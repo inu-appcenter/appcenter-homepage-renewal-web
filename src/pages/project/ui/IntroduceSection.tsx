@@ -54,7 +54,6 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
     </button>
   );
 };
-
 const Stacks = ({ data }: { data: Project }) => {
   const hasNoContent = (!data.stacks || data.stacks.length === 0) && !data.githubLink;
 
@@ -66,9 +65,12 @@ const Stacks = ({ data }: { data: Project }) => {
     <div className="flex h-full flex-col justify-center gap-20">
       {data.githubLink && (
         <div className="flex items-center gap-4">
-          <GitHub className="h-8 w-8" />
-          <a href={data.githubLink} target="_blank" rel="noopener noreferrer" className="text-custom-gray-100 text-2xl">
-            {data.githubLink}
+          <a href={data.githubLink} target="_blank" rel="noopener noreferrer" className="group flex w-fit items-center gap-5">
+            <GitHub className="h-8 w-8 text-white" />
+            <div className="flex flex-col">
+              <span className="text-custom-gray-400 group-hover:text-brand-primary-cta text-2xl transition-colors">프로젝트 깃허브 바로가기</span>
+              <div className="bg-brand-primary-cta h-0.5 w-0 transition-all duration-300 group-hover:w-full" />
+            </div>
           </a>
         </div>
       )}
