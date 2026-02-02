@@ -25,14 +25,12 @@ export const AboutSection = () => {
 const Item = ({ title, subNumber, smallSubtitle, index }: { title: string; subNumber: number; smallSubtitle?: string; index: number }) => {
   return (
     <motion.li
-      // 부모 설정 없이도 개별적으로 트리거되도록 설정
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      // index를 활용해 순차적 딜레이(Stagger) 직접 부여
       transition={{
         duration: 0.5,
-        delay: index * 0.1, // 0s, 0.1s, 0.2s... 순서대로 실행
+        delay: index * 0.1,
         ease: 'easeOut'
       }}
       className="bg-surface-elevated group border-custom-gray-600 hover:border-brand-primary-cta flex flex-1 cursor-default flex-col items-center gap-1 rounded-sm border py-3 drop-shadow-[0_0_16px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_16px_#57ff8566] sm:gap-6 sm:rounded-2xl sm:py-11.75"

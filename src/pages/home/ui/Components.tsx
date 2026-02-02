@@ -120,7 +120,6 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
     const itemWidth = singleSetWidth / data.length;
     const targetX = -(index * itemWidth);
 
-    // 클릭한 지점으로 부드럽게 이동
     animate(xTranslation, targetX, {
       type: 'spring',
       stiffness: 200,

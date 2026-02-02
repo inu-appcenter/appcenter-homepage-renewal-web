@@ -13,7 +13,6 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
 
   return (
     <div className="flex flex-col gap-4 sm:gap-7">
-      {/* 카테고리 탭 */}
       <div className="flex flex-row justify-between">
         {PART.map((category) => (
           <button
@@ -28,12 +27,10 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
         ))}
       </div>
 
-      {/* FAQ 리스트 영역 */}
       <div className="flex flex-1 flex-col gap-2">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={selectedCategory}
-            // 부모 컨테이너에서 자식들의 등장 간격을 제어 (Stagger)
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-50px' }}
@@ -41,7 +38,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
               hidden: { opacity: 0 },
               show: {
                 opacity: 1,
-                transition: { staggerChildren: 0.08 } // 여기서 순차적 지연을 제어
+                transition: { staggerChildren: 0.08 }
               }
             }}
             className="flex flex-col gap-2"

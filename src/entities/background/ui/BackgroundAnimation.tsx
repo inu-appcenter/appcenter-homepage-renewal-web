@@ -37,7 +37,7 @@ export const BackgroundAnimation = () => {
 
   return (
     <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden bg-black">
-      <div className="absolute inset-0 hidden opacity-5 sm:block">
+      <div className="absolute inset-0 hidden opacity-10 sm:block">
         <Image src="/images/landing.png" alt="Background Dark" fill className="object-cover" />
       </div>
 

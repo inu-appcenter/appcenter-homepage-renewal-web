@@ -1,13 +1,13 @@
-import { ApplySection } from './ApplySection';
-import { DescriptionSection } from './DescriptionSection';
+import { CarouselSection } from './CarouselSection';
+import { ListSection } from './ListSection';
 import { MainSection } from './MainSection';
 
 export const JoinUsPage = () => {
   return (
     <>
       <MainSection />
-      <ApplySection />
-      <DescriptionSection />
+      <CarouselSection />
+      <ListSection />
     </>
   );
 };

@@ -21,13 +21,13 @@ export const Header = () => {
       </Link>
 
       <div className="hidden flex-1 flex-row items-center justify-end gap-20 text-xl font-semibold text-white sm:flex">
-        <Link href="/#about" className="hover:text-brand-primary-light transition-colors">
+        <Link href="//#about" className="hover:text-brand-primary-light transition-colors">
           About
         </Link>
-        <Link href="/#activities" className="hover:text-brand-primary-light transition-colors">
+        <Link href="//#activities" className="hover:text-brand-primary-light transition-colors">
           Activity
         </Link>
-        <Link href="/#project" className="hover:text-brand-primary-light transition-colors">
+        <Link href="//#project" className="hover:text-brand-primary-light transition-colors">
           Project
         </Link>
         <Link href="//#faq" className="hover:text-brand-primary-light transition-colors">
