@@ -101,7 +101,7 @@ export function OtherRecruitments() {
 const Item = ({ data }: { data: { title: string; dDay: string } }) => {
   return (
     <div className="border-custom-gray-600 group hover:border-brand-primary-cta flex cursor-pointer flex-col gap-4 rounded-2xl border-2 bg-black/20 p-6 transition-all duration-500 hover:shadow-[0px_0px_16px_0px_#57FF8566]">
-      <div className="bg-custom-gray-300 aspect-4/3 w-full rounded-lg transition-transform group-hover:scale-[1.02]" />
+      <div className="bg-custom-gray-300 aspect-4/3 w-full rounded-lg transition-transform" />
 
       <div className="mt-2 flex flex-row items-center gap-4">
         <div className="text-background bg-brand-primary-cta rounded-full px-4 py-1 text-[14px] font-bold">모집중</div>

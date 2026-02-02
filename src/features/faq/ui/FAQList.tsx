@@ -33,7 +33,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
             key={selectedCategory}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: '-50px' }}
+            viewport={{ once: false, margin: '-50px' }}
             variants={{
               hidden: { opacity: 0 },
               show: {
@@ -64,12 +64,11 @@ const FAQItem = ({ data }: { data: Faq }) => {
 
   return (
     <motion.div
-      // 자식 요소는 부모의 'hidden'과 'show' 상태를 물려받음
       variants={{
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
       }}
-      layout // 아코디언 열릴 때 위치 자동 보정
+      layout
       className="group flex cursor-pointer flex-col text-white"
       onClick={() => setIsOpen(!isOpen)}
     >

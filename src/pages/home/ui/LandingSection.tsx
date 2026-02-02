@@ -1,6 +1,6 @@
 import { BackgroundAnimation } from 'entities/background';
 import { AnimationButton } from 'shared/ui/animation-button';
-import { ScrambleText } from '../animation/ScrambleText';
+import { ScrambleText } from 'shared/animation/ScrambleText';
 
 export const LandingSection = () => {
   return (
