@@ -9,9 +9,8 @@ import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 export const ProjectSection = () => {
   return (
-    <section className="relative flex h-[60vh] flex-col justify-center gap-10 sm:h-screen">
+    <section className="relative flex h-[60vh] flex-col justify-center gap-4 sm:h-screen sm:gap-10">
       <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
-
       <AsyncBoundary>
         <ProjectCarousel />
       </AsyncBoundary>
@@ -29,7 +28,7 @@ const ProjectCarousel = () => {
       renderItem={(item) => {
         const imageUrls = Object.values(item.images);
         return (
-          <motion.div whileHover={{ y: -24, scale: 1.05 }} transition={{ duration: 0.4 }} className="group relative h-75 w-75 shrink-0 cursor-pointer overflow-hidden rounded-xl sm:h-120 sm:w-125">
+          <motion.div whileHover={{ y: -24, scale: 1.05 }} transition={{ duration: 0.4 }} className="group relative h-35 w-35 shrink-0 cursor-pointer overflow-hidden rounded-xl sm:h-120 sm:w-125">
             <Image draggable={false} loading="lazy" src={imageUrls[0]} alt={item.title} fill className="object-cover" quality={100} />
             <Link draggable={false} href={`/project/${item.id}`} className="absolute inset-0 z-10">
               <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-2 p-10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-4">

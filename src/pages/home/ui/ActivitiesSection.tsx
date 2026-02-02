@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Carousel, SectionDetailTitle } from './Components';
+import { Carousel, SectionDetailTitle, SectionTitle } from './Components';
 import { MoveRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useActivities } from 'entities/activity';
@@ -9,7 +9,10 @@ import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 export const ActivitiesSection = () => {
   return (
-    <section className="flex h-[25vh] flex-col justify-center sm:h-screen sm:gap-16">
+    <section className="flex h-[60vh] flex-col justify-center sm:h-screen sm:gap-16">
+      <div className="relative flex h-96 flex-col justify-center gap-17 sm:hidden">
+        <SectionTitle title="activities" description="다양한 시각이 모여 하나의 목표를 향합니다" />
+      </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activities" />
         <motion.p
@@ -17,7 +20,7 @@ export const ActivitiesSection = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-primary-gradient w-40 text-[5px]/2 sm:w-150 sm:text-xl/7"
+          className="text-primary-gradient flex-1 text-[5px]/2 sm:max-w-150 sm:text-xl/7"
         >
           단순히 서비스를 만드는 것을 넘어 인사이트를 나누고 함께 성장합니다. 모든 워크숍은 우리의 집단 지성이 비범한 것을 만들어내는 이정표입니다.
         </motion.p>

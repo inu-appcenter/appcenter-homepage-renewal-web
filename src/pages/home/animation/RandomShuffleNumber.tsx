@@ -7,7 +7,7 @@ const DURATION = 1000;
 export const RandomShuffleNumber = ({ value }: { value: number }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { amount: 0.5, once: true });
+  const isInView = useInView(ref, { amount: 0.5, once: false });
 
   useEffect(() => {
     if (!isInView) return;

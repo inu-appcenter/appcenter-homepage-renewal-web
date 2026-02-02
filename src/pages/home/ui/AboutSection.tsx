@@ -12,9 +12,9 @@ export const AboutSection = () => {
   ];
 
   return (
-    <section className="relative flex h-[40vh] flex-col justify-center gap-8 sm:h-screen">
+    <section className="relative flex h-[45vh] flex-col justify-end gap-4 sm:h-screen sm:justify-center sm:gap-8">
       <SectionTitle title="about" description="서로의 영감이 되어주는 견고한 네트워크" />
-      <ul className="flex flex-row justify-between gap-4 sm:mt-25 sm:gap-20">
+      <ul className="grid grid-cols-2 justify-between gap-4 sm:mt-25 sm:flex sm:flex-row sm:gap-20">
         {aboutData.map((data, index) => (
           <Item key={index} title={data.title} subNumber={data.subNumber} smallSubtitle={data.smallSubtitle} index={index} />
         ))}

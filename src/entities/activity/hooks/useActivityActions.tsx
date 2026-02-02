@@ -14,16 +14,11 @@ export const useActivitiesById = (activityId: number) => {
   });
 };
 
-export const useActivityActions = (activityId?: number) => {
+export const useActivityActions = () => {
   const queryClient = useQueryClient();
 
   const invalidateActivities = () => {
     return queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-  };
-  const invalidateDetail = () => {
-    if (activityId) {
-      return queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-    }
   };
 
   const addMutation = useMutation({
@@ -38,22 +33,22 @@ export const useActivityActions = (activityId?: number) => {
 
   const editThumbnailMutation = useMutation({
     mutationFn: activityApi.editThumbnail,
-    onSuccess: invalidateDetail
+    onSuccess: invalidateActivities
   });
 
   const editMetadataMutation = useMutation({
     mutationFn: activityApi.editMetadata,
-    onSuccess: invalidateDetail
+    onSuccess: invalidateActivities
   });
 
   const editImageMutation = useMutation({
     mutationFn: activityApi.editImage,
-    onSuccess: invalidateDetail
+    onSuccess: invalidateActivities
   });
 
   const deleteImageMutation = useMutation({
     mutationFn: activityApi.deleteImage,
-    onSuccess: invalidateDetail
+    onSuccess: invalidateActivities
   });
 
   return { addMutation, editThumbnailMutation, editMetadataMutation, editImageMutation, deleteImageMutation, deleteMutation };

@@ -7,7 +7,7 @@ import { useWorkShop } from 'entities/workshop';
 
 export const WorkshopSection = () => {
   return (
-    <section className="flex h-[35vh] flex-col justify-center sm:h-screen sm:gap-16">
+    <section className="flex h-[40vh] flex-col justify-center sm:h-screen sm:gap-16">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
         <motion.p
