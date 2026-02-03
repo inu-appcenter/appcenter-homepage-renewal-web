@@ -53,7 +53,7 @@ export const GridSection = ({ data }: { data: Project }) => {
                     <Image src={item.content} alt="프로젝트 이미지" fill className="h-full w-full object-cover transition-transform duration-500" />
                   ) : (
                     <div className="flex h-full w-full items-start p-2">
-                      <p className="text-lg leading-relaxed whitespace-pre-wrap text-gray-200">{item.content}</p>
+                      <p className="text-lg leading-relaxed whitespace-pre-wrap text-gray-100">{item.content}</p>
                     </div>
                   )}
                 </div>

@@ -17,12 +17,15 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
         {PART.map((category) => (
           <button
             key={category}
-            className={`cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${
-              selectedCategory === category ? 'text-brand-primary-cta' : 'text-primary-gradient hover:text-brand-primary-light'
+            className={`relative cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${
+              selectedCategory === category ? 'text-brand-primary-cta' : 'text-custom-gray-200 hover:text-brand-primary-light'
             }`}
             onClick={() => setSelectedCategory(category)}
           >
             {category}
+            {selectedCategory === category && (
+              <motion.div layoutId="underline" className="bg-brand-primary-cta absolute -bottom-1 left-0 w-full sm:h-px" transition={{ type: 'spring', stiffness: 500, damping: 30 }} />
+            )}
           </button>
         ))}
       </div>
@@ -72,7 +75,7 @@ const FAQItem = ({ data }: { data: Faq }) => {
       className="group flex cursor-pointer flex-col text-white"
       onClick={() => setIsOpen(!isOpen)}
     >
-      <div className="text-text-primary group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-2xl px-3 py-2 sm:px-5 sm:py-4">
+      <div className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-2xl px-3 py-2 sm:px-5 sm:py-4">
         <h3 className="text-[12px] transition-colors sm:text-xl/7">
           <span className="text-[16px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
         </h3>

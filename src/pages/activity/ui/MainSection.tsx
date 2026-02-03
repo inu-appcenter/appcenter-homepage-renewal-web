@@ -12,7 +12,7 @@ export const MainSection = ({ data }: { data: Activity }) => {
           <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">{data.title}</h1>
           <h2 className="text-custom-gray-400 pl-2.5 text-[40px]/7">{data.titleEng}</h2>
         </div>
-        <p className="text-primary-gradient w-135 text-xl/7">{data.body}</p>
+        <p className="text-custom-gray-100 w-135 text-xl/7">{data.body}</p>
       </div>
       <div className="flex min-w-fit flex-col items-end gap-3">
         <Item title="Date" subTitle={new Date(data.createdDate).toLocaleDateString()} />
@@ -26,7 +26,7 @@ const Item = ({ title, subTitle }: { title: string; subTitle: string }) => {
   return (
     <div className="flex flex-row gap-5">
       <p className="text-brand-primary-cta text-xl/7">{title}</p>
-      <p className="text-text-primary text-xl/7">{subTitle}</p>
+      <p className="text-custom-gray-100 text-xl/7">{subTitle}</p>
     </div>
   );
 };

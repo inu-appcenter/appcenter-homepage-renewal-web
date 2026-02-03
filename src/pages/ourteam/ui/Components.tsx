@@ -58,7 +58,7 @@ export const PartDescriptionSection = ({
             </motion.h2>
             <motion.div initial={{ opacity: 0, y: 10 }} animate={isSectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }} transition={{ duration: 0.5, delay: 0.3 }}>
               <AnimationButton href="joinus">
-                <span className="text-primary-gradient text-[28px] font-bold">바로 지원하러 가기</span>
+                <span className="text-custom-gray-100 text-[28px] font-bold">바로 지원하러 가기</span>
               </AnimationButton>
             </motion.div>
           </div>
@@ -99,7 +99,7 @@ export const PartDescriptionSection = ({
               >
                 <Hello />
               </motion.div>
-              <p className="text-primary-gradient text-[56px]/17 font-bold">
+              <p className="text-custom-gray-100 text-[56px]/17 font-bold">
                 안녕하세요! <br />
                 <span className="text-brand-primary-cta">{partName} 파트</span>입니다.
               </p>
@@ -115,7 +115,7 @@ export const PartDescriptionSection = ({
           transition={{ duration: 0.6, delay: 0.4 }}
           className="bg-surface-elevated flex h-79 flex-1 flex-col justify-end rounded-2xl px-12 py-10"
         >
-          <p className="text-primary-gradient text-[44px]/15 font-medium whitespace-pre-line">{description}</p>
+          <p className="text-custom-gray-100 text-[44px]/15 font-medium whitespace-pre-line">{description}</p>
         </motion.div>
 
         <motion.div
@@ -139,6 +139,6 @@ export const PartDescriptionSection = ({
 const StackItem = ({ number, title }: { number: string; title: string }) => (
   <div className="space-y-1">
     <div className="text-brand-secondary-light border-brand-secondary-light flex h-6 w-6 items-center justify-center rounded-full border text-sm">{number}</div>
-    <p className="text-primary-gradient text-[42px]/14.5 font-semibold">{title}</p>
+    <p className="text-custom-gray-100 text-[42px]/14.5 font-semibold">{title}</p>
   </div>
 );

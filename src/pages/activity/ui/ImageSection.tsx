@@ -47,7 +47,7 @@ export const ImageSection = ({ data }: { data: ActivityContent }) => {
           ))}
         </div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-primary-gradient px-32 text-xl/7">
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-custom-gray-100 px-32 text-xl/7">
           {data.text}
         </motion.p>
       </div>

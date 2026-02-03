@@ -20,7 +20,6 @@ button {
   --color-custom-gray-300: #dcdcdc;
   --color-custom-gray-200: #f2f2f2;
   --color-custom-gray-100: #f8f8f8;
-  --color-text-primary: #ededed;
 
   --color-background: #0f0f10;
   --color-background-surface: #111113;
@@ -34,19 +33,10 @@ button {
   --color-brand-secondary: #9b28ff;
   --color-brand-secondary-light: #b07bff;
 
-  /* 특수한 색상 */
-  --color-text-primary-gradient: radial-gradient(circle, #dcdcdc 0%, #dcdcdce6 70%, #dcdcdcb3 90%);
-
   --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
 }
 
 @layer utilities {
-  .text-primary-gradient {
-    background: var(--color-text-primary-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

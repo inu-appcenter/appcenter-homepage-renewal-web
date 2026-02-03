@@ -21,10 +21,10 @@ export const MainSection = ({ data }: { data: Project }) => {
           ) : (
             <div className="mb-4 w-fit rounded-4xl bg-gray-600 px-2.5 py-1.5">서비스종료</div>
           )}
-          <h1 className="text-primary-gradient mb-29 text-[72px] font-bold">{data.title}</h1>
+          <h1 className="text-custom-gray-100 mb-29 text-[72px] font-bold">{data.title}</h1>
         </div>
         <div>
-          <p className="text-primary-gradient text-xl/7">{data.subTitle}</p>
+          <p className="text-custom-gray-100 text-xl/7">{data.subTitle}</p>
           <div className="mt-9 flex gap-3">
             {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} />}
             {data.appleStoreLink && <AppStore href={data.appleStoreLink} />}

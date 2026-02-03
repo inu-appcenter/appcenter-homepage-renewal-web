@@ -11,7 +11,7 @@ export const Footer = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <Logo className="h-10 w-10" />
-            <span className="font-montserrat text-primary-gradient font-product-design pl-1 text-2xl sm:text-4xl">
+            <span className="font-montserrat text-custom-gray-100 font-product-design pl-1 text-2xl sm:text-4xl">
               APP <span className="text-brand-primary-light">CENTER</span>
             </span>
           </div>

@@ -10,7 +10,7 @@ export const IntroduceSection = () => {
           visible: { x: 0, opacity: 1 }
         }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="text-primary-gradient text-[72px] leading-tight font-bold"
+        className="text-custom-gray-100 text-[72px] leading-tight font-bold"
       >
         안녕하세요! <br />
         <span className="text-brand-primary-cta">앱센터</span>입니다.
@@ -22,7 +22,7 @@ export const IntroduceSection = () => {
           visible: { x: 0, opacity: 1 }
         }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="text-primary-gradient self-end text-right text-[72px] font-bold"
+        className="text-custom-gray-100 self-end text-right text-[72px] font-bold"
       >
         앱센터의 각 <span className="text-brand-secondary-light">파트</span>를 소개합니다.
       </motion.p>

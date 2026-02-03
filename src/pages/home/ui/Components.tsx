@@ -12,7 +12,7 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex flex-col items-baseline ${className}`}
     >
-      <h2 className="text-brand-primary-cta text-[20px] font-bold tracking-tighter sm:text-[80px]">{title}</h2>
+      <h2 className="text-brand-primary-cta text-[20px] font-bold sm:text-[80px]">{title}</h2>
       <motion.p
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -43,7 +43,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 30 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'circOut' } }
         }}
-        className="text-primary-gradient font-product-design text-[32px] uppercase sm:text-[40px]"
+        className="text-custom-gray-200 font-product-design text-[32px] uppercase sm:text-[40px]"
       >
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
@@ -54,7 +54,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
         }}
-        className="text-primary-gradient text-[16px] font-semibold sm:text-2xl"
+        className="text-custom-gray-200 text-[16px] font-semibold sm:text-2xl"
       >
         {description}
       </motion.p>
