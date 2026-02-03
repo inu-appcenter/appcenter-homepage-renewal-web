@@ -1,2 +1,2 @@
-import { UserLayoutScrollAnimation } from 'app/UserLayout';
+import { UserLayoutScrollAnimation } from 'app/layout/UserLayout';
 export default UserLayoutScrollAnimation;

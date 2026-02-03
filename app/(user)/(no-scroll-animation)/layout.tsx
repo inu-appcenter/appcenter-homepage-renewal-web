@@ -1,2 +1,2 @@
-import { UserLayoutNoScrollAnimation } from 'app/UserLayout';
+import { UserLayoutNoScrollAnimation } from 'app/layout/UserLayout';
 export default UserLayoutNoScrollAnimation;

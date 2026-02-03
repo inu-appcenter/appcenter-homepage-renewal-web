@@ -1,4 +1,5 @@
 import { SearchX } from 'lucide-react';
+
 export const EmptyResult = ({ message }: { message?: string }) => {
   return (
     <tr className="border-none hover:bg-transparent">

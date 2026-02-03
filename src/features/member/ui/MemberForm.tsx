@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, Palette, LinkIcon, FileText, Camera, X, Hash } from 'lucide-react';
 
 import { Modal } from 'shared/ui/modal';
-import { useMemberActions } from 'entities/member';
-import type { Member, MemberForm } from 'entities/member';
+import { useMemberActions, type Member, type MemberForm } from 'entities/member';
 
 export const AddMemberForm = () => {
   const { addMutation } = useMemberActions();

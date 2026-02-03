@@ -94,8 +94,9 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
       };
       await submit(updatedForm);
       await new Promise((resolve) => setTimeout(resolve, 3000)); // 이미지 업로드 대기 시간 (마땅한 방법을 못찾음...)
+
       const response = await projectApi.getById(projectId);
-      console.log('Uploaded image response:', response);
+
       if (response?.images) {
         const imageEntries = Object.entries(response.images);
         const [, latestUrl] = imageEntries[imageEntries.length - 1];

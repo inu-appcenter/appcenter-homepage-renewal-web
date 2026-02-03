@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+
+body {
+  font-family: var(--font-pretendard), ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--color-background);
+}
+button {
+  cursor: pointer;
+}
+
+@theme {
+  /* 디자인시스템 색상표 */
+  --color-custom-black: #222124;
+  --color-custom-gray-900: #383838;
+  --color-custom-gray-800: #494949;
+  --color-custom-gray-700: #5a5a5a;
+  --color-custom-gray-600: #6d6d6d;
+  --color-custom-gray-500: #a8a8a8;
+  --color-custom-gray-400: #c6c6c6;
+  --color-custom-gray-300: #dcdcdc;
+  --color-custom-gray-200: #f2f2f2;
+  --color-custom-gray-100: #f8f8f8;
+
+  --color-background: #0f0f10;
+  --color-background-surface: #111113;
+  --color-surface-elevated: #18181b;
+  --color-border: #26262a;
+
+  --color-brand-primary: #00ffbf;
+  --color-brand-primary-cta: #57ff85;
+  --color-brand-primary-light: #0fe56e;
+
+  --color-brand-secondary: #9b28ff;
+  --color-brand-secondary-light: #b07bff;
+
+  --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 55px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #383838;
+    border-radius: 46px;
+    border: 23px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #57ff85;
+  }
+}

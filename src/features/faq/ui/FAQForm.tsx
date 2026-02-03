@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
-import type { Faq, FAQForm } from 'entities/faq';
-import { useFAQActions } from 'entities/faq';
+import { useFAQActions, type Faq, type FAQForm } from 'entities/faq';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
 import type { Part } from 'shared/types/part';
@@ -34,7 +33,6 @@ export const AddFAQForm = () => {
   );
 };
 
-// --- 2. 수정 버튼 ---
 export const EditFAQForm = ({ data }: { data: Faq }) => {
   const { editMutation } = useFAQActions();
 
@@ -61,7 +59,6 @@ export const EditFAQForm = ({ data }: { data: Faq }) => {
   );
 };
 
-// --- 3. 삭제 버튼 ---
 export const DeleteFAQButton = ({ faqId }: { faqId: number }) => {
   const { deleteMutation } = useFAQActions();
 
@@ -78,7 +75,6 @@ export const DeleteFAQButton = ({ faqId }: { faqId: number }) => {
   );
 };
 
-// --- 4. 공통 폼 컴포넌트 ---
 const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQForm) => void; isPending: boolean }) => {
   const [formData, setFormData] = useState<FAQForm>({
     part: initialData?.part || initialPart || 'Common',

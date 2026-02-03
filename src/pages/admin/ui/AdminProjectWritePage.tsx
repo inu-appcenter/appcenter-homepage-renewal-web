@@ -1,4 +1,4 @@
-import { projectApi } from 'entities/project/api';
+import { projectApi } from 'entities/project';
 import { ProjectForm } from 'features/project';
 
 export async function AdminProjectWritePage({ params }: { params: Promise<{ id?: string }> }) {

@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { WebLink, AppStore, GooglePlay } from 'entities/link';
-import { ProjectFormType } from 'features/project/types/form';
+import { ProjectFormType } from '../../types/form';
 import { GitHub } from 'shared/icon/GitHub';
 
 interface InputProps {

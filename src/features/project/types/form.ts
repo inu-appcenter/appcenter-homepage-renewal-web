@@ -6,7 +6,7 @@ export type ProjectFormType = Omit<Project, 'id' | 'createdDate' | 'lastModified
   images: ProjectImage[];
   stacks: number[];
   groups: number[];
-  webSiteLink: string; // 백엔드가 수정되기 전까지 임시로 사용
+  webSiteLink: string;
 };
 
 export type StepType = 'main' | 'introduce' | 'grid';

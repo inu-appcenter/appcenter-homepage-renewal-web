@@ -1,4 +1,4 @@
-import { projectApi } from 'entities/project/api';
+import { projectApi } from 'entities/project';
 import { GridSection } from './GridSection';
 import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';

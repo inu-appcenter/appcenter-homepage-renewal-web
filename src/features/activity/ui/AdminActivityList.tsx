@@ -1,10 +1,10 @@
 'use client';
 import Link from 'next/link';
+import { User, ImageIcon, FileText } from 'lucide-react';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { useActivities } from 'entities/activity';
 import { AddActivityButton, DeleteActivityButton, EditActivityButton } from './ActivityListButton';
-import { User, ImageIcon, FileText } from 'lucide-react';
 
 export const AdminActivityList = () => {
   const { data } = useActivities();

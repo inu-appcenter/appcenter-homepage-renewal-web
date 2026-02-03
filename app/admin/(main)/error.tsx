@@ -1,3 +1,3 @@
 'use client';
-import { Error } from 'shared/error/error';
+import { Error } from 'app/error/AdminError';
 export default Error;

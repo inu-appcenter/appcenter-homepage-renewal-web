@@ -1,9 +1,11 @@
-import { Generation, useGeneration, usePart } from 'entities/generation';
-import { AlertCircle, Check, Plus, Search, Users, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { AlertCircle, Check, Plus, Search, Users, X } from 'lucide-react';
+
+import { Generation, useGeneration, usePart } from 'entities/generation';
+
 import { Modal } from 'shared/ui/modal';
-import { ProjectFormType } from '../../types/form';
 import { PART_COLORS } from 'shared/constants/part';
+import { ProjectFormType } from '../../types/form';
 
 export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: allMembers } = useGeneration();

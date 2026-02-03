@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Trash2, Loader2, Pencil, Plus, Save } from 'lucide-react';
 import { useGenerationActions, useGroupYear, usePart, Generation, GenerationForm } from 'entities/generation';
 import { useRoles } from 'entities/role';
+
 import { Modal } from 'shared/ui/modal';
 import { PART_COLORS } from 'shared/constants/part';
 import { SearchMember } from './SearchMember';

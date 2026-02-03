@@ -18,8 +18,7 @@ export function useAdminLogout() {
       } else {
         alert('로그아웃 처리에 실패했습니다.');
       }
-    } catch (error) {
-      console.error('Logout error:', error);
+    } catch {
       alert('네트워크 오류가 발생했습니다.');
     } finally {
       setIsLoggingOut(false);

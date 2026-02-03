@@ -1,15 +1,17 @@
 'use client';
 import { useState } from 'react';
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Project, projectApi } from 'entities/project';
 
 import { ProjectFormType, StepType } from '../types/form';
+
+import { useProjectSubmit } from '../hooks/useProjectSubmit';
+
 import { MainSectionForm } from './MainSectionForm';
 import { IntroduceSectionForm } from './IntroduceSectionForm';
 import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
-import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();

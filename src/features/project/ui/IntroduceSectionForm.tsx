@@ -1,8 +1,8 @@
 'use client';
 import { Suspense, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { ProjectFormType, StepType } from '../types/form';
 import { SelectButton, StackForm, TeamForm } from './introduce-section';
-import { Loader2 } from 'lucide-react';
 
 interface IntroduceSectionFormProps {
   form: ProjectFormType;

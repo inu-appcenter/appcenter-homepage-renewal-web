@@ -4,11 +4,11 @@ import { useFAQs } from 'entities/faq';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
-
-import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
+import { SearchBar } from 'shared/ui/searchbar';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import { SearchBar } from 'shared/ui/searchbar';
+
+import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
 
 export const AdminFAQList = () => {
   const { data } = useFAQs();

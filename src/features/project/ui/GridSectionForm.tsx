@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 
 import { GridItem, ProjectFormType } from '../types/form';
-import { GridEditor } from './grid-section/GridEditor';
+import { GridEditor } from './grid-section';
 
 interface GridSectionFormProps {
   form: ProjectFormType;
@@ -90,7 +90,6 @@ export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormPro
             </ul>
           </div>
 
-          {/* 주의 사항 */}
           <div className="space-y-3">
             <h3 className="flex items-center gap-2 font-bold text-red-400">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-400 text-[10px] text-black">!</span>

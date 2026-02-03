@@ -1,9 +1,10 @@
-import { useSkillStack } from 'entities/skill-stack';
-import { Check, Code2, Layers, Plus, RefreshCw, Search, Settings, X } from 'lucide-react';
 import { useState } from 'react';
-import { Modal } from 'shared/ui/modal';
+import { Check, Code2, Layers, Plus, RefreshCw, Search, Settings, X } from 'lucide-react';
 import Link from 'next/link';
-import { ProjectFormType } from 'features/project/types/form';
+
+import { useSkillStack } from 'entities/skill-stack';
+import { ProjectFormType } from '../../types/form';
+import { Modal } from 'shared/ui/modal';
 
 export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: skillStack, refetch, isRefetching } = useSkillStack();

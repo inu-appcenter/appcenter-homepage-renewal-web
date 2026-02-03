@@ -29,6 +29,7 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
     formData.append('appleStoreLink', data.appleStoreLink);
     formData.append('webSiteLink', data.webSiteLink);
 
+    // 2. 이미지 파일 데이터
     data.images.forEach((img) => {
       if (img?.file) {
         formData.append('multipartFiles', img.file);
@@ -55,7 +56,6 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
         }
       });
     } else {
-      console.log('modifiedIds:', data);
       editMutation.mutate({ data: formData, id: props.projectId, modifiedIds }, { onSuccess: props.onSuccess });
     }
   };

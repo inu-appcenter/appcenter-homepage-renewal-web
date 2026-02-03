@@ -1,8 +1,6 @@
 import Image from 'next/image';
-import { AppStore } from 'entities/link/ui/AppStore';
-import { GooglePlay } from 'entities/link/ui/GooglePlay';
+import { AppStore, WebLink, GooglePlay } from 'entities/link';
 import { Project } from 'entities/project';
-import { WebLink } from 'entities/link';
 
 export const MainSection = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images);

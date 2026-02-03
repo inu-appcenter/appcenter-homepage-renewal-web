@@ -20,7 +20,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const { addActivity, isPending: isAddPending } = useAddActivity();
   const { editActivity, isPending: isEditPending } = useEditActivity();
 
-  const { deleteImageMutation } = useActivityActions(initialData?.id);
+  const { deleteImageMutation } = useActivityActions();
 
   const isPending = isEditMode ? isEditPending : isAddPending;
 
@@ -39,8 +39,6 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
         : [{ ...DEFAULT_CONTENT, id: Date.now() }]
     };
   });
-
-  console.log('ActivityForm render', { initialData, form });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

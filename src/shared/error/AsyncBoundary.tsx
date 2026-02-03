@@ -1,7 +1,7 @@
-import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-import { ErrorBoundary } from 'react-error-boundary';
 import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { AlertCircle, LoaderCircle, RotateCw } from 'lucide-react';
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 export const AsyncBoundary = ({ children, fallback = <DefaultFallback /> }: { children: React.ReactNode; fallback?: React.ReactNode }) => {
   const { reset } = useQueryErrorResetBoundary();

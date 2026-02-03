@@ -46,9 +46,6 @@ export const useAddActivity = () => {
         type: 'application/json'
       });
       formData.append('request', jsonBlob);
-      for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1] instanceof File ? `File(${pair[1].name})` : pair[1]);
-      }
 
       await addMutation.mutateAsync(formData, {
         onSuccess: () => {
