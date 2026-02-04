@@ -1,4 +1,4 @@
-import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2, Zap, Presentation, UserSearch } from 'lucide-react';
+import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2, Zap, Presentation, UserSearch, Component } from 'lucide-react';
 
 /* 
 기능이 추가로 생기면 아래에 넣어주세요.
@@ -63,14 +63,14 @@ export const ADMIN_MENU: AdminMenuType[] = [
     tag: 'recruit',
     description: '동아리 활동 업로드 및 관리',
     icon: ImageIcon,
-    path: '/admin/recruit',
+    path: '/admin/recruitment',
     subMenu: [
       {
         name: '모집 공고 관리',
-        href: '/admin/recruit',
+        href: '/admin/recruitment',
         icon: UserSearch
       },
-      { name: '모집 분야 관리', href: '/admin/recruit-field', icon: ImageIcon }
+      { name: '모집 분야 관리', href: '/admin/recruitment-field', icon: Component }
     ]
   },
   {

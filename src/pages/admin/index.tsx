@@ -9,5 +9,6 @@ export { AdminFAQPage } from './ui/AdminFAQPage';
 export { AdminSkillPage } from './ui/AdminSkillPage';
 export { AdminProjectWritePage } from './ui/AdminProjectWritePage';
 export { AdminActivityPage } from './ui/AdminActivityPage';
-export { AdminRecruitPage } from './ui/AdminRecruitPage';
 export { AdminActivityWritePage } from './ui/AdminAcitivityWritePage';
+export { AdminRecruitmentPage } from './ui/AdminRecruitmentPage';
+export { AdminRecruitmentFieldPage } from './ui/AdminRecruitmentFieldPage';

@@ -29,7 +29,7 @@ export const LandingSection = () => {
           </AnimationButton>
         </div>
         {/** 모바일인 경우 */}
-        <div className="bg-brand-primary-cta border-custom-gray-100 text-custom-black rounded-[60px] border px-8 py-4 text-xl font-semibold drop-shadow-[0_0_48px_#00FFBF66]">
+        <div className="bg-brand-primary-cta border-custom-gray-100 text-custom-black rounded-[60px] border px-8 py-4 text-xl font-semibold drop-shadow-[0_0_48px_#00FFBF66] sm:hidden">
           앱센터 모집 지원하러 가기
         </div>
 

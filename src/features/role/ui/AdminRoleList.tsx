@@ -34,11 +34,7 @@ const Item = ({ data }: { data: ReturnType<typeof useRoles>['data'][number] }) =
   return (
     <tr key={data.roleId} className="group transition-colors hover:bg-slate-50/80">
       <td className="px-6 py-5 text-slate-400">#{data.roleId}</td>
-      <td className="px-6 py-5">
-        <div className="flex items-center gap-3">
-          <span className="font-bold tracking-tight text-slate-800">{data.roleName}</span>
-        </div>
-      </td>
+      <td className="px-6 py-5 font-bold text-slate-800">{data.roleName}</td>
       <td className="px-6 py-5">
         <div className="flex items-center gap-2 text-slate-500">
           <Calendar size={14} className="text-slate-300" />

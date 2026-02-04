@@ -1,4 +1,4 @@
-export type JoinUs = {
+export type Recruitment = {
   id: number;
   title: string;
   description: string;
