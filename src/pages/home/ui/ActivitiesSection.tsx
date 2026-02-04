@@ -14,7 +14,7 @@ export const ActivitiesSection = () => {
         <SectionTitle title="activities" description="다양한 시각이 모여 하나의 목표를 향합니다" />
       </div>
       <div className="flex w-full justify-between">
-        <SectionDetailTitle title="활동" subtitle="Activities" />
+        <SectionDetailTitle title="활동" subtitle="Activity" />
         <motion.p
           viewport={{ once: true }}
           initial={{ opacity: 0, x: 20 }}

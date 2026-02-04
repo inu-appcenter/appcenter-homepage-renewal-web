@@ -9,7 +9,14 @@ import { Part } from 'shared/types/part';
 
 export const FAQList = ({ data }: { data: Faq[] }) => {
   const [selectedCategory, setSelectedCategory] = useState<Part>('Common');
+  const [openId, setOpenId] = useState<number | null>(null);
+
   const filteredData = data.filter((item) => item.part === selectedCategory);
+
+  const handleCategoryChange = (category: Part) => {
+    setSelectedCategory(category);
+    setOpenId(null);
+  };
 
   return (
     <div className="flex flex-col gap-4 sm:gap-7">
@@ -20,7 +27,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
             className={`relative cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${
               selectedCategory === category ? 'text-brand-primary-cta' : 'text-custom-gray-200 hover:text-brand-primary-light'
             }`}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => handleCategoryChange(category)}
           >
             {category}
             {selectedCategory === category && (
@@ -47,7 +54,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
             className="flex flex-col gap-2"
           >
             {filteredData.map((item, index) => (
-              <FAQItem key={`${item.part}-${index}`} data={item} />
+              <FAQItem key={`${item.part}-${index}`} data={item} isOpen={openId === index} onToggle={() => setOpenId(openId === index ? null : index)} />
             ))}
           </motion.div>
         </AnimatePresence>
@@ -62,9 +69,13 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
   );
 };
 
-const FAQItem = ({ data }: { data: Faq }) => {
-  const [isOpen, setIsOpen] = useState(false);
+interface FAQItemProps {
+  data: Faq;
+  isOpen: boolean;
+  onToggle: () => void;
+}
 
+const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
   return (
     <motion.div
       variants={{
@@ -73,7 +84,7 @@ const FAQItem = ({ data }: { data: Faq }) => {
       }}
       layout
       className="group flex cursor-pointer flex-col text-white"
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={onToggle}
     >
       <div className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-2xl px-3 py-2 sm:px-5 sm:py-4">
         <h3 className="text-[12px] transition-colors sm:text-xl/7">

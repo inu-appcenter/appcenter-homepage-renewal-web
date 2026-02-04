@@ -44,12 +44,7 @@ export const ADMIN_MENU: AdminMenuType[] = [
     icon: Layout,
     subMenu: [
       { name: '프로젝트 관리', href: '/admin/project', icon: Layout },
-      { name: '기술 아이콘 관리', href: '/admin/skill', icon: Zap },
-      {
-        name: '모집 공고 관리',
-        href: '/admin/recruit',
-        icon: UserSearch
-      }
+      { name: '기술 아이콘 관리', href: '/admin/skill', icon: Zap }
     ]
   },
   {
@@ -61,6 +56,21 @@ export const ADMIN_MENU: AdminMenuType[] = [
     subMenu: [
       { name: '활동 게시판 관리', href: '/admin/activity', icon: Presentation },
       { name: '워크숍 게시판 관리', href: '/admin/workshop', icon: ImageIcon }
+    ]
+  },
+  {
+    group: '모집 관리',
+    tag: 'recruit',
+    description: '동아리 활동 업로드 및 관리',
+    icon: ImageIcon,
+    path: '/admin/recruit',
+    subMenu: [
+      {
+        name: '모집 공고 관리',
+        href: '/admin/recruit',
+        icon: UserSearch
+      },
+      { name: '모집 분야 관리', href: '/admin/recruit-field', icon: ImageIcon }
     ]
   },
   {

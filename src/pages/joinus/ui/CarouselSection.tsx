@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus } from 'lucide-react';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 const DUMMY_DATA = Array.from({ length: 9 }).map((_, i) => ({
@@ -15,7 +14,7 @@ const DUMMY_DATA = Array.from({ length: 9 }).map((_, i) => ({
 
 export function CarouselSection() {
   return (
-    <section id="list" className="flex h-screen flex-col items-center justify-center gap-16 overflow-hidden text-white">
+    <section id="list" className="flex flex-col items-center justify-center gap-8 overflow-hidden text-white">
       <AsyncBoundary>
         <RecruitmentCard />
       </AsyncBoundary>
@@ -24,7 +23,6 @@ export function CarouselSection() {
 }
 
 const RecruitmentCard = () => {
-  const [selected, setSelected] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
   const itemsPerPage = 3;
@@ -32,13 +30,8 @@ const RecruitmentCard = () => {
   const currentItems = DUMMY_DATA.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
   return (
     <>
-      <div className="flex flex-row gap-40">
-        {['전체', '모집중', '모집마감'].map((text, index) => (
-          <SelectButton key={index} text={text} onClick={() => setSelected(index)} isSelected={selected === index} />
-        ))}
-      </div>
       <div className="relative flex w-full items-center justify-center">
-        <div className="flex w-full gap-6 overflow-hidden py-10">
+        <div className="flex w-full gap-6 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPage}
@@ -79,28 +72,5 @@ const RecruitmentCard = () => {
         ))}
       </div>
     </>
-  );
-};
-
-const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: () => void; isSelected: boolean }) => {
-  return (
-    <button
-      onClick={onClick}
-      className={`group bg-background relative flex cursor-pointer items-center gap-2 rounded-[40px] px-6 py-3 text-2xl transition-colors duration-300 ${
-        isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-600 border-custom-gray-600 border'
-      }`}
-    >
-      {isSelected && (
-        <motion.div
-          layoutId="active-pill"
-          className="border-brand-primary-cta absolute inset-0 rounded-[40px] border shadow-[0px_0px_16px_0px_#57FF8566]"
-          transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-        />
-      )}
-      <motion.div animate={{ rotate: isSelected ? 45 : 0 }} transition={{ duration: 0.3 }}>
-        <Plus className={isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-600'} strokeWidth={1} size={28} />
-      </motion.div>
-      <span className="relative z-10 font-medium">{text}</span>
-    </button>
   );
 };

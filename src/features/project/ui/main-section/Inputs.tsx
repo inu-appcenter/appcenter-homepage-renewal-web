@@ -84,7 +84,7 @@ export const TitleInput = ({ form, onChange }: InputProps) => {
         <input
           type="text"
           className="w-full bg-transparent text-[72px] font-bold text-gray-300 outline-none placeholder:text-gray-700"
-          placeholder="프로젝트 제목"
+          placeholder="프로젝트 명 (10자 이내 권장)"
           value={form.title}
           onChange={onChange('title')}
         />

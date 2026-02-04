@@ -116,7 +116,7 @@ const Item = ({ data }: { data: ItemData }) => {
   return (
     <Link
       href="/joinus/100"
-      className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-6 rounded-[18px] border p-6 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566]"
+      className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-6 rounded-[18px] border px-6 py-4 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566]"
     >
       <div className="bg-background flex h-27 w-27 items-center justify-center rounded-xl p-4">
         <Logo />

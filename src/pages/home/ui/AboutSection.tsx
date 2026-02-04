@@ -33,7 +33,7 @@ const Item = ({ title, subNumber, smallSubtitle, index }: { title: string; subNu
         delay: index * 0.1,
         ease: 'easeOut'
       }}
-      className="bg-surface-elevated group border-custom-gray-600 hover:border-brand-primary-cta flex flex-1 cursor-default flex-col items-center gap-1 rounded-sm border py-3 drop-shadow-[0_0_16px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_16px_#57ff8566] sm:gap-6 sm:rounded-2xl sm:py-11.75"
+      className="bg-surface-elevated group border-custom-gray-600 hover:border-brand-primary-cta flex flex-1 cursor-default flex-col items-center gap-1 rounded-sm border py-3 drop-shadow-[0_0_4px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_4px_#57ff8566] sm:gap-6 sm:rounded-2xl sm:py-11.75 sm:drop-shadow-[0_0_16px_#EDEDED66] sm:hover:drop-shadow-[0_0_16px_#57ff8566]"
     >
       <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 text-[8px] duration-500 sm:text-[28px]">{title}</span>
       <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 text-[18px] leading-none font-medium duration-500 sm:text-[66px]">

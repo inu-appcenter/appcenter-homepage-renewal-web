@@ -52,7 +52,7 @@ export const LocationSection = () => {
                 - <span className="rounded-lg bg-blue-700 px-1.5">간선</span> 8, 58 인천대정문 하차
               </div>
               <div className="text-white">
-                - <span className="rounded-lg bg-green-700 px-1.5">지선</span> 41, 46 인천대학교송캠퍼스 하차
+                - <span className="rounded-lg bg-green-700 px-1.5">지선</span> 41, 46 인천대학교송도캠퍼스 하차
               </div>
             </div>
           </div>
