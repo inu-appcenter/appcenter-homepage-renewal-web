@@ -54,7 +54,9 @@ export const AdminGenerationList = () => {
             <RotateCcw size={12} />
             필터 초기화
           </button>
-          <AddGenerationForm />
+          <div className="flex items-center gap-4">
+            <AddGenerationForm />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

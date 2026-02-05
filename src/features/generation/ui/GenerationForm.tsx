@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Trash2, Loader2, Pencil, Plus, Save } from 'lucide-react';
+import { Trash2, Loader2, Pencil, Plus, Save, AlertCircle } from 'lucide-react';
 import { useGenerationActions, useGroupYear, usePart, Generation, GenerationForm } from 'entities/generation';
 import { useRoles } from 'entities/role';
 
@@ -11,10 +11,10 @@ import { SearchMember } from './SearchMember';
 export const AddGenerationForm = () => {
   return (
     <Modal
-      title="기수 등록"
+      title="기수원 등록"
       trigger={
         <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-          <Plus size={18} /> 새 기수 추가
+          <Plus size={18} /> 새 기수원 등록
         </button>
       }
     >
@@ -26,7 +26,7 @@ export const AddGenerationForm = () => {
 export const EditGenerationForm = ({ data }: { data: Generation }) => {
   return (
     <Modal
-      title="역할 수정"
+      title="기수원 수정"
       trigger={
         <button className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
           <Pencil size={16} />
@@ -84,6 +84,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
     }
     return DEFAULT_FORM;
   });
+  const [customYear, setCustomYear] = useState<number | undefined>(undefined);
 
   const [selectedName, setSelectedName] = useState(initialData?.member || '');
 
@@ -95,7 +96,12 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
   };
 
   const handleSubmit = async () => {
-    await mutation.mutateAsync(formData);
+    const finalYear = customYear !== undefined ? customYear : formData.year;
+
+    await mutation.mutateAsync({
+      ...formData,
+      year: finalYear
+    });
     onClose();
   };
 
@@ -106,7 +112,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
           <p className="mb-1 text-xs font-bold text-slate-400">수정 대상</p>
           <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
             <p className="text-sm font-bold text-slate-700">
-              {selectedName}{' '}
+              {selectedName}
               <span className="font-normal text-slate-400">
                 ({formData.year}기 {formData.part}) #{formData.id}
               </span>
@@ -128,8 +134,25 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
 
       <div className="space-y-4 border-t border-slate-100 pt-4">
         <div className="space-y-3">
-          <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">기수 선택</label>
+          <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">기수 선택 또는 직접 입력</label>
+          <div className="flex items-center gap-2 rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-600">
+            <AlertCircle size={16} className="shrink-0" />
+            <span>
+              새 기수가 필요하면 <b>직접 입력</b> 해주세요
+            </span>
+          </div>
+
           <div className="flex flex-wrap gap-2">
+            <div className="relative flex items-center">
+              <input
+                type="number"
+                placeholder="직접 입력"
+                value={customYear}
+                onChange={(e) => setCustomYear(e.target.value ? Number(e.target.value) : undefined)}
+                className={`w-28 rounded-xl border-2 border-slate-200 px-3 py-2 text-xs font-bold transition-all outline-none`}
+              />
+              <span className="pointer-events-none absolute right-8 text-[10px] font-bold text-slate-400">기</span>
+            </div>
             {groupYear?.yearList.map((y) => (
               <button
                 key={y}
@@ -187,7 +210,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
           className="flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-4 font-bold text-white shadow-xl shadow-indigo-100 transition-all hover:bg-indigo-700 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none"
         >
           {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-          {isPending ? '처리 중...' : isEdit ? '변경사항 저장' : '데이터베이스에 저장'}
+          {isPending ? '처리 중...' : isEdit ? '변경사항 수정' : '저장'}
         </button>
       </div>
     </div>
