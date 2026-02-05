@@ -11,7 +11,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
   const isEditMode = Boolean(initialData);
   const { addRecruitment, isPending: isAddPending } = useAddRecruitment();
   const { editRecruitment, isPending: isEditPending } = useEditRecruitment();
-  const { data: recruitmentField = [] } = useRecruitmentField();
+  const { data: recruitmentField } = useRecruitmentField();
 
   const isPending = isEditMode ? isEditPending : isAddPending;
 
@@ -55,7 +55,6 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
       <h1 className="mb-8 text-2xl font-bold text-slate-900">{isEditMode ? '모집 공고 수정' : '신입 부원 모집 등록'}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* 1. 기본 정보 & 썸네일 */}
         <section className="space-y-4">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white">1</span>
@@ -63,7 +62,6 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           </h2>
 
           <div className="flex flex-col gap-6 lg:flex-row">
-            {/* 왼쪽: 텍스트 입력 필드 */}
             <div className="flex flex-1 flex-col gap-4">
               <Input label="공고 제목" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 2025년 1학기 신입 부원 모집" />
               <div className="space-y-1">

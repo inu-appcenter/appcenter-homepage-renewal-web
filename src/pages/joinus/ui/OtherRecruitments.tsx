@@ -3,14 +3,11 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-
-const MOCK_ITEMS = Array.from({ length: 6 }).map((_, i) => ({
-  id: i,
-  title: `${2024 + i}년 상반기 웹 개발자 모집`,
-  dDay: `D-${10 + i}`
-}));
+import { useRecruitment } from 'entities/recruitment';
+import { RecruitmentCard } from './Component';
 
 export function OtherRecruitments() {
+  const { data } = useRecruitment();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(3);
 
@@ -30,7 +27,7 @@ export function OtherRecruitments() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const maxIndex = Math.max(0, MOCK_ITEMS.length - visibleItems);
+  const maxIndex = Math.max(0, data.length - visibleItems);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
@@ -80,7 +77,7 @@ export function OtherRecruitments() {
             }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            {MOCK_ITEMS.map((item) => (
+            {data.map((item) => (
               <motion.div
                 key={item.id}
                 className="shrink-0"
@@ -88,7 +85,7 @@ export function OtherRecruitments() {
                   width: `calc((100% - ${(visibleItems - 1) * 32}px) / ${visibleItems})`
                 }}
               >
-                <Item data={item} />
+                <RecruitmentCard data={item} />
               </motion.div>
             ))}
           </motion.div>
@@ -97,22 +94,3 @@ export function OtherRecruitments() {
     </section>
   );
 }
-
-const Item = ({ data }: { data: { title: string; dDay: string } }) => {
-  return (
-    <div className="border-custom-gray-600 group hover:border-brand-primary-cta flex cursor-pointer flex-col gap-4 rounded-2xl border-2 bg-black/20 p-6 transition-all duration-500 hover:shadow-[0px_0px_16px_0px_#57FF8566]">
-      <div className="bg-custom-gray-300 aspect-4/3 w-full rounded-lg transition-transform" />
-
-      <div className="mt-2 flex flex-row items-center gap-4">
-        <div className="text-background bg-brand-primary-cta rounded-full px-4 py-1 text-[14px] font-bold">모집중</div>
-        <span className="text-[18px] font-semibold text-white">{data.dDay}</span>
-      </div>
-
-      <div className="text-brand-primary-cta line-clamp-1 text-[24px] font-semibold">{data.title}</div>
-
-      <hr className="border-custom-gray-600" />
-
-      <div className="mb-4 text-[18px] font-medium text-gray-300">프론트엔드, 백엔드, 풀스택</div>
-    </div>
-  );
-};

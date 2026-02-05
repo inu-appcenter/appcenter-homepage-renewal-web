@@ -4,29 +4,15 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from 'shared/icon/Logo';
+import { RecruitmentList } from 'entities/recruitment';
 
-interface ItemData {
-  id: number;
-  status: string;
-  title: string;
-  tags: string[];
-  dDay: string;
-}
-const MOCK_DATA: ItemData[] = Array.from({ length: 12 }, (_, i) => ({
-  id: i + 1,
-  status: '모집중',
-  title: `[BE] 새로운 프로젝트 팀원 모집 ${i + 1}`,
-  tags: ['Frontend', 'Backend', '기획'],
-  dDay: `D-${10 + i}`
-}));
-
-export function ListSection() {
+export function ListSection({ data }: { data: RecruitmentList[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [direction, setDirection] = useState(0);
   const itemsPerPage = 4;
 
-  const totalPages = Math.ceil(MOCK_DATA.length / itemsPerPage);
-  const currentItems = MOCK_DATA.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const currentItems = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handlePageChange = (newPage: number) => {
     setDirection(newPage > currentPage ? 1 : -1);
@@ -49,7 +35,7 @@ export function ListSection() {
   };
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center overflow-hidden py-10">
+    <section className="flex h-screen flex-col items-center justify-start overflow-hidden py-10">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentPage}
@@ -112,30 +98,38 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
   );
 }
 
-const Item = ({ data }: { data: ItemData }) => {
+const Item = ({ data }: { data: RecruitmentList }) => {
   return (
     <Link
-      href="/joinus/100"
+      href={`/joinus/${data.id}`}
       className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-6 rounded-[18px] border px-6 py-4 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566]"
     >
-      <div className="bg-background flex h-27 w-27 items-center justify-center rounded-xl p-4">
-        <Logo />
-      </div>
+      {data.thumbnail ? (
+        <img src={data.thumbnail} alt="thumb" className="h-27 w-27 rounded-xl object-cover" />
+      ) : (
+        <div className="bg-background flex h-27 w-27 items-center justify-center rounded-xl p-4">
+          <Logo />
+        </div>
+      )}
       <div className="flex flex-1 flex-row items-start gap-8">
-        <div className="bg-brand-primary-cta text-background rounded-[28px] px-3 py-2 text-[16px]">{data.status}</div>
+        {data.isRecruiting ? (
+          <div className="bg-brand-primary-cta text-background rounded-[28px] px-3 py-2 text-[16px]">모집중</div>
+        ) : (
+          <div className="bg-custom-gray-500 text-background rounded-[28px] px-3 py-2 text-[16px]">모집완료</div>
+        )}
         <div className="flex flex-col items-start gap-2">
           <span className="text-brand-primary-cta text-[28px]/7 font-semibold">{data.title}</span>
           <div className="flex gap-2 text-[20px] font-semibold text-white">
-            {data.tags.map((tag, index) => (
+            {data.fieldNames.map((tag, index) => (
               <span key={index}>
                 {tag}
-                {index < data.tags.length - 1 && ','}
+                {index < data.fieldNames.length - 1 && ','}
               </span>
             ))}
           </div>
         </div>
       </div>
-      <div className="bg-background rounded-[60px] px-10 py-4 text-xl font-semibold text-white">{data.dDay}</div>
+      {data.isRecruiting && <div className="bg-background rounded-[60px] px-10 py-4 text-xl font-semibold text-white">D-{data.dday}</div>}
     </Link>
   );
 };

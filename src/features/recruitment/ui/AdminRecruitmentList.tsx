@@ -4,6 +4,7 @@ import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, T
 import { useRecruitment } from 'entities/recruitment';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
+import Link from 'next/link';
 
 export const AdminRecruitmentList = () => {
   const { data } = useRecruitment();
@@ -47,7 +48,9 @@ const Item = ({ data }: { data: ReturnType<typeof useRecruitment>['data'][number
       <td className="px-6 py-5">
         {data.thumbnail ? (
           <div className="aspect-video w-24 overflow-hidden rounded-md border border-slate-200 shadow-sm">
-            <img src={data.thumbnail} alt="thumb" className="h-full w-full object-cover" />
+            <Link href={data.thumbnail} target="_blank" rel="noopener noreferrer">
+              <img src={data.thumbnail} alt="thumb" className="h-full w-full object-cover" />
+            </Link>
           </div>
         ) : (
           <div className="flex aspect-video w-24 items-center justify-center rounded-md bg-slate-100 text-slate-300">
