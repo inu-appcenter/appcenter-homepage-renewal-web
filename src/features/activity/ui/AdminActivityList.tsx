@@ -22,7 +22,7 @@ export const AdminActivityList = () => {
           <TableHeaderCell className="w-32">썸네일</TableHeaderCell>
           <TableHeaderCell>상세 컨텐츠</TableHeaderCell>
           <TableHeaderCell className="w-32">등록일</TableHeaderCell>
-          <TableHeaderCell className="w-20">관리</TableHeaderCell>
+          <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {data?.map((item) => (
@@ -107,8 +107,8 @@ const Item = ({ data }: { data: ReturnType<typeof useActivities>['data'][number]
       </td>
 
       <td className="px-6 py-5 text-sm text-slate-500">{new Date(data.createdDate).toLocaleDateString()}</td>
-      <td className="px-6 py-5 text-center align-middle">
-        <div className="flex justify-center opacity-0 transition-opacity group-hover:opacity-100">
+      <td className="px-6 py-5">
+        <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
           <EditActivityButton id={data.id} />
           <DeleteActivityButton imageId={data.id} />
         </div>

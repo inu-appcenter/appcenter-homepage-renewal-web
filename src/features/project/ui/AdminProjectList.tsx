@@ -28,7 +28,8 @@ export const AdminProjectList = () => {
           <TableHeaderCell>플랫폼 링크</TableHeaderCell>
           <TableHeaderCell className="w-36">상태</TableHeaderCell>
           <TableHeaderCell className="w-36">게시일</TableHeaderCell>
-          <TableHeaderCell className="w-36">작업</TableHeaderCell>
+          <TableHeaderCell className="w-36">앱 활성화 관리</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredData.map((project) => (
@@ -98,11 +99,11 @@ const Item = ({ data }: { data: Project }) => {
         </div>
       </td>
 
+      <td className="px-6 py-5">
+        <ProjectStatusToggle projectId={data.id} isActive={data.isActive} />
+      </td>
       <td className="px-6 py-5 text-right">
         <div className="flex items-center justify-end gap-3 opacity-0 transition-opacity group-hover:opacity-100">
-          <div className="flex flex-col items-end gap-1">
-            <ProjectStatusToggle projectId={data.id} isActive={data.isActive} />
-          </div>
           <EditProjectForm project={data} />
           <DeleteProjectButton projectId={data.id} />
         </div>
