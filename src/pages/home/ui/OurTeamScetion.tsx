@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 
 export const OurTeamSection = () => {
   return (
-    <section className="relative flex h-screen flex-col">
+    <section id="activity" className="relative flex h-screen flex-col">
       <div className="relative flex flex-col gap-17 py-40">
         <SectionTitle title="activity" description="다양한 시각이 모여 하나의 목표를 향합니다" />
       </div>

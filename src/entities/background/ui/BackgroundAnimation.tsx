@@ -51,7 +51,7 @@ export const BackgroundAnimation = () => {
         <Image src="/images/landing.png" alt="Background Spotlight" fill className="object-cover" />
       </motion.div>
 
-      <video ref={videoRef} autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
+      <video ref={videoRef} poster="/images/landing.png" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
         <source src="/videos/landing.mp4" type="video/mp4" />
       </video>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: isEnding ? 1 : 0 }} className="pointer-events-none absolute inset-0 bg-black" />

@@ -6,7 +6,7 @@ import { MoveDown } from 'lucide-react';
 export const LandingSection = () => {
   return (
     <>
-      <section className="relative flex h-screen flex-col items-center justify-center gap-4 sm:gap-8 md:items-start">
+      <section id="home" className="relative flex h-screen flex-col items-center justify-center gap-4 sm:gap-8 md:items-start">
         <BackgroundAnimation />
         <h1 className="text-custom-gray-100 font-product-design pl-2 text-[40px] whitespace-nowrap uppercase sm:text-[120px]">
           <ScrambleText text="APP " />

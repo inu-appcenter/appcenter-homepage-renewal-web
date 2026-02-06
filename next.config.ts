@@ -8,7 +8,8 @@ const nextConfig: NextConfig = {
         hostname: 'server.inuappcenter.kr',
         pathname: '/image/photo/**'
       }
-    ]
+    ],
+    qualities: [75, 100]
   }
 };
 

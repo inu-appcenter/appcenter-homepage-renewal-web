@@ -11,7 +11,7 @@ export const ActivitiesSection = () => {
   return (
     <section className="flex h-[60vh] flex-col justify-center sm:h-screen sm:gap-16">
       <div className="relative flex h-96 flex-col justify-center gap-17 sm:hidden">
-        <SectionTitle title="activities" description="다양한 시각이 모여 하나의 목표를 향합니다" />
+        <SectionTitle title="activity" description="다양한 시각이 모여 하나의 목표를 향합니다" />
       </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activity" />

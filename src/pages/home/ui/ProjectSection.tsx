@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 
 export const ProjectSection = () => {
   return (
-    <section className="relative flex h-[60vh] flex-col justify-center gap-4 sm:h-screen sm:gap-10">
+    <section id="project" className="relative flex h-[60vh] flex-col justify-center gap-4 sm:h-screen sm:gap-10">
       <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
       <AsyncBoundary>
         <ProjectCarousel />
@@ -46,11 +46,11 @@ const ProjectCarousel = () => {
                   {item.websiteLink && <span className="text-[18px] font-medium sm:text-[25px]">Web</span>}
                 </div>
                 {item.isActive ? (
-                  <span className="border-brand-primary-cta text-brand-primary-cta rounded-[31px] border px-2 py-1.5 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-3 sm:text-[14px]">
+                  <span className="border-brand-primary-cta text-brand-primary-cta rounded-[31px] border px-2 py-1 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-1.5 sm:text-[14px]">
                     서비스 이용 가능
                   </span>
                 ) : (
-                  <span className="rounded-[31px] border border-gray-500 px-2 py-1.5 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-3 sm:text-[14px]">서비스 종료</span>
+                  <span className="rounded-[31px] border border-gray-500 px-2 py-1 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-1.5 sm:text-[14px]">서비스 종료</span>
                 )}
                 <MoveRight className="text-custom-gray-500 absolute right-12 bottom-12" size={40} />
               </div>

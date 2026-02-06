@@ -28,7 +28,6 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
 export const SectionTitle = ({ title, description, className = '' }: { title: string; description: string; className?: string }) => {
   return (
     <motion.div
-      id={title}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
@@ -36,7 +35,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
       }}
-      className={`flex scroll-mt-[10vh] flex-col gap-2 sm:gap-5 ${className}`}
+      className={`flex flex-col gap-2 sm:gap-5 ${className}`}
     >
       <motion.h2
         variants={{
