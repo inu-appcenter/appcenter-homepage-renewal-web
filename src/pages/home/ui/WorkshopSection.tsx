@@ -15,7 +15,7 @@ export const WorkshopSection = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-custom-gray-200 max-w-40 flex-1 text-end text-[5px]/2 sm:max-w-150 sm:text-xl/7"
+          className="text-custom-gray-200 max-w-40 flex-1 text-end text-[10px]/4 sm:max-w-150 sm:text-xl/7"
         >
           일할 땐 열정적으로, 놀 땐 누구보다 진심으로!
         </motion.p>

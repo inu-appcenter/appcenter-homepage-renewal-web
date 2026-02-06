@@ -24,14 +24,14 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
         {PART.map((category) => (
           <button
             key={category}
-            className={`relative cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${
+            className={`relative cursor-pointer rounded-2xl text-[10px] font-bold transition-all duration-300 sm:text-2xl ${
               selectedCategory === category ? 'text-brand-primary-cta' : 'text-custom-gray-200 hover:text-brand-primary-light'
             }`}
             onClick={() => handleCategoryChange(category)}
           >
             {category}
             {selectedCategory === category && (
-              <motion.div layoutId="underline" className="bg-brand-primary-cta absolute -bottom-1 left-0 w-full sm:h-px" transition={{ type: 'spring', stiffness: 500, damping: 30 }} />
+              <motion.div layoutId="underline" className="bg-brand-primary-cta absolute -bottom-1 left-0 h-px w-full" transition={{ type: 'spring', stiffness: 500, damping: 30 }} />
             )}
           </button>
         ))}
@@ -60,7 +60,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
         </AnimatePresence>
 
         {filteredData.length === 0 && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10 text-center text-[12px] text-white sm:text-xl/7">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10 text-center text-[10px] text-white sm:text-xl/7">
             선택하신 카테고리에 해당하는 FAQ가 없습니다.
           </motion.p>
         )}
@@ -87,8 +87,8 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
       onClick={onToggle}
     >
       <div className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-2xl px-3 py-2 sm:px-5 sm:py-4">
-        <h3 className="text-[12px] transition-colors sm:text-xl/7">
-          <span className="text-[16px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
+        <h3 className="text-[10px] transition-colors sm:text-xl/7">
+          <span className="text-[12px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
         </h3>
         <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
           <ChevronDown className="h-6 w-6" aria-hidden="true" />
@@ -98,7 +98,7 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
-            <p className="flex flex-row items-center gap-3 px-10 py-5 text-[12px] sm:px-14 sm:text-xl/7">
+            <p className="flex flex-row items-center gap-3 px-4 py-2 text-[10px] sm:px-14 sm:py-5 sm:text-xl/7">
               <CornerDownRight className="w-6 sm:w-10" /> {data.answer}
             </p>
           </motion.div>

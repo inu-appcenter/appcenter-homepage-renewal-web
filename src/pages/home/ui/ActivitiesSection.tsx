@@ -20,9 +20,9 @@ export const ActivitiesSection = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-custom-gray-200 max-w-40 flex-1 text-end text-[5px]/2 sm:max-w-150 sm:text-xl/7"
+          className="text-custom-gray-200 line-clamp-3 max-w-40 flex-1 text-end text-[10px]/4 sm:max-w-150 sm:text-xl/7"
         >
-          단순히 서비스를 만드는 것을 넘어 인사이트를 나누고 함께 성장합니다. 모든 워크숍은 우리의 집단 지성이 비범한 것을 만들어내는 이정표입니다.
+          단순히 서비스를 만드는 것을 넘어 인사이트를 나누고 함께 성장합니다.
         </motion.p>
       </div>
       <AsyncBoundary>
