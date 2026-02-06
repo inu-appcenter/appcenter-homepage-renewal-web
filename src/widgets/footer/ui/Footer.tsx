@@ -24,7 +24,6 @@ export const Footer = () => {
           <p className="text-custom-gray-600 mt-4 text-xs sm:text-sm">© Copyright 2026 INU App Center. All rights reserved.</p>
         </div>
 
-        {/* 우측 소셜 링크 영역 */}
         <div className="flex flex-col items-center gap-4 sm:items-end">
           <h4 className="text-custom-gray-400 mt-2 text-xs font-semibold uppercase sm:mt-8 sm:text-sm">Contact Us</h4>
 

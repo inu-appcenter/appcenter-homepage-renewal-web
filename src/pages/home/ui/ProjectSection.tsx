@@ -10,7 +10,7 @@ import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 export const ProjectSection = () => {
   return (
-    <section id="project" className="relative mt-20 flex h-[60vh] flex-col justify-center gap-4 sm:h-screen sm:gap-10">
+    <section id="project" className="relative mt-20 flex flex-col justify-center gap-4 sm:h-screen sm:gap-10">
       <div className="flex justify-between">
         <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
         <div className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated hidden h-fit cursor-pointer items-center gap-1.5 rounded-4xl border-[0.7px] px-4 py-2 text-lg shadow-[0px_0px_12px_0px_#57FF8566] sm:flex">

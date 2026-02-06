@@ -35,7 +35,7 @@ export function ListSection({ data }: { data: RecruitmentList[] }) {
   };
 
   return (
-    <section className="flex h-screen flex-col items-center justify-start overflow-hidden py-10">
+    <section className="flex h-screen flex-col items-center justify-start overflow-hidden py-20">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentPage}
@@ -79,7 +79,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
           <button
             key={number}
             onClick={() => onPageChange(number)}
-            className={`group relative flex h-8 w-8 items-center justify-center text-lg font-semibold transition-colors ${currentPage === number ? 'text-brand-primary-cta' : 'hover:text-brand-primary-cta/80 text-white'} `}
+            className={`group relative flex h-8 w-8 items-center justify-center text-[16px] font-semibold transition-colors sm:text-lg ${currentPage === number ? 'text-brand-primary-cta' : 'hover:text-brand-primary-cta/80 text-white'} `}
           >
             {number}
             <div className={`bg-brand-primary-cta absolute right-0 bottom-0 left-0 mx-auto h-0.5 w-4 origin-center scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100`} />
@@ -102,34 +102,29 @@ const Item = ({ data }: { data: RecruitmentList }) => {
   return (
     <Link
       href={`/joinus/${data.id}`}
-      className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-6 rounded-[18px] border px-6 py-4 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566]"
+      className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-2 rounded-[18px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:px-6 sm:py-4"
     >
       {data.thumbnail ? (
-        <img src={data.thumbnail} alt="thumb" className="h-27 w-27 rounded-xl object-cover" />
+        <img src={data.thumbnail} alt="thumb" className="h-14 w-14 rounded-sm object-cover sm:h-27 sm:w-27 sm:rounded-xl" />
       ) : (
-        <div className="bg-background flex h-27 w-27 items-center justify-center rounded-xl p-4">
+        <div className="bg-background flex h-14 w-14 items-center justify-center rounded-sm p-4 sm:h-27 sm:w-27 sm:rounded-xl">
           <Logo />
         </div>
       )}
-      <div className="flex flex-1 flex-row items-start gap-8">
+      <div className="flex min-w-0 flex-1 flex-col items-start gap-2 sm:flex-row sm:gap-8">
         {data.isRecruiting ? (
-          <div className="bg-brand-primary-cta text-background rounded-[28px] px-3 py-2 text-[16px]">모집중</div>
+          <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[12px] sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>
         ) : (
-          <div className="bg-custom-gray-500 text-background rounded-[28px] px-3 py-2 text-[16px]">모집완료</div>
+          <div className="bg-custom-gray-500 text-background rounded-[28px] px-1.5 py-1 text-[12px] sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
         )}
-        <div className="flex flex-col items-start gap-2">
-          <span className="text-brand-primary-cta text-[28px]/7 font-semibold">{data.title}</span>
-          <div className="flex gap-2 text-[20px] font-semibold text-white">
-            {data.fieldNames.map((tag, index) => (
-              <span key={index}>
-                {tag}
-                {index < data.fieldNames.length - 1 && ','}
-              </span>
-            ))}
-          </div>
+        <div className="flex w-full flex-col items-start gap-1 sm:gap-2">
+          <span className="text-brand-primary-cta line-clamp-1 text-[16px] font-semibold sm:text-[28px]/7">{data.title}</span>
+          <div className="line-clamp-1 gap-2 text-[10px] font-semibold text-white sm:text-[20px]">{data.fieldNames.join(', ')}</div>
         </div>
       </div>
-      {data.isRecruiting && <div className="bg-background rounded-[60px] px-10 py-4 text-xl font-semibold text-white">D-{data.dday}</div>}
+      {data.isRecruiting && (
+        <div className="bg-background shrink-0 rounded-[30px] p-2 text-[16px] font-semibold whitespace-nowrap text-white sm:rounded-[60px] sm:px-10 sm:py-4 sm:text-xl">D-{data.dday}</div>
+      )}
     </Link>
   );
 };

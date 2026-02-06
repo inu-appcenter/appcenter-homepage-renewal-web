@@ -11,19 +11,19 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
   return (
     <>
       <section className="flex flex-col justify-center pt-35">
-        <div className="mb-12">
+        <div className="mb-10 sm:mb-12">
           {recruitmentData.isRecruiting ? (
-            <span className="bg-brand-primary-cta text-background mb-4 inline-block rounded-full px-3 py-2 text-2xl font-semibold">모집중</span>
+            <span className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">모집중</span>
           ) : (
-            <span className="bg-custom-gray-500 text-background mb-4 inline-block rounded-full px-3 py-2 text-2xl font-semibold">모집완료</span>
+            <span className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">모집완료</span>
           )}
-          <h1 className="text-[40px] font-bold text-white">{recruitmentData.title}</h1>
+          <h1 className="text-xl/5 font-bold text-white sm:text-[40px]">{recruitmentData.title}</h1>
         </div>
 
-        <div className="flex flex-col gap-12 sm:flex-row sm:items-start sm:gap-40">
+        <div className="flex flex-row gap-3 sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
-              <Image src={recruitmentData.thumbnail} alt="Recruitment Thumbnail" width={1920} height={1020} quality={100} className="h-auto w-full rounded-2xl object-contain" />
+              <Image src={recruitmentData.thumbnail} alt="Recruitment Thumbnail" width={1920} height={1020} quality={100} className="h-auto w-full object-contain" />
             ) : (
               <div className="bg-background flex aspect-video w-full items-center justify-center rounded-2xl p-4">
                 <Logo />
@@ -31,19 +31,19 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
             )}
           </div>
 
-          <div className="flex flex-1 flex-col gap-8">
-            <div className="grid grid-cols-[120px_1fr] gap-x-6 gap-y-8 text-white">
-              <div className="text-2xl font-semibold">모집 분야</div>
-              <div className="flex flex-wrap gap-2">
+          <div className="flex flex-1 flex-col gap-5 sm:gap-8">
+            <div className="grid grid-cols-[40px_1fr] gap-x-2.5 gap-y-2 text-white sm:grid-cols-[120px_1fr] sm:gap-x-6 sm:gap-y-8">
+              <div className="text-[10px] font-semibold sm:text-2xl">모집 분야</div>
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {recruitmentData.fields.map((role, index) => (
-                  <span key={index} className="border-brand-primary-cta text-brand-primary-cta rounded-full border px-4 py-1.5 text-sm font-medium">
+                  <span key={index} className="border-brand-primary-cta text-brand-primary-cta rounded-full border px-1.5 py-1 text-[8px] font-medium sm:px-4 sm:py-1.5 sm:text-sm">
                     {role.name}
                   </span>
                 ))}
               </div>
 
-              <div className="text-2xl font-semibold">모집 기한</div>
-              <div className="flex flex-col space-y-1 text-2xl font-medium">
+              <div className="text-[10px] font-semibold sm:text-2xl">모집 기한</div>
+              <div className="flex flex-col space-y-1 text-[10px] font-medium sm:text-2xl">
                 <span>
                   시작일 <span className="mx-2 text-gray-500">|</span> {recruitmentData.startDate}
                 </span>
@@ -52,19 +52,21 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
                 </span>
               </div>
 
-              <div className="text-2xl font-semibold">모집 인원</div>
-              <div className="text-2xl font-medium">{recruitmentData.capacity}명</div>
+              <div className="text-[10px] font-semibold sm:text-2xl">모집 인원</div>
+              <div className="text-[10px] font-medium sm:text-2xl">{recruitmentData.capacity}명</div>
 
-              <div className="text-2xl font-semibold">모집 대상</div>
-              <div className="text-2xl leading-relaxed font-medium">{recruitmentData.targetAudience}</div>
+              <div className="text-[10px] font-semibold sm:text-2xl">모집 대상</div>
+              <div className="text-[10px] leading-relaxed font-medium sm:text-2xl">{recruitmentData.targetAudience}</div>
             </div>
             <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
-              <div className="text-2xl">지원하러 가기</div>
+              <div className="text-[10px] sm:text-2xl">지원하러 가기</div>
             </AnimationButton>
           </div>
         </div>
       </section>
-      <section className="bg-surface-elevated mt-20 rounded-2xl px-20 py-15 text-xl whitespace-pre-line text-white">{recruitmentData.body}</section>
+      <section className="bg-surface-elevated mt-10 rounded-2xl px-4 py-8 text-[16px] wrap-break-word whitespace-pre-line text-white sm:mt-20 sm:px-20 sm:py-15 sm:text-xl">
+        {recruitmentData.body}
+      </section>
       <OtherRecruitments />
     </>
   );

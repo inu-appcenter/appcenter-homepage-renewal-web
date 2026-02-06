@@ -2,6 +2,7 @@ import { BackgroundAnimation } from 'entities/background';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { ScrambleText } from 'shared/animation/ScrambleText';
 import { MoveDown } from 'lucide-react';
+import Link from 'next/link';
 
 export const LandingSection = () => {
   return (
@@ -32,9 +33,12 @@ export const LandingSection = () => {
           </AnimationButton>
         </div>
         {/** 모바일인 경우 */}
-        <div className="bg-brand-primary-cta border-custom-gray-100 text-custom-black mt-10 rounded-[60px] border px-8 py-4 text-xl font-semibold whitespace-nowrap drop-shadow-[0_0_48px_#00FFBF66] sm:hidden">
+        <Link
+          href="/joinus"
+          className="bg-brand-primary-cta border-custom-gray-100 text-custom-black mt-10 rounded-[60px] border px-8 py-4 text-xl font-semibold whitespace-nowrap drop-shadow-[0_0_48px_#00FFBF66] sm:hidden"
+        >
           앱센터 모집 지원하러 가기
-        </div>
+        </Link>
 
         <MoveDown className="text-custom-gray-200 absolute bottom-20 animate-bounce sm:hidden" />
       </section>
