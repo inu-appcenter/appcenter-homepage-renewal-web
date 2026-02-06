@@ -59,7 +59,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-[10px] leading-relaxed font-medium sm:text-2xl">{recruitmentData.targetAudience}</div>
             </div>
             <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
-              <div className="text-[10px] sm:text-2xl">지원하러 가기</div>
+              <div className="text-[10px] text-white sm:text-2xl">지원하러 가기</div>
             </AnimationButton>
           </div>
         </div>

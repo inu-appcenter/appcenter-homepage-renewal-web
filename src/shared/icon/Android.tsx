@@ -1,6 +1,6 @@
-export const Android = () => {
+export const Android = ({ className }: { className?: string }) => {
   return (
-    <svg width="830" height="934" viewBox="0 0 830 934" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg className={className} viewBox="0 0 830 934" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g filter="url(#filter0_d_14_461)">
         <rect
           x="0.131456"

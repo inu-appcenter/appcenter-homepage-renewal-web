@@ -1,6 +1,6 @@
-export const Design = () => {
+export const Design = ({ className }: { className?: string }) => {
   return (
-    <svg width="1121" height="683" viewBox="0 0 1121 683" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg className={className} viewBox="0 0 1121 683" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g filter="url(#filter0_d_14_427)">
         <path
           d="M178.424 62.3877H941.128C953.379 62.3877 963.305 72.0881 963.305 84.043V585.803C963.305 597.758 953.38 607.458 941.128 607.458H178.424C166.171 607.458 156.247 597.758 156.247 585.803L156.247 84.043C156.247 72.088 166.171 62.3877 178.424 62.3877ZM175.704 564.958H943.018V95.1611H175.704L175.704 564.958Z"

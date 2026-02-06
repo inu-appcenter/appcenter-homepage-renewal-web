@@ -1,6 +1,6 @@
-export const Web = () => {
+export const Web = ({ className }: { className?: string }) => {
   return (
-    <svg width="708" height="801" viewBox="0 0 708 801" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={className} viewBox="0 0 708 801" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_d_645_1330)">
         <g clipPath="url(#clip0_645_1330)">
           <path

@@ -1,6 +1,6 @@
-export const Server = () => {
+export const Server = ({ className }: { className?: string }) => {
   return (
-    <svg width="965" height="747" viewBox="0 0 965 747" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg className={className} viewBox="0 0 965 747" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g filter="url(#filter0_d_14_237)">
         <g filter="url(#filter1_iii_14_237)">
           <path d="M376.775 674.613H587.749V683.498C587.749 684.327 587.077 684.998 586.249 684.998H378.275C377.446 684.998 376.775 684.327 376.775 683.498V674.613Z" fill="#A8A8A8" />

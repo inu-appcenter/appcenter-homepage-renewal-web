@@ -12,7 +12,7 @@ export const OurTeamData: OurTeam[] = [
     partName: '안드로이드',
     description: `안드로이드 운영체제에서\n작동하는 앱을 구현합니다.`,
     techStack: ['Android Studio', 'Kotlin'],
-    icon: <Android />,
+    icon: <Android className="w-40 sm:w-200" />,
     motionProps: {
       x: ['0vw', '4vw'],
       y: ['0vh', '90vh'],
@@ -24,7 +24,7 @@ export const OurTeamData: OurTeam[] = [
     partName: '디자인',
     description: `앱을 디자인하고,\n서비스를 설계합니다.`,
     techStack: ['Figma'],
-    icon: <Design />,
+    icon: <Design className="w-40 sm:w-300" />,
     motionProps: {
       x: ['0vw', '14vw'],
       y: ['0vh', '80vh'],
@@ -37,7 +37,7 @@ export const OurTeamData: OurTeam[] = [
     partName: 'iOS',
     description: `iOS 운영체제에서\n 작동하는 앱을 구현합니다.`,
     techStack: ['Xcode', 'Swift'],
-    icon: <Ios />,
+    icon: <Ios className="w-40 sm:w-200" />,
     motionProps: {
       x: ['0vw', '12vw'],
       y: ['0vh', '85vh'],
@@ -49,7 +49,7 @@ export const OurTeamData: OurTeam[] = [
     partName: '서버',
     description: `서버를 구현합니다.`,
     techStack: ['Java', 'Spring Boot'],
-    icon: <Server />,
+    icon: <Server className="w-40 sm:w-200" />,
     motionProps: {
       x: ['0vw', '12vw'],
       y: ['0vw', '90vh'],
@@ -61,7 +61,7 @@ export const OurTeamData: OurTeam[] = [
     partName: '웹',
     description: `웹환경에 맞춘 서비스를\n구현합니다.`,
     techStack: ['React', 'TypeScript'],
-    icon: <Web />,
+    icon: <Web className="w-40 sm:w-150" />,
     motionProps: {
       x: ['0vw', '4vw'],
       y: ['0vh', '84vh'],
@@ -74,7 +74,7 @@ export const OurTeamData: OurTeam[] = [
     partName: '베이직',
     description: `개발 기초에 대해\n학습합니다.`,
     techStack: ['React', 'TypeScript'],
-    icon: <Basic />,
+    icon: <Basic className="w-40 sm:w-250" />,
     motionProps: {
       x: ['0vw', '16vw'],
       y: ['0vh', '80vh'],
