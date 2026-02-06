@@ -45,7 +45,6 @@ export const PartDescriptionSection = ({
   return (
     <div ref={containerRef} className="relative w-full" id={title}>
       <section className="flex flex-col overflow-hidden">
-        {/* 상단 섹션 */}
         <div className="flex h-screen w-full flex-row items-center justify-between gap-20">
           <div className="flex flex-none flex-col gap-9">
             <motion.h2
@@ -108,7 +107,7 @@ export const PartDescriptionSection = ({
         </div>
       </section>
 
-      <div ref={bottomCardRef} className="relative -mt-[50vh] flex h-screen items-end gap-12 pb-24">
+      <div ref={bottomCardRef} className="relative flex h-[50vh] items-start gap-12 pt-12">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={isBottomVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}

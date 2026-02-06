@@ -2,6 +2,7 @@ import { projectApi } from 'entities/project';
 import { GridSection } from './GridSection';
 import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';
+import { OtherProjects } from './OtherProject';
 
 export async function ProjectDetailPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
@@ -12,6 +13,7 @@ export async function ProjectDetailPage({ params }: { params: Promise<{ id: numb
       <MainSection data={data} />
       <IntroduceSection data={data} />
       <GridSection data={data} />
+      <OtherProjects />
     </>
   );
 }
