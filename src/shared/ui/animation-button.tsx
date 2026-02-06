@@ -1,10 +1,14 @@
 'use client';
 import { motion } from 'motion/react';
 import Link from 'next/link';
+import { ComponentProps } from 'react';
 
-export const AnimationButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
+type AnimationButtonProps = ComponentProps<typeof Link> & {
+  children: React.ReactNode;
+};
+export const AnimationButton = ({ children, className, ...props }: AnimationButtonProps) => {
   return (
-    <Link href={href} className="group relative isolate inline-block w-fit overflow-hidden rounded-[60px] bg-white/10 p-[1.5px]">
+    <Link {...props} className={`group relative isolate inline-block w-fit overflow-hidden rounded-[60px] bg-white/10 p-[1.5px] ${className ?? ''}`}>
       <motion.div
         style={{
           willChange: 'transform'

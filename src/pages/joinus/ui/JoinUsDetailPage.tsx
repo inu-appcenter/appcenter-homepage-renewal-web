@@ -10,7 +10,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
 
   return (
     <>
-      <section className="flex min-h-screen flex-col justify-center">
+      <section className="flex flex-col justify-center pt-35">
         <div className="mb-12">
           {recruitmentData.isRecruiting ? (
             <span className="bg-brand-primary-cta text-background mb-4 inline-block rounded-full px-3 py-2 text-2xl font-semibold">모집중</span>
@@ -20,14 +20,16 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
           <h1 className="text-[40px] font-bold text-white">{recruitmentData.title}</h1>
         </div>
 
-        <div className="flex flex-col items-stretch gap-12 sm:flex-row sm:items-start sm:gap-40">
-          {recruitmentData.thumbnail ? (
-            <Image src={recruitmentData.thumbnail} alt="Recruitment Thumbnail" width={1920} height={1020} quality={100} className="w-full flex-1 rounded-2xl object-cover sm:aspect-auto sm:h-125" />
-          ) : (
-            <div className="bg-background flex w-full flex-1 items-center justify-center rounded-2xl p-4 sm:aspect-auto sm:h-125">
-              <Logo />
-            </div>
-          )}
+        <div className="flex flex-col gap-12 sm:flex-row sm:items-start sm:gap-40">
+          <div className="relative flex-1">
+            {recruitmentData.thumbnail ? (
+              <Image src={recruitmentData.thumbnail} alt="Recruitment Thumbnail" width={1920} height={1020} quality={100} className="h-auto w-full rounded-2xl object-contain" />
+            ) : (
+              <div className="bg-background flex aspect-video w-full items-center justify-center rounded-2xl p-4">
+                <Logo />
+              </div>
+            )}
+          </div>
 
           <div className="flex flex-1 flex-col gap-8">
             <div className="grid grid-cols-[120px_1fr] gap-x-6 gap-y-8 text-white">
@@ -56,13 +58,13 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-2xl font-semibold">모집 대상</div>
               <div className="text-2xl leading-relaxed font-medium">{recruitmentData.targetAudience}</div>
             </div>
-            <AnimationButton href="#">
+            <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
               <div className="text-2xl">지원하러 가기</div>
             </AnimationButton>
           </div>
         </div>
       </section>
-      <section className="bg-surface-elevated rounded-2xl px-20 py-15 text-xl whitespace-pre-line text-white">{recruitmentData.body}</section>
+      <section className="bg-surface-elevated mt-20 rounded-2xl px-20 py-15 text-xl whitespace-pre-line text-white">{recruitmentData.body}</section>
       <OtherRecruitments />
     </>
   );
