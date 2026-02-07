@@ -15,8 +15,7 @@ export function UserLayoutNoScrollAnimation({ children }: Readonly<{ children: R
 export function UserLayoutScrollAnimation({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <Header />
-      <FullPageScroll>
+      <FullPageScroll header={<Header />}>
         <main className="mx-auto w-full max-w-380 px-10 sm:max-w-400 sm:px-20">{children}</main>
         <Footer />
       </FullPageScroll>

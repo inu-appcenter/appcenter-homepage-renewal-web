@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
@@ -13,21 +13,6 @@ export function OtherProjects() {
   const sortedDataByDate = data ? [...data].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()) : [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [gap, setGap] = useState(32);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setGap(12);
-      } else {
-        setGap(32);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const maxIndex = Math.max(0, sortedDataByDate.length - VISIBLE_ITEMS);
 
@@ -40,10 +25,9 @@ export function OtherProjects() {
   };
 
   return (
-    <section className="group/section relative my-8 flex flex-col gap-3 sm:my-32 sm:gap-12">
+    <section className="group/section relative my-8 flex flex-col gap-3 [--gap:12px] sm:my-32 sm:gap-12 sm:[--gap:32px]">
       <div className="flex flex-row items-start justify-between gap-6">
         <h2 className="text-brand-primary-cta text-[16px] leading-none font-bold sm:text-[64px]">Other Projects</h2>
-
         <Link
           href="/joinus/#list"
           className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex items-center gap-2 rounded-full border px-2 py-1 text-[9px] font-medium shadow-[0px_0px_4px_0px_#57FF8566] transition-transform hover:scale-105 active:scale-95 sm:px-6 sm:py-3 sm:text-[16px] sm:shadow-[0px_0px_16px_0px_#57FF8566]"
@@ -72,10 +56,11 @@ export function OtherProjects() {
 
         <div className="-my-4 overflow-hidden px-1 py-4">
           <motion.div
-            className="flex gap-3 sm:gap-8"
+            className="flex"
+            style={{ gap: 'var(--gap)' }}
             initial={false}
             animate={{
-              x: `calc(-${currentIndex} * ((100% - ${(VISIBLE_ITEMS - 1) * gap}px) / ${VISIBLE_ITEMS} + ${gap}px))`
+              x: `calc(-1 * ${currentIndex} * ((100% + var(--gap)) / ${VISIBLE_ITEMS}))`
             }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
@@ -84,7 +69,7 @@ export function OtherProjects() {
                 key={item.id}
                 className="shrink-0"
                 style={{
-                  width: `calc((100% - ${(VISIBLE_ITEMS - 1) * gap}px) / ${VISIBLE_ITEMS})`
+                  width: `calc((100% - (${VISIBLE_ITEMS} - 1) * var(--gap)) / ${VISIBLE_ITEMS})`
                 }}
               >
                 <ProjectCard data={item} />

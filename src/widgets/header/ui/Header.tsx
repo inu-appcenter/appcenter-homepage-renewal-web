@@ -4,19 +4,43 @@ import Link from 'next/link';
 import { Logo } from 'shared/icon/Logo';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { useScroll } from 'entities/scroll';
 
 const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
-  { name: 'Activity', href: '/#activity' },
   { name: 'Project', href: '/#project' },
+  { name: 'Activity', href: '/#activity' },
   { name: 'FAQ', href: '/#faq' }
 ];
-
+// 헤더에서 이동 처리는 FullPageScroll의 scrollToId를 사용하여 처리합니다.
+// 단, 다른 페이지로 이동하는 경우에는 일반적인 링크 동작을 사용합니다.
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  let scrollToId: ((id: string) => void) | undefined;
+  try {
+    const scrollContext = useScroll();
+    scrollToId = scrollContext.scrollToId;
+  } catch {
+    scrollToId = undefined;
+  }
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (pathname === '/' && href.includes('#')) {
+      e.preventDefault();
+      const targetId = href.split('#')[1];
+
+      if (scrollToId) {
+        scrollToId(targetId);
+        closeMenu();
+      }
+    }
+  };
 
   return (
     <>
@@ -26,13 +50,13 @@ export const Header = () => {
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         className="fixed z-50 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30"
       >
-        <Link href="/" aria-label="홈으로 가기" onClick={closeMenu}>
+        <Link href="/#home" aria-label="홈으로 가기" onClick={(e) => handleScroll(e, '/#home')}>
           <Logo className="w-8 sm:w-16" />
         </Link>
 
         <div className="hidden flex-1 flex-row items-center justify-end gap-20 text-xl font-semibold text-white sm:flex">
           {NAV_ITEMS.map((item) => (
-            <Link key={item.name} href={item.href} className="hover:text-brand-primary-light transition-colors">
+            <Link key={item.name} scroll={false} href={item.href} onClick={(e) => handleScroll(e, item.href)} className="hover:text-brand-primary-light transition-colors">
               {item.name}
             </Link>
           ))}
@@ -51,7 +75,6 @@ export const Header = () => {
         </div>
       </motion.header>
 
-      {/* 모바일 메뉴 */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -86,7 +109,10 @@ export const Header = () => {
                 <motion.div key={item.name} variants={{ closed: { opacity: 0, y: -20 }, open: { opacity: 1, y: 0 } }}>
                   <Link
                     href={item.href}
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      closeMenu();
+                      handleScroll(e, item.href);
+                    }}
                     className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta block rounded-full border border-white/20 px-4 py-2 font-bold text-white transition-colors active:scale-95"
                   >
                     {item.name}

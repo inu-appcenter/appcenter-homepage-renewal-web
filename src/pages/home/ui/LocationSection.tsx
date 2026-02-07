@@ -14,7 +14,7 @@ export const LocationSection = () => {
 
       <SectionTitle title="Location" description="위치정보" />
       <div className="flex flex-1 flex-col gap-10 overflow-hidden sm:flex-row sm:gap-16">
-        <div className="relative h-50 w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:h-full sm:flex-1">
+        <div className="relative h-50 w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl sm:h-full sm:flex-1 sm:rounded-3xl">
           <Map center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
             <CustomOverlayMap position={POSITION}>
               <div className="relative flex flex-col items-center">

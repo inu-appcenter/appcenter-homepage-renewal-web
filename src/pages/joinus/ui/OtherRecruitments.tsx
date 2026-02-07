@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
@@ -11,21 +11,6 @@ const VISIBLE_ITEMS = 3;
 export function OtherRecruitments() {
   const { data } = useRecruitment();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [gap, setGap] = useState(32);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setGap(12);
-      } else {
-        setGap(32);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const maxIndex = Math.max(0, data.length - VISIBLE_ITEMS);
 
@@ -38,7 +23,7 @@ export function OtherRecruitments() {
   };
 
   return (
-    <section className="group/section relative mt-32 flex flex-col gap-3 sm:gap-12">
+    <section className="group/section relative mt-32 flex flex-col gap-3 [--gap:12px] sm:gap-12 sm:[--gap:32px]">
       <div className="flex flex-row items-start justify-between gap-6">
         <h2 className="text-brand-primary-cta text-[16px] leading-none font-bold sm:text-[64px]">Other Recruits</h2>
 
@@ -71,9 +56,10 @@ export function OtherRecruitments() {
         <div className="overflow-hidden py-4">
           <motion.div
             className="flex gap-8"
+            style={{ gap: 'var(--gap)' }}
             initial={false}
             animate={{
-              x: `calc(-${currentIndex} * ((100% - ${(VISIBLE_ITEMS - 1) * gap}px) / ${VISIBLE_ITEMS} + ${gap}px))`
+              x: `calc(-1 * ${currentIndex} * ((100% + var(--gap)) / ${VISIBLE_ITEMS}))`
             }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
@@ -82,7 +68,7 @@ export function OtherRecruitments() {
                 key={item.id}
                 className="shrink-0"
                 style={{
-                  width: `calc((100% - ${(VISIBLE_ITEMS - 1) * gap}px) / ${VISIBLE_ITEMS})`
+                  width: `calc((100% - (${VISIBLE_ITEMS} - 1) * var(--gap)) / ${VISIBLE_ITEMS})`
                 }}
               >
                 <RecruitmentCard data={item} />

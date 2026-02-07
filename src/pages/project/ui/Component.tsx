@@ -21,14 +21,16 @@ export function ProjectCard({ data }: { data: Project }) {
       <div className="text-brand-primary-cta mt-3 line-clamp-1 text-[12px] font-semibold sm:mt-8 sm:text-[28px]">{data.title}</div>
       <div className="flex gap-0.5 sm:gap-2">
         {data.androidStoreLink && <div className="text-[8px] font-semibold text-white sm:text-xl">Android</div>}
-        {data.websiteLink && <div className="text-[8px] font-semibold text-white sm:text-xl">Website</div>}
+        {data.websiteLink && <div className="text-[8px] font-semibold text-white sm:text-xl">Web</div>}
         {data.appleStoreLink && <div className="text-[8px] font-semibold text-white sm:text-xl">iOS</div>}
       </div>
       <div className="flex w-full justify-end">
         {data.isActive ? (
-          <div className="border-brand-primary-cta text-brand-primary-cta w-fit rounded-[28px] border-[1.8px] px-1 py-0.5 text-[8px] sm:px-4 sm:py-2 sm:text-[16px]">서비스 이용 가능</div>
+          <div className="border-brand-primary-cta text-brand-primary-cta w-fit rounded-[28px] border-[1.8px] px-1 py-0.5 text-[8px] whitespace-nowrap sm:px-4 sm:py-2 sm:text-[16px]">
+            서비스 이용 가능
+          </div>
         ) : (
-          <div className="border-custom-gray-500 text-custom-gray-500 w-fit rounded-[28px] border-[1.8px] px-1 py-0.5 text-[8px] sm:px-4 sm:py-2 sm:text-[16px]">서비스 종료</div>
+          <div className="border-custom-gray-500 text-custom-gray-500 w-fit rounded-[28px] border-[1.8px] px-1 py-0.5 text-[8px] whitespace-nowrap sm:px-4 sm:py-2 sm:text-[16px]">서비스 종료</div>
         )}
       </div>
     </Link>
