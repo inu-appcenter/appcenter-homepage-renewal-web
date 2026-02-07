@@ -7,7 +7,7 @@ export const IntroduceSection = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className="relative flex h-[50vh] w-full flex-col justify-between overflow-hidden sm:h-screen sm:px-10 sm:py-20"
+      className="relative flex h-[20vh] w-full flex-col justify-between overflow-hidden sm:h-screen sm:px-10 sm:py-20"
     >
       <motion.p
         variants={{

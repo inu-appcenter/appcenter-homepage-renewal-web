@@ -10,4 +10,12 @@ export interface OurTeam {
     scale?: number[];
     rotate?: number[];
   };
+  mobileMotionProps?: {
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+    scale?: number[];
+    rotate?: number[];
+  };
 }

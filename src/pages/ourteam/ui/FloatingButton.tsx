@@ -40,7 +40,12 @@ export const FloatingButton = () => {
   if (!mounted) return null;
 
   return createPortal(
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 2.4 }} className="text-custom-black fixed top-1/4 right-8 z-60 flex flex-col items-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 2.4 }}
+      className="text-custom-black fixed top-1/4 right-8 z-60 hidden flex-col items-center sm:flex"
+    >
       <button onClick={() => setIsOpen(!isOpen)} className="bg-brand-primary-cta z-20 rounded-full p-5 shadow-lg transition-transform active:scale-90">
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>

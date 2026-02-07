@@ -1,8 +1,9 @@
 import { MainSection } from './MainSection';
-import { PartDescriptionSection } from './Components';
+import { DesktopPartDescriptionSection, MobilePartDescriptionSection } from './Components';
 import { OurTeamData } from '../data/OurTeamData';
 import { FloatingButton } from './FloatingButton';
 import { IntroduceSection } from './IntroduceSection';
+import { OurTeamDataMobile } from '../data/OurTemaDataMobile';
 
 export const OurTeamPage = () => {
   return (
@@ -10,7 +11,10 @@ export const OurTeamPage = () => {
       <MainSection />
       <IntroduceSection />
       {OurTeamData.map((part) => (
-        <PartDescriptionSection key={part.title} {...part} />
+        <DesktopPartDescriptionSection key={part.title} {...part} />
+      ))}
+      {OurTeamDataMobile.map((part) => (
+        <MobilePartDescriptionSection key={part.title} {...part} />
       ))}
       <FloatingButton />
     </>
