@@ -50,23 +50,32 @@ export const Header = () => {
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         className="fixed z-50 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30"
       >
-        <Link href="/#home" aria-label="홈으로 가기" onClick={(e) => handleScroll(e, '/#home')}>
+        <a href="#main-content" className="bg-brand-primary-cta text-background fixed -top-2499.75 left-0 z-99999 w-40 px-6 py-4 text-center focus:top-0">
+          본문 바로가기
+        </a>
+        <Link href="/" aria-label="홈으로 가기" onClick={(e) => handleScroll(e, '/#home')}>
           <Logo className="w-8 sm:w-16" />
         </Link>
 
-        <div className="hidden flex-1 flex-row items-center justify-end gap-20 text-xl font-semibold text-white sm:flex">
-          {NAV_ITEMS.map((item) => (
-            <Link key={item.name} scroll={false} href={item.href} onClick={(e) => handleScroll(e, item.href)} className="hover:text-brand-primary-light transition-colors">
-              {item.name}
-            </Link>
-          ))}
-          <Link
-            href="/login"
-            className="text-custom-black ring-custom-gray-100 rounded-[60px] bg-white px-5 py-2.5 text-xl leading-none whitespace-nowrap shadow-[0_0_10px_0_#FFFAFA] ring-1 transition-all ring-inset hover:bg-gray-100 active:scale-95"
-          >
-            Sign in
-          </Link>
-        </div>
+        <nav className="hidden flex-1 justify-end text-xl font-semibold text-white sm:flex">
+          <ul className="flex items-center gap-20">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.name}>
+                <Link scroll={false} href={item.href} onClick={(e) => handleScroll(e, item.href)} className="hover:text-brand-primary-light transition-colors">
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/login"
+                className="text-custom-black ring-custom-gray-100 rounded-[60px] bg-white px-5 py-2.5 text-xl leading-none whitespace-nowrap shadow-[0_0_10px_0_#FFFAFA] ring-1 transition-all ring-inset hover:bg-gray-100 active:scale-95"
+              >
+                Sign in
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
         <div className="z-50 flex sm:hidden">
           <button onClick={toggleMenu} aria-label="메뉴 열기" className="text-white">
@@ -99,7 +108,7 @@ export const Header = () => {
                 <Link
                   href="/login"
                   onClick={closeMenu}
-                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-bold text-black shadow-[0_0_15px_rgba(255,255,255,0.3)] backdrop-blur-sm transition-transform active:scale-95"
+                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-bold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
                 >
                   Sign in
                 </Link>

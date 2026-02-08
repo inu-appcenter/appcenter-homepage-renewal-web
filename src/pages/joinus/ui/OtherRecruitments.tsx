@@ -29,6 +29,7 @@ export function OtherRecruitments() {
 
         <Link
           href="/joinus//#list"
+          aria-label="모집 공고 목록으로 이동"
           className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex items-center gap-2 rounded-full border px-2 py-1 text-[9px] font-medium shadow-[0px_0px_4px_0px_#57FF8566] transition-transform hover:scale-105 active:scale-95 sm:px-6 sm:py-3 sm:text-[16px] sm:shadow-[0px_0px_16px_0px_#57FF8566]"
         >
           <Menu strokeWidth={1.5} className="h-2 w-2 sm:h-5 sm:w-5" />

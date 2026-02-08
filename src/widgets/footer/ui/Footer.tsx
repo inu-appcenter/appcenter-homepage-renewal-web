@@ -33,17 +33,29 @@ export const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-custom-gray-500 transition-colors hover:text-yellow-300"
-              aria-label="KakaoTalk Channel"
+              aria-label="앱센터 카카오톡 채널 방문하기"
             >
               <KakaoIcon className="h-8 w-8 sm:h-10 sm:w-10" />
             </Link>
-            <Link href="https://instagram.com/inuappcenter" target="_blank" rel="noopener noreferrer" className="text-custom-gray-500 transition-colors hover:text-fuchsia-500" aria-label="Instagram">
+            <Link
+              href="https://instagram.com/inuappcenter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-custom-gray-500 transition-colors hover:text-fuchsia-500"
+              aria-label="앱센터 인스타그램 방문하기"
+            >
               <Instagram className="h-8 w-8 sm:h-10 sm:w-10" />
             </Link>
-            <Link href="https://github.com/inu-appcenter" target="_blank" rel="noopener noreferrer" className="text-custom-gray-500 transition-colors hover:text-white" aria-label="GitHub">
+            <Link
+              href="https://github.com/inu-appcenter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-custom-gray-500 transition-colors hover:text-white"
+              aria-label="앱센터 GitHub 방문하기"
+            >
               <Github className="h-8 w-8 sm:h-10 sm:w-10" />
             </Link>
-            <Link href="mailto:inuappcenter@gmail.com" className="text-custom-gray-500 hover:text-brand-primary transition-colors" aria-label="Email">
+            <Link href="mailto:inuappcenter@gmail.com" className="text-custom-gray-500 hover:text-brand-primary transition-colors" aria-label="앱센터 이메일 보내기">
               <Mail className="h-8 w-8 sm:h-10 sm:w-10" />
             </Link>
           </div>

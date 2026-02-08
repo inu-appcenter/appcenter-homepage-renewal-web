@@ -36,7 +36,7 @@ export function CarouselSection({ data }: { data: RecruitmentList[] }) {
 
       <div className="flex gap-6">
         {Array.from({ length: totalPages }).map((_, i) => (
-          <button key={i} onClick={() => setCurrentPage(i)} className="relative flex h-3 w-3 items-center justify-center">
+          <button aria-label={`리스트 ${i + 1}로 이동`} key={i} onClick={() => setCurrentPage(i)} className="relative flex h-3 w-3 items-center justify-center">
             <div
               className={`h-1.5 w-1.5 rounded-full transition-all duration-300 sm:h-2.5 sm:w-2.5 ${currentPage === i ? 'bg-brand-primary-cta scale-110' : 'bg-custom-gray-700 hover:bg-custom-gray-500'}`}
             />

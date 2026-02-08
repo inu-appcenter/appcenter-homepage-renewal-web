@@ -13,9 +13,13 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
       <section className="flex flex-col justify-center pt-35">
         <div className="mb-10 sm:mb-12">
           {recruitmentData.isRecruiting ? (
-            <span className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">모집중</span>
+            <span role="status" className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
+              모집중
+            </span>
           ) : (
-            <span className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">모집완료</span>
+            <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
+              모집완료
+            </span>
           )}
           <h1 className="text-xl/5 font-bold text-white sm:text-[40px]">{recruitmentData.title}</h1>
         </div>
@@ -23,7 +27,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
         <div className="flex flex-row gap-3 sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
-              <Image src={recruitmentData.thumbnail} alt="Recruitment Thumbnail" width={1920} height={1020} quality={100} className="h-auto w-full object-contain" />
+              <Image src={recruitmentData.thumbnail} alt={`${recruitmentData.title} 포스터 이미지`} width={1920} height={1020} quality={100} className="h-auto w-full object-contain" />
             ) : (
               <div className="bg-background flex aspect-video w-full items-center justify-center rounded-2xl p-4">
                 <Logo />
@@ -31,7 +35,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
             )}
           </div>
 
-          <div className="flex flex-1 flex-col gap-5 sm:gap-8">
+          <div className="flex flex-1 flex-col gap-5 sm:gap-8" tabIndex={0}>
             <div className="grid grid-cols-[40px_1fr] gap-x-2.5 gap-y-2 text-white sm:grid-cols-[120px_1fr] sm:gap-x-6 sm:gap-y-8">
               <div className="text-[10px] font-semibold sm:text-2xl">모집 분야</div>
               <div className="flex flex-wrap gap-1 sm:gap-2">
@@ -64,7 +68,12 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
           </div>
         </div>
       </section>
-      <section className="bg-surface-elevated mt-10 rounded-2xl px-4 py-8 text-[16px] wrap-break-word whitespace-pre-line text-white sm:mt-20 sm:px-20 sm:py-15 sm:text-xl">
+      <section
+        id="main-content"
+        tabIndex={0}
+        aria-label={recruitmentData.body}
+        className="bg-surface-elevated mt-10 rounded-2xl px-4 py-8 text-[16px] wrap-break-word whitespace-pre-line text-white sm:mt-20 sm:px-20 sm:py-15 sm:text-xl"
+      >
         {recruitmentData.body}
       </section>
       <OtherRecruitments />

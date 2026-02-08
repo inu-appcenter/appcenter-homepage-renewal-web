@@ -35,13 +35,13 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
     <button
       onClick={onClick}
       className={`group bg-surface-elevated relative flex cursor-pointer items-center gap-1 rounded-[40px] px-2 py-1 text-2xl transition-colors duration-300 sm:gap-2 sm:px-5 sm:py-2 ${
-        isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-100 border-custom-gray-100 border-[0.4px] sm:border'
+        isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-100 border-custom-gray-100 border'
       }`}
     >
       {isSelected && (
         <motion.div
           layoutId="active-pill"
-          className="border-brand-primary-cta absolute inset-0 rounded-[40px] border-[0.4px] shadow-[0px_0px_16px_0px_#57FF8566] sm:border"
+          className="border-brand-primary-cta absolute inset-0 rounded-[40px] border shadow-[0px_0px_16px_0px_#57FF8566]"
           transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
         />
       )}

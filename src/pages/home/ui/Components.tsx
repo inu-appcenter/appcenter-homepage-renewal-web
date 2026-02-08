@@ -180,7 +180,7 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
             key={index}
             onClick={() => handleDotClick(index)}
             className={`h-1 w-1 rounded-full transition-all duration-300 focus:outline-none sm:h-3 sm:w-3 ${activeIndex === index ? 'bg-brand-primary-cta scale-125' : 'bg-custom-gray-700'}`}
-            aria-label={`Go to slide ${index + 1}`}
+            aria-label={`캐로셀 항목 ${index + 1}로 이동`}
           />
         ))}
       </div>

@@ -12,9 +12,7 @@ export const MainSection = ({ data }: { data: Project }) => {
           <div>
             {data.isActive ? (
               <div className="mb-4 flex flex-row items-center gap-0.5 sm:gap-2">
-                <div className="bg-brand-secondary-light text-ba ckground rounded-lg px-0.5 py-0.5 text-[5px] whitespace-nowrap sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[16px]">
-                  서비스 이용 가능
-                </div>
+                <div className="bg-brand-secondary-light text-background rounded-lg px-0.5 py-0.5 text-[5px] whitespace-nowrap sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[16px]">서비스 이용 가능</div>
                 {data.websiteLink && (
                   <div className="text-brand-secondary-light border-brand-secondary-light/60 sm:border-brand-secondary-light rounded-lg border px-0.5 py-px text-[5px] sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[16px]">
                     Web
@@ -32,7 +30,7 @@ export const MainSection = ({ data }: { data: Project }) => {
                 )}
               </div>
             ) : (
-              <div className="bg-custom-gray-500 mb-4 w-fit rounded-4xl px-2.5 py-1.5">서비스 종료</div>
+              <div className="bg-custom-gray-500 mb-4 w-fit rounded-lg px-0.5 py-0.5 text-[5px] sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[16px]">서비스 종료</div>
             )}
             <h1 className="text-custom-gray-100 text-[16px] font-bold sm:mb-29 sm:text-[72px]">{data.title}</h1>
           </div>

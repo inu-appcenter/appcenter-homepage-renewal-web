@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { ChevronDown, CornerDownRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Faq } from 'entities/faq';
@@ -23,6 +23,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
       <div className="flex flex-row justify-between">
         {PART.map((category) => (
           <button
+            aria-label={`FAQ 카테고리 ${category} 선택`}
             key={category}
             className={`relative cursor-pointer rounded-2xl text-[10px] font-bold transition-all duration-300 sm:text-2xl ${
               selectedCategory === category ? 'text-brand-primary-cta' : 'text-custom-gray-200 hover:text-brand-primary-light'
@@ -74,8 +75,10 @@ interface FAQItemProps {
   isOpen: boolean;
   onToggle: () => void;
 }
-
 const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
+  const contentId = useId();
+  const headerId = useId();
+
   return (
     <motion.div
       variants={{
@@ -83,23 +86,39 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
         show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
       }}
       layout
-      className="group flex cursor-pointer flex-col text-white"
-      onClick={onToggle}
+      className="group flex flex-col text-white"
     >
-      <div className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-lg px-3 py-2 sm:rounded-2xl sm:px-5 sm:py-4">
-        <h3 className="text-[10px] transition-colors sm:text-xl/7">
+      <button
+        type="button"
+        id={headerId}
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex w-full cursor-pointer flex-row items-center justify-between gap-2 rounded-lg px-3 py-2 text-left sm:rounded-2xl sm:px-5 sm:py-4"
+      >
+        <span className="text-[10px] transition-colors sm:text-xl/7">
           <span className="text-[12px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
-        </h3>
+        </span>
         <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
           <ChevronDown className="h-6 w-6" aria-hidden="true" />
         </motion.div>
-      </div>
+      </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+          <motion.div
+            id={contentId}
+            aria-labelledby={headerId}
+            role="region"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
             <p className="flex flex-row items-center gap-3 px-4 py-2 text-[10px] sm:px-14 sm:py-5 sm:text-xl/7">
-              <CornerDownRight className="w-6 sm:w-10" /> {data.answer}
+              <CornerDownRight className="w-6 shrink-0 sm:w-10" aria-hidden="true" />
+              {data.answer}
             </p>
           </motion.div>
         )}

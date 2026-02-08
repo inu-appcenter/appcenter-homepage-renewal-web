@@ -77,6 +77,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <div className="flex gap-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
           <button
+            aria-label={`리스트 ${number}로 이동`}
             key={number}
             onClick={() => onPageChange(number)}
             className={`group relative flex h-8 w-8 items-center justify-center text-[16px] font-semibold transition-colors sm:text-lg ${currentPage === number ? 'text-brand-primary-cta' : 'hover:text-brand-primary-cta/80 text-white'} `}
@@ -113,9 +114,9 @@ const Item = ({ data }: { data: RecruitmentList }) => {
       )}
       <div className="flex min-w-0 flex-1 flex-col items-start gap-2 sm:flex-row sm:gap-8">
         {data.isRecruiting ? (
-          <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[12px] sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>
+          <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[12px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>
         ) : (
-          <div className="bg-custom-gray-500 text-background rounded-[28px] px-1.5 py-1 text-[12px] sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
+          <div className="bg-custom-gray-500 text-background rounded-[28px] px-1.5 py-1 text-[12px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
         )}
         <div className="flex w-full flex-col items-start gap-1 sm:gap-2">
           <span className="text-brand-primary-cta line-clamp-1 text-[16px] font-semibold sm:text-[28px]/7">{data.title}</span>

@@ -26,7 +26,7 @@ export function ProjectCard({ data }: { data: Project }) {
       </div>
       <div className="flex w-full justify-end">
         {data.isActive ? (
-          <div className="border-brand-primary-cta text-brand-primary-cta w-fit rounded-[28px] border-[1.8px] px-1 py-0.5 text-[8px] whitespace-nowrap sm:px-4 sm:py-2 sm:text-[16px]">
+          <div className="border-brand-primary-cta text-brand-primary-cta w-fit rounded-[28px] border px-1 py-0.5 text-[8px] whitespace-nowrap sm:border-[1.8px] sm:px-4 sm:py-2 sm:text-[16px]">
             서비스 이용 가능
           </div>
         ) : (
