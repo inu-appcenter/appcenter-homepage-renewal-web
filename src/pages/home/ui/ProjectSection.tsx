@@ -49,7 +49,7 @@ const ProjectCarousel = () => {
             <Image draggable={false} loading="lazy" src={imageUrls[0]} alt={item.title} fill className="object-cover" quality={100} />
             <Link aria-label={`${item.title} 프로젝트 바로가기`} draggable={false} href={`/project/${item.id}`} className="absolute inset-0 z-10">
               <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-1 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-4 sm:p-10">
-                <h1 className="text-brand-primary-cta line-clamp-2 text-[16px] font-extrabold break-keep whitespace-normal sm:text-[43px]">{item.title}</h1>
+                <h3 className="text-brand-primary-cta line-clamp-2 text-[16px] font-extrabold break-keep whitespace-normal sm:text-[43px]">{item.title}</h3>
                 <div className="flex gap-1 sm:gap-4">
                   {item.androidStoreLink && <span className="text-[9px] font-medium sm:text-[25px]">Android</span>}
                   {item.appleStoreLink && <span className="text-[9px] font-medium sm:text-[25px]">iOS</span>}
