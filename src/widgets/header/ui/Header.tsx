@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { name: 'Activity', href: '/#activity' },
   { name: 'FAQ', href: '/#faq' }
 ];
+
 // 헤더에서 이동 처리는 FullPageScroll의 scrollToId를 사용하여 처리합니다.
 // 단, 다른 페이지로 이동하는 경우에는 일반적인 링크 동작을 사용합니다.
 export const Header = () => {

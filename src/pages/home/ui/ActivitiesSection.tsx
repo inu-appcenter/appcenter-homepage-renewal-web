@@ -9,7 +9,7 @@ import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 export const ActivitiesSection = () => {
   return (
-    <section className="flex flex-col justify-center sm:h-screen sm:gap-16">
+    <section className="flex flex-col justify-center sm:h-screen sm:gap-8">
       <div className="relative flex h-96 flex-col justify-center gap-17 sm:hidden">
         <SectionTitle title="activity" description="다양한 시각이 모여 하나의 목표를 향합니다" />
       </div>

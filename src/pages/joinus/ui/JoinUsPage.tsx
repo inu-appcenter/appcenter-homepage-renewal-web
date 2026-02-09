@@ -6,18 +6,17 @@ import { MainSection } from './MainSection';
 
 export async function JoinUsPage() {
   const data = await recruitmentApi.getAll();
-
+  const isRecruiting = data?.filter((recruit) => recruit.isRecruiting);
   return (
     <>
       <MainSection />
-      {data && data.length > 0 ? (
+      {data && data.length > 0 && (
         <>
           <CarouselSection data={data} />
           <ListSection data={data} />
         </>
-      ) : (
-        <EmptyRecruit />
       )}
+      <>{isRecruiting.length === 0 && <EmptyRecruit />}</>
     </>
   );
 }

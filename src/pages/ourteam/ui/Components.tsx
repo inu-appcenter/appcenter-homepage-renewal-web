@@ -75,7 +75,7 @@ export const DesktopPartDescriptionSection = ({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-surface-elevated flex w-full rounded-2xl px-12 py-10"
           >
-            <div className="z-10 space-y-20 pt-10">
+            <div className="z-10 space-y-5 pt-10">
               <motion.div
                 style={{
                   display: 'inline-block',

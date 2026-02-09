@@ -21,7 +21,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               모집완료
             </span>
           )}
-          <h1 className="text-xl/5 font-bold text-white sm:text-[40px]">{recruitmentData.title}</h1>
+          <h1 className="mt-0.5 text-xl/5 font-bold text-white sm:mt-2 sm:text-[40px]">{recruitmentData.title}</h1>
         </div>
 
         <div className="flex flex-row gap-3 sm:items-start sm:gap-40">
@@ -62,9 +62,13 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-[10px] font-semibold sm:text-2xl">모집 대상</div>
               <div className="text-[10px] leading-relaxed font-medium sm:text-2xl">{recruitmentData.targetAudience}</div>
             </div>
-            <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
-              <div className="text-[10px] text-white sm:text-2xl">지원하러 가기</div>
-            </AnimationButton>
+            {recruitmentData.isRecruiting ? (
+              <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
+                <div className="text-[10px] text-white sm:text-2xl">지원하러 가기</div>
+              </AnimationButton>
+            ) : (
+              <div className="w-fit rounded-[60px] border border-white/40 px-3.5 py-2 text-[10px] text-white/40 sm:text-2xl">모집이 종료되었습니다</div>
+            )}
           </div>
         </div>
       </section>

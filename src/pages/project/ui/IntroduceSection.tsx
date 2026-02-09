@@ -22,7 +22,7 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="h-full w-full">
             {selected === 0 && <Stacks data={data} />}
             {selected === 1 && <Groups data={data.groups} />}
-            {selected === 2 && <div className="text-custom-gray-100 flex h-full items-center justify-center text-sm sm:text-3xl">아직 이용현황이 없습니다</div>}
+            {selected === 2 && <EmptyState title="아직 데이터가 충분하지 않아요" description="서비스 이용자가 늘어나면 이곳에서 멋진 통계를 보여드릴게요." />}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -40,6 +40,7 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
     >
       {isSelected && (
         <motion.div
+          initial={false}
           layoutId="active-pill"
           className="border-brand-primary-cta absolute inset-0 rounded-[40px] border shadow-[0px_0px_16px_0px_#57FF8566]"
           transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
@@ -58,7 +59,7 @@ const Stacks = ({ data }: { data: Project }) => {
   const hasNoContent = (!data.stacks || data.stacks.length === 0) && !data.githubLink;
 
   if (hasNoContent) {
-    return <div className="text-custom-gray-100 flex h-full items-center justify-center text-sm sm:text-3xl">사용 스택 정보가 없습니다</div>;
+    return <EmptyState title="기술 스택 정보가 비어있어요" description="어떤 기술로 만들어졌는지 곧 알려드릴게요" />;
   }
 
   return (
@@ -104,7 +105,7 @@ const Groups = ({ data }: { data: Groups[] }) => {
     return groups;
   }, [data]);
 
-  if (!data) return <div className="text-custom-gray-100 flex h-full items-center justify-center text-sm sm:text-3xl">팀원 정보가 없습니다</div>;
+  if (!data) return <EmptyState title="팀원 소개가 아직 없어요" description="누가 이 프로젝트를 만들었는지 곧 알려드릴게요." />;
 
   return (
     <div className="flex h-full w-full flex-wrap justify-between px-4 sm:px-8 xl:px-24">
@@ -126,6 +127,17 @@ const Groups = ({ data }: { data: Groups[] }) => {
             </div>
           </div>
         ))}
+    </div>
+  );
+};
+
+const EmptyState = ({ title, description }: { title: string; description?: string }) => {
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center text-center">
+      <div className="z-10 flex flex-col gap-2 sm:gap-3">
+        <h3 className="text-xl font-bold tracking-tight break-keep text-white sm:text-4xl">{title}</h3>
+        {description && <p className="text-custom-gray-400 text-sm leading-relaxed font-medium break-keep sm:text-xl">{description}</p>}
+      </div>
     </div>
   );
 };

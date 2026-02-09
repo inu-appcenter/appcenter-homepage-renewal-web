@@ -10,7 +10,7 @@ export const FAQSection = async () => {
   }
 
   return (
-    <section id="faq" className="flex h-screen flex-col gap-8 py-20">
+    <section id="faq" className="flex flex-col gap-8 py-30 sm:h-screen">
       <SectionTitle title="faq" description="자주 묻는 질문" />
       <FAQList data={faqData} />
     </section>

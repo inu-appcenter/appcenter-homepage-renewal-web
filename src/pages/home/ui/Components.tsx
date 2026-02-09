@@ -67,8 +67,9 @@ interface CarouselProps<T> {
   data: T[];
   renderItem: (item: T, index: number) => React.ReactNode;
   className?: string;
+  overflowHidden?: boolean;
 }
-export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps<T>) => {
+export const Carousel = <T,>({ data, renderItem, className = '', overflowHidden = true }: CarouselProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLUListElement>(null);
   const xTranslation = useMotionValue(0);
@@ -132,7 +133,7 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
   };
 
   return (
-    <div className={cn`${className} flex flex-col gap-7 overflow-hidden pt-12 pb-4`}>
+    <div className={cn`${className} flex flex-col gap-7 ${overflowHidden ? 'overflow-hidden' : ''} pt-12 pb-4`}>
       <motion.ul
         ref={containerRef}
         style={{ x: xTranslation }}
@@ -174,7 +175,7 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
         ))}
       </motion.ul>
 
-      <div className="flex justify-center gap-2 sm:gap-5">
+      <div className={`flex justify-center gap-2 sm:gap-5`}>
         {data.map((_, index) => (
           <button
             key={index}

@@ -35,7 +35,7 @@ export function ListSection({ data }: { data: RecruitmentList[] }) {
   };
 
   return (
-    <section className="flex h-screen flex-col items-center justify-start overflow-hidden py-20">
+    <section className="flex flex-col items-center justify-start overflow-hidden py-20">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentPage}
@@ -119,8 +119,8 @@ const Item = ({ data }: { data: RecruitmentList }) => {
           <div className="bg-custom-gray-500 text-background rounded-[28px] px-1.5 py-1 text-[12px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
         )}
         <div className="flex w-full flex-col items-start gap-1 sm:gap-2">
-          <span className="text-brand-primary-cta line-clamp-1 text-[16px] font-semibold sm:text-[28px]/7">{data.title}</span>
-          <div className="line-clamp-1 gap-2 text-[10px] font-semibold text-white sm:text-[20px]">{data.fieldNames.join(', ')}</div>
+          <span className="text-brand-primary-cta line-clamp-1 text-[14px] font-semibold sm:text-[28px]/7">{data.title}</span>
+          <div className="line-clamp-1 gap-2 text-[8px] font-semibold text-white sm:text-[20px]">{data.fieldNames.join(', ')}</div>
         </div>
       </div>
       {data.isRecruiting && (

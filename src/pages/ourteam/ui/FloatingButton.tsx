@@ -5,11 +5,13 @@ import { Menu, X } from 'lucide-react';
 import { OurTeamData } from '../data/OurTeamData';
 import Link from 'next/link';
 import { motion } from 'motion/react';
+import { useScroll } from 'entities/scroll';
 
 export const FloatingButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mounted, setMounted] = useState(false);
+  const { scrollToId } = useScroll();
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -37,6 +39,10 @@ export const FloatingButton = () => {
     return () => observer.disconnect();
   }, []);
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    scrollToId(id);
+  };
   if (!mounted) return null;
 
   return createPortal(
@@ -44,7 +50,7 @@ export const FloatingButton = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 2.4 }}
-      className="text-custom-black fixed top-1/4 right-8 z-60 hidden flex-col items-center sm:flex"
+      className="text-custom-black fixed top-1/4 z-60 hidden flex-col items-center sm:flex md:right-8 lg:right-16"
     >
       <button onClick={() => setIsOpen(!isOpen)} className="bg-brand-primary-cta z-20 rounded-full p-5 shadow-lg transition-transform active:scale-90">
         {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -58,7 +64,9 @@ export const FloatingButton = () => {
           return (
             <Link
               key={part.title}
-              href={`#${part.title}`}
+              href={`/ourteam/#${part.title}`}
+              scroll={false}
+              onClick={(e) => handleClick(e, part.title)}
               className={`w-full cursor-pointer px-2 py-3 text-center font-semibold transition-all duration-300 hover:scale-110 ${isActive ? 'text-brand-primary-cta bg-custom-gray-900 opacity-100' : 'text-custom-black'} `}
             >
               {part.title}
