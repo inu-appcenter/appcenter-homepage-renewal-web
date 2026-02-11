@@ -3,8 +3,15 @@ import { productDesignFont, pretendardFont } from '../style/fonts';
 import '../style/globals.css';
 import { Analytics } from '@vercel/analytics/next';
 
-export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '인천대학교 앱센터',
+    alternateName: ['INU App Center', '앱센터'],
+    url: 'https://appcenter.inu.ac.kr'
+  },
+  {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
@@ -15,7 +22,10 @@ export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>
         item: 'https://appcenter.inu.ac.kr'
       }
     ]
-  };
+  }
+];
+
+export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable} no-scrollbar`}>
       <body className="antialiased">

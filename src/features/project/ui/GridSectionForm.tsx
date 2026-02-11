@@ -67,24 +67,22 @@ export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormPro
               진행 방법
             </h3>
             <ul className="space-y-2 text-gray-300">
-              <li className="flex gap-2">
-                <span className="text-emerald-500">•</span>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 원하는 형태의 <strong>블록 유형</strong>을 선택하세요.
               </li>
-              <li className="flex gap-2">
-                <span className="text-emerald-500">•</span>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 입력창에 <strong>내용 또는 이미지</strong>를 삽입하세요.
               </li>
-              <li className="flex gap-2">
-                <span className="text-emerald-500">•</span>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 <strong>블록 추가 버튼</strong>을 눌러 레이아웃에 배치하세요.
               </li>
-              <li className="flex gap-2">
-                <span className="text-emerald-500">•</span>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 마우스로 위치와 크기를 <strong>자유롭게 설정</strong>하세요.
               </li>
-              <li className="flex gap-2">
-                <span className="text-emerald-500">•</span>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
+                크기는 요소의 <strong>우측 하단 모서리</strong>를 드래그하여 조절하세요.
+              </li>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 섹션을 늘리고 싶다면 아래<strong>새로운 레이아웃 섹션 추가</strong>버튼을 활용 하세요.
               </li>
             </ul>
@@ -101,6 +99,9 @@ export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormPro
               </li>
               <li className="flex gap-2 border-l-2 border-red-400/30 pl-3">
                 글자 블록에 <strong>스크롤바</strong>가 생길 경우, 실제 화면에서 내용이 잘릴 수 있으니 높이를 충분히 조절해 주세요.
+              </li>
+              <li className="flex gap-2 border-l-2 border-red-400/30 pl-3">
+                글자 블록에서 드래그로 글자선택이 안됩니다. <strong>키보드 shift 키를 활용</strong>하여 선택해주세요.
               </li>
             </ul>
           </div>

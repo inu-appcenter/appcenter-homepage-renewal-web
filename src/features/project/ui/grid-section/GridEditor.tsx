@@ -67,7 +67,6 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
 
   const addItem = async () => {
     if (inputType === 'text') {
-      if (!inputValue.trim()) return alert('내용을 입력해주세요.');
       const nextId = items.length > 0 ? Math.max(...items.map((item) => parseInt(item.i))) + 1 : 1;
       const newItem: GridItem = {
         i: String(nextId),
@@ -194,15 +193,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
                   className="w-full cursor-pointer text-xs text-gray-400 file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-gray-800 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white hover:file:bg-gray-700"
                 />
               ) : (
-                <input
-                  type="text"
-                  key="text-input"
-                  value={inputValue ?? ''}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="내용을 입력하세요..."
-                  className="w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-600"
-                  onKeyDown={(e) => e.key === 'Enter' && addItem()}
-                />
+                <div className="w-full bg-transparent text-sm text-gray-400"> 블록추가 후 아래 에디터에서 입력하세요...</div>
               )}
             </div>
           </div>
@@ -246,7 +237,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
           >
             {items.map((item) => (
               <div key={item.i} className="group hover:border-brand-primary/30 relative rounded-2xl border border-white/5 bg-[#1e1e22] shadow-lg transition-all">
-                <div className="drag-handle absolute inset-0 z-0 cursor-move" />
+                <div className="drag-handle absolute top-0 left-0 h-6 w-full cursor-move rounded-t-2xl bg-transparent" />
 
                 <div className="absolute top-2 right-2 z-30 opacity-0 transition-opacity group-hover:opacity-100">
                   <button
@@ -265,14 +256,21 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
                     {item.type === 'image' ? (
                       <img src={item.content} alt="" className="h-full w-full rounded-xl object-cover select-none" />
                     ) : (
-                      <div className="custom-scrollbar h-full w-full overflow-y-auto p-4">
-                        <p className="text-md whitespace-pre-wrap text-gray-300">{item.content}</p>
-                      </div>
+                      <textarea
+                        value={item.content}
+                        placeholder="내용을 입력하세요..."
+                        onChange={(e) => {
+                          const updated = items.map((it) => (it.i === item.i ? { ...it, content: e.target.value } : it));
+                          setItems(updated);
+                          onUpdate(updated);
+                        }}
+                        className="custom-scrollbar text-md h-full w-full resize-none bg-transparent p-4 whitespace-pre-wrap text-gray-300 outline-none"
+                      />
                     )}
                   </div>
                 </div>
-                <div className="absolute right-1 bottom-1 z-20 text-gray-600 opacity-30">
-                  <ArrowDownRight size={14} />
+                <div className="absolute right-1 bottom-1 z-20 text-gray-400 opacity-60">
+                  <ArrowDownRight size={24} />
                 </div>
               </div>
             ))}

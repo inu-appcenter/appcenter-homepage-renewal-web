@@ -130,7 +130,12 @@ export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: R
                   <Link
                     href="/admin/skill"
                     target="_blank"
-                    onClick={() => confirm('새 탭에 기술 아이콘 관리 페이지로 이동합니다. ')}
+                    onClick={(e) => {
+                      const ok = confirm('새 탭에 기술 아이콘 관리 페이지로 이동합니다.');
+                      if (!ok) {
+                        e.preventDefault();
+                      }
+                    }}
                     className="flex items-center gap-2 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
                   >
                     <Settings size={16} />
