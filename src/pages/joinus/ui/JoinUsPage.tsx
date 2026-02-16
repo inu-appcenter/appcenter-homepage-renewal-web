@@ -6,7 +6,7 @@ import { MainSection } from './MainSection';
 
 export async function JoinUsPage() {
   const data = await recruitmentApi.getAll();
-  const isRecruiting = data?.filter((recruit) => recruit.isRecruiting);
+  const isRecruiting = data?.filter((recruit) => recruit.status === 'RECRUITING') || [];
   return (
     <>
       <MainSection />

@@ -23,6 +23,11 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
   return handleProxy(req, path);
 }
 
+export async function PUT(req: NextRequest, { params }: RouteParams) {
+  const { path } = await params;
+  return handleProxy(req, path);
+}
+
 async function handleProxy(req: NextRequest, pathSegments: string[]) {
   const path = pathSegments?.join('/') || '';
   const searchParams = req.nextUrl.search;

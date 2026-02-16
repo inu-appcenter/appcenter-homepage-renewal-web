@@ -8,19 +8,35 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
   const { id } = await params;
   const recruitmentData = await recruitmentApi.getById(id);
 
+  const statusBadge = (status: string) => {
+    switch (status) {
+      case 'RECRUITING':
+        return (
+          <span role="status" className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
+            모집중
+          </span>
+        );
+      case 'CLOSED':
+        return (
+          <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
+            모집완료
+          </span>
+        );
+      case 'WAITING':
+        return (
+          <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
+            모집 대기중
+          </span>
+        );
+      default:
+        return null;
+    }
+  };
   return (
     <>
       <section className="flex flex-col justify-center pt-35">
         <div className="mb-10 sm:mb-12">
-          {recruitmentData.isRecruiting ? (
-            <span role="status" className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
-              모집중
-            </span>
-          ) : (
-            <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
-              모집완료
-            </span>
-          )}
+          {statusBadge(recruitmentData.status)}
           <h1 className="mt-0.5 text-xl/5 font-bold text-white sm:mt-2 sm:text-[40px]">{recruitmentData.title}</h1>
         </div>
 
@@ -62,12 +78,14 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-[10px] font-semibold sm:text-2xl">모집 대상</div>
               <div className="text-[10px] leading-relaxed font-medium sm:text-2xl">{recruitmentData.targetAudience}</div>
             </div>
-            {recruitmentData.isRecruiting ? (
+            {recruitmentData.status === 'RECRUITING' ? (
               <AnimationButton href={recruitmentData.applyLink} target="_blank" rel="noopener noreferrer">
                 <div className="text-[10px] text-white sm:text-2xl">지원하러 가기</div>
               </AnimationButton>
             ) : (
-              <div className="w-fit rounded-[60px] border border-white/40 px-3.5 py-2 text-[10px] text-white/40 sm:text-2xl">모집이 종료되었습니다</div>
+              <div className="w-fit rounded-[60px] border border-white/40 px-3.5 py-2 text-[10px] text-white/40 sm:text-2xl">
+                {recruitmentData.status === 'CLOSED' ? '모집이 종료되었습니다' : '모집 대기중입니다'}
+              </div>
             )}
           </div>
         </div>

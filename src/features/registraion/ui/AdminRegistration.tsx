@@ -18,6 +18,7 @@ export const AdminRegistration = () => {
   return (
     <div className="flex w-full items-center justify-center p-4">
       <div className="flex w-full max-w-3xl flex-col gap-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        {/* 헤더 영역 */}
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-1">
             <h2 className="text-xl font-bold text-slate-800">회원가입 인증 코드</h2>
@@ -30,6 +31,23 @@ export const AdminRegistration = () => {
         </div>
 
         <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between px-1">
+            {data.lastModifiedDate && (
+              <span className="text-xs text-slate-400">
+                최근 수정일:{' '}
+                <span className="font-medium text-slate-500">
+                  {new Date(data.lastModifiedDate).toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </span>
+              </span>
+            )}
+          </div>
+
           <div className="flex flex-col items-start justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:p-5">
             <button
               type="button"
@@ -41,6 +59,7 @@ export const AdminRegistration = () => {
             >
               {isVisible ? data.code : '••••••••'}
             </button>
+
             <div className="flex w-full items-center gap-2 sm:w-auto">
               <button
                 onClick={() => setIsVisible(!isVisible)}

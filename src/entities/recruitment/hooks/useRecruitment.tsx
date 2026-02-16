@@ -48,19 +48,20 @@ export const useRecruitmentActions = () => {
     onSuccess: invalidateRecruitments
   });
 
-  const toggleMutation = useMutation({
-    mutationFn: recruitmentApi.toggleActive,
+  const changeActiveMutation = useMutation({
+    mutationFn: recruitmentApi.changeActive,
     onSuccess: invalidateRecruitments
   });
 
   const invalidateEmail = () => {
     return queryClient.invalidateQueries({ queryKey: recruitmentKeys.email() });
   };
+
   // 이메일 관련 API
   const postEmailMutation = useMutation({
     mutationFn: recruitmentApi.postEmail,
     onSuccess: invalidateEmail
   });
 
-  return { addMutation, editThumbnailMutation, editMetadataMutation, deleteMutation, toggleMutation, postEmailMutation };
+  return { addMutation, editThumbnailMutation, editMetadataMutation, deleteMutation, changeActiveMutation, postEmailMutation };
 };

@@ -16,18 +16,28 @@ export function RecruitmentCard({ data }: { data: RecruitmentList }) {
           <Logo />
         </div>
       )}
-      {data.isRecruiting ? (
+      {
         <div className="flex items-center gap-4">
-          <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[8px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>
-          <span className="text-[8px] font-semibold text-white sm:text-[18px]">D-{data.dday}</span>
+          <StatusBadge status={data.status} />
         </div>
-      ) : (
-        <div className="bg-custom-gray-500 w-fit rounded-[28px] px-1.5 py-1 text-[8px] text-black sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
-      )}
+      }
       <div className="text-brand-primary-cta line-clamp-2 text-[12px] font-semibold sm:text-[28px]">{data.title}</div>
       <hr className="border-white" />
       <div className="line-clamp-2 text-[8px] font-semibold text-white sm:mb-10 sm:text-xl">{data.fieldNames.join(', ')}</div>
-      {!data.isRecruiting && <div className="absolute inset-0 z-20 bg-black/30" />}
+      {data.status !== 'RECRUITING' && <div className="absolute inset-0 z-20 bg-black/30" />}
     </Link>
   );
+}
+
+export function StatusBadge({ status }: { status: RecruitmentList['status'] }) {
+  switch (status) {
+    case 'RECRUITING':
+      return <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[8px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>;
+    case 'CLOSED':
+      return <div className="bg-custom-gray-500 w-fit rounded-[28px] px-1.5 py-1 text-[8px] whitespace-nowrap text-black sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>;
+    case 'WAITING':
+      return <div className="bg-custom-gray-500 w-fit rounded-[28px] px-1.5 py-1 text-[8px] whitespace-nowrap text-black sm:px-3 sm:py-2 sm:text-[16px]">모집 대기중</div>;
+    default:
+      return null;
+  }
 }

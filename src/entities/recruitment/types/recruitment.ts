@@ -1,3 +1,5 @@
+export const RECRUITMENT_STATUS = ['AUTO', 'WAITING', 'RECRUITING', 'CLOSED'] as const;
+
 export type Recruitment = {
   readonly id: number;
   readonly createdDate: string;
@@ -10,7 +12,7 @@ export type Recruitment = {
   targetAudience: string;
   applyLink: string;
   thumbnail: string;
-  isRecruiting: boolean;
+  status: (typeof RECRUITMENT_STATUS)[number];
   forceClosed: boolean;
   dday: number;
   fields: Array<{
@@ -19,7 +21,7 @@ export type Recruitment = {
   }>;
 };
 
-export type RecruitmentList = Pick<Recruitment, 'id' | 'title' | 'thumbnail' | 'isRecruiting' | 'dday'> & { fieldNames: string[] };
+export type RecruitmentList = Pick<Recruitment, 'id' | 'title' | 'thumbnail' | 'status' | 'dday'> & { fieldNames: string[] };
 
 export type RecruitmentMetaData = Pick<Recruitment, 'title' | 'body' | 'startDate' | 'endDate' | 'capacity' | 'targetAudience' | 'applyLink'> & {
   fieldIds: number[];

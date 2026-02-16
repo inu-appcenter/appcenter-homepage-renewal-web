@@ -24,9 +24,9 @@ export const recruitmentApi = {
     return http.patch<Recruitment>(`/recruitment/meta?recruitment_id=${id}`, metaData);
   },
 
-  // 모집을 강제로 마감시킵니다. 이미 마감 된 모집글이라면 다시 활성화시킵니다.
-  toggleActive: (id: number) => {
-    return http.patch<Recruitment>(`/recruitment/${id}/toggle-close`, {});
+  // 모집 상태를 변경합니다 status는 'AUTO', 'WAITING', 'RECRUITING', 'CLOSED' 중 하나
+  changeActive: ({ id, status }: { id: number; status: string }) => {
+    return http.patch<Recruitment>(`/recruitment/${id}/status?status=${status}`, {});
   },
 
   delete: (id: number) => {

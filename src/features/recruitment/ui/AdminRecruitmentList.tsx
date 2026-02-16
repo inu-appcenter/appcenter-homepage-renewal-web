@@ -1,10 +1,11 @@
 'use client';
 import { ImageIcon } from 'lucide-react';
-import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, ToggleRecruitmmentButton } from './RecruitmentListButton';
+import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, RecruitmentStatusGrid } from './RecruitmentListButton';
 import { useRecruitment } from 'entities/recruitment';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import Link from 'next/link';
+import { STATUS_CONFIG } from '../config/statusConfig';
 
 export const AdminRecruitmentList = () => {
   const { data } = useRecruitment();
@@ -19,9 +20,9 @@ export const AdminRecruitmentList = () => {
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
           <TableHeaderCell className="w-48">제목</TableHeaderCell>
           <TableHeaderCell className="w-32">썸네일</TableHeaderCell>
-          <TableHeaderCell className="w-40">모집여부</TableHeaderCell>
+          <TableHeaderCell className="w-40">모집상태</TableHeaderCell>
           <TableHeaderCell>모집분야</TableHeaderCell>
-          <TableHeaderCell className="w-32">마감 관리</TableHeaderCell>
+          <TableHeaderCell className="w-60">모집 상태 관리</TableHeaderCell>
           <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>
         <TableBody>
@@ -60,14 +61,17 @@ const Item = ({ data }: { data: ReturnType<typeof useRecruitment>['data'][number
       </td>
 
       <td className="px-6 py-5">
-        <div className="flex flex-col gap-1.5">
-          {data.isRecruiting ? (
-            <div className="flex flex-col items-start gap-2">
-              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-600">모집 중</span>
-              <span className="text-xs font-medium text-slate-500">D-{data.dday === 0 ? 'Day' : data.dday}</span>
-            </div>
-          ) : (
-            <span className="w-fit rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-400">모집 마감</span>
+        <div className="flex items-center gap-2.5">
+          {STATUS_CONFIG.filter((config) => config.value === data.status).map(({ value, label, activeColor }) => (
+            <span key={value} className={`text-sm font-bold ${activeColor}`}>
+              {label}
+            </span>
+          ))}
+
+          {(data.status === 'WAITING' || data.status === 'RECRUITING') && data.dday !== undefined && (
+            <span className="inline-flex items-center justify-center rounded-md bg-slate-100 px-2 py-0.5 text-xs font-semibold tracking-wide text-slate-500">
+              {data.dday === 0 ? 'D-Day' : `D-${data.dday}`}
+            </span>
           )}
         </div>
       </td>
@@ -87,7 +91,7 @@ const Item = ({ data }: { data: ReturnType<typeof useRecruitment>['data'][number
       </td>
 
       <td className="px-6 py-5">
-        <ToggleRecruitmmentButton id={data.id} isRecruiting={data.isRecruiting} />
+        <RecruitmentStatusGrid id={data.id} currentStatus={data.status} />
       </td>
 
       <td className="px-6 py-5 text-right">

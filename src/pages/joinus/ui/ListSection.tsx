@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from 'shared/icon/Logo';
 import { RecruitmentList } from 'entities/recruitment';
+import { StatusBadge } from './Component';
 
 export function ListSection({ data }: { data: RecruitmentList[] }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,17 +114,13 @@ const Item = ({ data }: { data: RecruitmentList }) => {
         </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col items-start gap-2 sm:flex-row sm:gap-8">
-        {data.isRecruiting ? (
-          <div className="bg-brand-primary-cta text-background rounded-[28px] px-1.5 py-1 text-[12px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집중</div>
-        ) : (
-          <div className="bg-custom-gray-500 text-background rounded-[28px] px-1.5 py-1 text-[12px] whitespace-nowrap sm:px-3 sm:py-2 sm:text-[16px]">모집완료</div>
-        )}
+        <StatusBadge status={data.status} />
         <div className="flex w-full flex-col items-start gap-1 sm:gap-2">
           <span className="text-brand-primary-cta line-clamp-1 text-[14px] font-semibold sm:text-[28px]/7">{data.title}</span>
           <div className="line-clamp-1 gap-2 text-[8px] font-semibold text-white sm:text-[20px]">{data.fieldNames.join(', ')}</div>
         </div>
       </div>
-      {data.isRecruiting && (
+      {data.status === 'RECRUITING' && (
         <div className="bg-background shrink-0 rounded-[30px] p-2 text-[16px] font-semibold whitespace-nowrap text-white sm:rounded-[60px] sm:px-10 sm:py-4 sm:text-xl">D-{data.dday}</div>
       )}
     </Link>

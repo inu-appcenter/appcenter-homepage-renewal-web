@@ -1,6 +1,7 @@
 import { Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRecruitmentActions } from 'entities/recruitment';
+import { STATUS_CONFIG } from '../config/statusConfig';
 
 export const AddRecruitmentButton = () => {
   return (
@@ -33,38 +34,42 @@ export const EditRecruitmentButton = ({ id }: { id: number }) => {
     </Link>
   );
 };
+export const RecruitmentStatusGrid = ({ id, currentStatus }: { id: number; currentStatus: string }) => {
+  const { changeActiveMutation } = useRecruitmentActions();
+  const isPending = changeActiveMutation.isPending;
 
-export const ToggleRecruitmmentButton = ({ id, isRecruiting }: { id: number; isRecruiting: boolean }) => {
-  const { toggleMutation } = useRecruitmentActions();
-
-  const isPending = toggleMutation.isPending;
-
-  const handleToggle = () => {
-    if (isPending) return;
-
-    toggleMutation.mutate(id);
+  const handleStatusChange = (newStatus: string) => {
+    if (isPending || currentStatus === newStatus) return;
+    changeActiveMutation.mutate({ id, status: newStatus });
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      disabled={isPending}
-      title={isRecruiting ? '비활성화하기' : '활성화하기'}
-      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-none ${
-        isRecruiting ? 'bg-emerald-500' : 'bg-slate-200'
-      } ${isPending ? 'cursor-not-allowed opacity-50' : ''}`}
-    >
-      <span className="sr-only">상태 변경</span>
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isRecruiting ? 'translate-x-5' : 'translate-x-0'}`}
-      >
-        {isPending && (
-          <span className="absolute inset-0 flex items-center justify-center">
-            <Loader2 size={10} className="animate-spin text-slate-400" />
-          </span>
-        )}
-      </span>
-    </button>
+    <div className="relative inline-flex flex-col">
+      <div className="grid w-39 grid-cols-2 gap-1 rounded-lg bg-slate-100 p-1">
+        {STATUS_CONFIG.map(({ value, label, Icon, activeColor }) => {
+          const isSelected = currentStatus === value;
+
+          return (
+            <button
+              key={value}
+              onClick={() => handleStatusChange(value)}
+              disabled={isPending}
+              className={`relative flex items-center justify-center gap-1.5 rounded-md px-1.5 py-1.5 transition-all duration-200 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 focus:outline-none ${
+                isSelected ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-500 hover:bg-slate-200/50 hover:text-slate-700'
+              }`}
+            >
+              <Icon className={`h-3.5 w-3.5 shrink-0 transition-colors ${isSelected ? activeColor : 'text-slate-400'}`} />
+              <span className={`text-[11px] font-bold tracking-tight ${isSelected ? 'text-slate-800' : ''}`}>{label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {isPending && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-white/60 backdrop-blur-[1px]">
+          <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+        </div>
+      )}
+    </div>
   );
 };
