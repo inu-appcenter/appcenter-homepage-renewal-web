@@ -24,3 +24,9 @@ export type RecruitmentList = Pick<Recruitment, 'id' | 'title' | 'thumbnail' | '
 export type RecruitmentMetaData = Pick<Recruitment, 'title' | 'body' | 'startDate' | 'endDate' | 'capacity' | 'targetAudience' | 'applyLink'> & {
   fieldIds: number[];
 };
+
+export type Email = {
+  readonly id: number;
+  readonly email: string;
+  readonly createdDate: string;
+};

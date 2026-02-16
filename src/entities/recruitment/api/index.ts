@@ -1,5 +1,5 @@
 import { http } from 'shared/utils/http';
-import { Recruitment, RecruitmentList, RecruitmentMetaData } from '../types/recruitment';
+import { Email, Recruitment, RecruitmentList, RecruitmentMetaData } from '../types/recruitment';
 
 export const recruitmentApi = {
   getAll: () => {
@@ -31,5 +31,13 @@ export const recruitmentApi = {
 
   delete: (id: number) => {
     return http.delete<void>(`/recruitment/${id}`);
+  },
+
+  postEmail: (email: string) => {
+    return http.post(`/recruitment/public/email`, { email });
+  },
+
+  getAllEmail: () => {
+    return http.get<Email[]>(`/recruitment/email`);
   }
 };
