@@ -1,17 +1,17 @@
 'use client';
 import { useState } from 'react';
 import { Lock, User, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
-import { useAdminLogin } from 'features/sign';
+import { useSignActions } from 'entities/sign';
 
 export function AdminLoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const { error, isLoading, handleLogin } = useAdminLogin();
+  const { adminLoginMutation } = useSignActions();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleLogin(id, password);
+    adminLoginMutation.mutate({ id, password });
   };
 
   return (
@@ -52,14 +52,18 @@ export function AdminLoginForm() {
           </div>
         </div>
 
-        {error && <div className="animate-in fade-in slide-in-from-top-1 rounded-lg border border-red-100 bg-red-50 py-2.5 text-center text-sm font-semibold text-red-600">{error}</div>}
+        {adminLoginMutation.error && (
+          <div className="animate-in fade-in slide-in-from-top-1 rounded-lg border border-red-100 bg-red-50 py-2.5 text-center text-sm font-semibold text-red-600">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+          </div>
+        )}
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={adminLoginMutation.isPending}
           className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-4 font-bold text-white transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-50"
         >
-          {isLoading ? (
+          {adminLoginMutation.isPending ? (
             <Loader2 className="h-6 w-6 animate-spin text-white" />
           ) : (
             <>

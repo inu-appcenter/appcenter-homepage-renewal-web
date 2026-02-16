@@ -1,11 +1,15 @@
 import { Loader2, LogOut } from 'lucide-react';
-import { useAdminLogout } from '../hooks/useAdminLogout';
+import { useSignActions } from 'entities/sign';
 
 export const AdminLogoutButton = ({ isCollapsed }: { isCollapsed?: boolean }) => {
-  const { handleLogout, isLoggingOut } = useAdminLogout();
+  const { adminLogoutMutation } = useSignActions();
 
-  if (isCollapsed) return <CollapsedLogoutButton onClick={handleLogout} isLoading={isLoggingOut} />;
-  return <ExpandedLogoutButton onClick={handleLogout} isLoading={isLoggingOut} />;
+  const handleLogout = () => {
+    adminLogoutMutation.mutate();
+  };
+
+  if (isCollapsed) return <CollapsedLogoutButton onClick={handleLogout} isLoading={adminLogoutMutation.isPending} />;
+  return <ExpandedLogoutButton onClick={handleLogout} isLoading={adminLogoutMutation.isPending} />;
 };
 
 const CollapsedLogoutButton = ({ onClick, isLoading }: { onClick: () => void; isLoading: boolean }) => (
