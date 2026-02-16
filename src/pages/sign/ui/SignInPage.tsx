@@ -1,5 +1,6 @@
 'use client';
 import { ArrowRight, Loader2, User, Lock, EyeOff, Eye } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from 'shared/icon/Logo';
 
@@ -86,6 +87,13 @@ export function SignInPage() {
               </>
             )}
           </button>
+          <div className="mt-8 flex items-center justify-center gap-2 text-sm">
+            <span className="text-zinc-400">아직 계정이 없으신가요?</span>
+            <Link href="/sign-up" className="group text-brand-primary-cta hover:text-brand-primary-cta/70 relative font-bold transition-colors">
+              회원가입
+              <span className="bg-brand-primary-cta absolute -bottom-1 left-1/2 h-px w-0 -translate-x-1/2 transition-all duration-300 ease-in-out group-hover:w-full" />
+            </Link>
+          </div>
         </form>
       </div>
     </div>

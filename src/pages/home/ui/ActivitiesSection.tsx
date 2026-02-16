@@ -1,9 +1,8 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Carousel, SectionDetailTitle, SectionTitle } from './Components';
+import { Carousel, ListButton, SectionDetailTitle, SectionTitle } from './Components';
 import { MoveRight } from 'lucide-react';
-import { motion } from 'motion/react';
 import { useActivities } from 'entities/activity';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
@@ -15,15 +14,7 @@ export const ActivitiesSection = () => {
       </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activity" />
-        <motion.p
-          viewport={{ once: true }}
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-custom-gray-200 line-clamp-3 max-w-40 flex-1 text-end text-[10px]/4 sm:max-w-150 sm:text-xl/7"
-        >
-          단순히 서비스를 만드는 것을 넘어 인사이트를 나누고 함께 성장합니다.
-        </motion.p>
+        <ListButton href="/activitylist" />
       </div>
       <AsyncBoundary>
         <ActivitiesCarousel />

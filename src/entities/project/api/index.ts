@@ -6,6 +6,10 @@ export const projectApi = {
     return http.get<Project[]>('/introduction-board/public/all-boards-contents');
   },
 
+  getByMember: () => {
+    return http.get<Project[]>('/introduction-board/my');
+  },
+
   create: (newProject: FormData) => {
     return http.post<Project>('/introduction-board', newProject);
   },

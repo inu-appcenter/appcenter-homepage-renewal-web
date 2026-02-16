@@ -8,6 +8,12 @@ export const useProject = () => {
   });
 };
 
+export const useProjectByMember = () => {
+  return useSuspenseQuery({
+    ...projectOptions.byMember()
+  });
+};
+
 export const useProjectActions = () => {
   const queryClient = useQueryClient();
 

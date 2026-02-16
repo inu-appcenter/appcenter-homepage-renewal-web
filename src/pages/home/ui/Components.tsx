@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
 import { cn } from 'shared/utils/cn';
+import Link from 'next/link';
+import { Menu } from 'lucide-react';
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
@@ -58,6 +60,18 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
         {description}
       </motion.p>
     </motion.div>
+  );
+};
+
+export const ListButton = ({ href }: { href: string }) => {
+  return (
+    <Link
+      href={href}
+      className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated hidden h-fit cursor-pointer items-center gap-1.5 rounded-4xl border-[0.7px] px-4 py-2 text-lg shadow-[0px_0px_12px_0px_#57FF8566] sm:flex"
+    >
+      <Menu strokeWidth={1.25} />
+      <span>목록으로</span>
+    </Link>
   );
 };
 

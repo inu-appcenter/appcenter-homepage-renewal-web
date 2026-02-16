@@ -2,7 +2,8 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 interface SignResponse {
-  token: string[];
+  accessToken: string;
+  refreshToken: string;
 }
 export async function POST(request: Request) {
   const { id, password } = await request.json();
@@ -18,10 +19,18 @@ export async function POST(request: Request) {
 
   if (res.ok) {
     const cookieStore = await cookies();
-    cookieStore.set('admin_access_token', data.token[0], {
+    cookieStore.set('accessToken', data.accessToken, {
       httpOnly: true,
       sameSite: 'strict',
-      expires: new Date(Date.now() + 60 * 60 * 1000),
+      expires: new Date(Date.now() + 30 * 60 * 1000), // 30분
+      secure: true,
+      path: '/'
+    });
+
+    cookieStore.set('refreshToken', data.refreshToken, {
+      httpOnly: true,
+      sameSite: 'strict',
+      expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14일 (서버 확인 필요)
       secure: true,
       path: '/'
     });

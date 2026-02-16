@@ -1,7 +1,7 @@
 'use client';
 import { useMemo } from 'react';
-import { Menu, MoveRight } from 'lucide-react';
-import { Carousel, SectionTitle } from './Components';
+import { MoveRight } from 'lucide-react';
+import { Carousel, ListButton, SectionTitle } from './Components';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import Link from 'next/link';
@@ -13,13 +13,7 @@ export const ProjectSection = () => {
     <section id="project" className="relative flex flex-col justify-center gap-4 pt-20 sm:h-screen sm:gap-10">
       <div className="flex justify-between">
         <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
-        <Link
-          href="/projectlist"
-          className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated hidden h-fit cursor-pointer items-center gap-1.5 rounded-4xl border-[0.7px] px-4 py-2 text-lg shadow-[0px_0px_12px_0px_#57FF8566] sm:flex"
-        >
-          <Menu strokeWidth={1.25} />
-          <span>목록으로</span>
-        </Link>
+        <ListButton href="/projectlist" />
       </div>
       <AsyncBoundary>
         <ProjectCarousel />

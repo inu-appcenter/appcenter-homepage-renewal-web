@@ -24,3 +24,6 @@ export { AdminActivityWritePage } from './ui/AdminAcitivityWritePage';
 export { AdminRecruitmentPage } from './ui/AdminRecruitmentPage';
 export { AdminRecruitmentFieldPage } from './ui/AdminRecruitmentFieldPage';
 export { AdminRecruitmentWritePage } from './ui/AdminRecruitmentWritePage';
+export { AdminRecruitmentEmailPage } from './ui/AdminRecruitmentEmailPage';
+
+export { AdminRegistrationCodePage } from './ui/AdminRegistrationCodePage';

@@ -3,11 +3,18 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get('admin_access_token');
+  const userToken = request.cookies.get('accessToken');
 
   if (pathname.startsWith('/admin') && pathname !== '/admin') {
-    if (!token) {
+    if (!userToken) {
       const loginUrl = new URL('/admin', request.url);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  if (pathname.startsWith('/member') && pathname !== '/member') {
+    if (!userToken) {
+      const loginUrl = new URL('/member', request.url);
       return NextResponse.redirect(loginUrl);
     }
   }
@@ -16,5 +23,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*']
+  matcher: ['/admin/:path*', '/member/:path*']
 };

@@ -1,11 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ScrollContext } from 'entities/scroll';
 import Link from 'next/link';
 import { Logo } from 'shared/icon/Logo';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useScroll } from 'entities/scroll';
 
 const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
@@ -17,13 +17,8 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  let scrollToId: ((id: string) => void) | undefined;
-  try {
-    const scrollContext = useScroll();
-    scrollToId = scrollContext.scrollToId;
-  } catch {
-    scrollToId = undefined;
-  }
+  const scrollContext = useContext(ScrollContext);
+  const scrollToId = scrollContext?.scrollToId;
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
@@ -42,12 +37,7 @@ export const Header = () => {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -120, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="fixed z-150 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30"
-      >
+      <header className="fixed z-150 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30">
         <a href="#main-content" className="bg-brand-primary-cta text-background fixed -top-2499.75 left-0 z-99999 w-40 px-6 py-4 text-center focus:top-0">
           본문 바로가기
         </a>
@@ -80,7 +70,7 @@ export const Header = () => {
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
-      </motion.header>
+      </header>
 
       <AnimatePresence>
         {isOpen && (

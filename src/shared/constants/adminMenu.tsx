@@ -1,4 +1,4 @@
-import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2, Zap, Presentation, UserSearch, Component } from 'lucide-react';
+import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2, Zap, Presentation, UserSearch, Component, Hash } from 'lucide-react';
 
 /* 
 기능이 추가로 생기면 아래에 넣어주세요.
@@ -62,7 +62,7 @@ export const ADMIN_MENU: AdminMenuType[] = [
     group: '모집 관리',
     tag: 'recruit',
     description: '동아리 활동 업로드 및 관리',
-    icon: ImageIcon,
+    icon: UserSearch,
     path: '/admin/recruitment',
     subMenu: [
       {
@@ -70,7 +70,12 @@ export const ADMIN_MENU: AdminMenuType[] = [
         href: '/admin/recruitment',
         icon: UserSearch
       },
-      { name: '모집 분야 관리', href: '/admin/recruitment-field', icon: Component }
+      { name: '모집 분야 관리', href: '/admin/recruitment-field', icon: Component },
+      {
+        name: '모집 대기 이메일 관리',
+        href: '/admin/recruitment-email',
+        icon: UserSearch
+      }
     ]
   },
   {
@@ -79,5 +84,12 @@ export const ADMIN_MENU: AdminMenuType[] = [
     description: '자주 묻는 질문 관리',
     icon: MessageCircle,
     path: '/admin/faq'
+  },
+  {
+    group: '멤버 인증 코드',
+    tag: 'registration-code',
+    description: '인증 코드 관리',
+    icon: Hash,
+    path: '/admin/registration-code'
   }
 ];

@@ -6,9 +6,9 @@ import Link from 'next/link';
 
 import { AdminLogoutButton } from 'features/sign';
 import { Logo } from 'shared/icon/Logo';
-import { ADMIN_MENU } from 'shared/constants/adminMenu';
+import { MEMBER_MENU } from 'shared/constants/memberMenu';
 
-export function AdminSidebar() {
+export function MemberSidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -22,13 +22,13 @@ export function AdminSidebar() {
       </button>
 
       <div className={`mb-6 flex items-center gap-2 px-2 text-xl font-bold tracking-tight ${isCollapsed ? 'justify-center' : ''}`}>
-        <Link href="/admin/home">
+        <Link href="/member/home">
           <Logo className="h-7 w-7" />
         </Link>
       </div>
 
       <nav className="space-y-4">
-        {ADMIN_MENU.map((item) => (
+        {MEMBER_MENU.map((item) => (
           <div key={item.group}>
             {!isCollapsed && <p className="mb-1.5 px-4 text-[10px] font-bold tracking-wider text-slate-400 uppercase">{item.group}</p>}
 

@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST() {
   const cookieStore = await cookies();
-  cookieStore.delete('admin_access_token');
+  cookieStore.delete('accessToken');
+  cookieStore.delete('refreshToken');
+
   return NextResponse.json({ success: true });
 }

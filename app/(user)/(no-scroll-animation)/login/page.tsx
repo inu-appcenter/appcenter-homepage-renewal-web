@@ -1,2 +1,2 @@
-import { SignInPage } from 'pages/signin';
+import { SignInPage } from 'pages/sign';
 export default SignInPage;
