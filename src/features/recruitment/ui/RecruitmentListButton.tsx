@@ -11,6 +11,30 @@ export const AddRecruitmentButton = () => {
   );
 };
 
+export const EditRecruitmentButton = ({ id }: { id: number }) => {
+  return (
+    <Link href={`/admin/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
+      <Pencil size={16} />
+    </Link>
+  );
+};
+
+export const MemberAddRecruitmentButton = () => {
+  return (
+    <Link href="/member/recruitment/editor" className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
+      <Plus size={18} /> 새 모집 공고 추가
+    </Link>
+  );
+};
+
+export const MemberEditRecruitmentButton = ({ id }: { id: number }) => {
+  return (
+    <Link href={`/member/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
+      <Pencil size={16} />
+    </Link>
+  );
+};
+
 export const DeleteRecruitmentButton = ({ recruitmentId }: { recruitmentId: number }) => {
   const { deleteMutation } = useRecruitmentActions();
 
@@ -24,14 +48,6 @@ export const DeleteRecruitmentButton = ({ recruitmentId }: { recruitmentId: numb
     <button disabled={deleteMutation.isPending} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 disabled:opacity-50" onClick={handleDelete}>
       {deleteMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
     </button>
-  );
-};
-
-export const EditRecruitmentButton = ({ id }: { id: number }) => {
-  return (
-    <Link href={`/admin/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
-      <Pencil size={16} />
-    </Link>
   );
 };
 export const RecruitmentStatusGrid = ({ id, currentStatus }: { id: number; currentStatus: string }) => {

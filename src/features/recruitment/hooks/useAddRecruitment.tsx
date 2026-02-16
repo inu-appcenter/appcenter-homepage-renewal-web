@@ -43,7 +43,7 @@ export const useAddRecruitment = () => {
       await addMutation.mutateAsync(formData, {
         onSuccess: () => {
           alert('모집 공고가 등록되었습니다.');
-          router.push('/admin/recruitment'); // 이동 경로 수정 필요 시 변경
+          router.back();
           router.refresh();
         },
         onError: (error) => {

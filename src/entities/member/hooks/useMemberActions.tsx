@@ -16,6 +16,12 @@ export const useSearchMember = (query: string, enabled = false) => {
   });
 };
 
+export const useMemberByMember = () => {
+  return useSuspenseQuery({
+    ...memberOptions.byMember()
+  });
+};
+
 export const useMemberActions = () => {
   const queryClient = useQueryClient();
 
@@ -38,5 +44,10 @@ export const useMemberActions = () => {
     onSuccess: invalidateMembers
   });
 
-  return { addMutation, editMutation, deleteMutation };
+  const editByMemberMutation = useMutation({
+    mutationFn: memberApi.updateByMember,
+    onSuccess: invalidateMembers
+  });
+
+  return { addMutation, editMutation, deleteMutation, editByMemberMutation };
 };

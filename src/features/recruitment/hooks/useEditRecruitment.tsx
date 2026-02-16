@@ -48,7 +48,7 @@ export const useEditRecruitment = () => {
       await Promise.all(promises);
 
       alert('수정이 완료되었습니다.');
-      router.push('/admin/recruitment');
+      router.back();
       router.refresh();
     } catch (error) {
       console.error('Edit Error:', error);

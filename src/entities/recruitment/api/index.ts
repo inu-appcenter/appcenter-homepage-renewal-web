@@ -10,6 +10,10 @@ export const recruitmentApi = {
     return http.get<Recruitment>(`/recruitment/public/${id}`);
   },
 
+  getByMember: () => {
+    return http.get<RecruitmentList[]>(`/recruitment/my`);
+  },
+
   create: (newRecruitment: FormData) => {
     return http.post<Recruitment>(`/recruitment`, newRecruitment);
   },

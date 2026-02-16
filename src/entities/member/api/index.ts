@@ -9,6 +9,13 @@ export const memberApi = {
   getByName: (name: string) => {
     return http.get<Member[]>(`/members/id/${encodeURIComponent(name.trim())}`);
   },
+  getByMember: () => {
+    return http.get<Member>(`/members/me`);
+  },
+
+  updateByMember: (data: MemberForm) => {
+    return http.patch<Member>(`/members/me`, data);
+  },
 
   create: (newMember: MemberForm) => {
     return http.post<Member>('/members', newMember);

@@ -23,6 +23,26 @@ export const EditProjectForm = ({ project }: { project: Project }) => {
   );
 };
 
+export const MemberAddProjectForm = () => {
+  return (
+    <Link href="/member/project/editor">
+      <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
+        <Plus size={18} /> 새 프로젝트 추가
+      </button>
+    </Link>
+  );
+};
+
+export const MemberEditProjectForm = ({ project }: { project: Project }) => {
+  return (
+    <Link href={`/member/project/editor/${project.id}`}>
+      <button className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
+        <Pencil size={16} />
+      </button>
+    </Link>
+  );
+};
+
 export const DeleteProjectButton = ({ projectId }: { projectId: number }) => {
   const { deleteMutation } = useProjectActions();
 

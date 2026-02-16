@@ -13,6 +13,11 @@ export const useRecruitmentById = (recruitmentId: number) => {
     ...recruitmentOptions.getById(recruitmentId)
   });
 };
+export const useRecruitmentByMember = () => {
+  return useSuspenseQuery({
+    ...recruitmentOptions.getByMember()
+  });
+};
 
 export const useRecruitmentEmail = () => {
   return useSuspenseQuery({

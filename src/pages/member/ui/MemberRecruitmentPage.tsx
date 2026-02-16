@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Info } from 'lucide-react';
 import { PageTitle } from './Components';
 import { TableSkeleton } from 'shared/skeleton/TableSkeleton';
-import { AdminRecruitmentList } from 'features/recruitment';
+import { MemberRecruitmentList } from 'features/recruitment';
 
 export const MemberRecruitmentPage = () => {
   return (
@@ -23,7 +23,7 @@ export const MemberRecruitmentPage = () => {
       </div>
 
       <Suspense fallback={<TableSkeleton />}>
-        <AdminRecruitmentList />
+        <MemberRecruitmentList />
       </Suspense>
     </div>
   );

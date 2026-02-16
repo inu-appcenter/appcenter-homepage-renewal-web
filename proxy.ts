@@ -14,7 +14,7 @@ export function proxy(request: NextRequest) {
 
   if (pathname.startsWith('/member') && pathname !== '/member') {
     if (!userToken) {
-      const loginUrl = new URL('/member', request.url);
+      const loginUrl = new URL('/login', request.url);
       return NextResponse.redirect(loginUrl);
     }
   }

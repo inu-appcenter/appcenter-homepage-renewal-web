@@ -4,7 +4,8 @@ import { memberApi } from '.';
 export const memberKeys = {
   all: ['members'] as const,
   lists: () => [...memberKeys.all, 'list'] as const,
-  search: (query: string) => [...memberKeys.all, 'search', query] as const
+  search: (query: string) => [...memberKeys.all, 'search', query] as const,
+  byMember: () => [...memberKeys.all, 'byMember'] as const
 };
 
 export const memberOptions = {
@@ -18,5 +19,10 @@ export const memberOptions = {
       queryKey: memberKeys.search(query),
       queryFn: () => memberApi.getByName(query),
       enabled: Boolean(query)
+    }),
+  byMember: () =>
+    queryOptions({
+      queryKey: memberKeys.byMember(),
+      queryFn: () => memberApi.getByMember()
     })
 };

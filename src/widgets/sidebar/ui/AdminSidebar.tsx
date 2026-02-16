@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-import { AdminLogoutButton } from 'features/sign';
+import { LogoutButton } from 'features/sign';
 import { Logo } from 'shared/icon/Logo';
 import { ADMIN_MENU } from 'shared/constants/adminMenu';
 
@@ -56,7 +56,7 @@ export function AdminSidebar() {
 
       <div className="absolute right-4 bottom-8 left-4">
         <div className="flex justify-center">
-          <AdminLogoutButton isCollapsed={isCollapsed} />
+          <LogoutButton isCollapsed={isCollapsed} type="admin" />
         </div>
       </div>
     </aside>
