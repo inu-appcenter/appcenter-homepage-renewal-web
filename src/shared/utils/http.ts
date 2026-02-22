@@ -19,9 +19,12 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
     }
   }
 
-  const config = {
+  const config: RequestInit = {
     ...options,
-    headers
+    cache: options?.cache || 'no-store',
+    headers: {
+      ...headers
+    }
   };
 
   const res = await fetch(`${baseUrl}${url}`, config);
