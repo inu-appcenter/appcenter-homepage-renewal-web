@@ -5,7 +5,6 @@ import { useGenerationActions, useGroupYear, usePart, Generation, GenerationForm
 import { useRoles } from 'entities/role';
 
 import { Modal } from 'shared/ui/modal';
-import { PART_COLORS } from 'shared/constants/part';
 import { SearchMember } from './SearchMember';
 
 export const AddGenerationForm = () => {
@@ -84,7 +83,8 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
     }
     return DEFAULT_FORM;
   });
-  const [customYear, setCustomYear] = useState<number | undefined>(undefined);
+  const [customYear, setCustomYear] = useState<number | string>('');
+  const [customPart, setCustomPart] = useState<string>('');
 
   const [selectedName, setSelectedName] = useState(initialData?.member || '');
 
@@ -96,11 +96,13 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
   };
 
   const handleSubmit = async () => {
-    const finalYear = customYear !== undefined ? customYear : formData.year;
+    const finalYear = customYear !== '' ? Number(customYear) : formData.year;
+    const finalPart = customPart !== undefined ? customPart : formData.part;
 
     await mutation.mutateAsync({
       ...formData,
-      year: finalYear
+      year: finalYear,
+      part: finalPart
     });
     onClose();
   };
@@ -133,14 +135,14 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
       )}
 
       <div className="space-y-4 border-t border-slate-100 pt-4">
+        <div className="flex items-center gap-2 rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-600">
+          <AlertCircle size={16} className="shrink-0" />
+          <span>
+            새 기수 또는 파트가 필요하면 <b>직접 입력</b> 해주세요
+          </span>
+        </div>
         <div className="space-y-3">
           <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">기수 선택 또는 직접 입력</label>
-          <div className="flex items-center gap-2 rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-600">
-            <AlertCircle size={16} className="shrink-0" />
-            <span>
-              새 기수가 필요하면 <b>직접 입력</b> 해주세요
-            </span>
-          </div>
 
           <div className="flex flex-wrap gap-2">
             <div className="relative flex items-center">
@@ -148,8 +150,8 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
                 type="number"
                 placeholder="직접 입력"
                 value={customYear}
-                onChange={(e) => setCustomYear(e.target.value ? Number(e.target.value) : undefined)}
-                className={`w-28 rounded-xl border-2 border-slate-200 px-3 py-2 text-xs font-bold transition-all outline-none`}
+                onChange={(e) => setCustomYear(e.target.value)}
+                className={`w-28 rounded-xl border-2 border-slate-200 px-2 py-1.5 text-xs font-bold transition-all outline-none`}
               />
               <span className="pointer-events-none absolute right-8 text-[10px] font-bold text-slate-400">기</span>
             </div>
@@ -158,7 +160,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
                 key={y}
                 type="button"
                 onClick={() => handleChange('year', y)}
-                className={`rounded-xl px-4 py-2.5 text-xs font-bold transition-all ${formData.year === y ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+                className={`rounded-xl px-3 py-2 text-xs font-bold transition-all ${formData.year === y ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
               >
                 {y}기
               </button>
@@ -168,15 +170,23 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
 
         <div className="space-y-3">
           <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">파트 선택</label>
+
           <div className="flex flex-wrap gap-2">
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                placeholder="직접 입력"
+                value={customPart}
+                onChange={(e) => setCustomPart(e.target.value)}
+                className={`w-28 rounded-xl border-2 border-slate-200 px-2 py-1.5 text-xs font-bold transition-all outline-none`}
+              />
+            </div>
             {partData?.parts.map((p) => (
               <button
                 key={p}
                 type="button"
                 onClick={() => handleChange('part', p)}
-                className={`rounded-xl px-5 py-2.5 text-xs font-bold transition-all ${
-                  formData.part === p ? `${PART_COLORS[p].bg} ${PART_COLORS[p].text} shadow-sm` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
-                }`}
+                className={`rounded-xl px-3 py-2 text-xs font-bold transition-all ${formData.part === p ? 'bg-slate-900 text-slate-100 shadow-sm' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
               >
                 {p}
               </button>
@@ -192,7 +202,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
                 key={r.roleId}
                 type="button"
                 onClick={() => handleChange('role_id', r.roleId)}
-                className={`rounded-xl px-5 py-2.5 text-xs font-bold transition-all ${
+                className={`rounded-xl px-3 py-2 text-xs font-bold transition-all ${
                   formData.role_id === r.roleId ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
                 }`}
               >
@@ -203,7 +213,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
         </div>
       </div>
 
-      <div className="pt-2">
+      <div className="">
         <button
           disabled={isPending || !isValid}
           onClick={handleSubmit}

@@ -4,7 +4,6 @@ import { AlertCircle, Check, Plus, Search, Users, X } from 'lucide-react';
 import { Generation, useGeneration, usePart } from 'entities/generation';
 
 import { Modal } from 'shared/ui/modal';
-import { PART_COLORS } from 'shared/constants/part';
 import { ProjectFormType } from '../../types/form';
 
 export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
@@ -112,9 +111,7 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
                   <button
                     key={part}
                     onClick={() => setSelectedPartName(part)}
-                    className={`rounded-xl px-4 py-2 text-xs font-medium transition-colors ${
-                      selectedPartName === part ? `${PART_COLORS[part].bg} ${PART_COLORS[part].text} hover:${PART_COLORS[part].bg}` : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                    }`}
+                    className={`rounded-xl px-4 py-2 text-xs font-medium transition-colors ${selectedPartName === part ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                   >
                     {part}
                   </button>
@@ -203,7 +200,7 @@ const MemberSelectionCard = ({ member, isSelected, onToggle }: { member: ReturnT
 
       <div className="flex flex-col gap-0.5 text-center">
         <div className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-slate-800'}`}>{member.member}</div>
-        <div className={`rounded-lg px-2 py-0.5 text-xs ${isSelected ? 'text-slate-300' : `${PART_COLORS[member.part].bg} ${PART_COLORS[member.part].text}`}`}>{member.part}</div>
+        <div className={`rounded-lg px-2 py-0.5 text-xs ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>{member.part}</div>
         <div className={`text-xs ${isSelected ? 'text-slate-300' : 'text-slate-400'}`}>{member.year}기</div>
       </div>
     </div>

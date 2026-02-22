@@ -34,7 +34,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     }))
   });
 
-  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && Boolean(form.images[0]) && Boolean(form.images[1]);
+  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && form.images.every((img) => img && img.url !== null && img.url !== ''); // 이미지가 2개 이상이어야 함(썸네일 + 대표 이미지);
 
   const { submit, isPending } = useProjectSubmit(
     projectId

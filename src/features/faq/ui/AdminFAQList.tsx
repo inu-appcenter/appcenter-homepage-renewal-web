@@ -2,20 +2,22 @@
 import { useState, useMemo } from 'react';
 import { useFAQs } from 'entities/faq';
 
-import { PART, PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 import { SearchBar } from 'shared/ui/searchbar';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 
 import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
+import { usePart } from 'entities/generation';
 
 export const AdminFAQList = () => {
   const { data } = useFAQs();
+  const { data: partData } = usePart();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<Part | 'All'>('All');
 
-  const filterOptions: Array<Part | 'All'> = ['All', ...PART];
+  const filterOptions: Array<Part | 'All'> = ['All', ...partData.parts];
 
   const filteredFaqs = useMemo(() => {
     return data.filter((faq) => {
@@ -33,7 +35,7 @@ export const AdminFAQList = () => {
             <button
               key={part}
               onClick={() => setSelectedPart(part)}
-              className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? `${PART_COLORS[part].bg} ${PART_COLORS[part].text} shadow-sm` : 'text-slate-400'}`}
+              className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? 'bg-slate-900 text-slate-100 shadow-sm' : 'text-slate-400'}`}
             >
               {part}
             </button>
@@ -66,7 +68,7 @@ const Item = ({ data }: { data: ReturnType<typeof useFAQs>['data'][number] }) =>
     <tr key={data.id} className="group transition-colors hover:bg-slate-50/80">
       <td className="px-6 py-5 text-slate-400">#{data.id}</td>
       <td className="px-6 py-5">
-        <span className={`inline-flex rounded-lg px-2.5 py-1 text-xs font-bold ${PART_COLORS[data.part].bg} ${PART_COLORS[data.part].text}`}>{data.part}</span>
+        <span className={`inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700`}>{data.part}</span>
       </td>
       <td className="px-6 py-5">
         <p className="font-bold text-slate-900">{data.question}</p>

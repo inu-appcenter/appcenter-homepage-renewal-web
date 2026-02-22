@@ -146,8 +146,8 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
       </div>
 
       {/* Input Area */}
-      <div className="flex w-full flex-col gap-6 lg:flex-row lg:items-end">
-        <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-row items-end justify-between gap-6">
+        <div className="mt-8.5 flex flex-col gap-2">
           <label className="ml-1 block text-xs font-black text-gray-500">블록 유형</label>
           <div className="flex w-fit rounded-xl border border-white/5 bg-[#151518] p-1">
             {(['text', 'image'] as const).map((type) => (
@@ -168,23 +168,16 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
             ))}
           </div>
         </div>
+        {inputType === 'image' && (
+          <div className="flex flex-1 flex-col gap-2">
+            <label className="ml-1 block text-xs font-black text-gray-500 uppercase">이미지 추가</label>
 
-        <div className="flex flex-1 flex-col gap-2">
-          <label className="ml-1 block text-xs font-black text-gray-500 uppercase">{inputType === 'image' ? '이미지 블록 입력' : '글자 블록 입력'}</label>
+            <div className="group focus-within:border-brand-primary/50 flex min-h-20 items-center gap-4 rounded-xl border border-white/10 bg-[#1e1e22] px-4 py-2 transition-all hover:border-white/20">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/5 bg-black/40">
+                {previewUrl ? <img src={previewUrl} alt="Preview" className="h-full w-full object-cover" /> : <Upload className="text-gray-700" size={20} />}
+              </div>
 
-          <div className="group focus-within:border-brand-primary/50 flex min-h-20 items-center gap-4 rounded-xl border border-white/10 bg-[#1e1e22] px-4 py-3 transition-all hover:border-white/20">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/5 bg-black/40">
-              {inputType === 'image' && previewUrl ? (
-                <img src={previewUrl} alt="Preview" className="h-full w-full object-cover" />
-              ) : inputType === 'image' ? (
-                <Upload className="text-gray-700" size={20} />
-              ) : (
-                <Type className="text-gray-700" size={20} />
-              )}
-            </div>
-
-            <div className="flex-1">
-              {inputType === 'image' ? (
+              <div className="flex-1">
                 <input
                   key="file-input"
                   type="file"
@@ -192,12 +185,10 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
                   onChange={onFileChange}
                   className="w-full cursor-pointer text-xs text-gray-400 file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-gray-800 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white hover:file:bg-gray-700"
                 />
-              ) : (
-                <div className="w-full bg-transparent text-sm text-gray-400"> 블록추가 후 아래 에디터에서 입력하세요...</div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <button
           onClick={addItem}

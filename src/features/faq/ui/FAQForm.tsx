@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
 import { useFAQActions, type Faq, type FAQForm } from 'entities/faq';
 
-import { PART, PART_COLORS } from 'shared/constants/part';
 import type { Part } from 'shared/types/part';
 import { Modal } from 'shared/ui/modal';
+import { usePart } from 'entities/generation';
 
 export const AddFAQForm = () => {
   const { addMutation } = useFAQActions();
@@ -76,6 +76,7 @@ export const DeleteFAQButton = ({ faqId }: { faqId: number }) => {
 };
 
 const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQForm) => void; isPending: boolean }) => {
+  const { data: partData } = usePart();
   const [formData, setFormData] = useState<FAQForm>({
     part: initialData?.part || initialPart || 'Common',
     question: initialData?.question || '',
@@ -93,14 +94,14 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       <div>
         <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">파트</label>
         <div className="flex flex-wrap gap-2">
-          {PART.map((p) => (
+          {partData.parts.map((p) => (
             <button
               type="button"
               key={p}
               disabled={isPending}
               onClick={() => setFormData({ ...formData, part: p })}
               className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${
-                formData.part === p ? `${PART_COLORS[p].bg} ${PART_COLORS[p].text}` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
+                formData.part === p ? 'bg-slate-900 text-slate-100 shadow-sm' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
               } disabled:opacity-50`}
             >
               {p}
@@ -112,7 +113,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        placeholder="질문 내용"
+        placeholder="질문을 입력해주세요"
         value={formData.question}
         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
       />
@@ -120,7 +121,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        placeholder="답변 내용"
+        placeholder="답변을 입력해주세요"
         value={formData.answer}
         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
       />
@@ -130,7 +131,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
       >
         {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-        {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '데이터베이스에 저장'}
+        {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '질문 저장'}
       </button>
     </form>
   );

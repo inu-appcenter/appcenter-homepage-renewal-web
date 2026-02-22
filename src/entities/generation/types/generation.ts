@@ -1,9 +1,7 @@
-import { Part } from 'shared/types/part';
-
 export interface Generation {
   readonly group_id: number;
   readonly role: string;
-  readonly part: Part;
+  readonly part: string;
   readonly year: number;
   readonly member: string;
   readonly profileImage: string | null;
@@ -17,6 +15,6 @@ export interface Generation {
 export interface GenerationForm {
   id: number;
   year: number;
-  part: Part;
+  part: string;
   role_id: number;
 }

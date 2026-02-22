@@ -50,7 +50,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending }: SearchMe
           <input
             disabled={isPending || isSearching}
             className={`w-full rounded-2xl border bg-slate-50 px-3 py-3 pl-5 text-sm transition-all outline-none ${
-              selectedId ? 'border-emerald-500/50' : 'focus:border-brand-primary-cta border-slate-100'
+              selectedId ? 'border-emerald-500/50' : 'border-slate-100 focus:border-emerald-500'
             } ${noResults ? 'border-amber-400' : ''}`}
             placeholder="이름을 입력하세요 (2글자 이상)"
             value={query}
@@ -63,7 +63,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending }: SearchMe
           type="button"
           onClick={handleSearch}
           disabled={isPending || isSearching || query.trim().length < 2}
-          className="bg-brand-primary-cta hover:bg-brand-primary-cta flex items-center justify-center rounded-2xl px-6 text-white transition-all active:scale-95 disabled:bg-slate-200 disabled:text-slate-400"
+          className="flex items-center justify-center rounded-2xl bg-emerald-400 px-6 text-white transition-all hover:bg-emerald-500 active:scale-95 disabled:bg-slate-200 disabled:text-slate-400"
         >
           {isSearching ? <Loader2 size={20} className="animate-spin" /> : <Search size={20} />}
         </button>
