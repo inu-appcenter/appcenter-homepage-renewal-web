@@ -2,8 +2,11 @@ import { http } from 'shared/utils/http';
 import { LoginRequest, SignUpRequest } from '../types';
 
 export const signApi = {
-  login: (data: LoginRequest) => {
-    return http.post('/sign-in', data);
+  adminLogin: (data: LoginRequest) => {
+    return http.post('/admin-sign-in', data);
+  },
+  memberLogin: (data: LoginRequest) => {
+    return http.post('/member-sign-in', data);
   },
   logout: () => {
     return http.post('/sign-out', {});

@@ -34,8 +34,6 @@ const Item = ({ data }: { data: Awaited<ReturnType<typeof activityApi.getAll>>[n
         </div>
         <div className="mt-2 flex flex-col gap-0 sm:mt-11 sm:gap-3">
           <h2 className="text-brand-primary-cta line-clamp-1 text-[12px] font-semibold sm:text-[28px]">{data.title}</h2>
-
-          <div className="mt-1 flex justify-end sm:mt-0"></div>
         </div>
       </li>
     </Link>

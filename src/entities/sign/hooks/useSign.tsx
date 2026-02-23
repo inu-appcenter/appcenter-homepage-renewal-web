@@ -8,7 +8,7 @@ export const useSignActions = () => {
   const router = useRouter();
 
   const adminLoginMutation = useMutation({
-    mutationFn: signApi.login,
+    mutationFn: signApi.adminLogin,
     onSuccess: () => {
       router.push('/admin/home');
     },
@@ -24,7 +24,7 @@ export const useSignActions = () => {
     }
   });
   const memberLoginMutation = useMutation({
-    mutationFn: signApi.login,
+    mutationFn: signApi.memberLogin,
     onSuccess: () => {
       router.push('/member/home');
     }

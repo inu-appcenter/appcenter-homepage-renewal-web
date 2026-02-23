@@ -9,7 +9,7 @@ import { ProjectFormType, StepType } from '../types/form';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
 import { MainSectionForm } from './MainSectionForm';
-import { IntroduceSectionForm } from './IntroduceSectionForm';
+import { MemberIntroduceSectionForm } from './MemberIntroduceSectionForm';
 import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
 
@@ -91,7 +91,7 @@ export const MemberProjectForm = ({ initialData }: { initialData?: Project }) =>
       case 'main':
         return <MainSectionForm form={form} setForm={setForm} setStep={setStep} />;
       case 'introduce':
-        return <IntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
+        return <MemberIntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
       case 'grid':
         return <GridSectionForm form={form} setForm={setForm} projectId={projectId} />;
       default:

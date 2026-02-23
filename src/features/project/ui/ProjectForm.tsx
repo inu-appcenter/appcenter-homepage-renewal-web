@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Project, projectApi } from 'entities/project';
 
@@ -126,6 +126,12 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         {renderStepContent()}
 
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
+          <div className="flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-xs font-medium text-amber-600">
+            <AlertCircle size={16} className="shrink-0" />
+            <span>
+              이미지 크기는 <strong>최대 5MB</strong>까지 허용됩니다. <br />
+            </span>
+          </div>
           {step !== 'main' && (
             <button
               type="button"

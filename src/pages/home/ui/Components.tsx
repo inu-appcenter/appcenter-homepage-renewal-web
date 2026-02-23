@@ -67,9 +67,9 @@ export const ListButton = ({ href }: { href: string }) => {
   return (
     <Link
       href={href}
-      className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated hidden h-fit cursor-pointer items-center gap-1.5 rounded-4xl border-[0.7px] px-4 py-2 text-lg shadow-[0px_0px_12px_0px_#57FF8566] sm:flex"
+      className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-2 py-1 text-[9px] shadow-[0px_0px_12px_0px_#57FF8566] sm:flex sm:px-4 sm:py-2 sm:text-lg"
     >
-      <Menu strokeWidth={1.25} />
+      <Menu strokeWidth={1.25} className="hidden sm:inline-block" />
       <span>목록으로</span>
     </Link>
   );
