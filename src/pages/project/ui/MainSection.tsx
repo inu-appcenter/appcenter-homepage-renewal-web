@@ -37,7 +37,15 @@ export const MainSection = ({ data }: { data: Project }) => {
           <p className="text-custom-gray-100 text-[10px] sm:text-xl/7">{data.subTitle}</p>
         </div>
         <div className="relative flex flex-1 justify-start sm:justify-end">
-          <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-auto max-w-full object-contain" quality={100} unoptimized={true} />
+          <Image
+            src={imageUrls[1] ? imageUrls[1] : '/images/dummyMockup.png'}
+            alt="Main Section Image"
+            width={2000}
+            height={600}
+            className="h-auto w-auto max-w-full object-contain"
+            quality={100}
+            unoptimized={true}
+          />
         </div>
       </div>
       <div className="flex gap-1 sm:mt-9 sm:gap-3">

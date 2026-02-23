@@ -62,7 +62,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
 
         {filteredData.length === 0 && (
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10 text-center text-[10px] text-white sm:text-xl/7">
-            선택하신 카테고리에 해당하는 FAQ가 없습니다.
+            {selectedCategory} 파트의 FAQ가 없습니다.
           </motion.p>
         )}
       </div>

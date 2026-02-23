@@ -9,7 +9,7 @@ import { ProjectFormType, StepType } from '../types/form';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
 import { MainSectionForm } from './MainSectionForm';
-import { IntroduceSectionForm } from './IntroduceSectionForm';
+import { MemberIntroduceSectionForm } from './MemberIntroduceSectionForm';
 import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
 
@@ -34,7 +34,7 @@ export const MemberProjectForm = ({ initialData }: { initialData?: Project }) =>
     }))
   });
 
-  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && Boolean(form.images[0]) && Boolean(form.images[1]);
+  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && form.images.every((img) => img && img.url !== null && img.url !== ''); // 이미지가 2개 이상이어야 함(썸네일 + 대표 이미지);
 
   const { submit, isPending } = useProjectSubmit(
     projectId
@@ -91,7 +91,7 @@ export const MemberProjectForm = ({ initialData }: { initialData?: Project }) =>
       case 'main':
         return <MainSectionForm form={form} setForm={setForm} setStep={setStep} />;
       case 'introduce':
-        return <IntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
+        return <MemberIntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
       case 'grid':
         return <GridSectionForm form={form} setForm={setForm} projectId={projectId} />;
       default:

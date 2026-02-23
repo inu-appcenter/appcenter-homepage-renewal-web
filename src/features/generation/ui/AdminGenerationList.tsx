@@ -8,7 +8,6 @@ import { DeleteGenerationButton, AddGenerationForm, EditGenerationForm } from '.
 import { useGeneration, useGroupYear, usePart } from 'entities/generation';
 
 import { EmptyResult } from 'shared/error/EmptyResult';
-import { PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
@@ -85,9 +84,7 @@ export const AdminGenerationList = () => {
                 <button
                   key={part}
                   onClick={() => setSelectedPart(part)}
-                  className={`rounded-lg px-3.5 py-2 text-xs font-bold transition-all ${
-                    selectedPart === part ? `${PART_COLORS[part].bg || 'bg-slate-900'} ${PART_COLORS[part].text || 'text-white'} ` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
-                  }`}
+                  className={`rounded-lg px-3.5 py-2 text-xs font-bold transition-all ${selectedPart === part ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
                 >
                   {part}
                 </button>
@@ -120,8 +117,6 @@ export const AdminGenerationList = () => {
 };
 
 const Item = ({ data }: { data: ReturnType<typeof useGeneration>['data'][number] }) => {
-  const partStyle = PART_COLORS[data.part] || { bg: 'bg-slate-100', text: 'text-slate-700' };
-
   return (
     <tr key={data.group_id} className="group transition-colors hover:bg-slate-50/80">
       <td className="px-6 py-5 text-slate-400">#{data.group_id}</td>
@@ -147,7 +142,7 @@ const Item = ({ data }: { data: ReturnType<typeof useGeneration>['data'][number]
       <td className="px-6 py-5">
         <div className="flex flex-col gap-2">
           <span className="flex items-center gap-1.5 font-bold text-slate-700">{data.role}</span>
-          <span className={`inline-flex w-fit items-center rounded-md px-2 py-0.5 text-xs font-bold ${partStyle.bg} ${partStyle.text}`}>{data.part}</span>
+          <span className={`inline-flex w-fit items-center rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-700`}>{data.part}</span>
         </div>
       </td>
       <td className="px-6 py-5">
