@@ -3,33 +3,17 @@ import Link from 'next/link';
 import { useRecruitmentActions } from 'entities/recruitment';
 import { STATUS_CONFIG } from '../config/statusConfig';
 
-export const AddRecruitmentButton = () => {
+export const AddRecruitmentButton = ({ mode }: { mode: string }) => {
   return (
-    <Link href="/admin/recruitment/editor" className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
+    <Link href={`/${mode}/recruitment/editor`} className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
       <Plus size={18} /> 새 모집 공고 추가
     </Link>
   );
 };
 
-export const EditRecruitmentButton = ({ id }: { id: number }) => {
+export const EditRecruitmentButton = ({ id, mode }: { id: number; mode: string }) => {
   return (
-    <Link href={`/admin/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
-      <Pencil size={16} />
-    </Link>
-  );
-};
-
-export const MemberAddRecruitmentButton = () => {
-  return (
-    <Link href="/member/recruitment/editor" className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-      <Plus size={18} /> 새 모집 공고 추가
-    </Link>
-  );
-};
-
-export const MemberEditRecruitmentButton = ({ id }: { id: number }) => {
-  return (
-    <Link href={`/member/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
+    <Link href={`/${mode}/recruitment/editor/${id}`} className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
       <Pencil size={16} />
     </Link>
   );

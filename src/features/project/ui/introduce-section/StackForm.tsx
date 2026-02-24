@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { useSkillStack } from 'entities/skill-stack';
 import { ProjectFormType } from '../../types/form';
 import { Modal } from 'shared/ui/modal';
+import { useRoleContext } from 'entities/sign';
 
 export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: skillStack, refetch, isRefetching } = useSkillStack();
   const [searchTerm, setSearchTerm] = useState('');
+  const { mode } = useRoleContext();
 
   const toggleStack = (id: number) => {
     setForm((prev) => {
@@ -128,7 +130,7 @@ export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: R
                   <div className="h-px w-32 bg-slate-100"></div>
 
                   <Link
-                    href="/admin/skill"
+                    href={`/${mode}/skill`}
                     target="_blank"
                     onClick={(e) => {
                       const ok = confirm('새 탭에 기술 아이콘 관리 페이지로 이동합니다.');

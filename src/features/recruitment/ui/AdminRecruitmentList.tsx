@@ -1,19 +1,22 @@
 'use client';
 import { ImageIcon } from 'lucide-react';
+import Link from 'next/link';
 import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, RecruitmentStatusGrid } from './RecruitmentListButton';
-import { useRecruitment } from 'entities/recruitment';
+import { useRecruitment, useRecruitmentByMember } from 'entities/recruitment';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import Link from 'next/link';
 import { STATUS_CONFIG } from '../config/statusConfig';
+import { useRoleContext } from 'entities/sign';
 
 export const AdminRecruitmentList = () => {
-  const { data } = useRecruitment();
+  const { data: adminData } = useRecruitment();
+  const { data: memberData } = useRecruitmentByMember();
+  const { mode } = useRoleContext();
 
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex w-full flex-row justify-end">
-        <AddRecruitmentButton />
+        <AddRecruitmentButton mode={mode} />
       </div>
       <Table>
         <TableHeader>
@@ -26,16 +29,28 @@ export const AdminRecruitmentList = () => {
           <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
-            <Item key={item.id} data={item} />
-          ))}
-          {data.length === 0 && <EmptyResult />}
+          {mode === 'admin' ? (
+            <>
+              {adminData.map((item) => (
+                <Item key={item.id} data={item} mode={mode} />
+              ))}
+              {adminData.length === 0 && <EmptyResult />}
+            </>
+          ) : (
+            <>
+              {memberData.map((item) => (
+                <Item key={item.id} data={item} mode={mode} />
+              ))}
+              {memberData.length === 0 && <EmptyResult />}
+            </>
+          )}
         </TableBody>
       </Table>
     </div>
   );
 };
-const Item = ({ data }: { data: ReturnType<typeof useRecruitment>['data'][number] }) => {
+
+const Item = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data'][number]; mode: string }) => {
   return (
     <tr className="group transition-colors hover:bg-slate-50/50">
       <td className="px-6 py-5 text-sm text-slate-400">#{data.id}</td>
@@ -96,7 +111,7 @@ const Item = ({ data }: { data: ReturnType<typeof useRecruitment>['data'][number
 
       <td className="px-6 py-5 text-right">
         <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-          <EditRecruitmentButton id={data.id} />
+          <EditRecruitmentButton id={data.id} mode={mode} />
           <DeleteRecruitmentButton recruitmentId={data.id} />
         </div>
       </td>

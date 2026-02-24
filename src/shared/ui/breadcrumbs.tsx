@@ -6,6 +6,7 @@ import { ArrowLeft, ChevronRight } from 'lucide-react';
 export function Breadcrumbs() {
   const pathname = usePathname();
   const link = pathname?.startsWith('/admin') ? '/admin/home' : '/member/home';
+
   // 대시보드 홈에서는 브레드크럼 표시 안 함
   if (!pathname || pathname === '/admin/home' || pathname === '/member/home') return null;
 

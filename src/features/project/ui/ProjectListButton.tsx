@@ -2,10 +2,11 @@
 import Link from 'next/link';
 import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { Project, useProjectActions } from 'entities/project';
+import { UserMode } from 'entities/sign';
 
-export const AddProjectForm = () => {
+export const AddProjectForm = ({ mode }: { mode: UserMode }) => {
   return (
-    <Link href="/admin/project/editor">
+    <Link href={`/${mode}/project/editor`}>
       <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
         <Plus size={18} /> 새 프로젝트 추가
       </button>
@@ -13,9 +14,9 @@ export const AddProjectForm = () => {
   );
 };
 
-export const EditProjectForm = ({ project }: { project: Project }) => {
+export const EditProjectForm = ({ project, mode }: { project: Project; mode: UserMode }) => {
   return (
-    <Link href={`/admin/project/editor/${project.id}`}>
+    <Link href={`/${mode}/project/editor/${project.id}`}>
       <button className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
         <Pencil size={16} />
       </button>

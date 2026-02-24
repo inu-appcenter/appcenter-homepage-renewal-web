@@ -7,12 +7,14 @@ import { useRecruitmentField } from 'entities/recruitment-field';
 import type { RecruitmentForm as RecruitmentFormType } from '../types/form';
 import { Recruitment } from 'entities/recruitment';
 import Link from 'next/link';
+import { useRoleContext } from 'entities/sign';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
   const isEditMode = Boolean(initialData);
   const { addRecruitment, isPending: isAddPending } = useAddRecruitment();
   const { editRecruitment, isPending: isEditPending } = useEditRecruitment();
   const { data: recruitmentField, refetch, isFetching } = useRecruitmentField();
+  const { mode } = useRoleContext();
 
   const isPending = isEditMode ? isEditPending : isAddPending;
 
@@ -131,7 +133,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           </h2>
           <div className="flex items-center gap-3">
             <Link
-              href="/admin/recruitment-field"
+              href={`/${mode}/recruitment-field`}
               target="_blank"
               onClick={(e) => {
                 const ok = confirm('새 탭에 모집 분야 관리 페이지로 이동합니다.');

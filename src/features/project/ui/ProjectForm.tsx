@@ -7,6 +7,7 @@ import { Project, projectApi } from 'entities/project';
 import { ProjectFormType, StepType } from '../types/form';
 
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
+import { useRoleContext } from 'entities/sign';
 
 import { MainSectionForm } from './MainSectionForm';
 import { IntroduceSectionForm } from './IntroduceSectionForm';
@@ -16,6 +17,7 @@ import { Alert } from 'shared/ui/alert';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();
+  const { mode } = useRoleContext();
   const [projectId, setProjectId] = useState<number | null>(initialData?.id || null);
   const [step, setStep] = useState<StepType>('main');
   const [form, setForm] = useState<ProjectFormType>({
@@ -44,7 +46,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
           projectId: projectId,
           onSuccess: () => {
             if (step === 'grid') {
-              router.push('/admin/project');
+              router.push(`/${mode}/project`);
               router.refresh();
             } else if (step === 'introduce') {
               setStep('grid');
@@ -127,7 +129,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         {renderStepContent()}
 
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
-          <Alert type="info">
+          <Alert type="warning">
             <span>
               이미지 크기는 <strong>최대 5MB</strong>까지 허용됩니다. <br />
             </span>

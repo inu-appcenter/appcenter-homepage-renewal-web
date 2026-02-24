@@ -1,10 +1,22 @@
 import { usePathname } from 'next/navigation';
+import { USER_MODES } from 'shared/constants/userMode';
 
-// URL 경로에서 사용자 권한을 추출하는 커스텀 훅
+export type UserMode = (typeof USER_MODES)[number];
+
+const MODE_SET = new Set<string>(USER_MODES);
+
+const isValidMode = (mode: string): mode is UserMode => {
+  return MODE_SET.has(mode);
+};
+
 export const useRoleContext = () => {
   const pathname = usePathname();
 
-  // URL 경로에서 모드를 추출 (예: /member, /admin) 기본값은 member
-  const mode = pathname?.split('/')[1] || 'member';
+  // URL 경로 분리 및 초기 값 추출
+  const firstSegment = pathname?.split('/')[1] || USER_MODES[0];
+
+  // 유효한 모드면 해당 모드를 사용하고, 아니면 기본값을 반환
+  const mode: UserMode = isValidMode(firstSegment) ? firstSegment : USER_MODES[0];
+
   return { mode };
 };

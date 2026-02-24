@@ -7,13 +7,18 @@ import Link from 'next/link';
 import { LogoutButton } from 'features/sign';
 import { Logo } from 'shared/icon/Logo';
 import { MEMBER_MENU } from 'shared/constants/memberMenu';
+import { useRoleContext } from 'entities/sign';
+import { ADMIN_MENU } from 'shared/constants/adminMenu';
 
-export function MemberSidebar() {
+export function Sidebar() {
   const pathname = usePathname();
+  const { mode } = useRoleContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [manualOpenGroup, setManualOpenGroup] = useState<string | null>(null);
 
-  const activeGroup = MEMBER_MENU.find((group) => group.path === pathname || group.subMenu?.some((sub) => sub.href === pathname));
+  const data = mode === 'admin' ? ADMIN_MENU : MEMBER_MENU;
+
+  const activeGroup = data.find((group) => group.path === pathname || group.subMenu?.some((sub) => sub.href === pathname));
 
   useEffect(() => {
     if (activeGroup) {
@@ -48,7 +53,7 @@ export function MemberSidebar() {
       </div>
 
       <nav className="no-scrollbar flex flex-col gap-0.5 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
-        {MEMBER_MENU.map((item) => {
+        {data.map((item) => {
           const hasSubMenu = Boolean(item.subMenu && item.subMenu.length > 0);
           const isExpanded = currentOpenGroup === item.group;
           const isGroupActive = pathname?.startsWith(item.path) || item.subMenu?.some((sub) => sub.href === pathname);
