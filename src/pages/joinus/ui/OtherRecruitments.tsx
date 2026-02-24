@@ -5,10 +5,18 @@ import Link from 'next/link';
 import { motion } from 'motion/react';
 import { useRecruitment } from 'entities/recruitment';
 import { RecruitmentCard } from './Component';
+import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 const VISIBLE_ITEMS = 3;
 
 export function OtherRecruitments() {
+  return (
+    <AsyncBoundary>
+      <OtherRecruitmentsContent />
+    </AsyncBoundary>
+  );
+}
+function OtherRecruitmentsContent() {
   const { data } = useRecruitment();
   const [currentIndex, setCurrentIndex] = useState(0);
 

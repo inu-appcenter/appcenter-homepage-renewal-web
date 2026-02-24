@@ -5,10 +5,19 @@ import Link from 'next/link';
 import { motion } from 'motion/react';
 import { ProjectCard } from './Component';
 import { useProject } from 'entities/project';
+import { AsyncBoundary } from 'shared/error/AsyncBoundary';
+
+export function OtherProjects() {
+  return (
+    <AsyncBoundary>
+      <OtherProjectsContent />
+    </AsyncBoundary>
+  );
+}
 
 const VISIBLE_ITEMS = 3;
 
-export function OtherProjects() {
+function OtherProjectsContent() {
   const { data } = useProject();
   const sortedDataByDate = data ? [...data].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()) : [];
 
