@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
-import { AlertCircle, Check, Plus, Search, Users, X } from 'lucide-react';
+import { Check, Plus, Search, Users, X } from 'lucide-react';
 
 import { Generation, useGeneration, usePart } from 'entities/generation';
 
 import { Modal } from 'shared/ui/modal';
 import { ProjectFormType } from '../../types/form';
+import { Alert } from 'shared/ui/alert';
 
 export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: allMembers } = useGeneration();
@@ -118,12 +119,11 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-xs font-medium text-amber-600">
-              <AlertCircle size={16} className="shrink-0" />
+            <Alert type="warning">
               <span>
                 반드시 <b>활동 기수</b>를 확인한 후 팀원을 선택해주세요.
               </span>
-            </div>
+            </Alert>
 
             <div className="flex-1 overflow-y-auto px-1 py-4">
               {filteredMembers.length > 0 ? (

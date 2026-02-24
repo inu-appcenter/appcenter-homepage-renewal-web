@@ -1,8 +1,9 @@
 'use client';
 import { useState, useRef } from 'react';
-import { Pencil, Plus, Trash2, Loader2, X, Upload, AlertCircle } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
+import { Alert } from 'shared/ui/alert';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -146,12 +147,11 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
 
       <div className="space-y-2">
         <label className="text-sm font-semibold text-slate-400">이미지 첨부</label>
-        <div className="flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-xs font-medium text-amber-600">
-          <AlertCircle size={16} className="shrink-0" />
+        <Alert type="warning">
           <span>
             이미지는 <b>무조건 </b>첨부해야합니다.
           </span>
-        </div>
+        </Alert>
 
         <div className="flex justify-start">
           {preview ? (
