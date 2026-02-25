@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Copy, Eye, EyeOff } from 'lucide-react';
 import { useRegistration } from 'entities/registraion';
 import { EditRegistrationButton } from './RegistartionForm';
+import { Alert } from 'shared/ui/alert';
 
 export const AdminRegistration = () => {
   const { data } = useRegistration();
@@ -31,6 +32,7 @@ export const AdminRegistration = () => {
         </div>
 
         <div className="flex flex-col gap-3">
+          <Alert type="error">코드가 외부에 노출되지 않도록 주의해주세요.</Alert>
           <div className="flex items-center justify-between px-1">
             {data.lastModifiedDate && (
               <span className="text-xs text-slate-400">

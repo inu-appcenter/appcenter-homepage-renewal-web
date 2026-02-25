@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { Trash2, Loader2, Pencil, Plus, Save } from 'lucide-react';
+import { Trash2, Loader2, Pencil, Plus } from 'lucide-react';
 import { useGenerationActions, useGroupYear, usePart, Generation, GenerationForm } from 'entities/generation';
 import { useRoles } from 'entities/role';
 
 import { Modal } from 'shared/ui/modal';
 import { SearchMember } from './SearchMember';
 import { Alert } from 'shared/ui/alert';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddGenerationForm = () => {
   return (
@@ -98,7 +99,7 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
 
   const handleSubmit = async () => {
     const finalYear = customYear !== '' ? Number(customYear) : formData.year;
-    const finalPart = customPart !== undefined ? customPart : formData.part;
+    const finalPart = customPart !== '' ? customPart : formData.part;
 
     await mutation.mutateAsync({
       ...formData,
@@ -212,17 +213,9 @@ const GenerationFormContent = ({ initialData, onClose }: FormContentProps) => {
           </div>
         </div>
       </div>
-
-      <div className="">
-        <button
-          disabled={isPending || !isValid}
-          onClick={handleSubmit}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-4 font-bold text-white shadow-xl shadow-indigo-100 transition-all hover:bg-indigo-700 active:scale-[0.98] disabled:bg-slate-200 disabled:shadow-none"
-        >
-          {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-          {isPending ? '처리 중...' : isEdit ? '변경사항 수정' : '저장'}
-        </button>
-      </div>
+      <SaveButton disabled={isPending || !isValid} onClick={handleSubmit} isPending={isPending}>
+        {isEdit ? '변경사항 수정' : '저장'}
+      </SaveButton>
     </div>
   );
 };

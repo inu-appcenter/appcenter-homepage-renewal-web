@@ -4,6 +4,7 @@ import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
 import { Alert } from 'shared/ui/alert';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -135,7 +136,7 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">워크숍 일정</label>
+        <label className="text-sm font-semibold text-slate-400">워크숍 날짜</label>
         <input
           type="date"
           required
@@ -175,14 +176,9 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
 
         <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
       </div>
-
-      <button
-        type="submit"
-        disabled={isPending || !title || !eventDate}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-4 font-bold text-white transition-all hover:bg-blue-600 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 className="animate-spin" /> : '저장하기'}
-      </button>
+      <SaveButton type="submit" disabled={isPending || !title || !eventDate || !preview}>
+        저장하기
+      </SaveButton>
     </form>
   );
 };

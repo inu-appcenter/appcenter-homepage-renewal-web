@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { useFAQActions, type Faq, type FAQForm } from 'entities/faq';
 
 import type { Part } from 'shared/types/part';
 import { Modal } from 'shared/ui/modal';
 import { usePart } from 'entities/generation';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddFAQForm = () => {
   const { addMutation } = useFAQActions();
@@ -125,14 +126,10 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
         value={formData.answer}
         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
       />
-      <button
-        type="submit"
-        disabled={isPending || !formData.question || !formData.answer}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-        {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '질문 저장'}
-      </button>
+
+      <SaveButton type="submit" disabled={isPending || !formData.question || !formData.answer}>
+        {initialData ? '변경사항 저장' : ' 저장'}
+      </SaveButton>
     </form>
   );
 };

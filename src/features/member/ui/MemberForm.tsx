@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Save, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, Palette, LinkIcon, FileText, Camera, X, Hash } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, Palette, LinkIcon, FileText, Camera, X, Hash } from 'lucide-react';
 
 import { Modal } from 'shared/ui/modal';
 import { useMemberActions, type Member, type MemberForm } from 'entities/member';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddMemberForm = () => {
   const { addMutation } = useMemberActions();
@@ -246,15 +247,9 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
           />
         </div>
       </section>
-
-      <button
-        disabled={isPending || !formData.name}
-        type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 py-4 font-bold text-white transition-all hover:bg-slate-800 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-        {isPending ? '처리 중...' : initialData ? '멤버 정보 수정' : '새 멤버 등록'}
-      </button>
+      <SaveButton disabled={isPending || !formData.name || !formData.studentNumber} isPending={isPending}>
+        {initialData ? '변경사항 수정' : '저장'}
+      </SaveButton>
     </form>
   );
 };

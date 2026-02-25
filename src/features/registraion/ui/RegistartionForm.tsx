@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { useRegistrationActions } from 'entities/registraion';
-import { Pencil, Save, Loader2 } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
+import { SaveButton } from 'shared/ui/button';
+import { Alert } from 'shared/ui/alert';
 
 export const EditRegistrationButton = ({ code }: { code: string }) => {
   const { editMutation } = useRegistrationActions();
@@ -56,17 +58,13 @@ const AuthCodeInnerForm = ({ initialData, onSubmit, isPending }: { initialData: 
             setFormData({ code: uppercasedValue });
           }}
         />
-        <p className="ml-1 text-xs text-slate-400"> 변경 즉시 기존 코드는 무효화됩니다.</p>
+        <Alert type="warning">
+          <strong>변경 즉시</strong> 기존 코드는 무효화됩니다.
+        </Alert>
       </div>
-
-      <button
-        type="submit"
-        disabled={isPending || !formData.code || formData.code === initialData.code}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-        {isPending ? '변경 중...' : '새 코드로 저장'}
-      </button>
+      <SaveButton type="submit" disabled={isPending || !formData.code || formData.code === initialData.code}>
+        코드 변경하기
+      </SaveButton>
     </form>
   );
 };

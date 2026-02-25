@@ -5,6 +5,7 @@ import { Modal } from 'shared/ui/modal';
 import { useSkillStackActions, type SkillStack } from 'entities/skill-stack';
 import { SKILL_CATEGORY, SKILL_CATEGORY_COLORS } from 'shared/constants/skillCategory';
 import { Alert } from 'shared/ui/alert';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -168,14 +169,9 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
           )}
         </div>
       </div>
-
-      <button
-        type="submit"
-        disabled={isPending || !name}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-4 font-bold text-white transition-all hover:bg-blue-600 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 className="animate-spin" /> : '저장하기'}
-      </button>
+      <SaveButton type="submit" disabled={isPending || !name || !category || !preview}>
+        저장하기
+      </SaveButton>
     </form>
   );
 };

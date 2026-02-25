@@ -16,7 +16,7 @@ export const MemberHomePage = () => {
         </h2>
       </header>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
         {MEMBER_MENU.map((feature, index) => (
           <div
             key={index}

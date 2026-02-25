@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { useRoleActions, type Role, type RoleForm } from 'entities/role';
 import { Modal } from 'shared/ui/modal';
+import { SaveButton } from 'shared/ui/button';
 
 export const AddRoleForm = () => {
   const { addMutation } = useRoleActions();
@@ -95,14 +96,9 @@ const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; on
           onChange={(e) => setFormData({ ...formData, roleName: e.target.value })}
         />
       </div>
-      <button
-        type="submit"
-        disabled={isPending || !formData.roleName}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
-      >
-        {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-        {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '데이터베이스에 저장'}
-      </button>
+      <SaveButton isPending={isPending} disabled={!formData.roleName}>
+        {initialData ? '변경사항 수정' : '저장'}
+      </SaveButton>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Info, TriangleAlert } from 'lucide-react';
 
 type AlertProps = {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ export function Alert({ children, type }: AlertProps) {
     case 'error':
       return (
         <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600">
-          <AlertCircle size={16} className="shrink-0" />
+          <TriangleAlert size={16} className="shrink-0" />
           {children}
         </div>
       );
@@ -24,7 +24,7 @@ export function Alert({ children, type }: AlertProps) {
     case 'info':
       return (
         <div className="flex items-center gap-2 rounded-lg bg-blue-50 p-3 text-xs font-medium text-blue-600">
-          <AlertCircle size={16} className="shrink-0" />
+          <Info size={16} className="shrink-0" />
           {children}
         </div>
       );
