@@ -1,2 +1,2 @@
-import { AdminLoginPage } from 'pages/admin';
+import { AdminLoginPage } from 'pages/dashboard';
 export default AdminLoginPage;

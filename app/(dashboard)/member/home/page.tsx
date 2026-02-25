@@ -1,2 +1,3 @@
-import { MemberHomePage } from 'pages/member';
+import { MemberHomePage } from 'pages/dashboard';
+
 export default MemberHomePage;

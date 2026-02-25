@@ -8,6 +8,7 @@ import type { RecruitmentForm as RecruitmentFormType } from '../types/form';
 import { Recruitment } from 'entities/recruitment';
 import Link from 'next/link';
 import { useRoleContext } from 'entities/sign';
+import { Alert } from 'shared/ui/alert';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
   const isEditMode = Boolean(initialData);
@@ -55,7 +56,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-      <h1 className="mb-8 text-2xl font-bold text-slate-900">{isEditMode ? '모집 공고 수정' : '신입 부원 모집 등록'}</h1>
+      <h1 className="mb-8 text-2xl font-bold text-slate-900">{isEditMode ? '모집 공고 수정' : '모집 공고 등록'}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         <section className="space-y-4">
@@ -112,14 +113,21 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
             모집 상세 조건
           </h2>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="flex gap-4">
-              <Input label="모집 시작일" type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
-              <Input label="모집 종료일" type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <div className="flex gap-4">
+                <Input label="모집 시작일" type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
+                <Input label="모집 종료일" type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
+                <Input label="모집 인원" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })} placeholder="숫자만 입력" />
+              </div>
+              <Input label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 열정있는 유니들" />
             </div>
-            <Input label="모집 인원" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })} placeholder="숫자만 입력" />
-            <Input label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 인천대학교 재학생" />
-            <Input label="지원 링크(Google Form 등)" value={form.applyLink} onChange={(e) => setForm({ ...form, applyLink: e.target.value })} placeholder="https://..." />
+            <div className="space-y-2">
+              <Alert type="warning">
+                <span className="whitespace-pre-line">{'링크 끝에 붙은 ? 기호와 그 뒤의 내용(예: ?usp=sharing)은 모두 지우고 입력해 주세요. \n설문지 링크가 제대로 작동하지 않을 수 있습니다.'}</span>
+              </Alert>
+              <Input label="지원 링크(Google Form 등)" value={form.applyLink} onChange={(e) => setForm({ ...form, applyLink: e.target.value })} placeholder="https://docs.google.com/forms" />
+            </div>
           </div>
         </section>
 

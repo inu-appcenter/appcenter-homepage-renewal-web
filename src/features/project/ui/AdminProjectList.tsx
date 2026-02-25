@@ -10,12 +10,32 @@ import { AppStore, GooglePlay, WebLink } from 'entities/link';
 import { UserMode, useRoleContext } from 'entities/sign';
 
 export const AdminProjectList = () => {
-  const { data: adminData } = useProject();
-  const { data: memberData } = useProjectByMember();
   const { mode } = useRoleContext();
+
+  switch (mode) {
+    case 'admin':
+      return <AdminProjectFetcher mode={mode} />;
+    case 'member':
+      return <MemberProjectFetcher mode={mode} />;
+    default:
+      return <div>알 수 없는 권한입니다.</div>;
+  }
+};
+
+const AdminProjectFetcher = ({ mode }: { mode: UserMode }) => {
+  const { data } = useProject();
+  return <ProjectListUI data={data} mode={mode} />;
+};
+
+const MemberProjectFetcher = ({ mode }: { mode: UserMode }) => {
+  const { data } = useProjectByMember();
+  return <ProjectListUI data={data} mode={mode} />;
+};
+
+const ProjectListUI = ({ data, mode }: { data: Project[]; mode: UserMode }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredData = (mode === 'admin' ? adminData : memberData)?.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase())) || [];
+  const filteredData = data.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>
@@ -44,7 +64,6 @@ export const AdminProjectList = () => {
     </>
   );
 };
-
 const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {
   const thumbnail = data.images && Object.values(data.images).length > 0 ? (Object.values(data.images)[0] as string) : null;
 

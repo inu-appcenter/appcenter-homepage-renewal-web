@@ -1,2 +1,3 @@
-import { AdminHomePage } from 'pages/admin';
+import { AdminHomePage } from 'pages/dashboard';
+
 export default AdminHomePage;

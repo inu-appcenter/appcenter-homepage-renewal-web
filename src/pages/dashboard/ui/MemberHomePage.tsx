@@ -9,9 +9,9 @@ export const MemberHomePage = () => {
   return (
     <section className="mx-auto max-w-7xl px-8 py-16">
       <header className="mb-16">
-        <h1 className="mb-3 text-sm font-semibold tracking-widest text-slate-400">멤버 페이지</h1>
+        <h1 className="mb-3 text-sm font-semibold tracking-widest text-slate-400">구성원 페이지</h1>
         <h2 className="text-5xl font-bold tracking-tight text-slate-900">
-          앱센터 멤버 페이지입니다 <br />
+          앱센터 구성원 페이지입니다 <br />
           <span className="text-slate-400">최대화된 화면으로 사용하길 권장합니다</span>
         </h2>
       </header>

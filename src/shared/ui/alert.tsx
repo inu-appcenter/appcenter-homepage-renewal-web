@@ -23,7 +23,7 @@ export function Alert({ children, type }: AlertProps) {
       );
     case 'info':
       return (
-        <div className="flex items-center gap-2 rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-600">
+        <div className="flex items-center gap-2 rounded-lg bg-blue-50 p-3 text-xs font-medium text-blue-600">
           <AlertCircle size={16} className="shrink-0" />
           {children}
         </div>

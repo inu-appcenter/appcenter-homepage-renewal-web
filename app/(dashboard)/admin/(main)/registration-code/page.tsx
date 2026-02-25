@@ -1,4 +1,4 @@
-import { AdminRegistrationCodePage } from 'pages/admin';
+import { AdminRegistrationCodePage } from 'pages/dashboard';
 export const dynamic = 'force-dynamic';
 
 export default AdminRegistrationCodePage;

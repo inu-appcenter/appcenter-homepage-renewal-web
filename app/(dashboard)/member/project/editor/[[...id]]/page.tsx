@@ -1,2 +1,2 @@
-import { AdminProjectWritePage } from 'pages/admin';
+import { AdminProjectWritePage } from 'pages/dashboard';
 export default AdminProjectWritePage;

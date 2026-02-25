@@ -1,4 +1,4 @@
-import { AdminWorkShopPage } from 'pages/admin';
+import { AdminWorkShopPage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 

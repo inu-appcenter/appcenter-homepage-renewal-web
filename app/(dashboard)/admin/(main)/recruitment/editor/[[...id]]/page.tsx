@@ -1,4 +1,4 @@
-import { AdminRecruitmentWritePage } from 'pages/admin';
+import { AdminRecruitmentWritePage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,2 +1,2 @@
-import { AdminActivityWritePage } from 'pages/admin';
+import { AdminActivityWritePage } from 'pages/dashboard';
 export default AdminActivityWritePage;

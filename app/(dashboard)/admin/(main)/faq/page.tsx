@@ -1,4 +1,4 @@
-import { AdminFAQPage } from 'pages/admin';
+import { AdminFAQPage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 

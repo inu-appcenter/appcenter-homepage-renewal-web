@@ -1,4 +1,4 @@
-import { MemberInfoPage } from 'pages/member';
+import { MemberInfoPage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 

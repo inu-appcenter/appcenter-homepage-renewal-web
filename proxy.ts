@@ -16,7 +16,7 @@ export async function proxy(request: NextRequest) {
   const refreshToken = request.cookies.get('refreshToken')?.value;
 
   // 1. accessToken이 있으면 일단 통과시킵니다.
-  // (만약 만료된 토큰이라면 이후 BFF나 API 단에서 401을 내뱉고 갱신하게 됩니다)
+  // (만약 만료된 토큰이라면 이후 BFF에서 401을 보고 갱신하게 됩니다)
   if (accessToken) {
     return NextResponse.next();
   }
@@ -42,7 +42,7 @@ export async function proxy(request: NextRequest) {
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
           path: '/',
-          maxAge: 30 * 60 // 30분 (초 단위)
+          maxAge: 30 * 60 // 30분
         });
 
         if (newData.refreshToken) {
@@ -51,19 +51,17 @@ export async function proxy(request: NextRequest) {
             sameSite: 'strict',
             secure: process.env.NODE_ENV === 'production',
             path: '/',
-            maxAge: 14 * 24 * 60 * 60 // 14일 (초 단위)
+            maxAge: 14 * 24 * 60 * 60 // 14일
           });
         }
 
-        return response; // 성공적으로 재발급 후 페이지 진입 허용
+        return response;
       }
     } catch (error) {
       console.error('Middleware Token Refresh Error:', error);
-      // 에러가 나면 아래의 리다이렉트 로직으로 자연스럽게 넘어갑니다.
     }
   }
 
-  // 3. 토큰이 모두 없거나, 재발급에 실패한 경우 로그인 페이지로 쫓아냅니다.
   if (isAdminRoute) {
     return NextResponse.redirect(new URL('/admin', request.url));
   }

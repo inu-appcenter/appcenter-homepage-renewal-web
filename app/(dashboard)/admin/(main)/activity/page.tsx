@@ -1,4 +1,4 @@
-import { AdminActivityPage } from 'pages/admin';
+import { AdminActivityPage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 

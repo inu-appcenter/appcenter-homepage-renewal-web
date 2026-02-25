@@ -1,15 +1,14 @@
 import { Suspense } from 'react';
-import { Info } from 'lucide-react';
 import { PageTitle } from './Components';
 import { TableSkeleton } from 'shared/skeleton/TableSkeleton';
 import { AdminRecruitmentList } from 'features/recruitment';
+import { Alert } from 'shared/ui/alert';
 
 export const AdminRecruitmentPage = () => {
   return (
     <div className="flex flex-col gap-6">
       <PageTitle title="모집 공고 관리" description="동아리의 모집 공고를 관리합니다." />
-      <div className="flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-4 shadow-sm">
-        <Info className="mt-0.5 h-5 w-5 shrink-0 text-blue-500" />
+      <Alert type="info">
         <div className="flex flex-col gap-1">
           <h3 className="text-sm font-bold text-blue-900">상태 자동화 안내</h3>
           <p className="text-sm leading-relaxed text-blue-800">
@@ -20,7 +19,7 @@ export const AdminRecruitmentPage = () => {
             으로 상태를 변경합니다.
           </p>
         </div>
-      </div>
+      </Alert>
 
       <Suspense fallback={<TableSkeleton />}>
         <AdminRecruitmentList />

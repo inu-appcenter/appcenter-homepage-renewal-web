@@ -6,13 +6,32 @@ import { useRecruitment, useRecruitmentByMember } from 'entities/recruitment';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { STATUS_CONFIG } from '../config/statusConfig';
-import { useRoleContext } from 'entities/sign';
+import { UserMode, useRoleContext } from 'entities/sign';
 
 export const AdminRecruitmentList = () => {
-  const { data: adminData } = useRecruitment();
-  const { data: memberData } = useRecruitmentByMember();
   const { mode } = useRoleContext();
 
+  switch (mode) {
+    case 'admin':
+      return <AdminRecruitmentFetcher mode={mode} />;
+    case 'member':
+      return <MemberRecruitmentFetcher mode={mode} />;
+    default:
+      return <div>알 수 없는 권한입니다.</div>;
+  }
+};
+
+const AdminRecruitmentFetcher = ({ mode }: { mode: UserMode }) => {
+  const { data } = useRecruitment();
+  return <RecruitmentListUI data={data} mode={mode} />;
+};
+
+const MemberRecruitmentFetcher = ({ mode }: { mode: UserMode }) => {
+  const { data } = useRecruitmentByMember();
+  return <RecruitmentListUI data={data} mode={mode} />;
+};
+
+const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data']; mode: UserMode }) => {
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex w-full flex-row justify-end">
@@ -29,21 +48,10 @@ export const AdminRecruitmentList = () => {
           <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {mode === 'admin' ? (
-            <>
-              {adminData.map((item) => (
-                <Item key={item.id} data={item} mode={mode} />
-              ))}
-              {adminData.length === 0 && <EmptyResult />}
-            </>
-          ) : (
-            <>
-              {memberData.map((item) => (
-                <Item key={item.id} data={item} mode={mode} />
-              ))}
-              {memberData.length === 0 && <EmptyResult />}
-            </>
-          )}
+          {data.map((item) => (
+            <Item key={item.id} data={item} mode={mode} />
+          ))}
+          {data.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>

@@ -1,4 +1,4 @@
-import { AdminRolePage } from 'pages/admin';
+import { AdminRolePage } from 'pages/dashboard';
 
 export const dynamic = 'force-dynamic';
 
