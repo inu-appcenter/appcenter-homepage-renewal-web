@@ -8,7 +8,7 @@ export const AdminRecruitmentEmailList = () => {
   const { data } = useRecruitmentEmail();
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="mt-4 flex flex-col items-center gap-6">
       <Table>
         <TableHeader>
           <TableHeaderCell className="w-16">ID</TableHeaderCell>

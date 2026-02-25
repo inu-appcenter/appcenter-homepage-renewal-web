@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { Plus, Trash2, Image as ImageIcon, X, Save } from 'lucide-react';
+import { Plus, Trash2, Image as ImageIcon, X } from 'lucide-react';
 import type { ActivityForm as ActivityFormType } from '../types/form';
 import { Activity, useActivityActions } from 'entities/activity';
 import { useEditActivity } from '../hooks/useEditActivity';
 import { useAddActivity } from '../hooks/useAddActivity';
+import { SaveButton } from 'shared/ui/button';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -255,7 +256,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
                         </label>
                       </div>
                     </div>
-                    <p className="text-right text-xs text-slate-400">{section.imageUrls.length}개의 이미지 선택됨</p>
+                    <p className="text-right text-xs text-slate-400">{section.imageUrls.length}개의 이미지 추가됨</p>
                   </div>
                 </div>
               </div>
@@ -272,13 +273,9 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
         </section>
 
         <div className="flex justify-end pt-4">
-          <button
-            disabled={isPending}
-            type="submit"
-            className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700 disabled:bg-slate-400"
-          >
-            <Save size={18} /> {isEditMode ? '게시글 수정 저장' : '게시글 등록'}
-          </button>
+          <SaveButton disabled={isPending} type="submit" className="w-60">
+            {isEditMode ? '변경사항 저장' : '게시글 등록'}
+          </SaveButton>
         </div>
       </form>
     </div>

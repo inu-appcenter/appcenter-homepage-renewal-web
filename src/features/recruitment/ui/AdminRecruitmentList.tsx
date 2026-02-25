@@ -7,6 +7,7 @@ import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { STATUS_CONFIG } from '../config/statusConfig';
 import { UserMode, useRoleContext } from 'entities/sign';
+import { Alert } from 'shared/ui/alert';
 
 export const AdminRecruitmentList = () => {
   const { mode } = useRoleContext();
@@ -34,7 +35,18 @@ const MemberRecruitmentFetcher = ({ mode }: { mode: UserMode }) => {
 const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data']; mode: UserMode }) => {
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="flex w-full flex-row justify-end">
+      <div className="flex w-full flex-row justify-between">
+        <Alert type="info">
+          <div className="flex flex-col gap-1">
+            <p className="text-sm leading-relaxed text-blue-800">
+              모집 상태를 <strong className="font-semibold">자동</strong>으로 설정해 두면, 설정하신 <strong className="font-semibold">모집 시작일과 종료일</strong>에 맞춰 시스템이 알아서
+              <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-amber-600 shadow-sm">대기중</span>
+              <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-emerald-600 shadow-sm">모집중</span>
+              <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-rose-600 shadow-sm">마감</span>
+              으로 상태를 변경합니다.
+            </p>
+          </div>
+        </Alert>
         <AddRecruitmentButton mode={mode} />
       </div>
       <Table>

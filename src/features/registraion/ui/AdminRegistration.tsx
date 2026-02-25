@@ -23,7 +23,7 @@ export const AdminRegistration = () => {
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-1">
             <h2 className="text-xl font-bold text-slate-800">회원가입 인증 코드</h2>
-            <p className="text-sm text-slate-500">멤버 회원가입 시 필요한 인증 코드입니다. 필요 시 코드를 수정할 수 있습니다.</p>
+            <p className="text-sm text-slate-500">구성원 회원가입 시 필요한 인증 코드입니다. 필요 시 코드를 수정할 수 있습니다.</p>
           </div>
 
           <div className="shrink-0">

@@ -113,7 +113,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">질문</label>
       <input
         disabled={isPending}
-        className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
+        className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
         placeholder="질문을 입력해주세요"
         value={formData.question}
         onChange={(e) => setFormData({ ...formData, question: e.target.value })}

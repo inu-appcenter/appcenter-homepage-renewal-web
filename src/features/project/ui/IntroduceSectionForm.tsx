@@ -29,7 +29,7 @@ export const IntroduceSectionForm = ({ form, setForm }: IntroduceSectionFormProp
         >
           {selectedTab === 0 && <StackForm form={form} setForm={setForm} />}
           {selectedTab === 1 && <TeamForm form={form} setForm={setForm} />}
-          {selectedTab === 2 && '아직 미구현'}
+          {selectedTab === 2 && <div className="flex h-full items-center justify-center">추후 구현 예정</div>}
         </Suspense>
       </div>
     </section>

@@ -83,7 +83,7 @@ export const TitleInput = ({ form, onChange }: InputProps) => {
       <div className="focus-within:border-brand-primary/50 focus-within:ring-brand-primary/50 bg-surface-elevated relative rounded-2xl border border-white/10 px-4 py-4 caret-white transition-all focus-within:ring-1 hover:border-white/20">
         <input
           type="text"
-          className="w-full bg-transparent text-[72px] font-bold text-gray-300 outline-none placeholder:text-gray-700"
+          className="w-full bg-transparent text-xl/7 text-gray-300 outline-none placeholder:text-gray-600"
           placeholder="프로젝트 명 (10자 이내 권장)"
           value={form.title}
           onChange={onChange('title')}
