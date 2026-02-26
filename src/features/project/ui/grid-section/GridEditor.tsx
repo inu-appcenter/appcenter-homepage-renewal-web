@@ -1,7 +1,7 @@
 import { projectApi } from 'entities/project';
 import { useProjectSubmit } from '../../hooks/useProjectSubmit';
 import { GridItem, GridItemType, ProjectFormType } from '../../types/form';
-import { ArrowDownRight, ImageIcon, LayoutGrid, Loader2, Plus, Trash2, Type, X, Upload } from 'lucide-react';
+import { ArrowDownRight, ImageIcon, LayoutGrid, Loader2, Plus, Trash2, Type, X, Upload, GripHorizontal } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Responsive, useContainerWidth } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -219,7 +219,9 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
             width={width}
             onLayoutChange={onLayoutChange}
             dragConfig={{
-              enabled: true
+              enabled: true,
+              handle: '.drag-handle',
+              cancel: 'textarea'
             }}
             resizeConfig={{
               enabled: true,
@@ -228,7 +230,9 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
           >
             {items.map((item) => (
               <div key={item.i} className="group hover:border-brand-primary/30 relative rounded-2xl border border-white/5 bg-[#1e1e22] shadow-lg transition-all">
-                <div className="drag-handle absolute top-0 left-0 h-6 w-full cursor-move rounded-t-2xl bg-transparent" />
+                <div className="drag-handle absolute top-0 left-0 z-20 flex h-10 w-full cursor-grab items-center justify-center rounded-t-2xl bg-linear-to-b from-black/80 to-transparent opacity-0 transition-opacity group-hover:opacity-100">
+                  <GripHorizontal size={32} className="text-zinc-300" />
+                </div>
 
                 <div className="absolute top-2 right-2 z-30 opacity-0 transition-opacity group-hover:opacity-100">
                   <button

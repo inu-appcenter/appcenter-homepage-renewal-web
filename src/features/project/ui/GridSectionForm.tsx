@@ -83,6 +83,9 @@ export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormPro
                 크기는 요소의 <strong>우측 하단 모서리</strong>를 드래그하여 조절하세요.
               </li>
               <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
+                블록을 옮기실 때는 <strong>상단의 드래그 핸들</strong>을 드래그하여 이동하세요.
+              </li>
+              <li className="flex gap-2 border-l-2 border-emerald-500/70 pl-3">
                 섹션을 늘리고 싶다면 아래<strong>새로운 레이아웃 섹션 추가</strong>버튼을 활용 하세요.
               </li>
             </ul>
@@ -99,9 +102,6 @@ export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormPro
               </li>
               <li className="flex gap-2 border-l-2 border-red-400/30 pl-3">
                 글자 블록에 <strong>스크롤바</strong>가 생길 경우, 실제 화면에서 내용이 잘릴 수 있으니 높이를 충분히 조절해 주세요.
-              </li>
-              <li className="flex gap-2 border-l-2 border-red-400/30 pl-3">
-                글자 블록에서 드래그로 글자선택이 안됩니다. <strong>키보드 shift 키를 활용</strong>하여 선택해주세요.
               </li>
             </ul>
           </div>
