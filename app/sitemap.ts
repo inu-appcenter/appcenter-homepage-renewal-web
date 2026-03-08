@@ -4,7 +4,7 @@ import { activityApi } from 'entities/activity/api';
 import { recruitmentApi } from 'entities/recruitment/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://inuappcenter.kr';
+  const baseUrl = 'https://inuappcenter.kr';
 
   const staticRoutes = ['', '/joinus', '/ourteam', '/project', '/activity'].map((route) => ({
     url: `${baseUrl}${route}`,
