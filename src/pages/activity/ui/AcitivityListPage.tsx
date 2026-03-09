@@ -1,7 +1,19 @@
 import { activityApi } from 'entities/activity';
 import { ScrollToBottomButton } from 'entities/scroll';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: '활동 | 인천대학교 앱센터',
+    description: '앱센터에서 진행한 다양한 활동들을 확인해보세요.',
+    openGraph: {
+      title: '활동 | 인천대학교 앱센터',
+      description: '앱센터에서 진행한 다양한 활동들을 확인해보세요.'
+    }
+  };
+}
 
 export async function ActivityListPage() {
   const data = await activityApi.getAll();

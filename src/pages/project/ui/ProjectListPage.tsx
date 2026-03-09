@@ -1,7 +1,19 @@
 import { projectApi } from 'entities/project';
 import { ScrollToBottomButton } from 'entities/scroll';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: '프로젝트 | 인천대학교 앱센터',
+    description: '인천대학교 앱센터에서 진행한 프로젝트들을 소개합니다.',
+    openGraph: {
+      title: '프로젝트 | 인천대학교 앱센터',
+      description: '인천대학교 앱센터에서 진행한 프로젝트들을 소개합니다.'
+    }
+  };
+}
 
 export async function ProjectListPage() {
   const data = await projectApi.getAll();

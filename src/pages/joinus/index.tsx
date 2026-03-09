@@ -1,2 +1,2 @@
-export { JoinUsPage } from './ui/JoinUsPage';
-export { JoinUsDetailPage } from './ui/JoinUsDetailPage';
+export { JoinUsPage, generateMetadata as generateJoinUsMetadata } from './ui/JoinUsPage';
+export { JoinUsDetailPage, generateMetadata as generateJoinUsDetailMetadata } from './ui/JoinUsDetailPage';

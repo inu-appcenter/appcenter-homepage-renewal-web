@@ -4,6 +4,29 @@ import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';
 import { OtherProjects } from './OtherProject';
 
+import { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: number }> }): Promise<Metadata> {
+  const { id } = await params;
+  try {
+    const data = await projectApi.getById(id);
+
+    return {
+      title: `${data.title} | 인천대학교 앱센터`,
+      description: data.subTitle,
+      openGraph: {
+        title: data.title,
+        description: data.subTitle,
+        images: Object.values(data.images).map((url) => ({ url }))
+      }
+    };
+  } catch {
+    return {
+      title: '프로젝트 상세 | 인천대학교 앱센터'
+    };
+  }
+}
+
 export async function ProjectDetailPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
   const data = await projectApi.getById(id);

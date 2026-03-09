@@ -4,6 +4,21 @@ import { recruitmentApi } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
 import Image from 'next/image';
 
+export async function generateMetadata({ params }: { params: Promise<{ id: number }> }) {
+  const { id } = await params;
+  const recruitmentData = await recruitmentApi.getById(id);
+
+  return {
+    title: `${recruitmentData.title} | 인천대학교 앱센터`,
+    description: recruitmentData.title,
+    openGraph: {
+      title: `${recruitmentData.title} | 인천대학교 앱센터`,
+      description: recruitmentData.title,
+      images: recruitmentData.thumbnail
+    }
+  };
+}
+
 export async function JoinUsDetailPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
   const recruitmentData = await recruitmentApi.getById(id);

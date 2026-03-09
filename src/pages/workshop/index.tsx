@@ -1,1 +1,1 @@
-export { WorkshopListPage } from './ui/WorkshopListPage';
+export { WorkshopListPage, generateMetadata } from './ui/WorkshopListPage';

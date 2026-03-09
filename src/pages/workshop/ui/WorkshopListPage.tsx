@@ -2,6 +2,16 @@ import { ScrollToBottomButton } from 'entities/scroll';
 import { workShopApi } from 'entities/workshop';
 import Image from 'next/image';
 
+export function generateMetadata() {
+  return {
+    title: '워크숍 | 인천대학교 앱센터',
+    description: '앱센터에서 진행한 워크숍입니다.',
+    openGraph: {
+      title: '워크숍 | 인천대학교 앱센터',
+      description: '앱센터에서 진행한 워크숍입니다.'
+    }
+  };
+}
 export async function WorkshopListPage() {
   const data = await workShopApi.getAll();
   const sortedData = data.sort((a, b) => {
