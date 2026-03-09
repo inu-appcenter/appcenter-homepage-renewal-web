@@ -10,6 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
   const { id } = await params;
   try {
     const data = await projectApi.getById(id);
+    const imageUrls = Object.values(data.images);
 
     return {
       title: `${data.title} | 인천대학교 앱센터`,
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
       openGraph: {
         title: data.title,
         description: data.subTitle,
-        images: Object.values(data.images).map((url) => ({ url }))
+        images: imageUrls[0]
       }
     };
   } catch {
