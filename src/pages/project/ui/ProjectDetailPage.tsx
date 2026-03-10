@@ -15,10 +15,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
     return {
       title: `${data.title} | 인천대학교 앱센터`,
       description: data.subTitle,
+      icons: {
+        icon: imageUrls[0] || '/favicon.ico'
+      },
       openGraph: {
         title: data.title,
-        description: data.subTitle,
-        images: imageUrls[0]
+        description: data.subTitle
       }
     };
   } catch {

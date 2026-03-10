@@ -8,6 +8,7 @@ import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table'
 import { STATUS_CONFIG } from '../config/statusConfig';
 import { UserMode, useRoleContext } from 'entities/sign';
 import { Alert } from 'shared/ui/alert';
+import { useMemo } from 'react';
 
 export const AdminRecruitmentList = () => {
   const { mode } = useRoleContext();
@@ -33,6 +34,9 @@ const MemberRecruitmentFetcher = ({ mode }: { mode: UserMode }) => {
 };
 
 const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data']; mode: UserMode }) => {
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => b.id - a.id);
+  }, [data]);
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex w-full flex-row justify-between">
@@ -60,10 +64,10 @@ const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitm
           <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
+          {sortedData.map((item) => (
             <Item key={item.id} data={item} mode={mode} />
           ))}
-          {data.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>

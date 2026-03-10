@@ -17,15 +17,19 @@ export const AdminFAQList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<Part | 'All'>('All');
 
+  const sortedFaqs = useMemo(() => {
+    return [...data].sort((a, b) => b.id - a.id);
+  }, [data]);
+
   const filterOptions: Array<Part | 'All'> = ['All', ...partData.parts];
 
   const filteredFaqs = useMemo(() => {
-    return data.filter((faq) => {
+    return sortedFaqs.filter((faq) => {
       const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPart = selectedPart === 'All' || faq.part === selectedPart;
       return matchesSearch && matchesPart;
     });
-  }, [searchTerm, selectedPart, data]);
+  }, [searchTerm, selectedPart, sortedFaqs]);
 
   return (
     <>

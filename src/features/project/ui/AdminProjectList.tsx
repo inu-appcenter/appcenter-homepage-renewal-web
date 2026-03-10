@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Calendar } from 'lucide-react';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
@@ -34,8 +34,10 @@ const MemberProjectFetcher = ({ mode }: { mode: UserMode }) => {
 
 const ProjectListUI = ({ data, mode }: { data: Project[]; mode: UserMode }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredData = data.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => b.id - a.id);
+  }, [data]);
+  const filteredData = sortedData.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>

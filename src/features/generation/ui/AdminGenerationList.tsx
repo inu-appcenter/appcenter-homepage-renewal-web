@@ -21,6 +21,10 @@ export const AdminGenerationList = () => {
   const [selectedPart, setSelectedPart] = useState<'All' | Part>('All');
   const [selectedYear, setSelectedYear] = useState<'All' | number>('All');
 
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => b.group_id - a.group_id);
+  }, [data]);
+
   const partOptions: Array<Part | 'All'> = ['All', ...parts.parts];
 
   const yearOptions: Array<number | 'All'> = useMemo(() => {
@@ -35,14 +39,14 @@ export const AdminGenerationList = () => {
   };
 
   const filteredData = useMemo(() => {
-    return data.filter((item) => {
+    return sortedData.filter((item) => {
       const matchesSearch = item.member.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPart = selectedPart === 'All' || item.part === selectedPart;
       const matchesYear = selectedYear === 'All' || item.year === selectedYear;
 
       return matchesSearch && matchesPart && matchesYear;
     });
-  }, [searchTerm, selectedPart, selectedYear, data]);
+  }, [searchTerm, selectedPart, selectedYear, sortedData]);
 
   return (
     <>

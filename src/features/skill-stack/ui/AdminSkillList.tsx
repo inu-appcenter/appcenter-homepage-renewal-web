@@ -4,9 +4,13 @@ import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { AddSkillForm, DeleteSkillButton, EditSkillForm } from './SkillForm';
 import { useSkillStack } from 'entities/skill-stack';
+import { useMemo } from 'react';
 
 export const AdminSkillList = () => {
   const { data } = useSkillStack();
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => b.id - a.id);
+  }, [data]);
 
   return (
     <div className="flex flex-col items-end gap-6">
@@ -20,10 +24,10 @@ export const AdminSkillList = () => {
           <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
+          {sortedData.map((item) => (
             <Item key={item.id} data={item} />
           ))}
-          {data.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>

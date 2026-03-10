@@ -13,12 +13,16 @@ export const AdminMemberList = () => {
   const { data } = useMember();
   const [searchTerm, setSearchTerm] = useState('');
 
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => b.member_id - a.member_id);
+  }, [data]);
+
   const filteredMembers = useMemo(() => {
-    return data.filter((m) => {
+    return sortedData.filter((m) => {
       const searchStr = `${m.name}`.toLowerCase();
       return searchStr.includes(searchTerm.toLowerCase());
     });
-  }, [searchTerm, data]);
+  }, [searchTerm, sortedData]);
 
   return (
     <>
