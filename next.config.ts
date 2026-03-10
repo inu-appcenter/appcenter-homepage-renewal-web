@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       }
     ],
     qualities: [75, 100]
+  },
+  logging: {
+    fetches: {
+      fullUrl: true // 백엔드로 보내는 전체 URL을 로그에 출력
+    }
   }
 };
 
