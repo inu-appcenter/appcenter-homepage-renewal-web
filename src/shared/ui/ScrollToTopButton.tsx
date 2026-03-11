@@ -23,7 +23,7 @@ export function ScrollToTopButton() {
       onClick={scrollToTop}
       className={`fixed right-1/2 bottom-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-white shadow-2xl transition-all duration-300 ease-in-out ${
         isVisible ? 'visible translate-y-0 scale-100 opacity-100' : 'invisible translate-y-4 scale-75 opacity-0'
-      } hover:scale-110 hover:bg-indigo-600 active:scale-95`}
+      } hover:bg-brand-primary-cta hover:scale-110 active:scale-95`}
       aria-label="Scroll to top"
     >
       <ArrowUp size={24} />

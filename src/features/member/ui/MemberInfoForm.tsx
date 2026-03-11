@@ -4,6 +4,7 @@ import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, Li
 
 import { useMemberActions, useMemberByMember } from 'entities/member';
 import type { MemberForm as MemberFormType } from 'entities/member';
+import { toast } from 'sonner';
 
 export function MemberInfoForm() {
   const { data: memberData } = useMemberByMember();
@@ -41,6 +42,7 @@ export function MemberInfoForm() {
 
   return (
     <div className="mx-auto w-full max-w-7xl rounded-3xl border border-slate-200 bg-white p-12 shadow-xl shadow-slate-200/50">
+      <button onClick={() => toast.warning('하이')}>클릭</button>
       <form onSubmit={handleSubmit} className="space-y-10">
         <section className="flex flex-col items-center gap-6 border-b border-slate-100 pb-10 md:flex-row md:items-end">
           <div className="group relative">

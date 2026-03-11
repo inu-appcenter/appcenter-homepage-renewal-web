@@ -1,10 +1,11 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -79,34 +80,37 @@ interface WorkShopFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   isPending: boolean;
 }
+
 export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormProps) => {
   const [title, setTitle] = useState(initialData?.title || '');
   const [eventDate, setEventDate] = useState(initialData?.eventDate || '');
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(() => {
-    if (initialData?.imageUrl) {
-      return initialData.imageUrl || null;
-    }
-    return null;
+    return initialData?.imageUrl || null;
   });
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const maxSizeInBytes = 2 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.error('파일 크기는 2MB 이하여야 합니다');
+      e.target.value = '';
+      return;
+    }
+
     setSelectedFile(file);
 
     if (preview && !initialData?.imageUrl) URL.revokeObjectURL(preview);
     setPreview(URL.createObjectURL(file));
+    e.target.value = '';
   };
 
   const removeFile = () => {
     setSelectedFile(null);
     setPreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -150,7 +154,7 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
         <label className="text-sm font-semibold text-slate-400">이미지 첨부</label>
         <Alert type="warning">
           <span>
-            이미지는 <b>무조건 </b>첨부해야합니다.
+            이미지는 <b>무조건 </b>첨부해야합니다
           </span>
         </Alert>
 
@@ -163,18 +167,13 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="flex aspect-square w-32 flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-blue-400 hover:bg-blue-50"
-            >
+            <label className="flex aspect-square w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-blue-400 hover:bg-blue-50">
               <Upload size={24} />
               <span className="text-xs">사진 추가</span>
-            </button>
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+            </label>
           )}
         </div>
-
-        <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
       </div>
       <SaveButton type="submit" disabled={isPending || !title || !eventDate || !preview}>
         저장하기

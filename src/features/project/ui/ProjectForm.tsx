@@ -131,7 +131,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
           <Alert type="warning">
             <span>
-              이미지 크기는 <strong>최대 5MB</strong>까지 허용됩니다. <br />
+              이미지 크기는 <strong>최대 2MB</strong>까지 허용됩니다. <br />
             </span>
           </Alert>
           {step !== 'main' && (

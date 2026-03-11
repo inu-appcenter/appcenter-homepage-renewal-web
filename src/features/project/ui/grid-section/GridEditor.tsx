@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { Responsive, useContainerWidth } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import { toast } from 'sonner';
 
 interface GridEditorProps {
   initialItems: GridItem[];
@@ -56,13 +57,17 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      // 기존 미리보기 URL이 있다면 해제
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+    if (!file) return;
+    const maxSizeInBytes = 2 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.error('파일 크기는 2MB 이하여야 합니다');
+      e.target.value = '';
+      return;
     }
+
+    setSelectedFile(file);
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
   const addItem = async () => {
@@ -82,7 +87,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
       onUpdate(newItems);
       setInputValue('');
     } else if (inputType === 'image') {
-      if (!selectedFile) return alert('이미지를 선택해주세요.');
+      if (!selectedFile) return toast.error('이미지를 선택해주세요.');
       if (!projectId) return;
       if (!currentForm) return;
 
@@ -156,6 +161,8 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
                 type="button"
                 onClick={() => {
                   setInputType(type);
+                  setSelectedFile(null);
+                  setPreviewUrl(null);
                   setInputValue('');
                 }}
                 className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-all ${

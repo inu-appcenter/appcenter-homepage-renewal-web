@@ -6,6 +6,7 @@ import { useSkillStackActions, type SkillStack } from 'entities/skill-stack';
 import { SKILL_CATEGORY, SKILL_CATEGORY_COLORS } from 'shared/constants/skillCategory';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -97,7 +98,17 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
+
     if (selectedFile) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (selectedFile.size > maxSizeInBytes) {
+        toast.error('이미지 크기는 2MB 이하여야 합니다');
+
+        e.target.value = '';
+        return;
+      }
+
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));
     }

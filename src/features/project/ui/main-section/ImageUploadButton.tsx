@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent } from 'react';
 import { ImagePlus, Trash2, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ImageUploaderProps {
   imageFile: string | null;
@@ -7,6 +8,22 @@ interface ImageUploaderProps {
   onRemove: (e: MouseEvent) => void;
 }
 export const MockupImageUploader = ({ imageFile, onUpload, onRemove }: ImageUploaderProps) => {
+  const handleUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (file.size > maxSizeInBytes) {
+        toast.error('이미지 크기는 2MB 이하여야 합니다');
+
+        e.target.value = '';
+        return;
+      }
+    }
+
+    onUpload(e);
+  };
   return (
     <div className="group flex flex-col">
       <label className="mb-2 ml-1 block text-xs font-bold tracking-wider text-gray-500">디바이스 목업 이미지 (필수)</label>
@@ -15,7 +32,7 @@ export const MockupImageUploader = ({ imageFile, onUpload, onRemove }: ImageUplo
           imageFile ? 'border-transparent bg-black shadow-2xl' : 'hover:border-brand-primary/50 border-gray-700 bg-[#151518] hover:bg-[#1a1a1f]'
         }`}
       >
-        <input type="file" className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" accept="image/*" onChange={onUpload} />
+        <input type="file" className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" accept="image/*" onChange={handleUploadChange} />
 
         {imageFile ? (
           <div className="group relative h-full w-full">
@@ -47,6 +64,22 @@ export const MockupImageUploader = ({ imageFile, onUpload, onRemove }: ImageUplo
 };
 
 export const AppIconUploader = ({ imageFile, onUpload, onRemove }: ImageUploaderProps) => {
+  const handleUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (file.size > maxSizeInBytes) {
+        toast.error('이미지 크기는 2MB 이하여야 합니다');
+
+        e.target.value = '';
+        return;
+      }
+    }
+
+    onUpload(e);
+  };
   return (
     <div className="group flex flex-col">
       <label className="mb-2 ml-1 block text-xs font-bold tracking-wider text-gray-500">앱 아이콘 (필수)</label>
@@ -55,7 +88,7 @@ export const AppIconUploader = ({ imageFile, onUpload, onRemove }: ImageUploader
           imageFile ? 'border-transparent bg-black shadow-lg' : 'hover:border-brand-primary/50 border-gray-700 bg-[#151518] hover:bg-[#1a1a1f]'
         }`}
       >
-        <input type="file" className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" accept="image/*" onChange={onUpload} />
+        <input type="file" className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" accept="image/*" onChange={handleUploadChange} />
 
         {imageFile ? (
           <div className="group relative h-full w-full">

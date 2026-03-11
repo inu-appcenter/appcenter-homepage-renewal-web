@@ -6,6 +6,7 @@ import { Activity, useActivityActions } from 'entities/activity';
 import { useEditActivity } from '../hooks/useEditActivity';
 import { useAddActivity } from '../hooks/useAddActivity';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -53,7 +54,14 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+      if (file.size > maxSizeInBytes) {
+        toast.error('썸네일 파일 크기는 2MB 이하여야 합니다.');
+        e.target.value = '';
+        return;
+      }
       setForm((prev) => ({ ...prev, thumbnail: file }));
+      e.target.value = '';
     }
   };
 
@@ -87,6 +95,16 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const handleSectionImageAdd = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      const hasLargeFile = newFiles.some((file) => file.size > maxSizeInBytes);
+
+      if (hasLargeFile) {
+        toast.error('2MB 이하의 파일만 업로드 가능합니다');
+        e.target.value = '';
+        return;
+      }
+
       setForm((prev) => ({
         ...prev,
         contents: prev.contents.map((s) => {
@@ -96,9 +114,9 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
           return s;
         })
       }));
+      e.target.value = '';
     }
   };
-
   const removeSectionImage = async (sectionId: number, targetImage: string | File) => {
     //  로컬 파일인 경우 (아직 업로드 안 됨) -> State에서만 삭제
     if (targetImage instanceof File) {
@@ -150,7 +168,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
       <form onSubmit={handleSubmit} className="space-y-8">
         <section className="space-y-4">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
-            <span className="bg-brand-primary-cta flex h-6 w-6 items-center justify-center rounded-full text-xs">1</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">1</span>
             기본 정보
           </h2>
 
@@ -207,7 +225,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
         <section className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
-              <span className="bg-brand-primary-cta flex h-6 w-6 items-center justify-center rounded-full text-xs">2</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">2</span>
               상세 콘텐츠
             </h2>
           </div>
@@ -286,7 +304,7 @@ const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInp
   return (
     <div className="space-y-1">
       <label className="text-sm font-medium text-slate-700">{label}</label>
-      <input {...props} className={`w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className}`} />
+      <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className}`} />
     </div>
   );
 };

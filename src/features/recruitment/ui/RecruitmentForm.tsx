@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useRoleContext } from 'entities/sign';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
   const isEditMode = Boolean(initialData);
@@ -44,6 +45,14 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (file.size > maxSizeInBytes) {
+        toast.error('파일 크기는 2MB 이하여야 합니다');
+        e.target.value = '';
+        return;
+      }
+
       setForm((prev) => ({ ...prev, thumbnail: file }));
     }
   };
@@ -62,7 +71,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
       <form onSubmit={handleSubmit} className="space-y-8">
         <section className="space-y-4">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white">1</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">1</span>
             공고 기본 정보
           </h2>
 
@@ -110,7 +119,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
         {/* 2. 상세 조건 */}
         <section className="space-y-4">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white">2</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">2</span>
             모집 상세 조건
           </h2>
 
@@ -137,7 +146,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
         {/* 3. 모집 분야 */}
         <section className="space-y-4">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white">3</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">3</span>
             모집 분야 선택
           </h2>
           <div className="flex items-center gap-3">
