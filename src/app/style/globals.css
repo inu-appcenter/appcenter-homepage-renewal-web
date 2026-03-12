@@ -9,7 +9,6 @@ button {
 }
 
 @theme {
-  --font-pretendard: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   /* 디자인시스템 색상표 */
   --color-custom-black: #222124;
   --color-custom-gray-900: #383838;

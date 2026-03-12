@@ -5,7 +5,7 @@ export const productDesignFont = localFont({
   weight: '100 900',
   style: 'normal',
   variable: '--font-product-design',
-  display: 'swap'
+  display: 'fallback'
 });
 
 export const pretendardFont = localFont({
@@ -13,5 +13,5 @@ export const pretendardFont = localFont({
   weight: '100 900',
   style: 'normal',
   variable: '--font-pretendard',
-  display: 'swap'
+  display: 'fallback'
 });
