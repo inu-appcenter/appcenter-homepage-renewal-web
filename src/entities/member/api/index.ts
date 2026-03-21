@@ -1,5 +1,5 @@
 import { http } from 'shared/utils/http';
-import type { Member, MemberForm } from '../types/member';
+import type { Member, MemberForm, MemberStats } from '../types/member';
 
 export const memberApi = {
   getAll: () => {
@@ -11,6 +11,10 @@ export const memberApi = {
   },
   getByMember: () => {
     return http.get<Member>(`/members/me`);
+  },
+
+  getStats: () => {
+    return http.get<MemberStats>('/members/public/stats');
   },
 
   updateByMember: (data: MemberForm) => {

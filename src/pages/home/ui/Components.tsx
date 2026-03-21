@@ -4,6 +4,29 @@ import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/rea
 import { cn } from 'shared/utils/cn';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
+import { RandomShuffleNumber } from '../animation/RandomShuffleNumber';
+
+export const ShuffleItem = ({ title, subNumber, smallSubtitle, index }: { title: string; subNumber: number; smallSubtitle?: string; index: number }) => {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: 'easeOut'
+      }}
+      className="bg-surface-elevated group border-custom-gray-600 hover:border-brand-primary-cta flex flex-1 cursor-default flex-col items-center gap-1 rounded-sm border py-3 drop-shadow-[0_0_4px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_4px_#57ff8566] sm:gap-6 sm:rounded-2xl sm:py-11.75 sm:drop-shadow-[0_0_16px_#EDEDED66] sm:hover:drop-shadow-[0_0_16px_#57ff8566]"
+    >
+      <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 text-[8px] duration-500 sm:text-[28px]">{title}</span>
+      <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 text-[18px] leading-none font-medium duration-500 sm:text-[66px]">
+        <RandomShuffleNumber value={subNumber} />
+        {smallSubtitle && <small className="ml-0.5 text-[8px] sm:ml-1 sm:text-[40px]">{smallSubtitle}</small>}
+      </span>
+    </motion.li>
+  );
+};
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
