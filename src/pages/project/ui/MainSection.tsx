@@ -34,7 +34,14 @@ export const MainSection = ({ data }: { data: Project }) => {
             )}
             <h1 className="text-custom-gray-100 text-[16px] font-bold sm:mb-29 sm:text-[72px]">{data.title}</h1>
           </div>
-          <p className="text-custom-gray-100 text-[10px] sm:text-xl/7">{data.subTitle}</p>
+          <div className="flex flex-col items-start gap-9">
+            <p className="text-custom-gray-100 text-[10px] sm:text-xl/7">{data.subTitle}</p>
+            <div className="flex gap-1 sm:gap-3">
+              {data.androidStoreLink && <GooglePlay className="h-5 sm:h-12" href={data.androidStoreLink} />}
+              {data.appleStoreLink && <AppStore className="h-5 sm:h-12" href={data.appleStoreLink} />}
+              {data.websiteLink && <WebLink className="h-5 sm:h-12" href={data.websiteLink} />}
+            </div>
+          </div>
         </div>
         <div className="relative flex flex-1 justify-start sm:justify-end">
           <Image
@@ -47,11 +54,6 @@ export const MainSection = ({ data }: { data: Project }) => {
             unoptimized={true}
           />
         </div>
-      </div>
-      <div className="flex gap-1 sm:mt-9 sm:gap-3">
-        {data.androidStoreLink && <GooglePlay className="h-5 sm:h-12" href={data.androidStoreLink} />}
-        {data.appleStoreLink && <AppStore className="h-5 sm:h-12" href={data.appleStoreLink} />}
-        {data.websiteLink && <WebLink className="h-5 sm:h-12" href={data.websiteLink} />}
       </div>
     </section>
   );
