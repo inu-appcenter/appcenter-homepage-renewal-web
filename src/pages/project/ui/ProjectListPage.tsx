@@ -50,9 +50,9 @@ const Item = ({ data }: { data: Awaited<ReturnType<typeof projectApi.getAll>>[nu
           <h2 className="text-brand-primary-cta line-clamp-1 text-[12px] font-semibold sm:text-[28px]">{data.title}</h2>
           <div className="flex flex-1 flex-col justify-between gap-4">
             <div className="flex min-h-4 flex-row gap-0.5 text-[8px] font-semibold text-white sm:min-h-7 sm:gap-2 sm:text-xl">
-              {data.androidStoreLink && <span>Android</span>}
-              {data.appleStoreLink && <span>iOS</span>}
-              {data.websiteLink && <span>Web</span>}
+              {data.androidStoreLink && <span>#Android</span>}
+              {data.appleStoreLink && <span>#iOS</span>}
+              {data.websiteLink && <span>#Web</span>}
             </div>
           </div>
 
