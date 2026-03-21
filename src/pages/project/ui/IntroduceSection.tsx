@@ -12,7 +12,7 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
   return (
     <section className="flex flex-col items-center justify-center gap-4 sm:h-screen sm:gap-10">
       <div className="relative flex flex-row gap-8 sm:gap-30">
-        {['사용 스택', '팀원 정보', '이용 현황'].map((tab, index) => (
+        {['사용 스택', '팀원 정보'].map((tab, index) => (
           <SelectButton key={index} text={tab} isSelected={selected === index} onClick={() => setSelected(index)} />
         ))}
       </div>
@@ -22,7 +22,6 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="h-full w-full">
             {selected === 0 && <Stacks data={data} />}
             {selected === 1 && <Groups data={data.groups} />}
-            {selected === 2 && <EmptyState title="아직 데이터가 충분하지 않아요" description="서비스 이용자가 늘어나면 이곳에서 멋진 통계를 보여드릴게요." />}
           </motion.div>
         </AnimatePresence>
       </div>
