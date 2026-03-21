@@ -10,12 +10,24 @@ interface FullPageScrollProps {
 }
 export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   const [currentY, setCurrentY] = useState(0);
+  const [activeId, setActiveId] = useState('');
   const [isChanging, setIsChanging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const isAnimating = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    const sections = ['home', 'about', 'project', 'activity', 'activity', 'activity', 'faq'];
+    const viewHeight = window.innerHeight;
+    const currentIndex = Math.round(currentY / viewHeight);
+
+    const currentSectionId = sections[currentIndex] || '';
+    setActiveId(currentSectionId);
+  }, [currentY, isMobile]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -111,7 +123,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   };
 
   return (
-    <ScrollContext.Provider value={{ scrollToId }}>
+    <ScrollContext.Provider value={{ scrollToId, activeId }}>
       {header}
       <div
         className={`inset-0 overflow-hidden ${isMobile ? 'relative overflow-y-auto' : 'fixed overscroll-none'} touch-pan-y`}
