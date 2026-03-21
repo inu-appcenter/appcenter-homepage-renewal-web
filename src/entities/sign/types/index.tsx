@@ -18,3 +18,10 @@ export interface SignUpRequest {
   behanceLink?: string | null; // 선택
   department?: string | null; // 선택
 }
+
+export interface FindIdRequest {
+  name: string;
+  email?: string;
+  phoneNumber?: string;
+  studentNumber?: string;
+}

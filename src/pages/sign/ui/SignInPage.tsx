@@ -81,12 +81,24 @@ export function SignInPage() {
               </>
             )}
           </button>
-          <div className="mt-8 flex items-center justify-center gap-2 text-sm">
-            <span className="text-zinc-400">아직 계정이 없으신가요?</span>
-            <Link href="/sign-up" className="group text-brand-primary-cta hover:text-brand-primary-cta/70 relative font-bold transition-colors">
-              회원가입
-              <span className="bg-brand-primary-cta absolute -bottom-1 left-1/2 h-px w-0 -translate-x-1/2 transition-all duration-300 ease-in-out group-hover:w-full" />
-            </Link>
+
+          <div className="mt-8 flex flex-col items-center justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-zinc-400">아직 계정이 없으신가요?</span>
+              <Link href="/sign-up" className="group text-brand-primary-cta hover:text-brand-primary-cta/70 relative font-bold transition-colors">
+                회원가입
+                <span className="bg-brand-primary-cta absolute -bottom-1 left-1/2 h-px w-0 -translate-x-1/2 transition-all duration-300 ease-in-out group-hover:w-full" />
+              </Link>
+            </div>
+            <div className="flex items-center gap-3 text-zinc-500">
+              <Link href="/find-id" className="transition-colors hover:text-zinc-300">
+                아이디 찾기
+              </Link>
+              <span className="h-3 w-px bg-zinc-800" />
+              <Link href="/find-password" className="transition-colors hover:text-zinc-300">
+                비밀번호 찾기
+              </Link>
+            </div>
           </div>
         </form>
       </div>
