@@ -5,6 +5,7 @@ import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { RecruitmentField, useRecruitmentFieldActions, type RecruitmentFieldForm } from 'entities/recruitment-field';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 export const AddRecruitmentFieldForm = () => {
   const { addMutation } = useRecruitmentFieldActions();
@@ -24,6 +25,7 @@ export const AddRecruitmentFieldForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
+            toast.success('모집 분야가 등록되었습니다');
           }}
         />
       )}
@@ -50,6 +52,7 @@ export const EditRecruitmentFieldForm = ({ data }: { data: RecruitmentField }) =
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: data.id, data: formData });
             close();
+            toast.success('모집 분야가 수정되었습니다');
           }}
         />
       )}
@@ -63,6 +66,7 @@ export const DeleteRecruitmentFieldButton = ({ recruitmentFieldId }: { recruitme
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(recruitmentFieldId);
+      toast.success('모집 분야가 삭제되었습니다');
     }
   };
 

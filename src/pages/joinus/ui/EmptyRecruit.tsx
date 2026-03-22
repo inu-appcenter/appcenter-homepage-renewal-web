@@ -5,6 +5,7 @@ import { Check, Loader2 } from 'lucide-react';
 import { Logo } from 'shared/icon/Logo';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { useRecruitmentActions } from 'entities/recruitment';
+import { toast } from 'sonner';
 
 export function EmptyRecruit() {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export function EmptyRecruit() {
     e.preventDefault();
 
     if (!email) {
-      alert('이메일을 입력해주세요!');
+      toast.error('이메일을 입력해주세요.');
       return;
     }
     postEmailMutation.mutate(email);

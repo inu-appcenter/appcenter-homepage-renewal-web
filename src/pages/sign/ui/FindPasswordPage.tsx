@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useFindActions } from 'entities/sign';
 import { formatPhoneNumber } from 'shared/utils/phoneNumber';
 import { GoToLoginLink, Input } from './Components';
+import { toast } from 'sonner';
 
 type VerifyMethod = 'email' | 'phone' | 'studentId';
 
@@ -38,7 +39,7 @@ export function FindPasswordPage() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.newPassword !== formData.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
+      toast.error('비밀번호가 일치하지 않습니다.');
       return;
     }
     resetPasswordMutation.mutate({

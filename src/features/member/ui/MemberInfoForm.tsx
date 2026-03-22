@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, FileText, Camera, X, Hash, Palette } from 'lucide-react';
+import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera, X, Hash, Palette } from 'lucide-react';
 
 import { useMemberActions, useMemberByMember } from 'entities/member';
 import type { MemberForm as MemberFormType } from 'entities/member';
@@ -33,16 +33,15 @@ export function MemberInfoForm() {
     e.preventDefault();
     try {
       await editByMemberMutation.mutateAsync(formData);
-      alert('프로필이 성공적으로 수정되었습니다.');
+      toast.success('프로필이 성공적으로 수정되었습니다');
     } catch (error) {
       console.error('Failed to update profile:', error);
-      alert('프로필 수정에 실패했습니다.');
+      toast.error('프로필 수정에 실패했습니다.');
     }
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl rounded-3xl border border-slate-200 bg-white p-12 shadow-xl shadow-slate-200/50">
-      <button onClick={() => toast.warning('하이')}>클릭</button>
+    <div className="mx-auto mt-4 w-full rounded-3xl border border-slate-200 bg-white p-12 shadow-xl shadow-slate-200/50">
       <form onSubmit={handleSubmit} className="space-y-10">
         <section className="flex flex-col items-center gap-6 border-b border-slate-100 pb-10 md:flex-row md:items-end">
           <div className="group relative">
@@ -100,21 +99,26 @@ export function MemberInfoForm() {
                 <FormInput icon={GraduationCap} label="학과" value={formData.department} onChange={(v) => handleChange('department', v)} disabled={isPending} />
               </div>
 
-              <FormInput icon={Github} label="GitHub" value={formData.gitRepositoryLink} onChange={(v) => handleChange('gitRepositoryLink', v)} disabled={isPending} />
+              <FormInput
+                icon={Github}
+                label="깃허브"
+                value={formData.gitRepositoryLink}
+                onChange={(v) => handleChange('gitRepositoryLink', v)}
+                disabled={isPending}
+                placeholder="https://www.github.com/..."
+              />
 
               {/* 2. Behance 입력 필드 추가 */}
               <FormInput icon={Palette} label="Behance" value={formData.behanceLink} onChange={(v) => handleChange('behanceLink', v)} disabled={isPending} placeholder="https://www.behance.net/..." />
 
-              <FormInput icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(v) => handleChange('blogLink', v)} disabled={isPending} />
+              <FormInput icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(v) => handleChange('blogLink', v)} disabled={isPending} placeholder="https://velog.io/..." />
             </div>
           </div>
         </div>
 
         {/* 하단 전체 너비: 자기소개 */}
-        <section className="space-y-4 pt-4">
-          <h3 className="flex items-center gap-2 text-sm font-bold text-slate-900">
-            <FileText size={18} className="text-slate-400" /> 자기소개
-          </h3>
+        <section className="space-y-4">
+          <label className="ml-1 text-[12px] font-bold text-zinc-400 uppercase">자기소개</label>
           <div className="relative">
             <textarea
               disabled={isPending}
@@ -132,17 +136,17 @@ export function MemberInfoForm() {
           <button
             disabled={isPending || !formData.name || !formData.studentNumber}
             type="submit"
-            className="group flex items-center gap-3 rounded-2xl border border-white/20 bg-slate-900/80 px-8 py-4 text-lg font-bold text-white backdrop-blur-xl transition-all hover:scale-105 hover:bg-slate-900/90 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:opacity-50 disabled:shadow-none disabled:backdrop-blur-none"
+            className="group bg-brand-primary-cta hover:bg-brand-primary-cta/90 flex items-center gap-2.5 rounded-2xl px-6 py-4 font-bold tracking-tight text-black shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:scale-105 active:scale-95 disabled:scale-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:grayscale sm:px-8"
           >
             {isPending ? (
               <>
-                <Loader2 size={22} className="animate-spin" />
-                <span>변경 사항 저장 중...</span>
+                <Loader2 size={20} className="animate-spin" />
+                <span className="text-sm sm:text-base">저장 중...</span>
               </>
             ) : (
               <>
-                <Save size={22} className="transition-transform duration-300 group-hover:-rotate-12" />
-                <span>프로필 정보 수정 완료</span>
+                <Save size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12" />
+                <span className="text-sm sm:text-base">변경 사항 저장</span>
               </>
             )}
           </button>
@@ -161,13 +165,13 @@ interface FormInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
 function FormInput({ icon: Icon, label, value, onChange, ...props }: FormInputProps) {
   return (
     <div className="space-y-1.5">
-      <label className="ml-1 text-[11px] font-bold tracking-wider text-slate-400 uppercase">{label}</label>
+      <label className="ml-1 text-[12px] font-bold text-zinc-400 uppercase">{label}</label>
       <div className="relative">
         <Icon className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300" size={16} />
         <input
           className="w-full rounded-xl border border-slate-100 bg-slate-50/50 p-3 pl-11 text-sm transition-all outline-none focus:border-slate-900 focus:bg-white focus:ring-0"
           value={value || ''}
-          onChange={(e) => onChange(e.target.value)} // 여기서 e.target.value는 string입니다.
+          onChange={(e) => onChange(e.target.value)}
           {...props}
         />
       </div>

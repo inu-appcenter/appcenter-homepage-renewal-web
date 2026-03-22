@@ -2,6 +2,7 @@ import { Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRecruitmentActions } from 'entities/recruitment';
 import { STATUS_CONFIG } from '../config/statusConfig';
+import { toast } from 'sonner';
 
 export const AddRecruitmentButton = ({ mode }: { mode: string }) => {
   return (
@@ -25,6 +26,7 @@ export const DeleteRecruitmentButton = ({ recruitmentId }: { recruitmentId: numb
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(recruitmentId);
+      toast.success('삭제가 완료되었습니다.');
     }
   };
 

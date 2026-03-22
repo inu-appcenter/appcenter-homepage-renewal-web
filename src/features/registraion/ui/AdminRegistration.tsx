@@ -4,6 +4,7 @@ import { Copy, Eye, EyeOff } from 'lucide-react';
 import { useRegistration } from 'entities/registraion';
 import { EditRegistrationButton } from './RegistartionForm';
 import { Alert } from 'shared/ui/alert';
+import { toast } from 'sonner';
 
 export const AdminRegistration = () => {
   const { data } = useRegistration();
@@ -13,7 +14,7 @@ export const AdminRegistration = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(data.code);
-    alert('인증 코드가 복사되었습니다!');
+    toast.success('인증 코드가 복사되었습니다!');
   };
 
   return (

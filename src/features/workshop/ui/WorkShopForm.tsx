@@ -25,6 +25,7 @@ export const AddWorkShopForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
+            toast.success('워크숍 사진이 등록되었습니다');
           }}
         />
       )}
@@ -52,6 +53,7 @@ export const EditWorkShopForm = ({ workshop }: { workshop: WorkShop }) => {
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: workshop.id, data: formData, photoId: Number(photoId) });
             close();
+            toast.success('워크숍 사진이 수정되었습니다');
           }}
         />
       )}
@@ -65,6 +67,7 @@ export const DeleteWorkShopButton = ({ workshopId }: { workshopId: number }) => 
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(workshopId);
+      toast.success('워크숍 사진이 삭제되었습니다');
     }
   };
 

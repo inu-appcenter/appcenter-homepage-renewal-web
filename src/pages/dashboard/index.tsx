@@ -30,3 +30,4 @@ export { AdminRegistrationCodePage } from './ui/AdminRegistrationCodePage';
 
 export { MemberHomePage } from './ui/MemberHomePage';
 export { MemberInfoPage } from './ui/MemberInfoPage';
+export { MemberChangePasswordPage } from './ui/MemberChangePasswordPage';
