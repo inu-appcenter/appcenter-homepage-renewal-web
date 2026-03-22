@@ -8,7 +8,7 @@ export async function AboutSection() {
     { title: '창립 연도', subNumber: new Date().getFullYear() - Math.trunc(data.currentYear) },
     { title: '누적 멤버 수', subNumber: data.totalMemberCount, smallSubtitle: '+' },
     { title: '출시한 서비스 수', subNumber: data.projectCount, smallSubtitle: '+' },
-    { title: '취업동아리 수상', subNumber: 3, smallSubtitle: '년 연속' }
+    { title: '전공취업동아리 수상', subNumber: 3, smallSubtitle: '년 연속' }
   ];
 
   return (

@@ -1,6 +1,6 @@
 import { Toaster } from 'shared/ui/toast';
 import { ReactQueryProvider } from '../provider/ReactQueryProvider';
-import { productDesignFont, pretendardFont } from '../style/fonts';
+import { productDesignFont, pretendardFont, tokyoFont } from '../style/fonts';
 import '../style/globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -29,7 +29,7 @@ const jsonLd = [
 
 export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable} no-scrollbar`}>
+    <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable} ${tokyoFont.variable} no-scrollbar`}>
       <body className="antialiased">
         <Analytics />
         <SpeedInsights />

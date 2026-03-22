@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Lock, KeyRound, Check, Loader2, Save, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Lock, KeyRound, Check, Loader2, Save, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSignActions } from 'entities/sign';
 import { Alert } from 'shared/ui/alert';

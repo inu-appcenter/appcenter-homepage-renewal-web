@@ -78,7 +78,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
         }}
-        className="text-custom-gray-200 text-[16px] font-semibold sm:text-2xl"
+        className="text-custom-gray-200 text-[16px] sm:text-2xl"
       >
         {description}
       </motion.p>

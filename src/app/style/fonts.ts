@@ -5,13 +5,40 @@ export const productDesignFont = localFont({
   weight: '100 900',
   style: 'normal',
   variable: '--font-product-design',
-  display: 'fallback'
+  display: 'swap'
+});
+// regular, medium, semibold, bold
+export const pretendardFont = localFont({
+  src: [
+    {
+      path: '../../../public/fonts/Pretendard-Regular.subset.woff2',
+      weight: '400',
+      style: 'normal'
+    },
+    {
+      path: '../../../public/fonts/Pretendard-Medium.subset.woff2',
+      weight: '500',
+      style: 'normal'
+    },
+    {
+      path: '../../../public/fonts/Pretendard-SemiBold.subset.woff2',
+      weight: '600',
+      style: 'normal'
+    },
+    {
+      path: '../../../public/fonts/Pretendard-Bold.subset.woff2',
+      weight: '700',
+      style: 'normal'
+    }
+  ],
+  variable: '--font-pretendard',
+  display: 'swap'
 });
 
-export const pretendardFont = localFont({
-  src: '../../../public/fonts/PretendardVariable.woff2',
+export const tokyoFont = localFont({
+  src: '../../../public/fonts/Tokyo.ttf',
   weight: '100 900',
   style: 'normal',
-  variable: '--font-pretendard',
-  display: 'fallback'
+  variable: '--font-tokyo',
+  display: 'swap'
 });
