@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { ArrowRight, Loader2, User, Lock, Mail, UserCheck, EyeOff, Eye, Camera, X, Phone, Hash, GraduationCap, Github, Palette, Link as LinkIcon, FileText, Key } from 'lucide-react';
+import { ArrowRight, Loader2, User, Lock, Mail, EyeOff, Eye, Camera, X, Phone, Hash, GraduationCap, Github, Palette, Link as LinkIcon, FileText, Key, Tag } from 'lucide-react';
 import { Logo } from 'shared/icon/Logo';
 import { SignUpRequest, useSignActions } from 'entities/sign';
 import { SignUpSuccessView } from './SignupSuccess';
@@ -128,7 +128,7 @@ export function SignUpPage() {
             <div className="animate-in fade-in slide-in-from-right-4 space-y-3 duration-300">
               <p className="text-brand-primary-cta/80 mb-2 ml-1 text-xs">기존 회원이신 경우, 입력하신 이메일과 전화번호를 통해 이전 정보가 자동 연동됩니다.</p>
               <div className="grid grid-cols-2 gap-2.5">
-                <Input icon={UserCheck} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="이름" required />
+                <Input icon={Tag} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="이름" required />
                 <Input icon={Hash} type="text" name="studentNumber" value={formData.studentNumber} onChange={handleChange} placeholder="학번" required />
               </div>
               <Input icon={Mail} type="email" name="email" value={formData.email} onChange={handleChange} placeholder="이메일" required />

@@ -1,8 +1,7 @@
 'use client';
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, Mail, Phone, Hash, Search, Copy, ChevronRight, Check } from 'lucide-react';
+import { Mail, Phone, Hash, Search, Copy, ChevronRight, Check, Tag } from 'lucide-react';
 import Link from 'next/link';
 import { useFindActions } from 'entities/sign';
 import { formatPhoneNumber } from 'shared/utils/phoneNumber';
@@ -52,7 +51,7 @@ export function FindIdPage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black p-4">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center p-4">
       <div className="mb-10 text-center">
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{findIdMutation.isSuccess ? '아이디 확인' : '아이디 찾기'}</h1>
         <p className="mt-2 font-medium text-gray-400">{findIdMutation.isSuccess ? '입력하신 정보와 일치하는 아이디입니다.' : '아이디를 찾기 위한 정보를 입력해주세요.'}</p>
@@ -71,7 +70,7 @@ export function FindIdPage() {
                       setMethod(m);
                       setValue('');
                     }}
-                    className={`relative flex-1 py-2.5 text-sm font-bold transition-all ${method === m ? 'text-black' : 'text-gray-500 hover:text-gray-300'}`}
+                    className={`relative flex-1 py-2 text-xs font-bold transition-all ${method === m ? 'text-black' : 'text-gray-500 hover:text-gray-300'}`}
                   >
                     {method === m && <motion.div layoutId="activeTab" className="bg-brand-primary-cta absolute inset-0 rounded-lg" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />}
                     <span className="relative z-10">{methodConfig[m].label}</span>
@@ -82,7 +81,7 @@ export function FindIdPage() {
               <form onSubmit={onSubmit} className="space-y-5">
                 <div className="space-y-2">
                   <label className="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase">성명</label>
-                  <Input icon={User} placeholder="이름을 입력하세요" value={name} onChange={(e) => setName(e.target.value)} required />
+                  <Input icon={Tag} placeholder="이름을 입력하세요" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
 
                 <div className="space-y-2">

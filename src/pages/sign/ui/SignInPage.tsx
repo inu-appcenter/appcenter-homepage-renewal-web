@@ -17,7 +17,7 @@ export function SignInPage() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center bg-black p-4">
+    <div className="flex h-screen w-full flex-col items-center justify-center p-4">
       <div className="mb-10 text-center">
         <div className="mb-4 inline-block">
           <Logo className="h-12 w-12 text-white" />
