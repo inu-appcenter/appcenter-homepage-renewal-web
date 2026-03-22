@@ -1,14 +1,14 @@
 'use client';
-import { useSignActions } from 'entities/sign';
-import { ArrowRight, Loader2, User, Lock, EyeOff, Eye } from 'lucide-react';
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight, Loader2, User, Lock } from 'lucide-react';
+import { useSignActions } from 'entities/sign';
 import { Logo } from 'shared/icon/Logo';
+import { Input } from './Components';
 
 export function SignInPage() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const { memberLoginMutation } = useSignActions();
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -17,7 +17,7 @@ export function SignInPage() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center p-4">
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-black p-4">
       <div className="mb-10 text-center">
         <div className="mb-4 inline-block">
           <Logo className="h-12 w-12 text-white" />
@@ -30,35 +30,12 @@ export function SignInPage() {
         <form onSubmit={onSubmit} className="space-y-6">
           <div className="space-y-2">
             <label className="ml-1 text-sm font-bold text-gray-300">ID</label>
-            <div className="group relative">
-              <User className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-white" />
-              <input
-                type="text"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                className="focus:border-brand-primary-cta focus:ring-brand-primary-cta w-full rounded-xl border border-gray-800 bg-gray-900 py-3.5 pr-4 pl-12 text-white transition-all placeholder:text-gray-600 focus:ring-1 focus:outline-none"
-                placeholder="구성원 아이디"
-                required
-              />
-            </div>
+            <Input icon={User} type="text" value={id} onChange={(e) => setId(e.target.value)} placeholder="구성원 아이디" required />
           </div>
 
           <div className="space-y-2">
             <label className="ml-1 text-sm font-bold text-gray-300">Password</label>
-            <div className="group relative">
-              <Lock className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-white" />
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="focus:border-brand-primary-cta focus:ring-brand-primary-cta w-full rounded-xl border border-gray-800 bg-gray-900 py-3.5 pr-12 pl-12 text-white transition-all placeholder:text-gray-600 focus:ring-1 focus:outline-none"
-                placeholder="비밀번호"
-                required
-              />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 transition-colors hover:text-white">
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-              </button>
-            </div>
+            <Input icon={Lock} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" required />
           </div>
 
           {memberLoginMutation.error && (
@@ -90,6 +67,7 @@ export function SignInPage() {
                 <span className="bg-brand-primary-cta absolute -bottom-1 left-1/2 h-px w-0 -translate-x-1/2 transition-all duration-300 ease-in-out group-hover:w-full" />
               </Link>
             </div>
+
             <div className="flex items-center gap-3 text-zinc-500">
               <Link href="/find-id" className="transition-colors hover:text-zinc-300">
                 아이디 찾기

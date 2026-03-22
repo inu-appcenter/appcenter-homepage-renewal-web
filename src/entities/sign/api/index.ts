@@ -1,5 +1,5 @@
 import { http } from 'shared/utils/http';
-import { FindIdRequest, LoginRequest, SignUpRequest } from '../types';
+import { FindIdRequest, LoginRequest, ResetPasswordRequest, SignUpRequest } from '../types';
 
 export const signApi = {
   adminLogin: (data: LoginRequest) => {
@@ -20,7 +20,7 @@ export const signApi = {
   changePassword: () => {
     return http.post('/sign/change-password', {});
   },
-  resetPassword: () => {
-    return http.post('/sign/reset-password', {});
+  resetPassword: (data: ResetPasswordRequest) => {
+    return http.post('/sign/reset-password', data);
   }
 };

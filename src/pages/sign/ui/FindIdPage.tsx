@@ -1,10 +1,12 @@
 'use client';
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, Mail, Phone, Hash, ArrowLeft, Search, Copy, ChevronRight, Check } from 'lucide-react';
+import { User, Mail, Phone, Hash, Search, Copy, ChevronRight, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useFindActions } from 'entities/sign';
 import { formatPhoneNumber } from 'shared/utils/phoneNumber';
+import { GoToLoginLink, Input } from './Components';
 
 type FindMethod = 'email' | 'phone' | 'studentId';
 
@@ -29,7 +31,7 @@ export function FindIdPage() {
     findIdMutation.mutate({
       name,
       email: method === 'email' ? value : undefined,
-      phoneNumber: method === 'phone' ? value : undefined,
+      phoneNumber: method === 'phone' ? value.replace(/\D/g, '') : undefined,
       studentNumber: method === 'studentId' ? value : undefined
     });
   };
@@ -39,26 +41,19 @@ export function FindIdPage() {
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
+
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = e.target.value;
-
     if (method === 'phone') {
       inputValue = formatPhoneNumber(inputValue);
     }
-
     if (method === 'phone' && inputValue.length > 13) return;
-
     setValue(inputValue);
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center p-4">
-      {/* 상단 헤더 섹션 */}
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black p-4">
       <div className="mb-10 text-center">
-        <Link href="/login" className="group mb-6 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
-          <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-          로그인으로 돌아가기
-        </Link>
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{findIdMutation.isSuccess ? '아이디 확인' : '아이디 찾기'}</h1>
         <p className="mt-2 font-medium text-gray-400">{findIdMutation.isSuccess ? '입력하신 정보와 일치하는 아이디입니다.' : '아이디를 찾기 위한 정보를 입력해주세요.'}</p>
       </div>
@@ -87,32 +82,20 @@ export function FindIdPage() {
               <form onSubmit={onSubmit} className="space-y-5">
                 <div className="space-y-2">
                   <label className="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase">성명</label>
-                  <div className="group relative">
-                    <User className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-white" />
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="focus:border-brand-primary-cta focus:ring-brand-primary-cta w-full rounded-xl border border-gray-800 bg-gray-900 py-4 pl-12 text-white transition-all focus:ring-1 focus:outline-none"
-                      placeholder="이름을 입력하세요"
-                      required
-                    />
-                  </div>
+                  <Input icon={User} placeholder="이름을 입력하세요" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
 
                 <div className="space-y-2">
                   <label className="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase">{methodConfig[method].label}</label>
-                  <div className="group relative">
-                    <Icon className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-white" />
-                    <input
-                      type={methodConfig[method].type}
-                      value={value}
-                      onChange={handleValueChange}
-                      className="focus:border-brand-primary-cta focus:ring-brand-primary-cta w-full rounded-xl border border-gray-800 bg-gray-900 py-4 pl-12 text-white transition-all focus:ring-1 focus:outline-none"
-                      placeholder={methodConfig[method].placeholder}
-                      required
-                    />
-                  </div>
+                  <Input
+                    icon={Icon}
+                    type={methodConfig[method].type}
+                    value={value}
+                    onChange={handleValueChange}
+                    placeholder={methodConfig[method].placeholder}
+                    required
+                    inputMode={method === 'phone' ? 'tel' : 'text'}
+                  />
                 </div>
 
                 {findIdMutation.isError && (
@@ -157,7 +140,11 @@ export function FindIdPage() {
                 <Link href="/login" className="bg-brand-primary-cta flex w-full items-center justify-center rounded-xl py-4 font-bold text-black transition-transform active:scale-95">
                   로그인하러 가기
                 </Link>
-                <Link href="/find-password" className="group flex items-center justify-center gap-1 py-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-300">
+                <Link
+                  href="/find-password"
+                  title="비밀번호 재설정"
+                  className="group flex items-center justify-center gap-1 py-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-300"
+                >
                   비밀번호를 잊으셨나요?
                   <ChevronRight size={14} className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
@@ -165,6 +152,7 @@ export function FindIdPage() {
             </motion.div>
           )}
         </AnimatePresence>
+        <GoToLoginLink />
       </div>
     </div>
   );

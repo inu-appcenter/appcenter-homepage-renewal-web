@@ -25,3 +25,12 @@ export interface FindIdRequest {
   phoneNumber?: string;
   studentNumber?: string;
 }
+
+export interface ResetPasswordRequest {
+  uid: string;
+  name: string;
+  email?: string;
+  phoneNumber?: string;
+  studentNumber?: string;
+  newPassword: string;
+}
