@@ -42,5 +42,9 @@ export const useSignActions = () => {
     mutationFn: signApi.signup
   });
 
-  return { adminLoginMutation, adminLogoutMutation, memberLoginMutation, memberLogoutMutation, signupMutation };
+  const changePasswordMutation = useMutation({
+    mutationFn: signApi.changePassword
+  });
+
+  return { adminLoginMutation, adminLogoutMutation, memberLoginMutation, memberLogoutMutation, signupMutation, changePasswordMutation };
 };

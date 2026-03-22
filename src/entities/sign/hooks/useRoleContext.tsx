@@ -1,3 +1,4 @@
+'use client';
 import { usePathname } from 'next/navigation';
 import { USER_MODES } from 'shared/constants/userMode';
 
