@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
   { name: 'Project', href: '/#project' },
   { name: 'Activity', href: '/#activity' },
-  { name: 'Member', href: '/members' },
+  // { name: 'Member', href: '/members' },
   { name: 'FAQ', href: '/#faq' }
 ];
 export const Header = () => {
