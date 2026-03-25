@@ -1,6 +1,7 @@
 import { useActivityActions } from 'entities/activity';
 import { useRouter } from 'next/navigation';
 import { ActivityForm } from '../types/form';
+import { toast } from 'sonner';
 
 export const useAddActivity = () => {
   const { addMutation } = useActivityActions();
@@ -8,7 +9,7 @@ export const useAddActivity = () => {
 
   const addActivity = async (data: ActivityForm) => {
     if (!data.title || !data.author || !data.thumbnail) {
-      alert('필수 정보를 모두 입력해주세요.');
+      toast.warning('필수 정보를 모두 입력해주세요.');
       return;
     }
 
@@ -56,7 +57,7 @@ export const useAddActivity = () => {
       });
     } catch (error) {
       console.error('Submit Error:', error);
-      alert('저장에 실패했습니다.');
+      toast.error('저장에 실패했습니다.');
     }
   };
 

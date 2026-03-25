@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useRecruitmentActions } from 'entities/recruitment';
 import { RecruitmentForm } from '../types/form';
+import { toast } from 'sonner';
 
 export const useAddRecruitment = () => {
   const { addMutation } = useRecruitmentActions();
@@ -9,7 +10,7 @@ export const useAddRecruitment = () => {
 
   const addRecruitment = async (data: RecruitmentForm) => {
     if (!data.title || !data.startDate || !data.endDate) {
-      alert('필수 정보(제목, 모집 기간)를 모두 입력해주세요.');
+      toast.warning('필수 정보(제목, 모집 기간)를 모두 입력해주세요.');
       return;
     }
 
@@ -35,13 +36,13 @@ export const useAddRecruitment = () => {
 
     await addMutation.mutateAsync(formData, {
       onSuccess: () => {
-        alert('모집 공고가 등록되었습니다.');
+        toast.success('모집 공고가 등록되었습니다.');
         router.back();
         router.refresh();
       },
       onError: (error) => {
         console.error('API Error:', error);
-        alert('서버 저장에 실패했습니다.');
+        toast.error('서버 저장에 실패했습니다.');
       }
     });
   };

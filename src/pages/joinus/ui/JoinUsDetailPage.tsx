@@ -15,6 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
       title: `${recruitmentData.title} | 인천대학교 앱센터`,
       description: recruitmentData.title,
       images: recruitmentData.thumbnail
+    },
+    twitter: {
+      title: `${recruitmentData.title} | 인천대학교 앱센터`,
+      description: recruitmentData.title,
+      images: recruitmentData.thumbnail
     }
   };
 }

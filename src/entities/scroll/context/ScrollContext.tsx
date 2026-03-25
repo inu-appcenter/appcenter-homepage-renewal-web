@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 
 interface ScrollContextType {
   scrollToId: (id: string) => void;
+  activeId: string;
 }
 
 export const ScrollContext = createContext<ScrollContextType | null>(null);

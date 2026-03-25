@@ -43,13 +43,13 @@ export const MainSection = ({ data }: { data: Project }) => {
             </div>
           </div>
         </div>
-        <div className="relative flex flex-1 justify-start sm:justify-end">
+        <div className="relative flex flex-1 justify-start sm:ml-10 sm:justify-end">
           <Image
             src={imageUrls[1] ? imageUrls[1] : '/images/dummyMockup.png'}
             alt="Main Section Image"
             width={2000}
             height={600}
-            className="h-auto w-auto max-w-full object-contain"
+            className="h-auto w-auto max-w-full rounded-xl object-contain"
             quality={100}
             unoptimized={true}
           />

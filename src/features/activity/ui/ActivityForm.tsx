@@ -157,7 +157,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
       }));
     } catch (error) {
       console.error(error);
-      alert('이미지 삭제 실패');
+      toast.error('이미지 삭제 실패');
     }
   };
 

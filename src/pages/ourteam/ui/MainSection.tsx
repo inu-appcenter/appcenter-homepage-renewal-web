@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import { AnimationButton } from 'shared/ui/animation-button';
 
 const subtitleSteps = ['', 'ㅍ', '파', '파트', '파트ㅂ', '파트벼', '파트별', '파트별 ', '파트별 ㅅ', '파트별 소', '파트별 소ㄱ', '파트별 소개'];
 
@@ -62,6 +63,15 @@ export const MainSection = () => {
               <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="ml-1 inline-block h-4 w-0.5 bg-white align-middle sm:h-7 sm:w-1.5" />
             )}
           </p>
+        </div>
+        <div className="min-h-10 sm:min-h-16">
+          {phase === 'done' ? (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+              <AnimationButton href="/members">
+                <span className="text-custom-gray-200 text-[8px] font-semibold sm:text-[16px]">멤버 구경하러 가기</span>
+              </AnimationButton>
+            </motion.div>
+          ) : null}
         </div>
       </div>
     </section>

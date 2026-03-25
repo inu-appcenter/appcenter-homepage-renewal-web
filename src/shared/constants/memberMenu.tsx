@@ -1,4 +1,4 @@
-import { Layout, LucideIcon, Zap, UserSearch, Component, User } from 'lucide-react';
+import { Layout, LucideIcon, Zap, UserSearch, Component, User, Lock } from 'lucide-react';
 
 /* 
 기능이 추가로 생기면 아래에 넣어주세요.
@@ -55,6 +55,10 @@ export const MEMBER_MENU: MemberMenuType[] = [
     tag: 'info',
     description: '회원 정보 관리',
     path: '/member/info',
+    subMenu: [
+      { name: '회원 정보 관리', href: '/member/info', icon: User },
+      { name: '비밀번호 변경', href: '/member/change-password', icon: Lock }
+    ],
     icon: User
   }
 ];

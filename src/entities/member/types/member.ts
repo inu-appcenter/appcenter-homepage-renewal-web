@@ -16,3 +16,11 @@ export interface MemberForm {
   studentNumber: string | null;
   department: string | null;
 }
+
+export interface MemberStats {
+  totalMemberCount: number;
+  currentYear: number;
+  partCount: number;
+  leaderCount: number;
+  projectCount: number;
+}

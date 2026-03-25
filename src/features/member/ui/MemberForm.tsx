@@ -5,6 +5,7 @@ import { Pencil, Plus, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github
 import { Modal } from 'shared/ui/modal';
 import { useMemberActions, type Member, type MemberForm } from 'entities/member';
 import { SaveButton } from 'shared/ui/button';
+import { toast } from 'sonner';
 
 export const AddMemberForm = () => {
   const { addMutation } = useMemberActions();
@@ -24,6 +25,7 @@ export const AddMemberForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
+            toast.success('새 동아리원이 등록되었습니다');
           }}
         />
       )}
@@ -50,6 +52,7 @@ export const EditMemberForm = ({ member }: { member: Member }) => {
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: member.member_id, data: formData });
             close();
+            toast.success('동아리원 정보가 수정되었습니다');
           }}
         />
       )}
@@ -63,6 +66,7 @@ export const DeleteMemberButton = ({ memberId }: { memberId: number }) => {
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(memberId);
+      toast.success('동아리원이 삭제되었습니다');
     }
   };
 
@@ -160,6 +164,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
           <Phone className="absolute top-2.5 left-4 text-slate-300" size={16} />
           <input
             disabled={isPending}
+            type="tel"
             className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
             placeholder="전화번호 (010-0000-0000)"
             value={formData.phoneNumber || ''}

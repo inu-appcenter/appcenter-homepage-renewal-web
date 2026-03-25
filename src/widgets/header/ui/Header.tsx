@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
   { name: 'Project', href: '/#project' },
   { name: 'Activity', href: '/#activity' },
+  // { name: 'Member', href: '/members' },
   { name: 'FAQ', href: '/#faq' }
 ];
 export const Header = () => {
@@ -19,6 +20,7 @@ export const Header = () => {
 
   const scrollContext = useContext(ScrollContext);
   const scrollToId = scrollContext?.scrollToId;
+  const activeId = scrollContext?.activeId;
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
@@ -47,13 +49,23 @@ export const Header = () => {
 
         <nav className="hidden flex-1 justify-end text-xl font-semibold text-white sm:flex">
           <ul className="flex items-center gap-20">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.name}>
-                <Link scroll={false} href={item.href} onClick={(e) => handleScroll(e, item.href)} className="hover:text-brand-primary-light transition-colors">
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const itemId = item.href.split('#')[1];
+              const isActive = activeId === itemId;
+
+              return (
+                <li key={item.name}>
+                  <Link
+                    scroll={false}
+                    href={item.href}
+                    onClick={(e) => handleScroll(e, item.href)}
+                    className={`hover:text-brand-primary-light transition-colors ${isActive ? 'text-brand-primary-cta' : 'text-white'}`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
             <li>
               <Link
                 href="/login"

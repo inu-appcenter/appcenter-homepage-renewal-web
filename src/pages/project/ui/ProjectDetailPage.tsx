@@ -21,6 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
       openGraph: {
         title: data.title,
         description: data.subTitle
+      },
+      twitter: {
+        title: data.title,
+        description: data.subTitle
       }
     };
   } catch {

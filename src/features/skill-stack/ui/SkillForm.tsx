@@ -26,6 +26,7 @@ export const AddSkillForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
+            toast.success('기술 스택이 추가되었습니다');
           }}
         />
       )}
@@ -52,6 +53,7 @@ export const EditSkillForm = ({ data }: { data: SkillStack }) => {
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: data.id, data: formData });
             close();
+            toast.success('기술 스택이 수정되었습니다');
           }}
         />
       )}
@@ -65,6 +67,7 @@ export const DeleteSkillButton = ({ skillId }: { skillId: number }) => {
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(skillId);
+      toast.success('기술 스택이 삭제되었습니다');
     }
   };
 

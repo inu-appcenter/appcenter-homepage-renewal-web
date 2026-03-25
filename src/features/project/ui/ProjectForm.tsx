@@ -13,7 +13,6 @@ import { MainSectionForm } from './MainSectionForm';
 import { IntroduceSectionForm } from './IntroduceSectionForm';
 import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
-import { Alert } from 'shared/ui/alert';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();
@@ -129,11 +128,6 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         {renderStepContent()}
 
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
-          <Alert type="warning">
-            <span>
-              이미지 크기는 <strong>최대 2MB</strong>까지 허용됩니다. <br />
-            </span>
-          </Alert>
           {step !== 'main' && (
             <button
               type="button"

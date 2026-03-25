@@ -2,9 +2,8 @@
 import { useRouter } from 'next/navigation';
 import { useRecruitmentActions } from 'entities/recruitment';
 import { RecruitmentForm } from '../types/form';
+import { toast } from 'sonner';
 
-// 1. 메타데이터 수정
-// 2. 썸네일 수정
 export const useEditRecruitment = () => {
   const { editMetadataMutation, editThumbnailMutation } = useRecruitmentActions();
   const router = useRouter();
@@ -47,12 +46,12 @@ export const useEditRecruitment = () => {
       // 3. 모든 수정 요청 병렬 처리
       await Promise.all(promises);
 
-      alert('수정이 완료되었습니다.');
+      toast.success('수정이 완료되었습니다.');
       router.back();
       router.refresh();
     } catch (error) {
       console.error('Edit Error:', error);
-      alert('수정 중 오류가 발생했습니다.');
+      toast.error('수정 중 오류가 발생했습니다.');
     }
   };
 

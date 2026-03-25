@@ -2,6 +2,7 @@ import { Activity, useActivityActions, activityOptions } from 'entities/activity
 import { useRouter } from 'next/navigation';
 import { ActivityForm } from '../types/form';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 // 1단계. 활동 메타데이터 확인 -> 다르면 수정
 // 2단계. 썸네일 파일 확인 -> 파일이면 수정
@@ -94,10 +95,11 @@ export const useEditActivity = () => {
       }
 
       router.push('/admin/activity');
+      toast.success('활동이 성공적으로 수정되었습니다');
       router.refresh();
     } catch (error) {
       console.error('Edit Error:', error);
-      alert('수정 중 오류가 발생했습니다.');
+      toast.error('수정 중 오류가 발생했습니다.');
     }
   };
 

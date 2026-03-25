@@ -5,6 +5,7 @@ import { Check, Loader2 } from 'lucide-react';
 import { Logo } from 'shared/icon/Logo';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { useRecruitmentActions } from 'entities/recruitment';
+import { toast } from 'sonner';
 
 export function EmptyRecruit() {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export function EmptyRecruit() {
     e.preventDefault();
 
     if (!email) {
-      alert('이메일을 입력해주세요!');
+      toast.error('이메일을 입력해주세요.');
       return;
     }
     postEmailMutation.mutate(email);
@@ -57,7 +58,7 @@ export function EmptyRecruit() {
                   }}
                   placeholder="이메일을 작성해주세요"
                   disabled={postEmailMutation.isPending}
-                  className={`focus:ring-brand-primary-cta placeholder-custom-gray-500 w-70 rounded-full border bg-black/20 p-4 text-white transition-colors focus:ring-1 focus:outline-none disabled:opacity-50 sm:w-150 sm:py-4 ${
+                  className={`focus:ring-brand-primary-cta placeholder-custom-gray-500 w-70 rounded-full border bg-black/20 p-4 text-white transition-colors placeholder:pl-2 focus:ring-1 focus:outline-none disabled:opacity-50 sm:w-150 sm:py-4 ${
                     postEmailMutation.isError ? 'border-red-500' : 'border-gray-600'
                   }`}
                 />

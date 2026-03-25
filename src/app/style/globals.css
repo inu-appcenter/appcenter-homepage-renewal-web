@@ -34,6 +34,7 @@ button {
   --color-brand-secondary-light: #b07bff;
 
   --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
+  --font-tokyo: var(--font-tokyo), ui-sans-serif, system-ui;
 }
 
 @layer utilities {

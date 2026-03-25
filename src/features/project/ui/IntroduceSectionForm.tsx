@@ -15,7 +15,7 @@ export const IntroduceSectionForm = ({ form, setForm }: IntroduceSectionFormProp
   return (
     <section className="mx-20 flex h-screen flex-col items-center justify-center gap-10">
       <div className="relative flex flex-row gap-30">
-        {['사용 스택', '팀원 정보', '이용 현황'].map((tab, index) => (
+        {['사용 스택', '팀원 정보'].map((tab, index) => (
           <SelectButton key={index} text={tab} isSelected={selectedTab === index} onClick={() => setSelectedTab(index)} />
         ))}
       </div>
@@ -29,7 +29,6 @@ export const IntroduceSectionForm = ({ form, setForm }: IntroduceSectionFormProp
         >
           {selectedTab === 0 && <StackForm form={form} setForm={setForm} />}
           {selectedTab === 1 && <TeamForm form={form} setForm={setForm} />}
-          {selectedTab === 2 && <div className="flex h-full items-center justify-center">추후 구현 예정</div>}
         </Suspense>
       </div>
     </section>
