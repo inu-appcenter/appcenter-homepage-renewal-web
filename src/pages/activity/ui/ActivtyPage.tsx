@@ -14,7 +14,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
       openGraph: {
         title: data.title,
         description: data.body,
-        images: Object.values(data.thumbnail).map((url) => ({ url }))
+        images: data.thumbnail
+      },
+      twitter: {
+        title: data.title,
+        description: data.body,
+        images: data.thumbnail
       }
     };
   } catch {
@@ -27,6 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
 export async function ActivityPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
   const data = await activityApi.getById(id);
+  console.log(data);
 
   return (
     <>

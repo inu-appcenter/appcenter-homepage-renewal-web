@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     recruitmentRoutes = recruitments.map((recruitment) => ({
       url: `${baseUrl}/joinus/${recruitment.id}`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'weekly' as const,
       priority: 1.0
     }));
   } catch {
