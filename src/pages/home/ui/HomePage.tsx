@@ -7,7 +7,7 @@ import { ActivitiesSection } from './ActivitiesSection';
 import { FAQSection } from './FAQSection';
 import { LocationSection } from './LocationSection';
 
-export const HomePage = () => {
+export const HomePage = async () => {
   return (
     <>
       <LandingSection />

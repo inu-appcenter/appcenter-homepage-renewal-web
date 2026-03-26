@@ -1,14 +1,24 @@
 'use client';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?';
 
+const getInitialScramble = (text: string) => {
+  return text
+    .split('')
+    .map((char, i) => {
+      const pseudoRandomIndex = (char.charCodeAt(0) + i * 7) % CHARACTERS.length;
+      return CHARACTERS[pseudoRandomIndex];
+    })
+    .join('');
+};
+
 export const ScrambleText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
   const spanRef = useRef<HTMLSpanElement>(null);
+  const [currentText, setCurrentText] = useState(() => getInitialScramble(text));
 
   const startScramble = useCallback(() => {
     let frame = 0;
-
     const step = 3;
     const revealOffset = 10;
 
@@ -17,6 +27,7 @@ export const ScrambleText = ({ text, delay = 0 }: { text: string; delay?: number
         .split('')
         .map((char, i) => {
           if (frame > i * step + revealOffset) return char;
+          // 애니메이션 도중에는 진짜 랜덤으로 화려하게!
           return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
         })
         .join('');
@@ -47,5 +58,5 @@ export const ScrambleText = ({ text, delay = 0 }: { text: string; delay?: number
     };
   }, [delay, startScramble]);
 
-  return <span ref={spanRef}>{text}</span>;
+  return <span ref={spanRef}>{currentText}</span>;
 };
