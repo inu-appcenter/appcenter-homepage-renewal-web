@@ -3,7 +3,7 @@ import type { Faq, FAQForm } from 'entities/faq';
 
 export const faqApi = {
   getAll: () => {
-    return http.get<Faq[]>('/faqs/public/all-faq-boards');
+    return http.get<Faq[]>('/faqs/public/all-faq-boards', { next: { revalidate: 3600 } });
   },
 
   create: (newFaq: FAQForm) => {

@@ -21,7 +21,6 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 
   const config: RequestInit = {
     ...options,
-    cache: options?.cache || 'no-store',
     headers: {
       ...headers
     }
