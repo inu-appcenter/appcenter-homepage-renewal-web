@@ -1,10 +1,25 @@
+'use client';
 import { BackgroundAnimation } from 'entities/background';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { ScrambleText } from 'shared/animation/ScrambleText';
 import { MoveDown } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export const LandingSection = () => {
+  useEffect(() => {
+    const deadline = new Date('2026-03-27T18:00:00+09:00');
+    const now = new Date();
+
+    if (now < deadline) {
+      toast.error('서비스 점검 예정 안내', {
+        id: 'recruitment-toast',
+        duration: 5000,
+        description: '3월 27일 오후 6시부터 7시까지 앱센터 홈페이지 점검이 예정되어 있습니다. 점검 시간 동안 홈페이지 이용이 어려울 수 있으니 양해 부탁드립니다.'
+      });
+    }
+  }, []);
   return (
     <>
       <section id="home" className="relative flex h-screen flex-col items-center justify-center gap-4 sm:gap-8 md:items-start">
@@ -16,11 +31,11 @@ export const LandingSection = () => {
           </span>
         </h1>
         <p className="text-custom-gray-200 text-center text-[13px] whitespace-nowrap sm:text-left sm:text-xl">
-          {`오랫동안 사용되어 온 앱센터가 `}
+          {`오랫동안 운영되어 온 앱센터가 `}
           <br className="sm:hidden" />
-          {`정보전산원 산하의 AI 빅데이터 센터에 `}
+          {`정보전산원 산하의 AI 빅데이터 센터에 소속의 `}
           <br className="sm:hidden" />
-          {`소속된 IT 이노베이션 랩으로 명칭 정식 변경되었습니다.`}
+          {`IT 이노베이션 랩 으로 공식 명칭이 변경되었습니다.`}
         </p>
         <p className="text-custom-gray-200 mb-4 hidden text-center text-[13px] whitespace-pre-line sm:inline-block sm:text-left sm:text-xl">
           {'인천대학교 학생들이 애플리케이션과 서비스를 직접 만드는 공간입니다.\n활동에 필요한 비용의 일부를 소속 기관으로부터 지원받고 있습니다.'}

@@ -31,7 +31,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobile(window.innerWidth < 1040);
     };
 
     checkMobile();
@@ -125,11 +125,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   return (
     <ScrollContext.Provider value={{ scrollToId, activeId }}>
       {header}
-      <div
-        className={`inset-0 overflow-hidden ${isMobile ? 'relative overflow-y-auto' : 'fixed overscroll-none'} touch-pan-y`}
-        onWheel={handleWheel}
-        style={{ visibility: isChanging ? 'hidden' : 'visible' }}
-      >
+      <div className={`inset-0 overflow-hidden ${isMobile ? 'relative overflow-y-auto' : 'fixed overscroll-none'} touch-pan-y`} onWheel={handleWheel}>
         <motion.div
           ref={containerRef}
           className="flex w-full flex-col"
