@@ -38,7 +38,7 @@ export const BackgroundAnimation = () => {
   return (
     <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden bg-black">
       <div className="absolute inset-0 hidden opacity-10 sm:block">
-        <Image src="/images/landing.png" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" fill className="object-cover" priority />
+        <Image src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" fill className="object-cover" priority />
       </div>
 
       <motion.div
@@ -48,11 +48,11 @@ export const BackgroundAnimation = () => {
           maskImage: maskImage
         }}
       >
-        <Image src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" fill className="object-cover" unoptimized />
+        <Image src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" fill className="object-cover" />
       </motion.div>
 
-      <video ref={videoRef} poster="/images/landing.png" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
-        <source src="/videos/landing.mp4" type="video/mp4" />
+      <video ref={videoRef} poster="/images/landing.webp" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
+        <source src="/videos/landing.webm" type="video/webm" />
       </video>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: isEnding ? 1 : 0 }} className="pointer-events-none absolute inset-0 bg-black" />
 
