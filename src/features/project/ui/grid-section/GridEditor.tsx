@@ -7,6 +7,7 @@ import { Responsive, useContainerWidth } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { toast } from 'sonner';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 interface GridEditorProps {
   initialItems: GridItem[];
@@ -58,9 +59,8 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const maxSizeInBytes = 2 * 1024 * 1024;
-    if (file.size > maxSizeInBytes) {
-      toast.error('파일 크기는 2MB 이하여야 합니다');
+    if (file.size > IMAGE_SIZE_LIMIT) {
+      toast.error(IMAGE_SIZE_ERROR_MESSAGE);
       e.target.value = '';
       return;
     }

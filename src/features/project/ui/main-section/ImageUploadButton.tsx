@@ -1,6 +1,7 @@
 import { ChangeEvent, MouseEvent } from 'react';
 import { ImagePlus, Trash2, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 interface ImageUploaderProps {
   imageFile: string | null;
@@ -12,11 +13,8 @@ export const MockupImageUploader = ({ imageFile, onUpload, onRemove }: ImageUplo
     const file = e.target.files?.[0];
 
     if (file) {
-      const maxSizeInBytes = 2 * 1024 * 1024;
-
-      if (file.size > maxSizeInBytes) {
-        toast.error('이미지 크기는 2MB 이하여야 합니다');
-
+      if (file.size > IMAGE_SIZE_LIMIT) {
+        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
         e.target.value = '';
         return;
       }
@@ -68,11 +66,8 @@ export const AppIconUploader = ({ imageFile, onUpload, onRemove }: ImageUploader
     const file = e.target.files?.[0];
 
     if (file) {
-      const maxSizeInBytes = 2 * 1024 * 1024;
-
-      if (file.size > maxSizeInBytes) {
-        toast.error('이미지 크기는 2MB 이하여야 합니다');
-
+      if (file.size > IMAGE_SIZE_LIMIT) {
+        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
         e.target.value = '';
         return;
       }

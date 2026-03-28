@@ -7,6 +7,7 @@ import { useEditActivity } from '../hooks/useEditActivity';
 import { useAddActivity } from '../hooks/useAddActivity';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -54,9 +55,8 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const maxSizeInBytes = 2 * 1024 * 1024;
-      if (file.size > maxSizeInBytes) {
-        toast.error('썸네일 파일 크기는 2MB 이하여야 합니다.');
+      if (file.size > IMAGE_SIZE_LIMIT) {
+        toast.error('썸네일 파일 크기는 4MB 이하여야 합니다.');
         e.target.value = '';
         return;
       }
@@ -95,12 +95,11 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const handleSectionImageAdd = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      const maxSizeInBytes = 2 * 1024 * 1024;
 
-      const hasLargeFile = newFiles.some((file) => file.size > maxSizeInBytes);
+      const hasLargeFile = newFiles.some((file) => file.size > IMAGE_SIZE_LIMIT);
 
       if (hasLargeFile) {
-        toast.error('2MB 이하의 파일만 업로드 가능합니다');
+        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
         e.target.value = '';
         return;
       }

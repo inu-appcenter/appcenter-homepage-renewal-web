@@ -7,6 +7,7 @@ import { SKILL_CATEGORY, SKILL_CATEGORY_COLORS } from 'shared/constants/skillCat
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -103,11 +104,8 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
     const selectedFile = e.target.files?.[0];
 
     if (selectedFile) {
-      const maxSizeInBytes = 100 * 1024 * 1024;
-
-      if (selectedFile.size > maxSizeInBytes) {
-        toast.error('이미지 크기는 2MB 이하여야 합니다');
-
+      if (selectedFile.size > IMAGE_SIZE_LIMIT) {
+        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
         e.target.value = '';
         return;
       }
