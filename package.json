@@ -1,5 +1,5 @@
 {
-  "name": "appcenter-hompage-renewal-web",
+  "name": "appcenter-homepage-renewal-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.17",
-    "@vercel/analytics": "^1.6.1",
-    "@vercel/speed-insights": "^1.3.1",
     "canvas-confetti": "^1.9.4",
     "lucide-react": "^0.562.0",
     "motion": "^12.24.7",

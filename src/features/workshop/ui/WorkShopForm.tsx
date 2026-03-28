@@ -6,6 +6,7 @@ import { WorkShop, useWorkShopActions } from 'entities/workshop';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -97,9 +98,8 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const maxSizeInBytes = 2 * 1024 * 1024;
-    if (file.size > maxSizeInBytes) {
-      toast.error('파일 크기는 2MB 이하여야 합니다');
+    if (file.size > IMAGE_SIZE_LIMIT) {
+      toast.error(IMAGE_SIZE_ERROR_MESSAGE);
       e.target.value = '';
       return;
     }
