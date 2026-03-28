@@ -1,11 +1,10 @@
-'use client';
 import { SectionTitle } from './Components';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import Script from 'next/script';
 import { Logo } from 'shared/icon/Logo';
 
 const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false`;
-const POSITION = { lat: 37.37658, lng: 126.6358 };
+const POSITION = { lat: 37.37658, lng: 126.6358 }; // 인천대학교 앱센터 위치
 
 export const LocationSection = () => {
   return (
