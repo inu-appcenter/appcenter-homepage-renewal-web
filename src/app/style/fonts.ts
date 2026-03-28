@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 
 export const productDesignFont = localFont({
-  src: '../../../public/fonts/ProductDesign.ttf',
+  src: '../../../public/fonts/ProductDesign.woff2',
   weight: '100 900',
   style: 'normal',
   variable: '--font-product-design',
@@ -36,7 +36,7 @@ export const pretendardFont = localFont({
 });
 
 export const tokyoFont = localFont({
-  src: '../../../public/fonts/Tokyo.ttf',
+  src: '../../../public/fonts/Tokyo.woff2',
   weight: '100 900',
   style: 'normal',
   variable: '--font-tokyo',

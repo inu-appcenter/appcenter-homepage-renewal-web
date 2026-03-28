@@ -53,6 +53,8 @@ export const BackgroundAnimation = () => {
 
       <video ref={videoRef} poster="/images/landing.webp" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
         <source src="/videos/landing.webm" type="video/webm" />
+        <source src="/videos/landing.mp4" type="video/mp4" />
+        {/* Fallback content for unsupported browsers */}
       </video>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: isEnding ? 1 : 0 }} className="pointer-events-none absolute inset-0 bg-black" />
 
