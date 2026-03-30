@@ -9,6 +9,7 @@ export const memberApi = {
   getByName: (name: string) => {
     return http.get<Member[]>(`/members/id/${encodeURIComponent(name.trim())}`);
   },
+
   getByMember: () => {
     return http.get<Member>(`/members/me`);
   },

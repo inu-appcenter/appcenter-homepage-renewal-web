@@ -4,22 +4,8 @@ import { AnimationButton } from 'shared/ui/animation-button';
 import { ScrambleText } from 'shared/animation/ScrambleText';
 import { MoveDown } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
 
 export const LandingSection = () => {
-  useEffect(() => {
-    const deadline = new Date('2026-03-27T18:00:00+09:00');
-    const now = new Date();
-
-    if (now < deadline) {
-      toast.error('서비스 점검 예정 안내', {
-        id: 'recruitment-toast',
-        duration: 5000,
-        description: '3월 27일 오후 6시부터 7시까지 앱센터 홈페이지 점검이 예정되어 있습니다. 점검 시간 동안 홈페이지 이용이 어려울 수 있으니 양해 부탁드립니다.'
-      });
-    }
-  }, []);
   return (
     <>
       <section id="home" className="relative flex h-screen flex-col items-center justify-center gap-4 sm:gap-8 md:items-start">
@@ -50,6 +36,7 @@ export const LandingSection = () => {
         {/** 모바일인 경우 */}
         <Link
           href="/joinus"
+          prefetch={true}
           className="bg-brand-primary-cta border-custom-gray-100 text-custom-black mt-10 rounded-[60px] border px-8 py-4 text-xl font-semibold whitespace-nowrap drop-shadow-[0_0_48px_#00FFBF66] sm:hidden"
         >
           앱센터 모집 지원하러 가기
