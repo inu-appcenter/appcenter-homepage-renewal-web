@@ -13,7 +13,7 @@ export const OurTeamSection = () => {
       </div>
       <div className="relative flex flex-row items-center justify-between">
         <SectionDetailTitle title="파트별 소개" subtitle="Our Team" />
-        <Image src="/videos/joinus.png" width={800} height={800} alt="Main Illustration" className="absolute -z-10 scale-200 sm:hidden" unoptimized />
+        <Image src="/videos/joinus.png" width={800} height={800} alt="Main Illustration" className="absolute -z-10 scale-200 sm:hidden" />
         <Link href="/ourteam" className="text-custom-gray-200" aria-label="파트별 소개 페이지로 이동">
           <motion.div
             animate={{ x: [0, 12, 0] }}

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { activityApi } from '../api';
 import { activityOptions, activityKeys } from '../api/queries';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useActivities = () => {
   return useSuspenseQuery({
@@ -17,8 +18,9 @@ export const useActivitiesById = (activityId: number) => {
 export const useActivityActions = () => {
   const queryClient = useQueryClient();
 
-  const invalidateActivities = () => {
-    return queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
+  const invalidateActivities = async () => {
+    await revalidateTag(activityKeys.all);
+    await queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
   };
 
   const addMutation = useMutation({

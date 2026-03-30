@@ -11,7 +11,7 @@ export const MainSection = () => {
         </span>
         <ScrambleText text="s" />
       </h1>
-      <Image src="/videos/joinus.png" width={1920} height={1080} alt="Main Illustration" className="absolute -z-10" unoptimized />
+      <Image src="/videos/joinus.png" width={1920} height={1080} alt="Main Illustration" className="absolute -z-10" />
     </section>
   );
 };

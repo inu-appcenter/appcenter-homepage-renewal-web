@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import Link from 'next/link';
 import { cn } from 'shared/utils/cn';
 
 export function AnimationButton({ href, children, className, ...props }: any) {
@@ -25,9 +26,9 @@ export function AnimationButton({ href, children, className, ...props }: any) {
 
   if (href) {
     return (
-      <a href={href} {...props} className={wrapperClassName}>
+      <Link href={href} {...props} className={wrapperClassName} prefetch={true}>
         {innerContent}
-      </a>
+      </Link>
     );
   }
 

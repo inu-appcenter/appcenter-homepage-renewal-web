@@ -1,9 +1,14 @@
 import { http } from 'shared/utils/http';
 import { Activity, ActivityMetaData } from '../types/activity';
+import { activityKeys } from './queries';
 
 export const activityApi = {
   getAll: () => {
-    return http.get<Activity[]>('/activity-board/public/all-boards-contents');
+    return http.get<Activity[]>('/cache/activity-board/public/all-boards-contents', {
+      headers: {
+        'x-cache-tag': activityKeys.all
+      }
+    });
   },
   getById: (id: number) => {
     return http.get<Activity>(`/activity-board/public/${id}`);

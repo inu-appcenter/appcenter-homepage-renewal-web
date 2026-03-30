@@ -1,9 +1,14 @@
 import { http } from 'shared/utils/http';
 import type { Project } from '../types/project';
+import { projectKeys } from './queries';
 
 export const projectApi = {
   getAll: () => {
-    return http.get<Project[]>('/introduction-board/public/all-boards-contents');
+    return http.get<Project[]>('/cache/introduction-board/public/all-boards-contents', {
+      headers: {
+        'x-cache-tag': projectKeys.all
+      }
+    });
   },
 
   getByMember: () => {

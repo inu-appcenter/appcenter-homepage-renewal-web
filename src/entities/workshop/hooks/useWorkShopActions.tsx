@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { workShopKeys, workShopOptions } from '../api/queries';
 import { workShopApi } from '../api';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useWorkShop = () => {
   return useSuspenseQuery({
@@ -11,8 +12,9 @@ export const useWorkShop = () => {
 export const useWorkShopActions = () => {
   const queryClient = useQueryClient();
 
-  const invalidateWorkShop = () => {
-    queryClient.invalidateQueries({ queryKey: workShopKeys.lists() });
+  const invalidateWorkShop = async () => {
+    await revalidateTag(workShopKeys.all);
+    await queryClient.invalidateQueries({ queryKey: workShopKeys.lists() });
   };
 
   const addMutation = useMutation({
