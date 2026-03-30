@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { projectKeys, projectOptions } from '../api/queries';
 import { projectApi } from '../api';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useProject = () => {
   return useSuspenseQuery({
@@ -17,8 +18,9 @@ export const useProjectByMember = () => {
 export const useProjectActions = () => {
   const queryClient = useQueryClient();
 
-  const invalidateProjects = () => {
-    return queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
+  const invalidateProjects = async () => {
+    await revalidateTag(projectKeys.all);
+    await queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
   };
 
   const addMutation = useMutation({

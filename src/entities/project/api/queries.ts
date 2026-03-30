@@ -2,8 +2,8 @@ import { queryOptions } from '@tanstack/react-query';
 import { projectApi } from '.';
 
 export const projectKeys = {
-  all: ['projects'] as const,
-  lists: () => [...projectKeys.all, 'list'] as const,
+  all: 'projects' as const,
+  lists: () => [projectKeys.all, 'list'] as const,
   byMember: () => [...projectKeys.lists(), 'byMember'] as const
 };
 

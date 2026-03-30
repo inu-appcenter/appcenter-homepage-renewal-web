@@ -2,8 +2,8 @@ import { queryOptions } from '@tanstack/react-query';
 import { workShopApi } from '.';
 
 export const workShopKeys = {
-  all: ['workShop'] as const,
-  lists: () => [...workShopKeys.all, 'list'] as const
+  all: 'workShop' as const,
+  lists: () => [workShopKeys.all, 'list'] as const
 };
 
 export const workShopOptions = {

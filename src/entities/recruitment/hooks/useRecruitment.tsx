@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { recruitmentKeys, recruitmentOptions } from '../api/queries';
 import { recruitmentApi } from '../api';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useRecruitment = () => {
   return useSuspenseQuery({
@@ -29,8 +30,9 @@ export const useRecruitmentEmail = () => {
 export const useRecruitmentActions = () => {
   const queryClient = useQueryClient();
 
-  const invalidateRecruitments = () => {
-    return queryClient.invalidateQueries({ queryKey: recruitmentKeys.lists() });
+  const invalidateRecruitments = async () => {
+    await revalidateTag(recruitmentKeys.all);
+    await queryClient.invalidateQueries({ queryKey: recruitmentKeys.lists() });
   };
 
   const addMutation = useMutation({
