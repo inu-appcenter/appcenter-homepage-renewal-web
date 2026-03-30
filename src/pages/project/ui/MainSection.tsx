@@ -51,7 +51,6 @@ export const MainSection = ({ data }: { data: Project }) => {
             height={600}
             className="h-auto w-auto max-w-full rounded-xl object-contain"
             quality={100}
-            unoptimized={true}
           />
         </div>
       </div>

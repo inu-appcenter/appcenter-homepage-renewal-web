@@ -44,7 +44,7 @@ const Item = ({ data }: { data: Awaited<ReturnType<typeof projectApi.getAll>>[nu
     <Link href={`/project/${data.id}`}>
       <li className="group border-custom-gray-600/30 sm:border-custom-gray-600 hover:bg-custom-black flex flex-col rounded-lg border p-2 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-white hover:shadow-lg sm:rounded-2xl sm:p-8">
         <div className="w-full overflow-hidden rounded-sm sm:rounded-2xl">
-          <Image src={appIcon} alt={data.title} width={0} height={0} sizes="100vw" className="h-auto w-full" unoptimized />
+          <Image src={appIcon} alt={data.title} width={0} height={0} sizes="100vw" className="h-auto w-full" />
         </div>
         <div className="mt-2 flex flex-col gap-0 sm:mt-11 sm:gap-3">
           <h2 className="text-brand-primary-cta line-clamp-1 text-[12px] font-semibold sm:text-[28px]">{data.title}</h2>
