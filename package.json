@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.0",
+    "@opennextjs/cloudflare": "^1.18.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.91.2",
     "@types/canvas-confetti": "^1.9.0",
@@ -43,7 +44,6 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.52.0",
-    "@opennextjs/cloudflare": "^1.18.0"
+    "typescript-eslint": "^8.52.0"
   }
 }
