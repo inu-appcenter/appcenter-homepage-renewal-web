@@ -1,7 +1,12 @@
 name = "appcenter-hompage-renewal-web"
+main = ".open-next/worker.js"
 compatibility_date = "2024-09-27"
 compatibility_flags = ["nodejs_compat"]
 
+[assets]
+directory = ".open-next/assets" 
+binding = "ASSETS"
+
 [[kv_namespaces]]
 binding = "NEXT_INC_CACHE_KV" 
-id = "ed1f1442de2b4c49a0e4e3867232a6f9"
+id = "9a3be3414f044b95af10430b33239238"
