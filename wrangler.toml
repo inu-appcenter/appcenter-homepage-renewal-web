@@ -15,3 +15,7 @@ id = "bd34000544a64472b29768426cf03ce8"
 binding = "NEXT_TAG_CACHE_D1"
 database_id = "089eb1b3-f75a-46e6-b212-ea5f32bd839d"
 database_name = "appcenter-tag-cache"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "appcenter-hompage-renewal-web"
