@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
     fetches: {
       fullUrl: true // 백엔드로 보내는 전체 URL을 로그에 출력
     }
+  },
+  experimental: {
+    serverActions: { allowedOrigins: ['home.inuappcenter.kr', 'appcenter-hompage-renewal-web.inuappcenter.workers.dev'] }
   }
 };
 
