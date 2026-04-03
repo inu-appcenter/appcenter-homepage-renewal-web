@@ -1,7 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import { MemberWithGeneration } from 'entities/member';
-import { MemberCard } from './Items';
+import { IntroduceBlock, MemberCard } from './Components';
 import { Dropdown } from 'shared/ui/dropdown';
 
 const PARTS = ['ALL', 'Dev', 'Basic', 'Design', 'PM'];
@@ -52,7 +52,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
       </section>
 
       {matchedData.length === 0 ? (
-        <div className="flex h-[50vh] items-center justify-center">
+        <div className="flex h-[30vh] items-center justify-center">
           <span className="text-custom-gray-600 text-[1rem] sm:text-[2rem]">해당 조건에 맞는 멤버가 없습니다</span>
         </div>
       ) : (
@@ -88,6 +88,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
           )}
         </section>
       )}
+      <IntroduceBlock part={selectedPart} />
     </>
   );
 };

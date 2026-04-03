@@ -5,12 +5,13 @@ import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { GitHub } from 'shared/icon/GitHub';
 import { Blog } from 'shared/icon/Blog';
+import { Hello } from 'shared/icon/Hello';
+import { PartDescriptData } from '../data/PartDescriptData';
 
 interface ItemProps {
   member: MemberWithGeneration;
   activeYear: number;
 }
-
 const useResponsiveFlip = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -142,5 +143,65 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
       </div>
       <span className="sm:text-custom-gray-500 text-[0.625rem]/2.5 text-white sm:text-[1.5rem]/6">{member.description}</span>
     </div>
+  );
+};
+
+export const IntroduceBlock = ({ part }: { part: string }) => {
+  if (part === 'ALL') {
+    return null;
+  }
+  const partData = PartDescriptData[part];
+
+  return (
+    <>
+      <div className="relative flex flex-col items-end overflow-hidden">
+        <div className="from-background-surface/60 to-background-surface/0 pointer-events-none absolute inset-0 z-50 bg-linear-to-t to-47%" />
+        <div className="bg-surface-elevated flex w-full rounded-md px-3 py-2.5 sm:rounded-2xl sm:px-12 sm:py-10">
+          <div className="z-10 sm:pt-10">
+            <motion.div
+              style={{
+                display: 'inline-block',
+                fontSize: '2rem',
+                originX: 0.7,
+                originY: 0.9
+              }}
+              whileInView={{ rotate: [0, 20, -10, 20, -10, 0] }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{
+                delay: 0.4,
+                duration: 0.8,
+                ease: 'easeInOut'
+              }}
+            >
+              <Hello className="mb-5 h-2 w-2 sm:h-8 sm:w-8" />
+            </motion.div>
+            <p className="text-custom-gray-100 text-[14px]/4 font-bold sm:text-[56px]/17">
+              안녕하세요! <br />
+              <span className="text-brand-primary-cta">{partData.partName} 파트</span>입니다.
+            </p>
+            {partData.icon}
+          </div>
+        </div>
+      </div>
+      <div className="relative flex w-full items-start gap-2.5 pt-2.5 pb-20 sm:gap-12 sm:pt-12">
+        <div className="bg-surface-elevated flex h-19 flex-1 flex-col justify-end rounded-md px-3 py-2.5 sm:h-79 sm:rounded-2xl sm:px-12 sm:py-10">
+          <p className="text-custom-gray-100 text-[12px]/4 font-medium whitespace-pre-line sm:text-[44px]/15">{partData.description}</p>
+        </div>
+
+        <div className="bg-surface-elevated flex h-19 flex-col rounded-md p-2 sm:h-79 sm:rounded-2xl sm:px-8 sm:py-9.5">
+          <p className="text-brand-secondary-light text-[8px]/1.5 sm:text-[20px]/6">이런 기술 스택을 주로 이용합니다.</p>
+          <div className="flex flex-1 flex-col justify-end gap-0.5 sm:gap-4">
+            {partData.techStack.map((tech, index) => (
+              <div key={index} className="space-y-1">
+                <div className="text-brand-secondary-light border-brand-secondary-light/40 sm:border-brand-secondary-light flex h-2 w-2 items-center justify-center rounded-full border text-[6px] sm:h-6 sm:w-6 sm:text-sm">
+                  {index + 1}
+                </div>
+                <p className="text-custom-gray-100 text-[10px]/3 font-semibold sm:text-[42px]/14.5">{tech}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
