@@ -11,7 +11,7 @@ interface PartDescription {
 export const PartDescriptData: Record<string, PartDescription> = {
   Dev: {
     partName: '데브',
-    description: `서비스를 개발하고, 유지보수를 합니다.`,
+    description: `서비스를 개발하고,\n유지보수합니다.`,
     techStack: ['Spring Boot', 'React'],
     icon: (
       <div className="absolute -right-4 -bottom-10 sm:-right-20 sm:-bottom-40">

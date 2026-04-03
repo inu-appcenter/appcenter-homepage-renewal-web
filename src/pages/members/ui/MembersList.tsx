@@ -56,7 +56,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
           <span className="text-custom-gray-600 text-[1rem] sm:text-[2rem]">해당 조건에 맞는 멤버가 없습니다</span>
         </div>
       ) : (
-        <section className="space-y-5 pb-20 sm:space-y-20 sm:py-10">
+        <section className="space-y-5 pb-10 sm:space-y-20 sm:py-10">
           {leaders.length > 0 && (
             <div className="flex flex-col">
               <div className="flex items-center py-5 sm:py-10">
