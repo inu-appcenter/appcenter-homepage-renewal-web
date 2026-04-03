@@ -1,12 +1,15 @@
 'use client';
 import Image from 'next/image';
-import { Carousel, ListButton, SectionDetailTitle } from './Components';
+import { Carousel, ListButton, SectionDetailTitle, SectionTitle } from './Components';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { useWorkShop } from 'entities/workshop';
 
 export const WorkshopSection = () => {
   return (
     <section className="flex h-[40vh] flex-col justify-center sm:h-screen sm:gap-8">
+      <div className="relative flex flex-col">
+        <SectionTitle title="activity" description="다양한 시각이 모여 하나의 목표를 향합니다" />
+      </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
         <ListButton href="/workshoplist" />

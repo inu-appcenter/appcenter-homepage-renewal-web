@@ -21,7 +21,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   useEffect(() => {
     if (isMobile) return;
 
-    const sections = ['home', 'about', 'project', 'activity', 'activity', 'activity', 'faq'];
+    const sections = ['home', 'about', 'project', 'activity', 'activity', 'faq'];
     const viewHeight = window.innerHeight;
     const currentIndex = Math.round(currentY / viewHeight);
 
@@ -41,6 +41,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
 
   // 페이지 변경 시 초기화
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     setIsChanging(true);
     isAnimating.current = false;
 

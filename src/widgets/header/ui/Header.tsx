@@ -11,8 +11,8 @@ const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
   { name: 'Project', href: '/#project' },
   { name: 'Activity', href: '/#activity' },
-  // { name: 'Member', href: '/members' },
-  { name: 'FAQ', href: '/#faq' }
+  { name: 'FAQ', href: '/#faq' },
+  { name: 'Join Us', href: '/joinus' }
 ];
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +51,7 @@ export const Header = () => {
           <ul className="flex items-center gap-20">
             {NAV_ITEMS.map((item) => {
               const itemId = item.href.split('#')[1];
-              const isActive = activeId === itemId;
+              const isActive = itemId === undefined ? false : activeId === itemId;
 
               return (
                 <li key={item.name}>

@@ -9,7 +9,7 @@ button {
 }
 
 @theme {
-  /* 디자인시스템 색상표 */
+  /* 디자인시스템 색상표 시작*/
   --color-custom-black: #222124;
   --color-custom-gray-900: #383838;
   --color-custom-gray-800: #494949;
@@ -33,6 +33,7 @@ button {
   --color-brand-secondary: #9b28ff;
   --color-brand-secondary-light: #b07bff;
 
+  /* 폰트 스타일 시작 */
   --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
   --font-tokyo: var(--font-tokyo), ui-sans-serif, system-ui;
 }
@@ -60,5 +61,24 @@ button {
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #57ff85;
+  }
+
+  /* 파트별 색상 정의 */
+  .part-dev {
+    --part-color: #5ed2f1;
+  } /* Dev */
+  .part-design {
+    --part-color: #f561c0;
+  } /* Design */
+  .part-pm {
+    --part-color: #f79c03;
+  } /* PM */
+  .part-basic {
+    --part-color: #00ffbf;
+  } /* Basic */
+
+  /* 파트 데이터가 없을 때를 대비한 기본값 */
+  .part-default {
+    --part-color: #e8e8e8;
   }
 }

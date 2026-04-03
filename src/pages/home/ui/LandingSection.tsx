@@ -4,6 +4,7 @@ import { AnimationButton } from 'shared/ui/animation-button';
 import { ScrambleText } from 'shared/animation/ScrambleText';
 import { MoveDown } from 'lucide-react';
 import Link from 'next/link';
+import { ScrollIndicator } from './Components';
 
 export const LandingSection = () => {
   return (
@@ -42,7 +43,8 @@ export const LandingSection = () => {
           앱센터 모집 지원하러 가기
         </Link>
 
-        <MoveDown className="text-custom-gray-200 absolute bottom-20 animate-bounce sm:hidden" />
+        {/* <MoveDown className="text-custom-gray-200 absolute bottom-20 animate-bounce sm:hidden" /> */}
+        <ScrollIndicator />
       </section>
     </>
   );

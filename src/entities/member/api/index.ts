@@ -1,5 +1,5 @@
 import { http } from 'shared/utils/http';
-import type { Member, MemberForm, MemberStats } from '../types/member';
+import type { Member, MemberForm, MemberStats, MemberWithGeneration } from '../types/member';
 
 export const memberApi = {
   getAll: () => {
@@ -32,5 +32,8 @@ export const memberApi = {
 
   delete: (id: number) => {
     return http.delete<{ success: boolean }>(`/members/${id}`);
+  },
+  getMembersInfo: (year?: number, part?: string) => {
+    return http.get<MemberWithGeneration[]>(`/groups/public/all-members-info?${year ? `year=${year}&` : ''}${part ? `part=${part}` : ''}`, { next: { revalidate: 3600 } });
   }
 };

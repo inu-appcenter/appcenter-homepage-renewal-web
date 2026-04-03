@@ -86,14 +86,14 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
   );
 };
 
-export const ListButton = ({ href }: { href: string }) => {
+export const ListButton = ({ href, text }: { href: string; text?: string }) => {
   return (
     <Link
       href={href}
       className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-2 py-1 text-[9px] shadow-[0px_0px_12px_0px_#57FF8566] sm:flex sm:px-4 sm:py-2 sm:text-lg"
     >
       <Menu strokeWidth={1.25} className="hidden sm:inline-block" />
-      <span>목록으로</span>
+      <span>{text || '목록으로'}</span>
     </Link>
   );
 };
@@ -222,6 +222,78 @@ export const Carousel = <T,>({ data, renderItem, className = '', overflowHidden 
           />
         ))}
       </div>
+    </div>
+  );
+};
+
+export const ScrollIndicator = () => {
+  // 선이 다 그려지는 데 걸리는 시간 (초)
+  const lineDrawDuration = 0.6;
+  // 선이 끝난 후 글자가 나타날 때까지의 작은 지연 시간
+  const textDelayAfterLine = 0.2;
+  const textStartDelay = lineDrawDuration + textDelayAfterLine;
+
+  return (
+    <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-4.5">
+      {/* 1. 위에서 아래로 그려지는 그라데이션 SVG 선 */}
+      <motion.svg
+        // h-20 (80px), w-0.75 (3px)에 맞춤
+        width="3"
+        height="80"
+        viewBox="0 0 3 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        initial="initial"
+        animate="animate"
+      >
+        {/* 그려질 실제 경로 */}
+        <motion.path
+          // 세로선 경로 (시작: x1.5 y0, 끝: x1.5 y80)
+          d="M1.5 0 L1.5 80"
+          stroke="url(#gradient-line)" // 아래 정의된 그라데이션 사용
+          strokeWidth="3"
+          strokeLinecap="round"
+          variants={{
+            initial: {
+              pathLength: 0, // 처음엔 선이 없음 (길이 0)
+              opacity: 0
+            },
+            animate: {
+              pathLength: 1, // 목표: 전체 선 그리기 (길이 1)
+              opacity: 1,
+              transition: {
+                // 선 그리기 애니메이션 설정
+                duration: lineDrawDuration,
+                ease: 'easeInOut' // 부드러운 가속도
+              }
+            }
+          }}
+        />
+
+        {/* 그라데이션 정의 (제공된 색상 적용) */}
+        <defs>
+          <linearGradient id="gradient-line" x1="1.5" y1="0" x2="1.5" y2="80" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0B0B0C" offset="0%" />
+            <stop stopColor="#0C4A28" offset="35%" />
+            <stop stopColor="#0FE56E" offset="100%" />
+          </linearGradient>
+        </defs>
+      </motion.svg>
+
+      {/* 2. 선이 그려진 후 나타나는 글자 */}
+      <motion.span
+        initial={{ opacity: 0, y: -10 }} // 처음에 투명하고 약간 아래에 위치
+        animate={{ opacity: 1, y: 0 }} // 선이 끝나면 선명해지며 위로 올라옴
+        transition={{
+          // 선 그리기 애니메이션이 끝난 후 시작하도록 지연 시간 설정
+          delay: textStartDelay,
+          duration: 0.8,
+          ease: 'easeOut'
+        }}
+        className="text-brand-primary-cta text-2xl font-normal uppercase"
+      >
+        Scroll
+      </motion.span>
     </div>
   );
 };
