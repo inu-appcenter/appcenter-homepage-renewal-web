@@ -55,15 +55,15 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
 
   return (
     <div className={`flex items-center gap-10 ${className}`}>
-      {label && <span className="text-custom-gray-600 text-[32px]">{label}</span>}
+      {label && <span className="text-custom-gray-600 hidden text-[2rem] sm:block">{label}</span>}
 
       <button
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="border-custom-gray-600 text-custom-gray-100 hover:border-brand-primary-cta flex w-42.5 items-center justify-between border-2 px-6 py-7 text-[32px] font-medium transition-colors"
+        className="border-custom-gray-600 text-custom-gray-100 hover:border-brand-primary-cta flex w-14 items-center justify-between border-2 px-1 py-1 text-[0.625rem]/2.5 font-medium transition-colors sm:w-42.5 sm:px-6 sm:py-7 sm:text-[2rem]/6"
       >
         {renderValue(value)}
-        <ChevronDown size={24} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-2.5 w-2.5 transition-transform duration-300 sm:h-6 sm:w-6 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen &&
@@ -76,7 +76,7 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
               left: `${coords.left}px`,
               width: `${coords.width}px`
             }}
-            className="bg-background border-custom-gray-600 no-scrollbar absolute z-9998 max-h-124 overflow-y-auto border-2"
+            className="bg-background border-custom-gray-600 no-scrollbar absolute z-9998 max-h-28 overflow-y-auto border-2 sm:max-h-126"
           >
             <ul className="flex flex-col">
               {options.map((option) => (
@@ -86,7 +86,7 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
                       onChange(option);
                       setIsOpen(false);
                     }}
-                    className={`hover:text-brand-primary-cta w-full px-6 py-5 text-left text-[28px] transition-colors hover:bg-[#08341F] ${
+                    className={`hover:text-brand-primary-cta block w-full px-1 py-1 text-left text-[0.625rem] leading-none transition-colors hover:bg-[#08341F] sm:px-6 sm:py-5 sm:text-[2rem] ${
                       value === option ? 'text-brand-primary-cta bg-[#08341F]' : 'text-white'
                     }`}
                   >

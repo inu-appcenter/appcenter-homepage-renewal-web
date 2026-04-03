@@ -6,7 +6,7 @@ export function UserLayoutNoScrollAnimation({ children }: Readonly<{ children: R
   return (
     <>
       <Header />
-      <main className="mx-auto w-full max-w-380 px-10 sm:max-w-400 sm:px-20">{children}</main>
+      <main className="mx-auto w-full max-w-380 px-5 sm:max-w-400 sm:px-20">{children}</main>
       <Footer />
     </>
   );
@@ -16,7 +16,7 @@ export function UserLayoutScrollAnimation({ children }: Readonly<{ children: Rea
   return (
     <>
       <FullPageScroll header={<Header />}>
-        <main className="mx-auto w-full max-w-380 px-10 sm:max-w-400 sm:px-20">{children}</main>
+        <main className="mx-auto w-full max-w-380 px-5 sm:max-w-400 sm:px-20">{children}</main>
         <Footer />
       </FullPageScroll>
     </>
