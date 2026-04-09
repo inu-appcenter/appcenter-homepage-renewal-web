@@ -28,5 +28,5 @@ const ProjectCarousel = () => {
     return [...data].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
   }, [data]);
 
-  return <Carousel data={sortedProjects} overflowHidden={false} className="gap-3 sm:gap-8" renderItem={(item) => <ProjectCard data={item} />} />;
+  return <Carousel data={sortedProjects} overflowHidden={false} className="gap-3 sm:gap-8" renderItem={(item) => <ProjectCard data={item} className="w-36 sm:w-90" />} />;
 };
