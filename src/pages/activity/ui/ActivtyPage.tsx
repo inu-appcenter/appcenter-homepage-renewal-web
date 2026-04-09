@@ -32,7 +32,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
 export async function ActivityPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
   const data = await activityApi.getById(id);
-  console.log(data);
 
   return (
     <>

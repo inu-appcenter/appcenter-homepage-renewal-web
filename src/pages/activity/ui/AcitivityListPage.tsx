@@ -23,7 +23,7 @@ export async function ActivityListPage() {
 
   return (
     <section className="flex flex-col items-center py-30 sm:py-40">
-      <h1 className="font-product-design text-[16px] text-white sm:text-[64px]">
+      <h1 className="font-product-design text-[1.5rem]/6 text-white sm:text-[4rem]/6">
         <span className="text-brand-primary-cta">A</span>ctivity
       </h1>
 
@@ -44,8 +44,9 @@ const Item = ({ data }: { data: Awaited<ReturnType<typeof activityApi.getAll>>[n
         <div className="w-full overflow-hidden rounded-sm sm:rounded-2xl">
           <Image src={data.thumbnail} alt={data.title} width={0} height={0} sizes="100vw" className="h-auto w-full" />
         </div>
-        <div className="mt-2 flex flex-col gap-0 sm:mt-11 sm:gap-3">
-          <h2 className="text-brand-primary-cta line-clamp-1 text-[12px] font-semibold sm:text-[28px]">{data.title}</h2>
+        <div className="mt-2 flex flex-col gap-0.5 sm:mt-11 sm:gap-3">
+          <h2 className="text-brand-primary-cta line-clamp-1 text-[0.75rem]/3 font-semibold sm:text-[1.75rem]/7">{data.title}</h2>
+          <span className="text-[0.625rem]/2.5 font-semibold text-white sm:text-[1.25rem]/5">{data.createdDate.slice(0, 10)}</span>
         </div>
       </li>
     </Link>

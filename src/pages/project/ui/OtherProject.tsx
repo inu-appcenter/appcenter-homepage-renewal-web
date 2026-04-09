@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ProjectCard } from './Component';
 import { useProject } from 'entities/project';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
+import { ProjectCard } from 'features/project';
 
 export function OtherProjects() {
   return (
@@ -38,11 +38,11 @@ function OtherProjectsContent() {
       <div className="flex flex-row items-start justify-between gap-6">
         <h2 className="text-brand-primary-cta text-[16px] leading-none font-bold sm:text-[64px]">Other Projects</h2>
         <Link
-          href="/projectlist"
-          className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex items-center gap-2 rounded-full border px-2 py-1 text-[9px] font-medium shadow-[0px_0px_4px_0px_#57FF8566] transition-transform hover:scale-105 active:scale-95 sm:px-6 sm:py-3 sm:text-[16px] sm:shadow-[0px_0px_16px_0px_#57FF8566]"
+          href={'/projectlist'}
+          className={`text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-3 py-1.5 text-[0.875rem]/3.5 shadow-[0px_0px_8px_0px_#57FF8566] sm:px-4 sm:py-2 sm:text-lg sm:shadow-[0px_0px_12px_0px_#57FF8566]`}
         >
-          <Menu strokeWidth={1.5} className="h-2 w-2 sm:h-5 sm:w-5" />
-          목록으로
+          <Menu strokeWidth={1.25} className="h-4 w-4 sm:h-6 sm:w-6" />
+          <span>목록으로</span>
         </Link>
       </div>
 
