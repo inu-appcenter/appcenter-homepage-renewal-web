@@ -7,6 +7,7 @@ import { GitHub } from 'shared/icon/GitHub';
 import { Blog } from 'shared/icon/Blog';
 import { Hello } from 'shared/icon/Hello';
 import { PartDescriptData } from '../data/PartDescriptData';
+import { toast } from 'sonner';
 
 interface ItemProps {
   member: MemberWithGeneration;
@@ -125,9 +126,14 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
             </a>
           )}
           {member.email && (
-            <a href={`mailto:${member.email}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <Mail className="h-2.5 w-2.5 sm:h-9 sm:w-9" />
-            </a>
+            <Mail
+              className="h-2.5 w-2.5 sm:h-9 sm:w-9"
+              onClick={() => {
+                if (!member.email) return;
+                navigator.clipboard.writeText(member.email);
+                toast.success('이메일 주소가 복사되었습니다');
+              }}
+            />
           )}
           {member.blogLink && (
             <a href={member.blogLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
@@ -141,7 +147,7 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
           )}
         </div>
       </div>
-      <span className="sm:text-custom-gray-500 text-[0.625rem]/2.5 text-white sm:text-[1.5rem]/6">{member.description}</span>
+      <span className="sm:text-custom-gray-500 text-[0.625rem]/2.5 whitespace-pre-line text-white sm:text-[1.5rem]/8">{member.description || `안녕하세요 \n ${member.name}입니다`}</span>
     </div>
   );
 };

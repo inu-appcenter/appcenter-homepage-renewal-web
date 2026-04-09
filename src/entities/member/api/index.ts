@@ -34,6 +34,6 @@ export const memberApi = {
     return http.delete<{ success: boolean }>(`/members/${id}`);
   },
   getMembersInfo: (year?: number, part?: string) => {
-    return http.get<MemberWithGeneration[]>(`/groups/public/all-members-info?${year ? `year=${year}&` : ''}${part ? `part=${part}` : ''}`, { next: { revalidate: 3600 } });
+    return http.get<MemberWithGeneration[]>(`/groups/public/all-members-info?${year ? `year=${year}&` : ''}${part ? `part=${part}` : ''}`);
   }
 };

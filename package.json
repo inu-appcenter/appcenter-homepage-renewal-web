@@ -12,6 +12,9 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.17",
     "canvas-confetti": "^1.9.4",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.562.0",
     "motion": "^12.24.7",
     "next": "16.1.5",

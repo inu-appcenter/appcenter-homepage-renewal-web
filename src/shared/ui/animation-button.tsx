@@ -14,7 +14,7 @@ export function AnimationButton({ href, children, className, ...props }: any) {
       />
       <div
         className={cn(
-          `${className ?? ''} bg-background-surface group-hover:bg-surface-elevated relative z-10 flex items-center justify-center rounded-[60px] px-3.5 py-2 transition-colors duration-300 sm:px-10 sm:py-4`
+          `${className ?? ''} bg-background-surface group-hover:bg-surface-elevated relative z-10 flex items-center justify-center rounded-[60px] px-3.5 py-2 transition-colors duration-300 sm:px-8 sm:py-4`
         )}
       >
         {children}

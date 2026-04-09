@@ -36,6 +36,18 @@ button {
   /* 폰트 스타일 시작 */
   --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
   --font-tokyo: var(--font-tokyo), ui-sans-serif, system-ui;
+
+  /* 애니메이션 시작 */
+  --animate-wiggle-right: wiggle-right 1s linear infinite;
+  @keyframes wiggle-right {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+  }
 }
 
 @layer utilities {

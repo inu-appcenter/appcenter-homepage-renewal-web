@@ -109,7 +109,7 @@ export const Header = () => {
                 <Link
                   href="/login"
                   onClick={closeMenu}
-                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-bold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
+                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-semibold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
                 >
                   Sign in
                 </Link>
@@ -123,7 +123,7 @@ export const Header = () => {
                       closeMenu();
                       handleScroll(e, item.href);
                     }}
-                    className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta block rounded-full border border-white/20 px-4 py-2 font-bold text-white transition-colors active:scale-95"
+                    className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta border-custom-gray-500 block rounded-full border px-4 py-2 font-bold text-white transition-colors active:scale-95"
                   >
                     {item.name}
                   </Link>

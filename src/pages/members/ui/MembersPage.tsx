@@ -11,8 +11,8 @@ export async function MembersPage() {
   const aboutData = [
     { title: 'TOTAL MEMBERS', subNumber: data.totalMemberCount },
     { title: 'CURRENT GEN', subNumber: `${data.currentYear}TH` },
-    { title: 'PARTS', subNumber: data.projectCount },
-    { title: 'LEADERS', subNumber: 3 }
+    { title: 'PARTS', subNumber: data.partCount },
+    { title: 'LEADERS', subNumber: data.leaderCount }
   ];
 
   return (

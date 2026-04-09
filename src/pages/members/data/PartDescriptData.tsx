@@ -1,6 +1,7 @@
 import { Design } from 'shared/icon/Design';
 import { Server } from 'shared/icon/Server';
 import { Basic } from 'shared/icon/Basic';
+import { Ios } from 'shared/icon/Ios';
 
 interface PartDescription {
   partName: string;
@@ -44,8 +45,8 @@ export const PartDescriptData: Record<string, PartDescription> = {
     description: `프로젝트를 관리하고,\n팀을 이끕니다.`,
     techStack: ['Notion', 'Slack'],
     icon: (
-      <div className="absolute -right-4 -bottom-10 sm:-right-20 sm:-bottom-40">
-        <Design className="w-20 sm:w-120" />
+      <div className="absolute -right-4 -bottom-8 sm:-right-20 sm:-bottom-20">
+        <Ios className="w-48 sm:w-160" />
       </div>
     )
   }
