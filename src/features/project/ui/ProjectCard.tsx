@@ -24,7 +24,7 @@ export function ProjectCard({ data, className, isActive }: { data: Project; clas
       )}
 
       <div className="mt-3 grid grid-cols-1 gap-y-2 sm:grid-cols-[1fr_auto] sm:gap-x-2 sm:gap-y-0">
-        <p className="text-brand-primary-cta line-clamp-1 text-base/4 font-semibold whitespace-normal sm:col-start-1 sm:row-start-1 sm:text-[1.375rem]/5.5">{data.title}</p>
+        <p className="text-brand-primary-cta line-clamp-1 truncate text-base/4 font-semibold sm:col-start-1 sm:row-start-1 sm:text-[1.375rem]/5.5">{data.title}</p>
 
         <p className="line-clamp-3 text-[0.75rem] font-semibold whitespace-normal text-white sm:col-span-2 sm:col-start-1 sm:row-start-2 sm:mt-2 sm:mb-10 sm:text-[1.25rem]">{data.subTitle}</p>
 

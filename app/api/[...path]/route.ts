@@ -57,7 +57,6 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
 
     let response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
 
-    // 인증이 만료된 경우 access_token 재발급 시도
     if (response.status === 401) {
       const refreshToken = cookieStore.get('refreshToken')?.value;
 
@@ -93,21 +92,22 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
           fetchOptions.headers = headers;
 
           response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
+          return NextResponse.json(await response.json(), { status: response.status });
         } else {
           // 재발급 실패 (refreshToken 마저 만료됨) -> 로그아웃 처리
           cookieStore.delete('accessToken');
           cookieStore.delete('refreshToken');
-          return NextResponse.json({ message: 'Session expired' }, { status: 401 });
+          return NextResponse.json({ message: '세션이 만료되었습니다. 다시 로그인해주세요.' }, { status: 401 });
         }
       } else {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        return NextResponse.json({ message: '세션이 만료되었습니다. 다시 로그인해주세요.' }, { status: 401 });
       }
     }
 
     if (!response.ok) {
       const errorData = await response.text();
       console.log('BFF Error Response:', errorData);
-      return NextResponse.json(errorData, { status: response.status });
+      return NextResponse.json({ message: errorData }, { status: response.status });
     }
 
     if (response.status === 204) return new NextResponse(null, { status: 204 });

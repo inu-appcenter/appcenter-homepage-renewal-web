@@ -27,12 +27,12 @@ function ProjectCarousel() {
   return (
     <Carousel
       data={sortedProjects}
-      options={{ loop: true, align: 'center', containScroll: 'trimSnaps' }}
+      options={{ loop: true, align: 'center', containScroll: 'trimSnaps', dragFree: true }}
       autoPlay={true}
       autoPlayOptions={{ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }}
       className="space-y-4 py-4"
       trackClassName="gap-4 p-4"
-      slideClassName="min-w-0 flex-[0_0_60%] sm:flex-[0_0_30%]"
+      slideClassName="min-w-0 flex-[0_0_60%] sm:flex-[0_0_25%]"
       renderItem={(project, _, isActive) => <ProjectCard data={project} isActive={isActive} />}
       overflow={false}
     />

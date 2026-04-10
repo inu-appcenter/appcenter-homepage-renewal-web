@@ -20,7 +20,6 @@ export const AdminRegistration = () => {
   return (
     <div className="flex w-full items-center justify-center p-4">
       <div className="flex w-full max-w-3xl flex-col gap-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-        {/* 헤더 영역 */}
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-1">
             <h2 className="text-xl font-bold text-slate-800">회원가입 인증 코드</h2>

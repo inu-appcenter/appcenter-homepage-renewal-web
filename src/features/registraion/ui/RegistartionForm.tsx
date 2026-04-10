@@ -59,7 +59,7 @@ const AuthCodeInnerForm = ({ initialData, onSubmit, isPending }: { initialData: 
           }}
         />
         <Alert type="warning">
-          <strong>변경 즉시</strong> 기존 코드는 무효화됩니다.
+          코드는 항상 <strong>대문자</strong>입니다.
         </Alert>
       </div>
       <SaveButton type="submit" disabled={isPending || !formData.code || formData.code === initialData.code}>

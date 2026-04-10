@@ -67,7 +67,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
         ) : (
           <motion.section
             key={`${selectedPart}-${selectedYear}`}
-            className="space-y-5 pb-10 sm:space-y-20 sm:py-10"
+            className="space-y-5 px-10 pb-10 sm:space-y-20 sm:py-10"
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
