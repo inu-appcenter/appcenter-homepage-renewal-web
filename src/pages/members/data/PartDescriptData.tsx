@@ -1,7 +1,7 @@
 import { Design } from 'shared/icon/Design';
-import { Server } from 'shared/icon/Server';
+import { Dev } from 'shared/icon/Dev';
 import { Basic } from 'shared/icon/Basic';
-import { Ios } from 'shared/icon/Ios';
+import { PM } from 'shared/icon/PM';
 
 interface PartDescription {
   partName: string;
@@ -16,7 +16,7 @@ export const PartDescriptData: Record<string, PartDescription> = {
     techStack: ['Spring Boot', 'React'],
     icon: (
       <div className="absolute -right-4 -bottom-10 sm:-right-20 sm:-bottom-40">
-        <Server className="w-36 sm:w-160" />
+        <Dev className="w-36 sm:w-160" />
       </div>
     )
   },
@@ -46,7 +46,7 @@ export const PartDescriptData: Record<string, PartDescription> = {
     techStack: ['Notion', 'Slack'],
     icon: (
       <div className="absolute -right-4 -bottom-8 sm:-right-20 sm:-bottom-20">
-        <Ios className="w-48 sm:w-160" />
+        <PM className="w-48 sm:w-160" />
       </div>
     )
   }
