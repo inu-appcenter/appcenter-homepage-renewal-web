@@ -4,7 +4,7 @@ import { ListButton, SectionTitle } from './Components';
 import { useProject } from 'entities/project';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { ProjectCard } from 'features/project';
-import { Carousel } from 'shared/ui/caroshel';
+import { Carousel } from 'shared/ui/carousel';
 
 export const ProjectSection = () => {
   return (

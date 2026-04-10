@@ -104,7 +104,7 @@ const Item = ({ data }: { data: RecruitmentList }) => {
   return (
     <Link
       href={`/joinus/${data.id}`}
-      className="bg-surface-elevated hover:border-brand-primary-cta border-background relative flex w-full cursor-pointer flex-row items-center gap-2 rounded-[18px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:px-6 sm:py-4"
+      className="bg-surface-elevated hover:border-brand-primary-cta border-background relative flex w-full cursor-pointer flex-row items-center gap-2 rounded-[9px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:rounded-[18px] sm:px-6 sm:py-4"
     >
       {data.thumbnail ? (
         <img src={data.thumbnail} alt="thumb" className="h-14 w-14 rounded-sm object-cover object-top sm:h-27 sm:w-27 sm:rounded-xl" />

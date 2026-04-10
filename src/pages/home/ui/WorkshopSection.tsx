@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { ListButton, SectionDetailTitle } from './Components';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { useWorkShop } from 'entities/workshop';
-import { Carousel } from 'shared/ui/caroshel';
+import { Carousel } from 'shared/ui/carousel';
 
 export const WorkshopSection = () => {
   return (
@@ -21,12 +21,14 @@ export const WorkshopSection = () => {
 
 const WorkshopCarousel = () => {
   const { data } = useWorkShop();
-  const sortedData = data.slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+  const sortedData = [...data].slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+
   return (
     <Carousel
       data={sortedData}
       className="gap-3 sm:gap-11.5"
       autoScroll={true}
+      pauseOnIntersection={false}
       trackClassName="gap-4 px-4 sm:gap-8 sm:px-8"
       renderItem={(item) => (
         <div className="group relative h-24 w-40 overflow-hidden rounded-sm bg-gray-900 sm:h-90 sm:w-164 sm:rounded-xl">

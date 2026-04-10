@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { ScrollContext } from 'entities/scroll';
+import { useMediaQuery } from 'shared/hooks/useMediaQuery';
 
 interface FullPageScrollProps {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   const [currentY, setCurrentY] = useState(0);
   const [activeId, setActiveId] = useState('');
   const [isChanging, setIsChanging] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 1040px)');
 
   const isAnimating = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,16 +29,6 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
     const currentSectionId = sections[currentIndex] || '';
     setActiveId(currentSectionId);
   }, [currentY, isMobile]);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1040);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // 페이지 변경 시 초기화
   useEffect(() => {

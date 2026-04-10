@@ -2,11 +2,12 @@
 import { MemberWithGeneration } from 'entities/member';
 import { Dot, FileUser, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GitHub } from 'shared/icon/GitHub';
 import { Blog } from 'shared/icon/Blog';
 import { Hello } from 'shared/icon/Hello';
 import { PartDescriptData } from '../data/PartDescriptData';
+import { useMediaQuery } from 'shared/hooks/useMediaQuery';
 import { toast } from 'sonner';
 
 interface ItemProps {
@@ -15,15 +16,7 @@ interface ItemProps {
 }
 const useResponsiveFlip = () => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useMediaQuery('(max-width: 639px)');
 
   const handleMouseEnter = () => {
     if (!isMobile) setIsFlipped(true);

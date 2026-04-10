@@ -1,13 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { useRecruitment } from 'entities/recruitment';
 import { RecruitmentCard } from './Component';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
-
-const VISIBLE_ITEMS = 3;
 
 export function OtherRecruitments() {
   return (
@@ -16,22 +14,44 @@ export function OtherRecruitments() {
     </AsyncBoundary>
   );
 }
+
 function OtherRecruitmentsContent() {
   const { data } = useRecruitment();
-  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const maxIndex = Math.max(0, data.length - VISIBLE_ITEMS);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'center',
+    containScroll: 'trimSnaps',
+    dragFree: true
+  });
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
-  };
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
-  };
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setPrevBtnDisabled(!emblaApi.canScrollPrev());
+    setNextBtnDisabled(!emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+    emblaApi.on('init', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+      emblaApi.off('init', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  if (!data || data.length === 0) return null;
 
   return (
-    <section className="group/section relative my-32 flex flex-col gap-3 [--gap:12px] sm:gap-12 sm:[--gap:32px]">
+    <section className="group/section relative my-32 flex flex-col gap-3 sm:gap-12">
       <div className="flex flex-row items-start justify-between gap-6">
         <h2 className="text-brand-primary-cta text-base/4 font-bold sm:text-[4rem]/16">Other Recruits</h2>
 
@@ -47,43 +67,29 @@ function OtherRecruitmentsContent() {
 
       <div className="relative w-full">
         <button
-          onClick={prevSlide}
-          disabled={currentIndex === 0}
+          onClick={scrollPrev}
+          disabled={prevBtnDisabled}
           className={`text-brand-primary-cta disabled:text-custom-gray-800 border-custom-gray-800 bg-custom-black absolute top-1/2 -left-3 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border p-2 shadow-[0px_0px_16px_0px_#00000040] backdrop-blur-md transition-all hover:bg-white/20 disabled:pointer-events-none sm:-left-10`}
         >
           <ChevronLeft className="h-4 w-4 sm:h-8 sm:w-8" />
         </button>
 
         <button
-          onClick={nextSlide}
-          disabled={currentIndex === maxIndex}
+          onClick={scrollNext}
+          disabled={nextBtnDisabled}
           className={`text-brand-primary-cta disabled:text-custom-gray-800 border-custom-gray-800 bg-custom-black absolute top-1/2 -right-3 z-10 translate-x-1/2 -translate-y-1/2 rounded-full border p-2 shadow-[0px_0px_16px_0px_#00000040] backdrop-blur-md transition-all hover:bg-white/20 disabled:pointer-events-none sm:-right-10`}
         >
           <ChevronRight className="h-4 w-4 sm:h-8 sm:w-8" />
         </button>
 
-        <div className="overflow-hidden py-4">
-          <motion.div
-            className="flex gap-8"
-            style={{ gap: 'var(--gap)' }}
-            initial={false}
-            animate={{
-              x: `calc(-1 * ${currentIndex} * ((100% + var(--gap)) / ${VISIBLE_ITEMS}))`
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
+        <div className="overflow-hidden py-4" ref={emblaRef}>
+          <div className="flex gap-3 sm:gap-8">
             {data.map((item) => (
-              <motion.div
-                key={item.id}
-                className="shrink-0"
-                style={{
-                  width: `calc((100% - (${VISIBLE_ITEMS} - 1) * var(--gap)) / ${VISIBLE_ITEMS})`
-                }}
-              >
+              <div key={item.id} className="min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]">
                 <RecruitmentCard data={item} />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

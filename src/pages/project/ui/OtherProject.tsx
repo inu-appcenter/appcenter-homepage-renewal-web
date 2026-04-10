@@ -1,11 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { motion } from 'motion/react';
-import { useProject } from 'entities/project';
+import useEmblaCarousel from 'embla-carousel-react';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { ProjectCard } from 'features/project';
+import { useProject } from 'entities/project';
 
 export function OtherProjects() {
   return (
@@ -15,76 +15,81 @@ export function OtherProjects() {
   );
 }
 
-const VISIBLE_ITEMS = 3;
-
 function OtherProjectsContent() {
   const { data } = useProject();
-  const sortedDataByDate = data ? [...data].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()) : [];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'center',
+    containScroll: 'trimSnaps',
+    dragFree: true
+  });
 
-  const maxIndex = Math.max(0, sortedDataByDate.length - VISIBLE_ITEMS);
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
-  };
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
-  };
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setPrevBtnDisabled(!emblaApi.canScrollPrev());
+    setNextBtnDisabled(!emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+    emblaApi.on('init', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+      emblaApi.off('init', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  if (!data || data.length === 0) return null;
 
   return (
-    <section className="group/section relative my-8 flex flex-col gap-3 [--gap:12px] sm:my-32 sm:gap-12 sm:[--gap:32px]">
+    <section className="group/section relative my-32 flex flex-col gap-3 sm:gap-12">
       <div className="flex flex-row items-start justify-between gap-6">
-        <h2 className="text-brand-primary-cta text-[16px] leading-none font-bold sm:text-[64px]">Other Projects</h2>
+        <h2 className="text-brand-primary-cta text-base/4 font-bold sm:text-[4rem]/16">Other Projects</h2>
+
         <Link
-          href={'/projectlist'}
-          className={`text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-3 py-1.5 text-[0.875rem]/3.5 shadow-[0px_0px_8px_0px_#57FF8566] sm:px-4 sm:py-2 sm:text-lg sm:shadow-[0px_0px_12px_0px_#57FF8566]`}
+          href="/projectlist"
+          aria-label="프로젝트 목록으로 이동"
+          className="text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex items-center gap-2 rounded-full border px-2 py-1 text-[9px] font-medium shadow-[0px_0px_4px_0px_#57FF8566] transition-transform hover:scale-105 active:scale-95 sm:px-6 sm:py-3 sm:text-[1.125rem]/4.5 sm:shadow-[0px_0px_16px_0px_#57FF8566]"
         >
-          <Menu strokeWidth={1.25} className="h-4 w-4 sm:h-6 sm:w-6" />
-          <span>목록으로</span>
+          <Menu strokeWidth={1.5} className="hidden scale-x-120 sm:inline-block sm:h-6 sm:w-7" />
+          목록으로
         </Link>
       </div>
 
       <div className="relative w-full">
         <button
-          onClick={prevSlide}
-          disabled={currentIndex === 0}
+          onClick={scrollPrev}
+          disabled={prevBtnDisabled}
           className={`text-brand-primary-cta disabled:text-custom-gray-800 border-custom-gray-800 bg-custom-black absolute top-1/2 -left-3 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border p-2 shadow-[0px_0px_16px_0px_#00000040] backdrop-blur-md transition-all hover:bg-white/20 disabled:pointer-events-none sm:-left-10`}
         >
           <ChevronLeft className="h-4 w-4 sm:h-8 sm:w-8" />
         </button>
 
         <button
-          onClick={nextSlide}
-          disabled={currentIndex === maxIndex}
+          onClick={scrollNext}
+          disabled={nextBtnDisabled}
           className={`text-brand-primary-cta disabled:text-custom-gray-800 border-custom-gray-800 bg-custom-black absolute top-1/2 -right-3 z-10 translate-x-1/2 -translate-y-1/2 rounded-full border p-2 shadow-[0px_0px_16px_0px_#00000040] backdrop-blur-md transition-all hover:bg-white/20 disabled:pointer-events-none sm:-right-10`}
         >
           <ChevronRight className="h-4 w-4 sm:h-8 sm:w-8" />
         </button>
 
-        <div className="-my-4 overflow-hidden px-1 py-4">
-          <motion.div
-            className="flex"
-            style={{ gap: 'var(--gap)' }}
-            initial={false}
-            animate={{
-              x: `calc(-1 * ${currentIndex} * ((100% + var(--gap)) / ${VISIBLE_ITEMS}))`
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
-            {sortedDataByDate.map((item) => (
-              <motion.div
-                key={item.id}
-                className="shrink-0"
-                style={{
-                  width: `calc((100% - (${VISIBLE_ITEMS} - 1) * var(--gap)) / ${VISIBLE_ITEMS})`
-                }}
-              >
+        <div className="overflow-hidden py-4" ref={emblaRef}>
+          <div className="flex gap-3 sm:gap-8">
+            {data.map((item) => (
+              <div key={item.id} className="min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]">
                 <ProjectCard data={item} />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

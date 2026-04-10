@@ -5,7 +5,7 @@ import { ListButton, SectionDetailTitle, SectionTitle } from './Components';
 import { MoveRight } from 'lucide-react';
 import { useActivities } from 'entities/activity';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
-import { Carousel } from 'shared/ui/caroshel';
+import { Carousel } from 'shared/ui/carousel';
 
 export const ActivitiesSection = () => {
   return (
@@ -26,16 +26,17 @@ export const ActivitiesSection = () => {
 
 const ActivitiesCarousel = () => {
   const { data } = useActivities();
-  const sortedData = data.slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+  const sortedData = [...data].slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
     <Carousel
       data={sortedData}
       autoScroll={true}
+      pauseOnIntersection={false}
       className="gap-3 sm:gap-11.5"
       trackClassName="gap-4 px-4"
       renderItem={(item) => (
-        <div className="group relative h-16 w-30 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
+        <div className="group relative h-20 w-36 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
           <Image draggable={false} loading="lazy" src={item.thumbnail} alt={item.title} fill className="object-cover" />
           <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
             <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-end gap-0.5 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:p-7">
