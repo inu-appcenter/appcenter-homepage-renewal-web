@@ -107,7 +107,7 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
     if (!response.ok) {
       const errorData = await response.text();
       console.log('BFF Error Response:', errorData);
-      return NextResponse.json(errorData, { status: response.status });
+      return NextResponse.json({ message: errorData }, { status: response.status });
     }
 
     if (response.status === 204) return new NextResponse(null, { status: 204 });

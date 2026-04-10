@@ -42,7 +42,7 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.msg || '요청 처리 중 에러가 발생했습니다.');
+    throw errorData;
   }
 
   return res.json();
