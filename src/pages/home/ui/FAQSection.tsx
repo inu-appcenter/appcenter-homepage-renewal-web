@@ -11,7 +11,7 @@ export const FAQSection = async () => {
 
   return (
     <section id="faq" className="flex min-h-150 flex-col gap-8 py-30 sm:h-screen">
-      <SectionTitle title="faq" description="자주 묻는 질문" />
+      <SectionTitle title="faq" />
       <FAQList data={faqData} />
     </section>
   );

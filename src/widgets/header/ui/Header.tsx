@@ -11,8 +11,8 @@ const NAV_ITEMS = [
   { name: 'About', href: '/#about' },
   { name: 'Project', href: '/#project' },
   { name: 'Activity', href: '/#activity' },
-  // { name: 'Member', href: '/members' },
-  { name: 'FAQ', href: '/#faq' }
+  { name: 'FAQ', href: '/#faq' },
+  { name: 'Join Us', href: '/joinus' }
 ];
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="fixed z-150 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30">
+      <header className="fixed z-9999 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30">
         <a href="#main-content" className="bg-brand-primary-cta text-background fixed -top-2499.75 left-0 z-99999 w-40 px-6 py-4 text-center focus:top-0">
           본문 바로가기
         </a>
@@ -51,7 +51,7 @@ export const Header = () => {
           <ul className="flex items-center gap-20">
             {NAV_ITEMS.map((item) => {
               const itemId = item.href.split('#')[1];
-              const isActive = activeId === itemId;
+              const isActive = itemId === undefined ? false : activeId === itemId;
 
               return (
                 <li key={item.name}>
@@ -109,7 +109,7 @@ export const Header = () => {
                 <Link
                   href="/login"
                   onClick={closeMenu}
-                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-bold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
+                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-semibold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
                 >
                   Sign in
                 </Link>
@@ -123,7 +123,7 @@ export const Header = () => {
                       closeMenu();
                       handleScroll(e, item.href);
                     }}
-                    className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta block rounded-full border border-white/20 px-4 py-2 font-bold text-white transition-colors active:scale-95"
+                    className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta border-custom-gray-500 block rounded-full border px-4 py-2 font-bold text-white transition-colors active:scale-95"
                   >
                     {item.name}
                   </Link>

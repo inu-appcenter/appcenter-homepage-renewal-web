@@ -20,7 +20,7 @@ export const generationApi = {
   },
 
   getGroupYears: () => {
-    return http.get<{ yearList: number[] }>('/groups/public/all-groups-years');
+    return http.get<{ yearList: number[] }>('/groups/public/all-groups-years', { next: { revalidate: 86400 } });
   },
 
   getParts: () => {

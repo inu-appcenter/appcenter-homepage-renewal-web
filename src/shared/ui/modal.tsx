@@ -10,12 +10,7 @@ interface ModalProps {
 }
 export const Modal = ({ trigger, children, title }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  // 클라이언트 사이드 마운트 확인 (Next.js SSR 에러 방지)
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const isMount = typeof document !== 'undefined';
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,7 +45,7 @@ export const Modal = ({ trigger, children, title }: ModalProps) => {
       <div onClick={handleOpen} className="inline-block cursor-pointer">
         {trigger}
       </div>
-      {mounted && isOpen && createPortal(modalContent, document.body)}
+      {isMount && isOpen && createPortal(modalContent, document.body)}
     </>
   );
 };

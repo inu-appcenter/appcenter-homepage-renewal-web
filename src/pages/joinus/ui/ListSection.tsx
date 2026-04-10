@@ -46,7 +46,7 @@ export function ListSection({ data }: { data: RecruitmentList[] }) {
           animate="center"
           exit="exit"
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="flex w-full flex-col gap-9"
+          className="flex w-full flex-col gap-4.5 sm:gap-9"
         >
           {currentItems.map((item) => (
             <Item key={item.id} data={item} />
@@ -104,10 +104,10 @@ const Item = ({ data }: { data: RecruitmentList }) => {
   return (
     <Link
       href={`/joinus/${data.id}`}
-      className="bg-surface-elevated hover:border-brand-primary-cta border-background flex w-full cursor-pointer flex-row items-center gap-2 rounded-[18px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:px-6 sm:py-4"
+      className="bg-surface-elevated hover:border-brand-primary-cta border-background relative flex w-full cursor-pointer flex-row items-center gap-2 rounded-[9px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:rounded-[18px] sm:px-6 sm:py-4"
     >
       {data.thumbnail ? (
-        <img src={data.thumbnail} alt="thumb" className="h-14 w-14 rounded-sm object-cover sm:h-27 sm:w-27 sm:rounded-xl" />
+        <img src={data.thumbnail} alt="thumb" className="h-14 w-14 rounded-sm object-cover object-top sm:h-27 sm:w-27 sm:rounded-xl" />
       ) : (
         <div className="bg-background flex h-14 w-14 items-center justify-center rounded-sm p-4 sm:h-27 sm:w-27 sm:rounded-xl">
           <Logo />
@@ -116,13 +116,14 @@ const Item = ({ data }: { data: RecruitmentList }) => {
       <div className="flex min-w-0 flex-1 flex-col items-start gap-2 sm:flex-row sm:gap-8">
         <StatusBadge status={data.status} />
         <div className="flex w-full flex-col items-start gap-1 sm:gap-2">
-          <span className="text-brand-primary-cta line-clamp-1 text-[14px] font-semibold sm:text-[28px]/7">{data.title}</span>
-          <div className="line-clamp-1 gap-2 text-[8px] font-semibold text-white sm:text-[20px]">{data.fieldNames.join(', ')}</div>
+          <span className="text-brand-primary-cta line-clamp-1 text-base/4 font-semibold sm:text-[1.75rem]/7">{data.title}</span>
+          <div className="line-clamp-1 gap-2 text-sm/3.5 text-white sm:text-[1.25rem]/5">{data.fieldNames.join(', ')}</div>
         </div>
       </div>
       {data.status === 'RECRUITING' && (
-        <div className="bg-background shrink-0 rounded-[30px] p-2 text-[16px] font-semibold whitespace-nowrap text-white sm:rounded-[60px] sm:px-10 sm:py-4 sm:text-xl">D-{data.dday}</div>
+        <div className="bg-background shrink-0 rounded-[30px] p-2 text-base/4 font-semibold whitespace-nowrap text-white sm:rounded-[60px] sm:px-10 sm:py-4 sm:text-xl/8">D-{data.dday}</div>
       )}
+      {data.status !== 'RECRUITING' && <div className="absolute inset-0 z-20 bg-black/30" />}
     </Link>
   );
 };

@@ -47,10 +47,10 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
       )}
 
       <motion.div animate={{ rotate: isSelected ? 45 : 0 }} transition={{ duration: 0.3 }}>
-        <Plus className={`h-2 w-2 sm:h-7 sm:w-7 ${isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-100'}`} strokeWidth={1} />
+        <Plus className={`h-3 w-3 sm:h-7 sm:w-7 ${isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-100'}`} strokeWidth={1} />
       </motion.div>
 
-      <span className="relative z-10 text-[9px] whitespace-nowrap sm:text-2xl">{text}</span>
+      <span className="relative z-10 text-[12px] whitespace-nowrap sm:text-2xl">{text}</span>
     </button>
   );
 };

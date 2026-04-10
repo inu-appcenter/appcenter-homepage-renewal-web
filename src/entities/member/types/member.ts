@@ -24,3 +24,17 @@ export interface MemberStats {
   leaderCount: number;
   projectCount: number;
 }
+
+export interface MemberWithGeneration {
+  readonly memberId: number;
+  name: string;
+  description: string | null;
+  profileImage: string | null;
+  email: string | null;
+  blogLink: string | null;
+  gitRepositoryLink: string | null;
+  behanceLink: string | null;
+  department: string | null;
+  groups: Array<{ groupId: number; role: string; year: number; part: string }>;
+  projects: Array<{ id: number; title: string; mainImage: string }>;
+}

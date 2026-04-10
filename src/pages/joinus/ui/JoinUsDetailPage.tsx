@@ -1,8 +1,10 @@
-import { AnimationButton } from 'shared/ui/animation-button';
-import { OtherRecruitments } from './OtherRecruitments';
 import { recruitmentApi } from 'entities/recruitment';
-import { Logo } from 'shared/icon/Logo';
+import { AnimationButton } from 'shared/ui/animation-button';
 import Image from 'next/image';
+import { Logo } from 'shared/icon/Logo';
+import { OtherRecruitments } from './OtherRecruitments';
+import { StatusBadge } from './Component';
+import dayjs from 'dayjs';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
@@ -28,39 +30,15 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
   const { id } = await params;
   const recruitmentData = await recruitmentApi.getById(id);
 
-  const statusBadge = (status: string) => {
-    switch (status) {
-      case 'RECRUITING':
-        return (
-          <span role="status" className="bg-brand-primary-cta text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
-            모집중
-          </span>
-        );
-      case 'CLOSED':
-        return (
-          <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
-            모집완료
-          </span>
-        );
-      case 'WAITING':
-        return (
-          <span role="status" className="bg-custom-gray-500 text-background mb-3 inline-block rounded-full px-2 py-1 text-[14px]/6 font-semibold sm:mb-4 sm:px-3 sm:py-2 sm:text-2xl">
-            모집 대기중
-          </span>
-        );
-      default:
-        return null;
-    }
-  };
   return (
     <>
       <section className="flex flex-col justify-center pt-35">
         <div className="mb-10 sm:mb-12">
-          {statusBadge(recruitmentData.status)}
-          <h1 className="mt-0.5 text-xl/5 font-bold text-white sm:mt-2 sm:text-[40px]">{recruitmentData.title}</h1>
+          <StatusBadge status={recruitmentData.status} />
+          <h1 className="mt-2 text-xl/5 font-bold text-white sm:mt-2 sm:text-[2.5rem]/10">{recruitmentData.title}</h1>
         </div>
 
-        <div className="flex flex-row gap-3 sm:items-start sm:gap-40">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
               <Image src={recruitmentData.thumbnail} alt={`${recruitmentData.title} 포스터 이미지`} width={1920} height={1020} quality={100} className="h-auto w-full object-contain" />
@@ -72,38 +50,38 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
           </div>
 
           <div className="flex flex-1 flex-col gap-5 sm:gap-8" tabIndex={0}>
-            <div className="grid grid-cols-[40px_1fr] gap-x-2.5 gap-y-2 text-white sm:grid-cols-[120px_1fr] sm:gap-x-6 sm:gap-y-8">
-              <div className="text-[10px] font-semibold sm:text-2xl">모집 분야</div>
+            <div className="grid grid-cols-[60px_1fr] gap-x-2.5 gap-y-2 text-white sm:grid-cols-[120px_1fr] sm:gap-x-6 sm:gap-y-7">
+              <div className="text-base font-semibold sm:text-2xl/6">모집 분야</div>
               <div className="flex flex-wrap gap-1 sm:gap-2">
                 {recruitmentData.fields.map((role, index) => (
-                  <span key={index} className="border-brand-primary-cta text-brand-primary-cta rounded-full border px-1.5 py-1 text-[8px] font-medium sm:px-4 sm:py-1.5 sm:text-sm">
+                  <span key={index} className="border-brand-primary-cta text-brand-primary-cta rounded-full border px-2 py-1 text-[0.875rem]/3.5 sm:px-4 sm:py-1.5 sm:text-sm">
                     {role.name}
                   </span>
                 ))}
               </div>
 
-              <div className="text-[10px] font-semibold sm:text-2xl">모집 기한</div>
-              <div className="flex flex-col space-y-1 text-[10px] font-medium sm:text-2xl">
+              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 기한</div>
+              <div className="flex flex-col space-y-1 text-base/4 font-medium sm:text-2xl/6">
                 <span>
-                  시작일 <span className="mx-2 text-gray-500">|</span> {recruitmentData.startDate}
+                  시작일 <span className="mx-1">|</span> {dayjs(recruitmentData.startDate).format('YYYY. MM . DD')}
                 </span>
                 <span>
-                  마감일 <span className="mx-2 text-gray-500">|</span> {recruitmentData.endDate}
+                  마감일 <span className="mx-1">|</span> {dayjs(recruitmentData.endDate).format('YYYY. MM . DD')}
                 </span>
               </div>
 
-              <div className="text-[10px] font-semibold sm:text-2xl">모집 인원</div>
-              <div className="text-[10px] font-medium sm:text-2xl">{recruitmentData.capacity}명</div>
+              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 인원</div>
+              <div className="text-base/4 font-medium sm:text-2xl/6">{recruitmentData.capacity}명</div>
 
-              <div className="text-[10px] font-semibold sm:text-2xl">모집 대상</div>
-              <div className="text-[10px] leading-relaxed font-medium sm:text-2xl">{recruitmentData.targetAudience}</div>
+              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 대상</div>
+              <div className="text-base/4 font-medium sm:text-2xl/6">{recruitmentData.targetAudience ? recruitmentData.targetAudience : '-'}</div>
             </div>
             {recruitmentData.status === 'RECRUITING' ? (
               <AnimationButton target="_top" href={recruitmentData.applyLink}>
-                <div className="text-[10px] text-white sm:text-2xl">지원하러 가기</div>
+                <div className="text-base/4 text-white sm:text-2xl/6">지원하러 가기</div>
               </AnimationButton>
             ) : (
-              <div className="w-fit rounded-[60px] border border-white/40 px-3.5 py-2 text-[10px] text-white/40 sm:text-2xl">
+              <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">
                 {recruitmentData.status === 'CLOSED' ? '모집이 종료되었습니다' : '모집 대기중입니다'}
               </div>
             )}

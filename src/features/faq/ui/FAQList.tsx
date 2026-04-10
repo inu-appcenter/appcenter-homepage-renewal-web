@@ -20,12 +20,12 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
 
   return (
     <div className="flex flex-col gap-4 sm:gap-7">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row gap-3 sm:justify-between">
         {PART.map((category) => (
           <button
             aria-label={`FAQ 카테고리 ${category} 선택`}
             key={category}
-            className={`relative cursor-pointer rounded-2xl text-[10px] font-bold transition-all duration-300 sm:text-2xl ${
+            className={`relative cursor-pointer rounded-2xl text-[1rem]/4 font-bold transition-all duration-300 sm:text-2xl/6 ${
               selectedCategory === category ? 'text-brand-primary-cta' : 'text-custom-gray-200 hover:text-brand-primary-light'
             }`}
             onClick={() => handleCategoryChange(category)}
@@ -94,10 +94,10 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-controls={contentId}
-        className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex w-full cursor-pointer flex-row items-center justify-between gap-2 rounded-lg px-3 py-2 text-left sm:rounded-2xl sm:px-5 sm:py-4"
+        className="text-custom-gray-200 group-hover:text-brand-primary-light bg-surface-elevated flex w-full cursor-pointer flex-row items-center justify-between gap-2 rounded-lg px-5 py-4 text-left sm:rounded-2xl"
       >
-        <span className="text-[10px] transition-colors sm:text-xl/7">
-          <span className="text-[12px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
+        <span className="text-[1rem]/6 transition-colors sm:text-xl/7">
+          <span className="text-[28px]/7 font-bold">Q.</span> {data.question}
         </span>
         <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
           <ChevronDown className="h-6 w-6" aria-hidden="true" />

@@ -11,7 +11,8 @@ export const projectOptions = {
   all: () =>
     queryOptions({
       queryKey: projectKeys.lists(),
-      queryFn: () => projectApi.getAll()
+      queryFn: () => projectApi.getAll(),
+      select: (data) => [...data].sort((a, b) => b.id - a.id)
     }),
   byMember: () =>
     queryOptions({
