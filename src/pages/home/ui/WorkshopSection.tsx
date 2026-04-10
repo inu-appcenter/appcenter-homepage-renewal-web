@@ -30,7 +30,7 @@ const WorkshopCarousel = () => {
           <Image draggable={false} loading="lazy" src={item.imageUrl} alt={item.title} fill className="object-cover" />
           <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-1 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-3 sm:p-11">
             <span className="text-custom-gray-100 text-[1rem]/4 font-medium sm:text-[2.625rem]/10.5">{item.title}</span>
-            <span className="text-custom-gray-500 text-[0.75rem]/3 sm:text-[1.625rem]/6.5">{item.eventDate}</span>
+            <span className="text-custom-gray-500 ml-1.5 text-[0.75rem]/3 sm:text-[1.625rem]/6.5">{item.eventDate}</span>
           </div>
         </div>
       )}

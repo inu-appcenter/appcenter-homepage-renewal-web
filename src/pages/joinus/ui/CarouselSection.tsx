@@ -22,7 +22,7 @@ export function CarouselSection({ data }: { data: RecruitmentList[] }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              className="flex w-full justify-between gap-4 py-8 sm:gap-10"
+              className="flex w-full justify-between gap-4 py-8 sm:gap-20"
             >
               {currentItems.map((item) => (
                 <div key={item.id} className="w-1/3">

@@ -37,7 +37,7 @@ const ActivitiesCarousel = () => {
           <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
             <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-end gap-0.5 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:p-7">
               <span className="text-custom-gray-200 text-[1rem]/4 font-medium sm:text-[1.75rem]/7">{item.title}</span>
-              <span className="text-custom-gray-500 text-[0.75rem]/3 sm:text-[1rem]/4">{item.createdDate.slice(0, 10)}</span>
+              <span className="text-custom-gray-500 ml-1 text-[0.75rem]/3 sm:text-[1rem]/4">{item.createdDate.slice(0, 10)}</span>
               <MoveRight className="text-custom-gray-500 animate-wiggle-right absolute right-3 bottom-0 w-2 origin-right scale-x-[1.5] sm:right-6 sm:bottom-6 sm:w-10" />
             </div>
           </Link>

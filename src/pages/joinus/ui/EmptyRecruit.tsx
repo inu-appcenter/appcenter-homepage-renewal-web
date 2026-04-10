@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Loader2 } from 'lucide-react';
+import { useRecruitmentActions } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
 import { AnimationButton } from 'shared/ui/animation-button';
-import { useRecruitmentActions } from 'entities/recruitment';
 import { toast } from 'sonner';
 
 export function EmptyRecruit() {
@@ -12,7 +12,7 @@ export function EmptyRecruit() {
 
   const { postEmailMutation } = useRecruitmentActions();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email) {

@@ -12,18 +12,23 @@ export function generateMetadata() {
   };
 }
 
+const STATUSPRIORITY: Record<string, number> = {
+  RECRUITING: 1,
+  WAITING: 2,
+  CLOSED: 3
+};
+
 export async function JoinUsPage() {
   const data = await recruitmentApi.getAll();
 
-  // 모집공고 정렬 (모집중 > 대기중 > 마감)
-  const statusPriority: Record<string, number> = {
-    RECRUITING: 1,
-    WAITING: 2,
-    CLOSED: 3
-  };
-
   const sortedData = [...data].sort((a, b) => {
-    return (statusPriority[a.status] || 99) - (statusPriority[b.status] || 99);
+    const statusDiff = (STATUSPRIORITY[a.status] || 99) - (STATUSPRIORITY[b.status] || 99);
+
+    if (statusDiff !== 0) {
+      return statusDiff;
+    }
+
+    return b.id - a.id;
   });
 
   const isRecruiting = sortedData.filter((recruit) => recruit.status === 'RECRUITING');
