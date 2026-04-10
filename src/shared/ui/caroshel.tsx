@@ -1,96 +1,129 @@
 'use client';
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cn } from 'shared/utils/cn';
+import useEmblaCarousel from 'embla-carousel-react';
+import AutoScroll from 'embla-carousel-auto-scroll';
+import Autoplay from 'embla-carousel-autoplay';
+import { EmblaOptionsType } from 'embla-carousel';
 
 interface CarouselProps<T> {
   data: T[];
-  renderItem: (item: T, index: number) => React.ReactNode;
+  renderItem: (item: T, index: number, isActive?: boolean) => React.ReactNode;
+
+  options?: EmblaOptionsType;
+  autoScroll?: boolean;
+  autoPlayOptions?: {
+    delay?: number;
+    stopOnInteraction?: boolean;
+    stopOnMouseEnter?: boolean;
+  };
+  autoScrollOptions?: {
+    speed?: number;
+    stopOnInteraction?: boolean;
+    stopOnMouseEnter?: boolean;
+  };
+  autoPlay?: boolean;
+  pauseOnIntersection?: boolean;
+
   className?: string;
+  trackClassName?: string;
+  slideClassName?: string;
+  overflow?: boolean;
 }
 
-export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps<T>) => {
+export const Carousel = <T,>({
+  data,
+  renderItem,
+  options = { loop: true, align: 'start', dragFree: true },
+  autoScroll = false,
+  autoPlay = false,
+  autoPlayOptions = { delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true },
+  autoScrollOptions = { speed: 1.5, stopOnInteraction: false, stopOnMouseEnter: true },
+  pauseOnIntersection = true,
+  className,
+  trackClassName = 'gap-4 px-4',
+  slideClassName = '',
+  overflow = true
+}: CarouselProps<T>) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const plugins = useMemo(() => {
+    const activePlugins = [];
+    if (autoScroll) {
+      activePlugins.push(AutoScroll({ ...autoScrollOptions }));
+    }
+    if (autoPlay) {
+      activePlugins.push(Autoplay({ ...autoPlayOptions }));
+    }
+    return activePlugins;
+  }, [autoScroll, autoPlay, autoPlayOptions, autoScrollOptions]);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef<HTMLUListElement>(null);
-  const xTranslation = useMotionValue(0);
-
-  const duplicatedData = [...data, ...data, ...data];
-
-  // 1. 애니메이션 함수를 useCallback으로 감싸 일관성 유지
-  const startAnimation = useCallback(() => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-    if (singleSetWidth === 0) return;
-
-    const startX = xTranslation.get();
-    const remainingDistance = Math.abs(-singleSetWidth - startX);
-    const duration = 40 * (remainingDistance / singleSetWidth);
-
-    // animate를 변수에 할당하지 않고 바로 실행 (이전 애니메이션은 자동 중지됨)
-    animate(xTranslation, -singleSetWidth, {
-      ease: 'linear',
-      duration: duration > 0 ? duration : 40,
-      onComplete: () => {
-        xTranslation.set(0);
-        startAnimation();
-      }
-    });
-  }, [data.length, xTranslation]);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   useEffect(() => {
-    startAnimation();
-    // useEffect 클린업에서 모든 xTranslation 애니메이션 중지
-    return () => xTranslation.stop();
-  }, [startAnimation, xTranslation]);
+    if (!emblaApi) return;
 
-  useMotionValueEvent(xTranslation, 'change', (latest) => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-    if (singleSetWidth === 0) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    const onSelect = () => setActiveIndex(emblaApi.selectedScrollSnap() || 0);
 
-    const progress = (Math.abs(latest) % singleSetWidth) / singleSetWidth;
-    const index = Math.round(progress * data.length) % data.length;
+    onSelect();
+    emblaApi.on('select', onSelect);
 
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
-  });
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
-  const handleDotClick = (index: number) => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-    const itemWidth = singleSetWidth / data.length;
-    const targetX = -(index * itemWidth);
+  useEffect(() => {
+    if (!emblaApi || !pauseOnIntersection) return;
 
-    // 클릭 시 바로 animate 호출 (기존 linear 루프는 여기서 자동 중단됨)
-    animate(xTranslation, targetX, {
-      type: 'spring',
-      stiffness: 200,
-      damping: 25,
-      onComplete: () => {
-        // 이동이 끝나면 다시 부드럽게 루프 시작
-        startAnimation();
-      }
-    });
+    const activePlugin = emblaApi.plugins().autoScroll || emblaApi.plugins().autoplay;
+    if (!activePlugin) return;
 
-    setActiveIndex(index);
-  };
+    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? activePlugin.play() : activePlugin.stop()), { threshold: 0.3 });
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [emblaApi, pauseOnIntersection]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      const activePlugin = emblaApi?.plugins().autoScroll || emblaApi?.plugins().autoplay;
+
+      activePlugin?.stop();
+      emblaApi?.scrollTo(index);
+
+      const resume = () => {
+        activePlugin?.play();
+        emblaApi?.off('settle', resume);
+      };
+      emblaApi?.on('settle', resume);
+    },
+    [emblaApi]
+  );
 
   return (
-    <div className={`${className} flex flex-col gap-7 overflow-hidden py-12`}>
-      <motion.ul ref={containerRef} style={{ x: xTranslation }} className="flex gap-8 whitespace-nowrap">
-        {duplicatedData.map((item, index) => (
-          <li key={index} className="shrink-0">
-            {renderItem(item, index % data.length)}
-          </li>
-        ))}
-      </motion.ul>
+    <div ref={containerRef} className={cn('relative flex flex-col py-6', className)}>
+      <div ref={emblaRef} className={cn('overflow-hidden', { 'overflow-visible': !overflow })}>
+        <ul className={cn('flex', trackClassName)}>
+          {data.map((item, index) => (
+            <li key={index} className={slideClassName}>
+              {renderItem(item, index, activeIndex === index)}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <div className="flex justify-center gap-5">
-        {data.map((_, index) => (
+      <div className="flex justify-center gap-2 sm:gap-5">
+        {scrollSnaps.map((_, index) => (
           <button
             key={index}
-            onClick={() => handleDotClick(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 focus:outline-none ${activeIndex === index ? 'bg-brand-primary-cta scale-125' : 'bg-custom-gray-700'}`}
+            onClick={() => scrollTo(index)}
+            className={cn('h-1 w-1 rounded-full transition-all duration-300 sm:h-3 sm:w-3', activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700')}
+            aria-label={`슬라이드 ${index + 1}로 이동`}
           />
         ))}
       </div>

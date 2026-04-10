@@ -26,7 +26,7 @@ export function EmptyRecruit() {
     <section className="flex flex-col items-center justify-center gap-4 py-20 sm:py-40">
       <Logo className="h-16 w-16 sm:h-32 sm:w-32" />
 
-      <div className="text-custom-gray-400 text-center text-[16px] whitespace-pre-line sm:text-2xl/10">
+      <div className="text-custom-gray-200 text-center text-base/5 whitespace-pre-line sm:text-2xl/10">
         {`지금은 모집 중인 프로젝트가 없어요...
         프로젝트의 모집이 시작되었을 때 다시 알려드릴게요!`}
       </div>
@@ -35,9 +35,7 @@ export function EmptyRecruit() {
         <AnimatePresence mode="wait">
           {postEmailMutation.isSuccess ? (
             <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-3">
-              <div className="bg-brand-primary-cta/20 text-brand-primary-cta flex h-12 w-12 items-center justify-center rounded-full">
-                <Check className="h-6 w-6" strokeWidth={2} />
-              </div>
+              <Check className="text-brand-primary-cta h-12 w-12" strokeWidth={1.25} />
 
               <div className="flex flex-col items-center gap-1 text-center">
                 <h3 className="text-brand-primary-cta text-xl font-bold">알림 신청이 완료되었어요</h3>
@@ -58,7 +56,7 @@ export function EmptyRecruit() {
                   }}
                   placeholder="이메일을 작성해주세요"
                   disabled={postEmailMutation.isPending}
-                  className={`focus:ring-brand-primary-cta placeholder-custom-gray-500 w-70 rounded-full border bg-black/20 p-4 text-white transition-colors placeholder:pl-2 focus:ring-1 focus:outline-none disabled:opacity-50 sm:w-150 sm:py-4 ${
+                  className={`focus:ring-brand-primary-cta placeholder-custom-gray-500 w-70 rounded-full border bg-black/20 p-4 text-white transition-colors focus:ring-1 focus:outline-none disabled:opacity-50 sm:w-150 sm:pl-6 ${
                     postEmailMutation.isError ? 'border-red-500' : 'border-gray-600'
                   }`}
                 />
@@ -71,8 +69,8 @@ export function EmptyRecruit() {
               </div>
 
               <button type="submit" disabled={postEmailMutation.isPending} className="w-fit">
-                <AnimationButton>
-                  <div className="flex items-center gap-2 text-[16px] text-white sm:text-xl">
+                <AnimationButton href="#" className="w-full">
+                  <div className="flex items-center gap-2 text-base/4 text-white sm:text-xl/5">
                     {postEmailMutation.isPending && <Loader2 className="h-5 w-5 animate-spin" />}
                     <span>{postEmailMutation.isPending ? '신청하는 중...' : '이메일 작성하고 알림 받기'}</span>
                   </div>

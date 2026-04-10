@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { Carousel, ListButton, SectionDetailTitle } from './Components';
+import { ListButton, SectionDetailTitle } from './Components';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { useWorkShop } from 'entities/workshop';
+import { Carousel } from 'shared/ui/caroshel';
 
 export const WorkshopSection = () => {
   return (
@@ -25,6 +26,8 @@ const WorkshopCarousel = () => {
     <Carousel
       data={sortedData}
       className="gap-3 sm:gap-11.5"
+      autoScroll={true}
+      trackClassName="gap-4 px-4 sm:gap-8 sm:px-8"
       renderItem={(item) => (
         <div className="group relative h-24 w-40 overflow-hidden rounded-sm bg-gray-900 sm:h-90 sm:w-164 sm:rounded-xl">
           <Image draggable={false} loading="lazy" src={item.imageUrl} alt={item.title} fill className="object-cover" />

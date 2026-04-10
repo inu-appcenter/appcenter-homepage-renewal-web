@@ -1,7 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
-import { cn } from 'shared/utils/cn';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { RandomShuffleNumber } from '../animation/RandomShuffleNumber';
@@ -50,6 +48,7 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
     </motion.div>
   );
 };
+
 export const SectionTitle = ({ title, className = '' }: { title: string; className?: string }) => {
   return (
     <motion.h2
@@ -77,136 +76,8 @@ export const ListButton = ({ href, text, className }: { href: string; text?: str
   );
 };
 
-// 무한 케로셀을 위해 데이터 3배로 복제 및 애니메이션 처리
-// /3은 3배 복제된 데이터셋에서 현재 위치를 계산하기 위함
-interface CarouselProps<T> {
-  data: T[];
-  renderItem: (item: T, index: number) => React.ReactNode;
-  className?: string;
-  overflowHidden?: boolean;
-}
-export const Carousel = <T,>({ data, renderItem, className = '', overflowHidden = true }: CarouselProps<T>) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef<HTMLUListElement>(null);
-  const xTranslation = useMotionValue(0);
-  const controlsRef = useRef<any>(null);
-  const isDragging = useRef(false);
-
-  // 애니메이션 실행 함수
-  const startAnimation = (fromValue?: number) => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-    const startX = fromValue ?? xTranslation.get();
-
-    const remainingDistance = Math.abs(-singleSetWidth - startX);
-    const totalDistance = singleSetWidth;
-    const dynamicDuration = 40 * (remainingDistance / totalDistance);
-
-    controlsRef.current = animate(xTranslation, [startX, -singleSetWidth], {
-      ease: 'linear',
-      duration: dynamicDuration > 0 ? dynamicDuration : 40,
-      onComplete: () => {
-        xTranslation.set(0); // 끝에 도달하면 0으로 리셋하여 무한 루프
-        startAnimation(0);
-      }
-    });
-  };
-
-  useEffect(() => {
-    startAnimation();
-    return () => controlsRef.current?.stop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useMotionValueEvent(xTranslation, 'change', (latest) => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-
-    const progress = (Math.abs(latest) % singleSetWidth) / singleSetWidth;
-    const index = Math.round(progress * data.length) % data.length;
-
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
-  });
-
-  const handleDotClick = (index: number) => {
-    const contentWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = contentWidth / 3;
-    const itemWidth = singleSetWidth / data.length;
-    const targetX = -(index * itemWidth);
-
-    animate(xTranslation, targetX, {
-      type: 'spring',
-      stiffness: 200,
-      damping: 40,
-      onComplete: () => {
-        startAnimation(targetX);
-      }
-    });
-
-    setActiveIndex(index);
-  };
-
-  return (
-    <div className={cn`${className} flex flex-col gap-7 ${overflowHidden ? 'overflow-hidden' : ''} pt-6 pb-4 sm:pt-12`}>
-      <motion.ul
-        ref={containerRef}
-        style={{ x: xTranslation }}
-        className={cn`flex gap-8 whitespace-nowrap ${className} cursor-grab select-none active:cursor-grabbing`}
-        drag="x"
-        onDragStart={() => {
-          isDragging.current = true;
-          controlsRef.current?.stop();
-        }}
-        onDragEnd={() => {
-          const contentWidth = containerRef.current?.scrollWidth || 0;
-          const singleSetWidth = contentWidth / 3;
-          let currentX = xTranslation.get();
-
-          if (currentX > 0) {
-            currentX -= singleSetWidth;
-            xTranslation.set(currentX);
-          } else if (currentX < -singleSetWidth) {
-            currentX += singleSetWidth;
-            xTranslation.set(currentX);
-          }
-          startAnimation(currentX);
-
-          setTimeout(() => {
-            isDragging.current = false;
-          }, 50);
-        }}
-        onClickCapture={(e) => {
-          if (isDragging.current) {
-            e.stopPropagation();
-            e.preventDefault();
-          }
-        }}
-      >
-        {[...data, ...data, ...data].map((item, index) => (
-          <li key={index} className="shrink-0">
-            {renderItem(item, index % data.length)}
-          </li>
-        ))}
-      </motion.ul>
-
-      <div className={`flex justify-center gap-2 sm:gap-5`}>
-        {data.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`h-1 w-1 rounded-full transition-all duration-300 focus:outline-none sm:h-3 sm:w-3 ${activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700'}`}
-            aria-label={`캐로셀 항목 ${index + 1}로 이동`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
 export const ScrollIndicator = () => (
-  <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-4.5">
+  <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
     <div style={{ position: 'relative', width: 3, height: 90 }}>
       <motion.div
         style={{
@@ -215,21 +86,20 @@ export const ScrollIndicator = () => (
           left: '50%',
           x: '-50%',
           width: 3,
-          height: 52,
           borderRadius: 2,
           background: 'linear-gradient(to bottom, transparent 0%, #0C4A28 40%, #0FE56E 100%)'
         }}
-        initial={{ y: 0, opacity: 0 }}
+        initial={{ y: 0, height: 0, opacity: 0 }}
         animate={{
-          y: [0, 90],
-          height: [10, 40, 20, 0],
-          opacity: [0, 1, 1, 0]
+          y: [0, 30, 90],
+          height: [0, 60, 0],
+          opacity: [0, 1, 0]
         }}
         transition={{
-          duration: 1.6,
-          ease: [0.4, 0, 0.8, 1],
+          duration: 1.5,
+          ease: ['easeIn', 'easeOut'],
           repeat: Infinity,
-          times: [0, 0.06, 0.88, 1]
+          repeatDelay: 0.2
         }}
       />
     </div>

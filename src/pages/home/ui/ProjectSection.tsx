@@ -1,9 +1,10 @@
 'use client';
 import { useMemo } from 'react';
-import { Carousel, ListButton, SectionTitle } from './Components';
+import { ListButton, SectionTitle } from './Components';
 import { useProject } from 'entities/project';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { ProjectCard } from 'features/project';
+import { Carousel } from 'shared/ui/caroshel';
 
 export const ProjectSection = () => {
   return (
@@ -19,14 +20,21 @@ export const ProjectSection = () => {
   );
 };
 
-const ProjectCarousel = () => {
+function ProjectCarousel() {
   const { data } = useProject();
+  const sortedProjects = useMemo(() => [...(data ?? [])].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()), [data]);
 
-  const sortedProjects = useMemo(() => {
-    if (!data) return [];
-
-    return [...data].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-  }, [data]);
-
-  return <Carousel data={sortedProjects} overflowHidden={false} className="gap-3 sm:gap-8" renderItem={(item) => <ProjectCard data={item} className="w-36 sm:w-90" />} />;
-};
+  return (
+    <Carousel
+      data={sortedProjects}
+      options={{ loop: true, align: 'center', containScroll: 'trimSnaps' }}
+      autoPlay={true}
+      autoPlayOptions={{ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }}
+      className="space-y-4 py-4"
+      trackClassName="gap-4 p-4"
+      slideClassName="min-w-0 flex-[0_0_60%] sm:flex-[0_0_30%]"
+      renderItem={(project, _, isActive) => <ProjectCard data={project} isActive={isActive} />}
+      overflow={false}
+    />
+  );
+}

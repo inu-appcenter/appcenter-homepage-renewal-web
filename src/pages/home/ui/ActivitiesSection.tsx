@@ -1,10 +1,11 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Carousel, ListButton, SectionDetailTitle, SectionTitle } from './Components';
+import { ListButton, SectionDetailTitle, SectionTitle } from './Components';
 import { MoveRight } from 'lucide-react';
 import { useActivities } from 'entities/activity';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
+import { Carousel } from 'shared/ui/caroshel';
 
 export const ActivitiesSection = () => {
   return (
@@ -30,7 +31,9 @@ const ActivitiesCarousel = () => {
   return (
     <Carousel
       data={sortedData}
+      autoScroll={true}
       className="gap-3 sm:gap-11.5"
+      trackClassName="gap-4 px-4"
       renderItem={(item) => (
         <div className="group relative h-16 w-30 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
           <Image draggable={false} loading="lazy" src={item.thumbnail} alt={item.title} fill className="object-cover" />

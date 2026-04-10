@@ -42,7 +42,7 @@ export async function JoinUsPage() {
           <ListSection data={sortedData} />
         </>
       )}
-      <>{isRecruiting.length === 0 && <EmptyRecruit />}</>
+      {isRecruiting.length === 0 && <EmptyRecruit />}
     </>
   );
 }

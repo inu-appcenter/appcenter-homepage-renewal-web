@@ -81,7 +81,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
                 <div className="text-base/4 text-white sm:text-2xl/6">지원하러 가기</div>
               </AnimationButton>
             ) : (
-              <div className="w-fit rounded-[60px] border border-white/40 px-3.5 py-2 text-base/4 text-white/40 sm:text-2xl/6">
+              <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">
                 {recruitmentData.status === 'CLOSED' ? '모집이 종료되었습니다' : '모집 대기중입니다'}
               </div>
             )}

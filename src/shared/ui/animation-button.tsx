@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import { cn } from 'shared/utils/cn';
 
-export function AnimationButton({ href, children, className, ...props }: any) {
+export function AnimationButton({ href, children, className, ...props }: { href: string; children: React.ReactNode; className?: string } & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const innerContent = (
     <>
       <motion.div
@@ -24,17 +24,9 @@ export function AnimationButton({ href, children, className, ...props }: any) {
 
   const wrapperClassName = 'group relative isolate inline-block w-fit overflow-hidden rounded-[60px] bg-white/10 p-[1.5px]';
 
-  if (href) {
-    return (
-      <Link href={href} {...props} className={wrapperClassName} prefetch={true}>
-        {innerContent}
-      </Link>
-    );
-  }
-
   return (
-    <div {...props} className={wrapperClassName}>
+    <Link href={href} {...props} className={wrapperClassName} prefetch={true}>
       {innerContent}
-    </div>
+    </Link>
   );
 }
