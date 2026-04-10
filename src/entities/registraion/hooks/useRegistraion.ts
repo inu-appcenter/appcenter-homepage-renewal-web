@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { registrationKeys } from '../api/queries';
 import { registrationApi } from '../api';
+import { toast } from 'sonner';
 
 export const useRegistration = () => {
   return useSuspenseQuery({
@@ -18,7 +19,13 @@ export const useRegistrationActions = () => {
 
   const editMutation = useMutation({
     mutationFn: registrationApi.update,
-    onSuccess: invalidateRegistration
+    onSuccess: () => {
+      toast.success('인증 코드가 성공적으로 변경되었습니다');
+      invalidateRegistration();
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    }
   });
 
   return {
