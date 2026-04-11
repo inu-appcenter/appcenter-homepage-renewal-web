@@ -6,20 +6,21 @@ import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table'
 
 export const AdminRecruitmentEmailList = () => {
   const { data } = useRecruitmentEmail();
+  const sortedData = [...data].sort((a, b) => b.id - a.id);
 
   return (
     <div className="mt-4 flex flex-col items-center gap-6">
       <Table>
         <TableHeader>
-          <TableHeaderCell className="w-16">ID</TableHeaderCell>
-          <TableHeaderCell className="w-48">이메일</TableHeaderCell>
-          <TableHeaderCell className="w-48">등록일</TableHeaderCell>
+          <TableHeaderCell className="w-30">ID</TableHeaderCell>
+          <TableHeaderCell className="px-6">이메일</TableHeaderCell>
+          <TableHeaderCell className="w-120">등록일</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
+          {sortedData.map((item) => (
             <Item key={item.id} data={item} />
           ))}
-          {data.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>
