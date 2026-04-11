@@ -75,8 +75,8 @@ const Item = ({ data }: { data: ReturnType<typeof useFAQs>['data'][number] }) =>
         <span className={`inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700`}>{data.part}</span>
       </td>
       <td className="px-6 py-5">
-        <p className="font-bold text-slate-900">{data.question}</p>
-        <p className="mt-1 text-xs text-slate-400">{data.answer}</p>
+        <p className="text-lg font-bold text-slate-800">{data.question}</p>
+        <p className="mt-1 text-sm text-slate-400">{data.answer}</p>
       </td>
       <td className="px-6 py-5 text-right">
         <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
