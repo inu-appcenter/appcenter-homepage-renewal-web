@@ -1,10 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera, X, Hash, Palette } from 'lucide-react';
+import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera, X, Hash, FileUser } from 'lucide-react';
 
 import { useMemberActions, useMemberByMember } from 'entities/member';
 import type { MemberForm as MemberFormType } from 'entities/member';
-import { toast } from 'sonner';
 
 export function MemberInfoForm() {
   const { data: memberData } = useMemberByMember();
@@ -31,13 +30,7 @@ export function MemberInfoForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await editByMemberMutation.mutateAsync(formData);
-      toast.success('프로필이 성공적으로 수정되었습니다');
-    } catch (error) {
-      console.error('Failed to update profile:', error);
-      toast.error('프로필 수정에 실패했습니다.');
-    }
+    await editByMemberMutation.mutateAsync(formData);
   };
 
   return (
@@ -64,7 +57,6 @@ export function MemberInfoForm() {
             <div className="relative">
               <Camera className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300" size={18} />
               <input
-                disabled={isPending}
                 className="w-full rounded-2xl border border-slate-200 bg-white p-3.5 pl-12 text-sm transition-all outline-none focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5"
                 placeholder="이미지 주소를 입력하세요"
                 value={formData.profileImage || ''}
@@ -78,40 +70,32 @@ export function MemberInfoForm() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           {/* 왼쪽 컬럼: 인적 사항 */}
           <div className="space-y-6">
-            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-900">
+            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-700">
               <UserIcon size={18} className="text-slate-400" /> 기본 정보
             </h3>
             <div className="space-y-4">
-              <FormInput icon={UserIcon} label="이름" value={formData.name} onChange={(v) => handleChange('name', v)} required disabled={isPending} />
-              <FormInput icon={Mail} label="이메일" type="email" value={formData.email} onChange={(v) => handleChange('email', v)} disabled={isPending} />
-              <FormInput icon={Phone} label="전화번호" value={formData.phoneNumber} onChange={(v) => handleChange('phoneNumber', v)} placeholder="010-0000-0000" disabled={isPending} />
+              <FormInput icon={UserIcon} label="이름" value={formData.name} onChange={(v) => handleChange('name', v)} required />
+              <FormInput icon={Mail} label="이메일" type="email" value={formData.email} onChange={(v) => handleChange('email', v)} />
+              <FormInput icon={Phone} label="전화번호" value={formData.phoneNumber} onChange={(v) => handleChange('phoneNumber', v)} placeholder="010-0000-0000" />
             </div>
           </div>
 
           {/* 오른쪽 컬럼: 학적 및 소셜 */}
           <div className="space-y-6">
-            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-900">
+            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-700">
               <GraduationCap size={18} className="text-slate-400" /> 학적 및 소셜
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <FormInput icon={Hash} label="학번" value={formData.studentNumber} onChange={(v) => handleChange('studentNumber', v)} required disabled={isPending} />
-                <FormInput icon={GraduationCap} label="학과" value={formData.department} onChange={(v) => handleChange('department', v)} disabled={isPending} />
+                <FormInput icon={Hash} label="학번" value={formData.studentNumber} onChange={(v) => handleChange('studentNumber', v)} required />
+                <FormInput icon={GraduationCap} label="학과" value={formData.department} onChange={(v) => handleChange('department', v)} />
               </div>
 
-              <FormInput
-                icon={Github}
-                label="깃허브"
-                value={formData.gitRepositoryLink}
-                onChange={(v) => handleChange('gitRepositoryLink', v)}
-                disabled={isPending}
-                placeholder="https://www.github.com/..."
-              />
+              <FormInput icon={Github} label="깃허브" value={formData.gitRepositoryLink} onChange={(v) => handleChange('gitRepositoryLink', v)} placeholder="https://www.github.com/..." />
 
-              {/* 2. Behance 입력 필드 추가 */}
-              <FormInput icon={Palette} label="Behance" value={formData.behanceLink} onChange={(v) => handleChange('behanceLink', v)} disabled={isPending} placeholder="https://www.behance.net/..." />
+              <FormInput icon={FileUser} label="포트폴리오" value={formData.behanceLink} onChange={(v) => handleChange('behanceLink', v)} placeholder="https://www.portfolio.com/..." />
 
-              <FormInput icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(v) => handleChange('blogLink', v)} disabled={isPending} placeholder="https://velog.io/..." />
+              <FormInput icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(v) => handleChange('blogLink', v)} placeholder="https://velog.io/..." />
             </div>
           </div>
         </div>
@@ -121,7 +105,6 @@ export function MemberInfoForm() {
           <label className="ml-1 text-[12px] font-bold text-zinc-400 uppercase">자기소개</label>
           <div className="relative">
             <textarea
-              disabled={isPending}
               rows={4}
               className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-4 text-sm transition-all outline-none focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5"
               placeholder="자신을 짧게 소개해 주세요."

@@ -65,7 +65,11 @@ export const useMemberActions = () => {
 
   const editByMemberMutation = useMutation({
     mutationFn: memberApi.updateByMember,
-    onSuccess: invalidateMembers
+    onSuccess: () => {
+      invalidateMembers();
+      toast.success('프로필이 성공적으로 수정되었습니다');
+    },
+    onError: (error) => toast.error(error.message || '프로필 수정에 실패했습니다')
   });
 
   return { addMutation, editMutation, deleteMutation, editByMemberMutation };
