@@ -6,8 +6,8 @@ import { Activity, useActivityActions } from 'entities/activity';
 import { useEditActivity } from '../hooks/useEditActivity';
 import { useAddActivity } from '../hooks/useAddActivity';
 import { SaveButton } from 'shared/ui/button';
-import { toast } from 'sonner';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { toast } from 'sonner';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -16,7 +16,6 @@ const DEFAULT_CONTENT = {
   imageUrls: [],
   id: 0
 };
-
 export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const isEditMode = Boolean(initialData);
 
@@ -27,20 +26,18 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
 
   const isPending = isEditMode ? isEditPending : isAddPending;
 
-  const [form, setForm] = useState<ActivityFormType>(() => {
-    return {
-      title: initialData?.title || '',
-      author: initialData?.author || '',
-      body: initialData?.body || '',
-      titleEng: initialData?.titleEng || '',
-      thumbnail: initialData?.thumbnail || null,
-      contents: initialData?.contents
-        ? initialData.contents.map((content) => ({
-            ...content,
-            imageUrls: content.imageUrls || []
-          }))
-        : [{ ...DEFAULT_CONTENT, id: Date.now() }]
-    };
+  const [form, setForm] = useState<ActivityFormType>({
+    title: initialData?.title || '',
+    author: initialData?.author || '',
+    body: initialData?.body || '',
+    titleEng: initialData?.titleEng || '',
+    thumbnail: initialData?.thumbnail || null,
+    contents: initialData?.contents
+      ? initialData.contents.map((content) => ({
+          ...content,
+          imageUrls: content.imageUrls || []
+        }))
+      : [{ ...DEFAULT_CONTENT, id: Date.now() }]
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -175,20 +172,18 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
             <div className="flex flex-1 flex-col gap-2">
               <Input label="제목" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="활동 제목을 입력하세요" />
               <Input label="영문 제목" type="text" value={form.titleEng} onChange={(e) => setForm({ ...form, titleEng: e.target.value })} placeholder="영문 제목을 입력하세요" />
-              <Input label="작성자" type="text" value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} placeholder="작성자 이름을 입력하세요" />
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-700">본문</label>
-                <textarea
-                  value={form.body}
-                  onChange={(e) => setForm({ ...form, body: e.target.value })}
-                  rows={3}
-                  className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-                  placeholder="게시글 첫 화면에 보일 간단한 본문을 입력하세요"
-                />
-              </div>
+              <Input label="작성자" type="text" value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} placeholder="작성자를 입력하세요" />
+              <label className="mb-1 text-sm font-medium text-slate-400">본문</label>
+              <textarea
+                value={form.body}
+                onChange={(e) => setForm({ ...form, body: e.target.value })}
+                rows={10}
+                className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                placeholder="게시글 첫 화면에 보일 본문을 입력하세요"
+              />
             </div>
             <div className="flex flex-1 flex-col">
-              <span className="mb-1 text-sm font-medium text-slate-700">썸네일</span>
+              <span className="mb-1 text-sm font-medium text-slate-400">썸네일</span>
               <div className="flex-1">
                 <label className="group relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100">
                   {form.thumbnail ? (
@@ -234,14 +229,15 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
               <div key={section.id !== 0 ? section.id : `new-${index}`} className="relative rounded-lg border border-slate-200 bg-slate-50/50 p-5">
                 <div className="mb-4 flex items-center justify-between">
                   <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-bold text-blue-600">섹션 {index + 1}</span>
-                  <button type="button" onClick={() => removeSection(section.id)} className="text-slate-400 hover:text-red-500">
-                    <Trash2 size={18} />
+                  <button type="button" onClick={() => removeSection(section.id)} className="text-slate-500 hover:text-red-500">
+                    <Trash2 size={24} />
                   </button>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-3">
                     <Input label="소제목" type="text" value={section.subTitle} onChange={(e) => updateSection(section.id, 'subTitle', e.target.value)} placeholder="소제목을 입력하세요" />
+                    <label className="text-sm font-medium text-slate-400">본문 내용</label>
                     <textarea
                       value={section.text}
                       onChange={(e) => updateSection(section.id, 'text', e.target.value)}
@@ -268,12 +264,12 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
                         ))}
                         <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded border border-dashed border-slate-200 bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-blue-500">
                           <Plus size={20} />
-                          <span className="mt-1 text-[10px]">추가</span>
+                          <span className="mt-1 text-sm">추가</span>
                           <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => handleSectionImageAdd(section.id, e)} />
                         </label>
                       </div>
                     </div>
-                    <p className="text-right text-xs text-slate-400">{section.imageUrls.length}개의 이미지 추가됨</p>
+                    <p className="text-right text-sm text-slate-500">{section.imageUrls.length}개의 이미지 추가됨</p>
                   </div>
                 </div>
               </div>
@@ -283,14 +279,14 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
           <button
             type="button"
             onClick={addSection}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-slate-200 py-4 text-sm text-slate-500 transition-colors hover:border-blue-300 hover:bg-slate-50 hover:text-blue-600"
+            className="text-md flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-slate-200 py-4 text-slate-500 transition-colors hover:border-blue-300 hover:bg-slate-50 hover:text-blue-600"
           >
             <Plus size={16} /> 새로운 섹션 추가하기
           </button>
         </section>
 
         <div className="flex justify-end pt-4">
-          <SaveButton disabled={isPending} type="submit" className="w-60">
+          <SaveButton disabled={isPending} type="submit" className="w-50">
             {isEditMode ? '변경사항 저장' : '게시글 등록'}
           </SaveButton>
         </div>
@@ -301,9 +297,9 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
 
 const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => {
   return (
-    <div className="space-y-1">
-      <label className="text-sm font-medium text-slate-700">{label}</label>
+    <>
+      <label className="text-sm font-medium text-slate-400">{label}</label>
       <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className}`} />
-    </div>
+    </>
   );
 };
