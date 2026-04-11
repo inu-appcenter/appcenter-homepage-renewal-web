@@ -95,7 +95,7 @@ export const useEditActivity = () => {
       }
 
       router.push('/admin/activity');
-      toast.success('활동이 성공적으로 수정되었습니다');
+      toast.success('활동이 수정되었습니다');
       router.refresh();
     } catch (error) {
       console.error('Edit Error:', error);
@@ -103,7 +103,5 @@ export const useEditActivity = () => {
     }
   };
 
-  const isPending = editMetadataMutation.isPending || editThumbnailMutation.isPending || editImageMutation.isPending;
-
-  return { editActivity, isPending };
+  return { editActivity, isPending: editMetadataMutation.isPending || editThumbnailMutation.isPending || editImageMutation.isPending };
 };

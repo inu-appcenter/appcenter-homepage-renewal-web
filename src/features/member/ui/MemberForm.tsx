@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, Palette, LinkIcon, FileText, Camera, X, Hash } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, LinkIcon, FileText, Camera, X, Hash, FileUser } from 'lucide-react';
 
 import { Modal } from 'shared/ui/modal';
 import { useMemberActions, type Member, type MemberForm } from 'entities/member';
 import { SaveButton } from 'shared/ui/button';
-import { toast } from 'sonner';
+import { formatPhoneNumber } from 'shared/utils/phoneNumber';
 
 export const AddMemberForm = () => {
   const { addMutation } = useMemberActions();
@@ -25,7 +25,6 @@ export const AddMemberForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
-            toast.success('새 동아리원이 등록되었습니다');
           }}
         />
       )}
@@ -52,7 +51,6 @@ export const EditMemberForm = ({ member }: { member: Member }) => {
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: member.member_id, data: formData });
             close();
-            toast.success('동아리원 정보가 수정되었습니다');
           }}
         />
       )}
@@ -66,7 +64,6 @@ export const DeleteMemberButton = ({ memberId }: { memberId: number }) => {
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(memberId);
-      toast.success('동아리원이 삭제되었습니다');
     }
   };
 
@@ -107,7 +104,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
       {/* 0. 프로필 이미지 섹션 */}
       <section className="flex flex-col items-center justify-center space-y-4">
         <div className="group relative">
-          <div className="h-20 w-20 overflow-hidden rounded-full bg-slate-50 shadow-inner">
+          <div className="h-20 w-20 overflow-hidden rounded-lg bg-slate-50 shadow-inner">
             {formData.profileImage ? (
               <img src={formData.profileImage} alt="Profile Preview" className="h-full w-full object-cover" />
             ) : (
@@ -139,7 +136,10 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">기본 정보</h3>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative">
-            <User className="absolute top-2.5 left-4 text-slate-300" size={16} />
+            <div className="absolute top-2.5 left-4 text-slate-400">
+              <User size={16} />
+              <span className="absolute -top-0.5 -right-1.5 text-xs font-bold text-red-500">*</span>
+            </div>
             <input
               disabled={isPending}
               required
@@ -168,7 +168,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
             placeholder="전화번호 (010-0000-0000)"
             value={formData.phoneNumber || ''}
-            onChange={(e) => handleChange('phoneNumber', e.target.value)}
+            onChange={(e) => handleChange('phoneNumber', formatPhoneNumber(e.target.value))}
           />
         </div>
       </section>
@@ -178,7 +178,10 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">학적 정보</h3>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative">
-            <Hash className="absolute top-2.5 left-4 text-slate-300" size={16} />
+            <div className="absolute top-2.5 left-4 text-slate-400">
+              <Hash size={16} />
+              <span className="absolute -top-0.5 -right-1.5 text-xs font-bold text-red-500">*</span>
+            </div>
             <input
               disabled={isPending}
               required
@@ -216,11 +219,11 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             />
           </div>
           <div className="relative">
-            <Palette className="absolute top-2.5 left-4 text-slate-300" size={16} />
+            <FileUser className="absolute top-2.5 left-4 text-slate-300" size={16} />
             <input
               disabled={isPending}
               className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="Behance 링크"
+              placeholder="포트폴리오 링크"
               value={formData.behanceLink || ''}
               onChange={(e) => handleChange('behanceLink', e.target.value)}
             />
@@ -230,7 +233,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             <input
               disabled={isPending}
               className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="블로그/포트폴리오 링크"
+              placeholder="블로그 링크"
               value={formData.blogLink || ''}
               onChange={(e) => handleChange('blogLink', e.target.value)}
             />

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
-import { Github, Palette, Phone, Mail, ExternalLink, NotebookPen } from 'lucide-react';
+import { Github, Phone, Mail, ExternalLink, LinkIcon, FileUser } from 'lucide-react';
 import { useMember } from 'entities/member';
 import { AddMemberForm, EditMemberForm, DeleteMemberButton } from './MemberForm';
 
@@ -56,8 +56,8 @@ const MemberItem = ({ data }: { data: ReturnType<typeof useMember>['data'][numbe
       <td className="px-6 py-5 text-center text-sm text-slate-400">#{data.member_id}</td>
 
       <td className="px-6 py-5">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+        <div className="flex items-center gap-4">
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
             {data.profileImage ? (
               <img src={data.profileImage} alt={data.name} className="h-full w-full object-cover" />
             ) : (
@@ -97,14 +97,14 @@ const MemberItem = ({ data }: { data: ReturnType<typeof useMember>['data'][numbe
           )}
           {data.behanceLink && (
             <Link href={data.behanceLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-[#0057ff]">
-              <Palette size={14} className="text-slate-400" />
-              <span className="truncate">Behance : {data.behanceLink}</span>
+              <FileUser size={14} className="text-slate-400" />
+              <span className="truncate">Portfolio : {data.behanceLink}</span>
               <ExternalLink size={10} className="opacity-0 group-hover:opacity-40" />
             </Link>
           )}
           {data.blogLink && (
             <Link href={data.blogLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-indigo-500">
-              <NotebookPen size={14} className="text-slate-400" />
+              <LinkIcon size={14} className="text-slate-400" />
               <span className="truncate">Blog : {data.blogLink}</span>
               <ExternalLink size={10} className="opacity-0 group-hover:opacity-40" />
             </Link>

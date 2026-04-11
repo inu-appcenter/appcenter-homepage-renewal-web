@@ -5,7 +5,8 @@ export const memberKeys = {
   all: ['members'] as const,
   lists: () => [...memberKeys.all, 'list'] as const,
   search: (query: string) => [...memberKeys.all, 'search', query] as const,
-  byMember: () => [...memberKeys.all, 'byMember'] as const
+  byMember: () => [...memberKeys.all, 'byMember'] as const,
+  memberInfo: (year?: number, part?: string) => [...memberKeys.all, 'membersInfo', year, part] as const
 };
 
 export const memberOptions = {
@@ -24,5 +25,10 @@ export const memberOptions = {
     queryOptions({
       queryKey: memberKeys.byMember(),
       queryFn: () => memberApi.getByMember()
+    }),
+  memberInfo: (year?: number, part?: string) =>
+    queryOptions({
+      queryKey: memberKeys.memberInfo(year, part),
+      queryFn: () => memberApi.getMembersInfo(year, part)
     })
 };

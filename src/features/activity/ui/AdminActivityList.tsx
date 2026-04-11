@@ -20,7 +20,7 @@ export const AdminActivityList = () => {
           <TableHeaderCell className="w-36">기본 정보</TableHeaderCell>
           <TableHeaderCell className="w-60">본문 내용</TableHeaderCell>
           <TableHeaderCell className="w-32">썸네일</TableHeaderCell>
-          <TableHeaderCell>상세 컨텐츠</TableHeaderCell>
+          <TableHeaderCell>상세 내용</TableHeaderCell>
           <TableHeaderCell className="w-32">등록일</TableHeaderCell>
           <TableHeaderCell className="w-24">관리</TableHeaderCell>
         </TableHeader>

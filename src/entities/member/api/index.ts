@@ -33,6 +33,7 @@ export const memberApi = {
   delete: (id: number) => {
     return http.delete<{ success: boolean }>(`/members/${id}`);
   },
+
   getMembersInfo: (year?: number, part?: string) => {
     return http.get<MemberWithGeneration[]>(`/groups/public/all-members-info?${year ? `year=${year}&` : ''}${part ? `part=${part}` : ''}`);
   }

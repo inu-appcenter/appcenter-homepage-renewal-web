@@ -1,11 +1,9 @@
 import { useActivityActions } from 'entities/activity';
-import { useRouter } from 'next/navigation';
 import { ActivityForm } from '../types/form';
 import { toast } from 'sonner';
 
 export const useAddActivity = () => {
   const { addMutation } = useActivityActions();
-  const router = useRouter();
 
   const addActivity = async (data: ActivityForm) => {
     if (!data.title || !data.author || !data.thumbnail) {
@@ -49,14 +47,8 @@ export const useAddActivity = () => {
       });
       formData.append('request', jsonBlob);
 
-      await addMutation.mutateAsync(formData, {
-        onSuccess: () => {
-          router.push('/admin/activity');
-          router.refresh();
-        }
-      });
-    } catch (error) {
-      console.error('Submit Error:', error);
+      await addMutation.mutateAsync(formData);
+    } catch {
       toast.error('저장에 실패했습니다.');
     }
   };

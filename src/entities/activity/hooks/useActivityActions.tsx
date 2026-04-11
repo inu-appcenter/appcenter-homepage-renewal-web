@@ -1,7 +1,10 @@
+'use client';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { activityApi } from '../api';
 import { activityOptions, activityKeys } from '../api/queries';
 import { revalidateTag } from 'shared/utils/revalidateTag';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export const useActivities = () => {
   return useSuspenseQuery({
@@ -17,6 +20,7 @@ export const useActivitiesById = (activityId: number) => {
 
 export const useActivityActions = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const invalidateActivities = async () => {
     await revalidateTag(activityKeys.all);
@@ -25,12 +29,24 @@ export const useActivityActions = () => {
 
   const addMutation = useMutation({
     mutationFn: activityApi.create,
-    onSuccess: invalidateActivities
+    onSuccess: () => {
+      invalidateActivities();
+      toast.success('활동이 추가되었습니다.');
+      router.push('/admin/activity');
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    }
   });
 
   const deleteMutation = useMutation({
     mutationFn: activityApi.delete,
-    onSuccess: invalidateActivities
+    onSuccess: () => {
+      toast.success('활동이 삭제되었습니다.');
+      invalidateActivities();
+    },
+    onError: (error) => toast.error(error.message)
   });
 
   const editThumbnailMutation = useMutation({
