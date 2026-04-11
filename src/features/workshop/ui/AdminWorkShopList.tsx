@@ -7,6 +7,8 @@ import { AddWorkShopForm, DeleteWorkShopButton, EditWorkShopForm } from './WorkS
 
 export const AdminWorkShopList = () => {
   const { data } = useWorkShop();
+  const sortedData = [...data].sort((a, b) => b.id - a.id);
+
   return (
     <div className="flex flex-col items-end gap-6">
       <AddWorkShopForm />
@@ -19,10 +21,10 @@ export const AdminWorkShopList = () => {
           <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
+          {sortedData.map((item) => (
             <Item key={item.id} data={item} />
           ))}
-          {data.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>

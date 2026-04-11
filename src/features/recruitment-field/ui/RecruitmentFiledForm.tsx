@@ -87,7 +87,9 @@ const RecruitmentFieldForm = ({ initialData, onSubmit, isPending }: { initialDat
       className="space-y-4"
     >
       <div className="flex flex-col gap-2">
-        <label className="ml-1 text-sm font-semibold text-slate-400">모집 분야 명</label>
+        <label className="ml-1 text-sm font-semibold text-slate-400">
+          모집 분야 명 <span className="text-red-500">*</span>
+        </label>
         <input
           disabled={isPending}
           className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"

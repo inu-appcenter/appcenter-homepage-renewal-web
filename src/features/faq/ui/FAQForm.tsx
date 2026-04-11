@@ -93,7 +93,9 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       }}
     >
       <div>
-        <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">파트</label>
+        <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
+          파트 <span className="text-red-500">*</span>
+        </label>
         <div className="flex flex-wrap gap-2">
           {partData.parts.map((p) => (
             <button
@@ -110,7 +112,9 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
           ))}
         </div>
       </div>
-      <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">질문</label>
+      <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
+        질문 <span className="text-red-500">*</span>
+      </label>
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
@@ -118,7 +122,9 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
         value={formData.question}
         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
       />
-      <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">답변</label>
+      <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
+        답변 <span className="text-red-500">*</span>
+      </label>
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"

@@ -115,7 +115,9 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">기술 스택명</label>
+        <label className="text-sm font-semibold text-slate-400">
+          기술 스택명 <span className="text-red-500">*</span>
+        </label>
         <input
           autoFocus
           required
@@ -126,7 +128,9 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">카테고리</label>
+        <label className="text-sm font-semibold text-slate-400">
+          카테고리 <span className="text-red-500">*</span>
+        </label>
         <div className="flex flex-wrap gap-2">
           {SKILL_CATEGORY.map((c) => (
             <button
@@ -142,7 +146,9 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-semibold text-slate-400">아이콘 이미지</span>
+        <span className="text-sm font-semibold text-slate-400">
+          아이콘 이미지 <span className="text-red-500">*</span>
+        </span>
         <Alert type="warning">
           <span>
             배경이 투명한 <b>.png</b> 파일만 업로드해주세요.

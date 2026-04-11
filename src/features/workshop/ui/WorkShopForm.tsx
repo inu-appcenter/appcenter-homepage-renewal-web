@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
-import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
@@ -13,7 +12,7 @@ export const AddWorkShopForm = () => {
 
   return (
     <Modal
-      title="워크숍 등록"
+      title="워크숍 추가"
       trigger={
         <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
           <Plus size={18} /> 새 워크숍 활동 추가
@@ -26,7 +25,6 @@ export const AddWorkShopForm = () => {
           onSubmit={async (data) => {
             await addMutation.mutateAsync(data);
             close();
-            toast.success('워크숍 사진이 등록되었습니다');
           }}
         />
       )}
@@ -54,7 +52,6 @@ export const EditWorkShopForm = ({ workshop }: { workshop: WorkShop }) => {
           onSubmit={async (formData) => {
             await editMutation.mutateAsync({ id: workshop.id, data: formData, photoId: Number(photoId) });
             close();
-            toast.success('워크숍 사진이 수정되었습니다');
           }}
         />
       )}
@@ -68,7 +65,6 @@ export const DeleteWorkShopButton = ({ workshopId }: { workshopId: number }) => 
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(workshopId);
-      toast.success('워크숍 사진이 삭제되었습니다');
     }
   };
 
@@ -132,7 +128,9 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">워크숍 제목</label>
+        <label className="text-sm font-semibold text-slate-400">
+          워크숍 제목 <span className="text-red-500">*</span>
+        </label>
         <input
           required
           value={title}
@@ -143,7 +141,9 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">워크숍 날짜</label>
+        <label className="text-sm font-semibold text-slate-400">
+          워크숍 날짜 <span className="text-red-500">*</span>
+        </label>
         <input
           type="date"
           required
@@ -154,12 +154,9 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">이미지 첨부</label>
-        <Alert type="warning">
-          <span>
-            이미지는 <b>무조건 </b>첨부해야합니다
-          </span>
-        </Alert>
+        <label className="text-sm font-semibold text-slate-400">
+          이미지 첨부 <span className="text-red-500">*</span>
+        </label>
 
         <div className="flex justify-start">
           {preview ? (
