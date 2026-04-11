@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { skillStackKeys, skillStackOptions } from '../api/queries';
 import { skillStackApi } from '../api';
+import { toast } from 'sonner';
 
 export const useSkillStack = () => {
   return useSuspenseQuery({
@@ -17,17 +18,29 @@ export const useSkillStackActions = () => {
 
   const addMutation = useMutation({
     mutationFn: skillStackApi.create,
-    onSuccess: invalidateSkillStack
+    onSuccess: () => {
+      toast.success('기술 스택 아이콘이 추가되었습니다');
+      invalidateSkillStack();
+    },
+    onError: (error) => toast.error(error.message || '기술 스택 아이콘 추가에 실패했습니다')
   });
 
   const editMutation = useMutation({
     mutationFn: skillStackApi.update,
-    onSuccess: invalidateSkillStack
+    onSuccess: () => {
+      toast.success('기술 스택 아이콘이 수정되었습니다');
+      invalidateSkillStack();
+    },
+    onError: (error) => toast.error(error.message || '기술 스택 아이콘 수정에 실패했습니다')
   });
 
   const deleteMutation = useMutation({
     mutationFn: skillStackApi.delete,
-    onSuccess: invalidateSkillStack
+    onSuccess: () => {
+      toast.success('기술 스택 아이콘이 삭제되었습니다');
+      invalidateSkillStack();
+    },
+    onError: (error) => toast.error(error.message || '기술 스택 아이콘 삭제에 실패했습니다')
   });
 
   return { addMutation, editMutation, deleteMutation };

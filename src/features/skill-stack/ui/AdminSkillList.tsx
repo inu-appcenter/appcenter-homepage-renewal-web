@@ -5,6 +5,7 @@ import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table'
 import { AddSkillForm, DeleteSkillButton, EditSkillForm } from './SkillForm';
 import { useSkillStack } from 'entities/skill-stack';
 import { useMemo } from 'react';
+import { SKILL_CATEGORY_COLORS } from 'shared/constants/skillCategory';
 
 export const AdminSkillList = () => {
   const { data } = useSkillStack();
@@ -18,8 +19,8 @@ export const AdminSkillList = () => {
       <Table>
         <TableHeader>
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
-          <TableHeaderCell className="w-60">기술 스택명</TableHeaderCell>
-          <TableHeaderCell className="w-60">카테고리</TableHeaderCell>
+          <TableHeaderCell className="w-60">기술 스택 이름</TableHeaderCell>
+          <TableHeaderCell className="w-60">분류</TableHeaderCell>
           <TableHeaderCell>이미지</TableHeaderCell>
           <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
@@ -39,7 +40,15 @@ const Item = ({ data }: { data: ReturnType<typeof useSkillStack>['data'][number]
     <tr className="group transition-colors hover:bg-slate-50/50">
       <td className="px-6 py-5 text-center text-sm text-slate-500">#{data.id}</td>
       <td className="px-6 py-5 text-sm font-medium text-slate-500">{data.name || '내용 없음'}</td>
-      <td className="px-6 py-5 text-sm font-medium text-slate-500">{data.category || '내용 없음'}</td>
+      <td className="px-6 py-5">
+        <span
+          className={`inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-sm font-semibold ${SKILL_CATEGORY_COLORS[data.category]?.bg || 'bg-slate-100'} ${
+            SKILL_CATEGORY_COLORS[data.category]?.text || 'text-slate-500'
+          }`}
+        >
+          {data.category || '내용 없음'}
+        </span>
+      </td>
       <td className="px-6 py-5">
         <div className="flex items-center gap-2 overflow-x-auto pb-2">
           <div key={data.id} className="relative h-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 transition-transform hover:scale-105">

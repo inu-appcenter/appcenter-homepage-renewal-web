@@ -42,7 +42,7 @@ export const useMemberActions = () => {
       invalidateMembers();
       toast.success('동아리원이 추가되었습니다');
     },
-    onError: (error) => toast.error(error.message)
+    onError: (error) => toast.error(error.message || '동아리원 추가에 실패했습니다')
   });
 
   const editMutation = useMutation({
@@ -51,7 +51,7 @@ export const useMemberActions = () => {
       invalidateMembers();
       toast.success('동아리원 정보가 수정되었습니다');
     },
-    onError: (error) => toast.error(error.message)
+    onError: (error) => toast.error(error.message || '동아리원 수정에 실패했습니다')
   });
 
   const deleteMutation = useMutation({
@@ -60,7 +60,7 @@ export const useMemberActions = () => {
       invalidateMembers();
       toast.success('동아리원이 삭제되었습니다');
     },
-    onError: (error) => toast.error(error.message)
+    onError: (error) => toast.error(error.message || '동아리원 삭제에 실패했습니다')
   });
 
   const editByMemberMutation = useMutation({
