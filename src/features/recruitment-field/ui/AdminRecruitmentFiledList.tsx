@@ -7,6 +7,7 @@ import { AddRecruitmentFieldForm, DeleteRecruitmentFieldButton, EditRecruitmentF
 
 export const AdminRecruitmentFieldList = () => {
   const { data } = useRecruitmentField();
+  const sortedData = [...data].sort((a, b) => b.id - a.id);
 
   return (
     <div className="flex flex-col items-end gap-6">
@@ -14,15 +15,15 @@ export const AdminRecruitmentFieldList = () => {
 
       <Table>
         <TableHeader>
-          <TableHeaderCell className="w-16">ID</TableHeaderCell>
+          <TableHeaderCell className="w-30">ID</TableHeaderCell>
           <TableHeaderCell className="px-6">모집 분야 명</TableHeaderCell>
           <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {data.map((recruitmentField) => (
+          {sortedData.map((recruitmentField) => (
             <Item key={recruitmentField.id} data={recruitmentField} />
           ))}
-          {data.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
     </div>
