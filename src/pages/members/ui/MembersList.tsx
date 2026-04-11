@@ -40,15 +40,15 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
 
   return (
     <>
-      <section className="border-border flex justify-between border-y py-3 sm:h-[25vh] sm:py-0">
+      <section className="border-border flex justify-between border-y py-3 sm:h-[15vh] sm:py-0">
         <div className="flex items-center gap-2 sm:gap-10">
-          <span className="text-custom-gray-600 text-[0.75rem]/3 sm:text-[2rem]/6">PART</span>
+          <span className="text-custom-gray-600 text-[0.75rem]/3 sm:text-[1.5rem]/4">PART</span>
           <div className="flex gap-0.5 sm:gap-0">
             {PARTS.map((part) => (
               <button
                 key={part}
                 onClick={() => setSelectedPart(part)}
-                className={`group border-border relative overflow-hidden border px-2 py-1 text-[0.625rem]/2.5 font-medium transition-all sm:border-2 sm:px-10 sm:py-7 sm:text-[2rem]/6 ${selectedPart === part ? 'border-brand-primary-cta' : 'hover:border-white'}`}
+                className={`group border-border relative overflow-hidden border px-2 py-1 text-[0.625rem]/2.5 font-medium transition-all sm:border-2 sm:px-8 sm:py-4 sm:text-[1.5rem]/6 ${selectedPart === part ? 'border-brand-primary-cta' : 'hover:border-white'}`}
               >
                 {selectedPart === part && <motion.div layoutId="activePartBg" className="absolute inset-0 bg-[#08341F]" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />}
                 <span className={cn('relative z-10 transition-colors duration-300', selectedPart === part ? 'text-brand-primary-cta' : 'text-custom-gray-500 group-hover:text-white')}>{part}</span>
@@ -67,7 +67,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
         ) : (
           <motion.section
             key={`${selectedPart}-${selectedYear}`}
-            className="space-y-5 px-5 pb-10 sm:space-y-20 sm:px-10 sm:py-10"
+            className="space-y-5 pb-10 sm:space-y-20 sm:px-36 sm:py-10"
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
@@ -77,8 +77,8 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
             {leaders.length > 0 && (
               <div className="flex flex-col">
                 <div className="flex items-center py-5 sm:py-10">
-                  <span className="text-custom-gray-600 shrink-0 px-1.5 py-0.75 text-[0.75rem]/3 sm:px-10 sm:py-8 sm:text-[2rem]/8">Leader</span>
-                  <motion.span layout className="text-brand-primary-cta border-brand-primary-cta border p-0.75 text-[0.625rem]/2.5 font-medium sm:p-4 sm:text-[2rem]/8">
+                  <span className="text-custom-gray-600 shrink-0 px-1.5 py-0.75 text-[0.75rem]/3 sm:px-8 sm:py-5 sm:text-[1.625rem]/6.5">Leader</span>
+                  <motion.span layout className="text-brand-primary-cta border-brand-primary-cta border p-0.75 text-[0.625rem]/2.5 font-medium sm:p-3 sm:text-[1.625rem]/6.5">
                     {leaders.length}
                   </motion.span>
                   <hr className="text-border ml-4 w-full" />
@@ -99,8 +99,8 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
             {members.length > 0 && (
               <div className="flex flex-col">
                 <div className="flex items-center py-5 sm:py-10">
-                  <span className="text-custom-gray-600 shrink-0 px-1.5 py-0.75 text-[0.75rem]/3 sm:px-10 sm:py-8 sm:text-[2rem]/8">Member</span>
-                  <motion.span layout className="text-brand-primary-cta border-brand-primary-cta border p-0.75 text-[0.625rem]/2.5 font-medium sm:p-4 sm:text-[2rem]/8">
+                  <span className="text-custom-gray-600 shrink-0 px-1.5 py-0.75 text-[0.75rem]/3 sm:px-8 sm:py-5 sm:text-[1.625rem]/6.5">Member</span>
+                  <motion.span layout className="text-brand-primary-cta border-brand-primary-cta border p-0.75 text-[0.625rem]/2.5 font-medium sm:p-3 sm:text-[1.625rem]/6.5">
                     {members.length}
                   </motion.span>
                   <hr className="text-border ml-4 w-full" />

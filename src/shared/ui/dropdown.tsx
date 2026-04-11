@@ -55,12 +55,12 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
 
   return (
     <div className={`flex items-center gap-10 ${className}`}>
-      {label && <span className="text-custom-gray-600 hidden text-[2rem] sm:block">{label}</span>}
+      {label && <span className="text-custom-gray-600 hidden text-[1.5rem]/4 sm:block">{label}</span>}
 
       <button
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="border-custom-gray-600 text-custom-gray-100 hover:border-brand-primary-cta flex w-14 items-center justify-between border-2 px-1 py-1 text-[0.625rem]/2.5 font-medium transition-colors sm:w-42.5 sm:px-6 sm:py-7 sm:text-[2rem]/6"
+        className="border-custom-gray-600 text-custom-gray-100 hover:border-brand-primary-cta flex w-14 items-center justify-between border-2 px-1 py-1 text-[0.625rem]/2.5 font-medium transition-colors sm:w-42.5 sm:px-8 sm:py-4 sm:text-[1.5rem]/6"
       >
         {renderValue(value)}
         <ChevronDown className={`h-2.5 w-2.5 transition-transform duration-300 sm:h-6 sm:w-6 ${isOpen ? 'rotate-180' : ''}`} />

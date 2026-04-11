@@ -52,10 +52,10 @@ export const MemberCard = ({ member, activeYear }: ItemProps) => {
       >
         <div
           style={{ backfaceVisibility: 'hidden' }}
-          className={`group border-brand-primary-cta flex h-full flex-row gap-2 ${isLeader ? 'border-l bg-[#191E1C] hover:bg-[#232B28]' : 'border-none bg-[#0A0A0A] hover:bg-[#151515]'} p-3 transition-colors hover:shadow-[inset_0_-1px_0_0_var(--color-brand-primary-cta)] sm:flex-col sm:gap-9 sm:border-l-4 sm:p-10 hover:sm:shadow-[inset_0_-4px_0_0_var(--color-brand-primary-cta)] part-${groupData.part.toLowerCase() || 'default'}`}
+          className={`group border-brand-primary-cta flex h-full flex-row gap-2 ${isLeader ? 'border-l bg-[#191E1C] hover:bg-[#232B28]' : 'border-none bg-[#0A0A0A] hover:bg-[#151515]'} p-3 transition-colors hover:shadow-[inset_0_-1px_0_0_var(--color-brand-primary-cta)] sm:flex-col sm:gap-7 sm:border-l-4 sm:p-10 hover:sm:shadow-[inset_0_-4px_0_0_var(--color-brand-primary-cta)] part-${groupData.part.toLowerCase() || 'default'}`}
         >
           <div className="flex flex-row justify-between">
-            <div className="bg-custom-gray-500 relative h-12 w-12 overflow-hidden sm:h-35 sm:w-35">
+            <div className="bg-custom-gray-500 relative h-12 w-12 overflow-hidden sm:h-28 sm:w-28">
               {member.profileImage ? (
                 <img src={member.profileImage} alt={member.name} className="h-full w-full object-cover" />
               ) : (
@@ -66,14 +66,14 @@ export const MemberCard = ({ member, activeYear }: ItemProps) => {
             </div>
 
             <div className="hidden items-end gap-4 sm:flex sm:flex-col">
-              <span className="border-brand-primary-cta text-brand-primary-cta border-2 bg-[#08341F] p-4 text-[1.5rem]/6 font-medium">{groupData.role}</span>
-              <span className="border-2 border-(--part-color) p-4 text-[1.5rem]/6 font-medium text-(--part-color)">{groupData.part}</span>
+              <span className="border-brand-primary-cta text-brand-primary-cta border-2 bg-[#08341F] p-3 text-[1.25rem]/5 font-medium">{groupData.role}</span>
+              <span className="border-2 border-(--part-color) p-3 text-[1.25rem]/5 font-medium text-(--part-color)">{groupData.part}</span>
             </div>
           </div>
 
-          <div className="flex flex-col gap-1 sm:gap-3">
-            <span className="text-[0.875rem]/2.5 font-semibold text-white sm:text-[2.5rem]/10">{member.name}</span>
-            <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.5rem]/6">
+          <div className="flex flex-col gap-1 sm:gap-2.5">
+            <span className="text-[0.875rem]/2.5 font-semibold text-white sm:text-[2rem]/8">{member.name}</span>
+            <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.25rem]/5">
               <span className="line-clamp-1">{member.department}</span>
               <Dot className="h-4 w-4 sm:h-6 sm:w-6" />
               <span className="text-brand-primary-cta whitespace-nowrap">{groupData.year}기</span>
@@ -86,7 +86,7 @@ export const MemberCard = ({ member, activeYear }: ItemProps) => {
             </div>
             <div className="mt-3 flex flex-row-reverse gap-1 sm:flex-row sm:gap-3">
               {member.projects.map((project, index) => (
-                <img key={index} src={project.mainImage} alt={project.title} className="bg-custom-gray-500 h-2.5 w-2.5 rounded-[1px] object-cover sm:h-9 sm:w-9 sm:rounded-sm" />
+                <img key={index} src={project.mainImage} alt={project.title} className="bg-custom-gray-500 h-2.5 w-2.5 rounded-[1px] object-cover sm:h-7 sm:w-7 sm:rounded-sm" />
               ))}
             </div>
           </div>

@@ -17,8 +17,8 @@ export async function MembersPage() {
 
   return (
     <>
-      <section className="flex flex-col justify-end gap-10 pt-40 pb-20 sm:h-[75vh] sm:pt-0">
-        <h1 aria-label="APP CENTER" className="text-custom-gray-100 font-product-design pl-2 text-[40px] whitespace-nowrap uppercase sm:text-[120px]">
+      <section className="flex flex-col justify-end gap-10 pt-40 pb-16 sm:h-[65vh] sm:pt-0">
+        <h1 aria-label="APP CENTER" className="text-custom-gray-100 font-product-design pl-2 text-[40px] whitespace-nowrap uppercase sm:text-[6rem]/24">
           <span className="text-brand-primary-light">
             <ScrambleText text="M" />
           </span>
@@ -27,10 +27,10 @@ export async function MembersPage() {
         <div className="flex flex-row gap-5 pl-2 sm:gap-20">
           {aboutData.map((item, index) => (
             <div key={index} className="flex flex-col gap-6 text-[20px]">
-              <span className="text-brand-primary-light font-tokyo text-[2rem]/8 font-bold sm:text-[120px]/25">
+              <span className="text-brand-primary-light font-tokyo text-[2rem]/8 font-bold sm:text-[100px]/25">
                 <ScrambleText text={item.subNumber.toString()} />
               </span>
-              <span className="text-custom-gray-600 text-[0.75rem]/3 sm:text-[2rem]/8">{item.title}</span>
+              <span className="text-custom-gray-600 text-[0.75rem]/3 sm:text-[1.5rem]/6">{item.title}</span>
             </div>
           ))}
         </div>
