@@ -1,14 +1,14 @@
 'use client';
-import { ImageIcon } from 'lucide-react';
+import { useMemo } from 'react';
+import { ImageIcon, Cog, Clock, Ban, Check, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, RecruitmentStatusGrid } from './RecruitmentListButton';
+
+import { UserMode, useRoleContext } from 'entities/sign';
 import { useRecruitment, useRecruitmentByMember } from 'entities/recruitment';
+import { AddRecruitmentButton, DeleteRecruitmentButton, EditRecruitmentButton, RecruitmentStatusGrid } from './RecruitmentListButton';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import { STATUS_CONFIG } from '../config/statusConfig';
-import { UserMode, useRoleContext } from 'entities/sign';
 import { Alert } from 'shared/ui/alert';
-import { useMemo } from 'react';
 
 export const AdminRecruitmentList = () => {
   const { mode } = useRoleContext();
@@ -37,13 +37,14 @@ const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitm
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => b.id - a.id);
   }, [data]);
+
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex w-full flex-row justify-between">
         <Alert type="info">
           <div className="flex flex-col gap-1">
             <p className="text-sm leading-relaxed text-blue-800">
-              모집 상태를 <strong className="font-semibold">자동</strong>으로 설정해 두면, 설정하신 <strong className="font-semibold">모집 시작일과 종료일</strong>에 맞춰 시스템이 알아서
+              모집 상태를 <strong className="font-semibold">자동</strong>으로 설정해 두면, 설정하신 <strong className="font-semibold">모집 시작일과 종료일</strong>에 맞춰 시스템이
               <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-amber-600 shadow-sm">대기중</span>
               <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-emerald-600 shadow-sm">모집중</span>
               <span className="mx-1 inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[11px] font-bold text-rose-600 shadow-sm">마감</span>
@@ -60,8 +61,8 @@ const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitm
           <TableHeaderCell className="w-32">썸네일</TableHeaderCell>
           <TableHeaderCell className="w-40">모집상태</TableHeaderCell>
           <TableHeaderCell>모집분야</TableHeaderCell>
-          <TableHeaderCell className="w-60">모집 상태 관리</TableHeaderCell>
-          <TableHeaderCell className="w-24">관리</TableHeaderCell>
+          <TableHeaderCell className="w-60">모집상태 관리</TableHeaderCell>
+          <TableHeaderCell className="w-40">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {sortedData.map((item) => (
@@ -74,6 +75,12 @@ const RecruitmentListUI = ({ data, mode }: { data: ReturnType<typeof useRecruitm
   );
 };
 
+const STATUS_CONFIG = [
+  { value: 'AUTO', label: '자동', Icon: Cog, activeColor: 'text-indigo-600' },
+  { value: 'WAITING', label: '대기중', Icon: Clock, activeColor: 'text-amber-600' },
+  { value: 'RECRUITING', label: '모집중', Icon: Check, activeColor: 'text-emerald-600' },
+  { value: 'CLOSED', label: '마감', Icon: Ban, activeColor: 'text-rose-600' }
+] as const;
 const Item = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data'][number]; mode: string }) => {
   return (
     <tr className="group transition-colors hover:bg-slate-50/50">
@@ -118,8 +125,8 @@ const Item = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data'][
       <td className="px-6 py-5">
         <div className="flex flex-wrap gap-1.5">
           {data.fieldNames && data.fieldNames.length > 0 ? (
-            data.fieldNames.map((name: string, idx: number) => (
-              <span key={idx} className="inline-flex items-center gap-1 rounded-md border border-blue-100 bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-600">
+            data.fieldNames.map((name, index) => (
+              <span key={index} className="inline-flex items-center gap-1 rounded-md border border-blue-100 bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-600">
                 {name}
               </span>
             ))
@@ -135,6 +142,16 @@ const Item = ({ data, mode }: { data: ReturnType<typeof useRecruitment>['data'][
 
       <td className="px-6 py-5 text-right">
         <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          <Link
+            href={`/joinus/${data.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center rounded-md p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            title="사용자 페이지에서 보기"
+          >
+            <ExternalLink size={18} />
+          </Link>
+
           <EditRecruitmentButton id={data.id} mode={mode} />
           <DeleteRecruitmentButton recruitmentId={data.id} />
         </div>

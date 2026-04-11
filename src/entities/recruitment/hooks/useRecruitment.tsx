@@ -1,7 +1,10 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { recruitmentKeys, recruitmentOptions } from '../api/queries';
 import { recruitmentApi } from '../api';
 import { revalidateTag } from 'shared/utils/revalidateTag';
+import { toast } from 'sonner';
 
 export const useRecruitment = () => {
   return useSuspenseQuery({
@@ -29,6 +32,7 @@ export const useRecruitmentEmail = () => {
 
 export const useRecruitmentActions = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const invalidateRecruitments = async () => {
     await revalidateTag(recruitmentKeys.all);
@@ -37,12 +41,22 @@ export const useRecruitmentActions = () => {
 
   const addMutation = useMutation({
     mutationFn: recruitmentApi.create,
-    onSuccess: invalidateRecruitments
+    onSuccess: () => {
+      invalidateRecruitments();
+      toast.success('모집 공고가 등록되었습니다.');
+      router.back();
+      router.refresh();
+    },
+    onError: (error) => toast.error(error.message || '모집 공고 등록에 실패했습니다.')
   });
 
   const deleteMutation = useMutation({
     mutationFn: recruitmentApi.delete,
-    onSuccess: invalidateRecruitments
+    onSuccess: () => {
+      invalidateRecruitments();
+      toast.success('모집공고가 삭제되었습니다');
+    },
+    onError: (error) => toast.error(error.message || '모집공고 삭제에 실패했습니다')
   });
 
   const editThumbnailMutation = useMutation({

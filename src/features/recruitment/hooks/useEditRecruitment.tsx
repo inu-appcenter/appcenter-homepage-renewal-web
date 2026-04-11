@@ -5,24 +5,16 @@ import { RecruitmentForm } from '../types/form';
 import { toast } from 'sonner';
 
 export const useEditRecruitment = () => {
-  const { editMetadataMutation, editThumbnailMutation } = useRecruitmentActions();
   const router = useRouter();
+  const { editMetadataMutation, editThumbnailMutation } = useRecruitmentActions();
+  const isPending = editMetadataMutation.isPending || editThumbnailMutation.isPending;
 
   const editRecruitment = async (recruitmentId: number, form: RecruitmentForm) => {
     try {
       const promises: Array<Promise<any>> = [];
+      const { thumbnail, ...requestPayload } = form;
 
-      const requestPayload = {
-        title: form.title,
-        body: form.body,
-        startDate: form.startDate,
-        endDate: form.endDate,
-        capacity: Number(form.capacity),
-        targetAudience: form.targetAudience,
-        applyLink: form.applyLink,
-        fieldIds: form.fieldIds
-      };
-
+      // 1. 메타데이터 수정 요청
       promises.push(
         editMetadataMutation.mutateAsync({
           id: recruitmentId,
@@ -54,8 +46,6 @@ export const useEditRecruitment = () => {
       toast.error('수정 중 오류가 발생했습니다.');
     }
   };
-
-  const isPending = editMetadataMutation.isPending || editThumbnailMutation.isPending;
 
   return { editRecruitment, isPending };
 };

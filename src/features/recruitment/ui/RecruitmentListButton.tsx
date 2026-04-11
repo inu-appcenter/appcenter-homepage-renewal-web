@@ -2,7 +2,6 @@ import { Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRecruitmentActions } from 'entities/recruitment';
 import { STATUS_CONFIG } from '../config/statusConfig';
-import { toast } from 'sonner';
 
 export const AddRecruitmentButton = ({ mode }: { mode: string }) => {
   return (
@@ -26,7 +25,6 @@ export const DeleteRecruitmentButton = ({ recruitmentId }: { recruitmentId: numb
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(recruitmentId);
-      toast.success('삭제가 완료되었습니다.');
     }
   };
 
@@ -60,7 +58,7 @@ export const RecruitmentStatusGrid = ({ id, currentStatus }: { id: number; curre
                 isSelected ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-500 hover:bg-slate-200/50 hover:text-slate-700'
               }`}
             >
-              <Icon className={`h-3.5 w-3.5 shrink-0 transition-colors ${isSelected ? activeColor : 'text-slate-400'}`} />
+              <Icon className={`h-4 w-4 shrink-0 transition-colors ${isSelected ? activeColor : 'text-slate-400'}`} />
               <span className={`text-[11px] font-bold tracking-tight ${isSelected ? 'text-slate-800' : ''}`}>{label}</span>
             </button>
           );

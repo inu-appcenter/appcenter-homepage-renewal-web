@@ -1,20 +1,23 @@
 'use client';
 import { useState } from 'react';
-import { CheckCircle2, Image as ImageIcon, Plus, Settings, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import { toast } from 'sonner';
+import { Image as ImageIcon, Plus, Settings, RotateCw } from 'lucide-react';
+
 import { useAddRecruitment } from '../hooks/useAddRecruitment';
 import { useEditRecruitment } from '../hooks/useEditRecruitment';
 import { useRecruitmentField } from 'entities/recruitment-field';
 import type { RecruitmentForm as RecruitmentFormType } from '../types/form';
-import { Recruitment } from 'entities/recruitment';
-import Link from 'next/link';
+
 import { useRoleContext } from 'entities/sign';
+import { Recruitment } from 'entities/recruitment';
+
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
-import { toast } from 'sonner';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
-  const isEditMode = Boolean(initialData);
+  const isEditMode = initialData ? true : false;
   const { addRecruitment, isPending: isAddPending } = useAddRecruitment();
   const { editRecruitment, isPending: isEditPending } = useEditRecruitment();
   const { data: recruitmentField, refetch, isFetching } = useRecruitmentField();
@@ -56,13 +59,6 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
     }
   };
 
-  const handleFieldToggle = (fieldId: number) => {
-    setForm((prev) => ({
-      ...prev,
-      fieldIds: prev.fieldIds.includes(fieldId) ? prev.fieldIds.filter((id) => id !== fieldId) : [...prev.fieldIds, fieldId]
-    }));
-  };
-
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
       <h1 className="mb-8 text-2xl font-bold text-slate-900">{isEditMode ? '모집 공고 수정' : '모집 공고 등록'}</h1>
@@ -76,7 +72,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
 
           <div className="flex flex-row gap-6">
             <div className="flex flex-1 flex-col gap-4">
-              <Input label="공고 제목" required={true} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 앱센터 18기 모집" />
+              <Input label="공고 제목" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 앱센터 18기 모집" />
               <div className="h-full space-y-1">
                 <label className="text-sm font-medium text-slate-700">모집 설명</label>
                 <textarea
@@ -108,7 +104,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
                 )}
                 <input type="file" accept="image/*" className="hidden" onChange={handleThumbnailChange} />
               </label>
-              <p className="mt-2 text-center text-[11px] text-slate-400">권장 사이즈: 1200 x 630 (px)</p>
+              <p className="mt-2 text-center text-[11px] text-slate-400">권장 사이즈: 1200 x 1200 (px)</p>
             </div>
           </div>
         </section>
@@ -125,8 +121,8 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex gap-4">
-                <Input label="모집 시작일" required={true} type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
-                <Input label="모집 종료일" required={true} type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
+                <Input label="모집 시작일" required type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
+                <Input label="모집 종료일" required type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
                 <Input label="모집 인원" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })} placeholder="숫자만 입력" />
               </div>
               <Input label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 열정있는 유니들" />
@@ -153,12 +149,11 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
               href={`/${mode}/recruitment-field`}
               target="_blank"
               onClick={(e) => {
-                const ok = confirm('새 탭에 모집 분야 관리 페이지로 이동합니다.');
-                if (!ok) {
+                if (!confirm('새 탭에 모집 분야 관리 페이지로 이동합니다.')) {
                   e.preventDefault();
                 }
               }}
-              className="flex items-center gap-2 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+              className="flex items-center gap-2 rounded-lg bg-slate-50 px-4 py-3.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
             >
               <Settings size={16} />
               <span>
@@ -169,10 +164,10 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
             <button
               type="button"
               onClick={() => refetch()}
-              className="group flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-900 active:scale-95"
+              className="group flex h-12 w-12 items-center justify-center rounded-lg bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-900 active:scale-95"
               title="목록 새로고침"
             >
-              <RefreshCw size={20} className={`transition-all ${isFetching ? 'rotate-180 text-blue-500' : ''}`} />
+              <RotateCw size={20} className={`transition-all ${isFetching ? 'animate-spin text-blue-500' : ''}`} />
             </button>
           </div>
 
@@ -181,7 +176,15 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
               <button
                 key={field.id}
                 type="button"
-                onClick={() => handleFieldToggle(field.id)}
+                onClick={() =>
+                  setForm((prev) => {
+                    const isSelected = prev.fieldIds.includes(field.id);
+                    return {
+                      ...prev,
+                      fieldIds: isSelected ? prev.fieldIds.filter((id) => id !== field.id) : [...prev.fieldIds, field.id]
+                    };
+                  })
+                }
                 className={`flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all ${
                   form.fieldIds.includes(field.id)
                     ? 'border-blue-600 bg-blue-50 text-blue-600 ring-1 ring-blue-600'
@@ -189,7 +192,6 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
                 }`}
               >
                 {field.name}
-                {form.fieldIds.includes(field.id) && <CheckCircle2 size={14} />}
               </button>
             ))}
           </div>

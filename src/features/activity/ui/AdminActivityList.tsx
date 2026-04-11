@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { ImageIcon, FileText } from 'lucide-react';
+import { ImageIcon, FileText, ExternalLink } from 'lucide-react';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { useActivities } from 'entities/activity';
@@ -24,7 +24,7 @@ export const AdminActivityList = () => {
           <TableHeaderCell className="w-32">썸네일</TableHeaderCell>
           <TableHeaderCell>상세 내용</TableHeaderCell>
           <TableHeaderCell className="w-40">등록일</TableHeaderCell>
-          <TableHeaderCell className="w-24">관리</TableHeaderCell>
+          <TableHeaderCell className="w-40">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {sortedData.map((item) => (
@@ -90,6 +90,15 @@ const Item = ({ data }: { data: ReturnType<typeof useActivities>['data'][number]
       <td className="px-6 py-5 text-sm text-slate-500">{new Date(data.createdDate).toLocaleDateString()}</td>
       <td className="px-6 py-5">
         <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          <Link
+            href={`/activity/${data.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center rounded-md p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            title="사용자 페이지에서 보기"
+          >
+            <ExternalLink size={18} />
+          </Link>
           <EditActivityButton id={data.id} />
           <DeleteActivityButton imageId={data.id} />
         </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Code2, Layers, Plus, RefreshCw, Search, Settings, X } from 'lucide-react';
+import { Check, Code2, Layers, Plus, RotateCw, Search, Settings, X } from 'lucide-react';
 import Link from 'next/link';
 
 import { useSkillStack } from 'entities/skill-stack';
@@ -84,7 +84,7 @@ export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: R
                 className="group flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-900 active:scale-95"
                 title="목록 새로고침"
               >
-                <RefreshCw size={20} className={`transition-all ${isRefetching ? 'rotate-180 text-blue-500' : ''}`} />
+                <RotateCw size={20} className={`transition-all ${isRefetching ? 'animate-spin text-blue-500' : ''}`} />
               </button>
             </div>
 
