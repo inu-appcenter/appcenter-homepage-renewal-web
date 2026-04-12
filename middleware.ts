@@ -2,77 +2,62 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, origin } = request.nextUrl;
 
-  // 보호할 경로인지 확인
   const isAdminRoute = pathname.startsWith('/admin') && pathname !== '/admin';
   const isMemberRoute = pathname.startsWith('/member') && pathname !== '/member';
 
-  if (!isAdminRoute && !isMemberRoute) {
-    return NextResponse.next();
-  }
+  if (!isAdminRoute && !isMemberRoute) return NextResponse.next();
 
   const accessToken = request.cookies.get('accessToken')?.value;
   const refreshToken = request.cookies.get('refreshToken')?.value;
+  const role = request.cookies.get('role')?.value;
 
-  // 1. accessToken이 있으면 일단 통과시킵니다.
-  // (만약 만료된 토큰이라면 이후 BFF에서 401을 보고 갱신하게 됩니다)
-  if (accessToken) {
-    return NextResponse.next();
-  }
+  const response = NextResponse.next();
 
-  // 2. accessToken은 없는데 refreshToken이 있다면 재발급을 시도합니다.
-  if (!accessToken && refreshToken) {
+  const isAuthenticated = await (async () => {
+    if (accessToken) return true; // accessToken이 만료되었는지
+    if (!refreshToken) return false; // refreshToken이 없으면 새로 로그인 필요
+
     try {
+      // accessToken이 만료된 경우 refreshToken으로 토큰 재발급 시도
       const refreshRes = await fetch(`${process.env.API_URL}/sign/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken: refreshToken })
+        body: JSON.stringify({ refreshToken })
       });
 
       if (refreshRes.ok) {
         const newData = await refreshRes.json();
+        const cookieOptions = { httpOnly: true, sameSite: 'strict' as const, secure: true, path: '/' };
 
-        // 요청한 페이지로 그대로 통과시키는 응답 객체 생성
-        const response = NextResponse.next();
-
-        // 새로 발급받은 토큰을 브라우저 쿠키에 구워줍니다.
-        response.cookies.set('accessToken', newData.accessToken, {
-          httpOnly: true,
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-          path: '/',
-          maxAge: 30 * 60 // 30분
-        });
-
-        if (newData.refreshToken) {
-          response.cookies.set('refreshToken', newData.refreshToken, {
-            httpOnly: true,
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            maxAge: 14 * 24 * 60 * 60 // 14일
-          });
-        }
-
-        return response;
+        response.cookies.set('accessToken', newData.accessToken, { ...cookieOptions, maxAge: 30 * 60 });
+        response.cookies.set('refreshToken', newData.refreshToken, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
+        return true;
       }
-    } catch (error) {
-      console.error('Middleware Token Refresh Error:', error);
+      return false;
+    } catch {
+      console.error('Middleware Token Refresh Error:');
+      return false;
     }
+  })();
+
+  if (!isAuthenticated) {
+    const loginPath = isAdminRoute ? '/admin' : '/login';
+    return NextResponse.redirect(new URL(loginPath, origin));
   }
 
-  if (isAdminRoute) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+  // 4. 인가(Authorization) 검사, error 쿼리스트링을 붙여서 로그인 페이지로 리다이렉트
+  if (isAdminRoute && role !== 'admin') {
+    return NextResponse.redirect(new URL('/login?error=admin_required', origin));
+  }
+  if (isMemberRoute && role !== 'member') {
+    return NextResponse.redirect(new URL('/login?error=member_required', origin));
   }
 
-  if (isMemberRoute) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/member/:path*']
+  matcher: ['/admin/:path*', '/member/:path*', '/admin']
 };

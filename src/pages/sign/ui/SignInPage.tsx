@@ -1,55 +1,82 @@
 'use client';
-import { useState } from 'react';
+
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRight, Loader2, User, Lock } from 'lucide-react';
 import { useSignActions } from 'entities/sign';
 import { Logo } from 'shared/icon/Logo';
-import { Input } from './Components';
+import { AuthErrorHandler, Input } from './Components';
+
+type LoginType = 'member' | 'admin';
+
+const LOGIN_TABS = [
+  { id: 'member', label: '구성원' },
+  { id: 'admin', label: '관리자' }
+] as const;
 
 export function SignInPage() {
+  const [loginType, setLoginType] = useState<LoginType>('member');
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const { memberLoginMutation } = useSignActions();
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const { memberLoginMutation, adminLoginMutation } = useSignActions();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    memberLoginMutation.mutate({ id, password });
+    if (loginType === 'member') {
+      memberLoginMutation.mutate({ id, password });
+    } else {
+      adminLoginMutation.mutate({ id, password });
+    }
   };
+
+  const isPending = memberLoginMutation.isPending || adminLoginMutation.isPending;
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center p-4">
+      <Suspense fallback={null}>
+        <AuthErrorHandler setLoginType={setLoginType} />
+      </Suspense>
+
       <div className="mb-10 text-center">
         <div className="mb-4 inline-block">
           <Logo className="h-12 w-12 text-white" />
         </div>
-        <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-white">Member Login</h1>
-        <p className="font-medium text-gray-400">앱센터 구성원 로그인 페이지 입니다</p>
+        <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-white">{loginType === 'member' ? 'Member Login' : 'Admin Login'}</h1>
+        <p className="font-medium text-gray-400">{loginType === 'member' ? '앱센터 구성원 로그인 페이지입니다' : '앱센터 관리자 전용 로그인 페이지입니다'}</p>
       </div>
 
       <div className="w-full max-w-100">
         <form onSubmit={onSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="ml-1 text-sm font-bold text-gray-300">ID</label>
-            <Input icon={User} type="text" value={id} onChange={(e) => setId(e.target.value)} placeholder="구성원 아이디" required />
+          <div className="flex rounded-xl bg-gray-900 p-1.5 ring-1 ring-gray-800">
+            {LOGIN_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setLoginType(tab.id)}
+                className={`relative flex-1 py-2 text-sm font-bold transition-all ${loginType === tab.id ? 'text-black' : 'text-gray-500 hover:text-gray-300'}`}
+              >
+                {loginType === tab.id && (
+                  <motion.div layoutId="loginTabIndicator" className="bg-brand-primary-cta absolute inset-0 rounded-lg" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />
+                )}
+                <span className="relative z-10">{tab.label}</span>
+              </button>
+            ))}
           </div>
 
-          <div className="space-y-2">
-            <label className="ml-1 text-sm font-bold text-gray-300">Password</label>
-            <Input icon={Lock} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" required />
-          </div>
+          <label className="ml-1 text-sm font-semibold text-gray-300">ID</label>
+          <Input icon={User} type="text" value={id} onChange={(e) => setId(e.target.value)} placeholder={loginType === 'member' ? '구성원 아이디' : '관리자 아이디'} required />
 
-          {memberLoginMutation.error && (
-            <div className="animate-in fade-in slide-in-from-top-1 rounded-lg border border-red-900/50 bg-red-900/20 py-2.5 text-center text-sm font-semibold text-red-400">
-              아이디 또는 비밀번호가 일치하지 않습니다.
-            </div>
-          )}
+          <label className="ml-1 text-sm font-semibold text-gray-300">Password</label>
+          <Input icon={Lock} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" required />
 
           <button
             type="submit"
-            disabled={memberLoginMutation.isPending}
+            disabled={isPending}
             className="group bg-brand-primary-cta hover:bg-brand-primary-cta/80 relative flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold text-black transition-all active:scale-[0.98] disabled:opacity-50"
           >
-            {memberLoginMutation.isPending ? (
+            {isPending ? (
               <Loader2 className="h-6 w-6 animate-spin text-black" />
             ) : (
               <>
