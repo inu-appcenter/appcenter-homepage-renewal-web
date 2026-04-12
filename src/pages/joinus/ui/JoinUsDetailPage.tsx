@@ -38,7 +38,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
           <h1 className="mt-2 text-xl/5 font-bold text-white sm:mt-2 sm:text-[2.5rem]/10">{recruitmentData.title}</h1>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-40">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
               <Image src={recruitmentData.thumbnail} alt={`${recruitmentData.title} 포스터 이미지`} width={1200} height={600} quality={75} className="h-auto w-full object-contain" />

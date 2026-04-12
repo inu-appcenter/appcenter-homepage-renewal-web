@@ -1,7 +1,5 @@
 export { AdminHomePage } from './ui/AdminHomePage';
 
-export { AdminLoginPage } from './ui/AdminLoginPage';
-
 export { AdminMemberPage } from './ui/AdminMemberPage';
 
 export { AdminProjectPage } from './ui/AdminProjectPage';
