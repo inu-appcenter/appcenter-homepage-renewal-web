@@ -1,7 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { LucideIcon, Eye, EyeOff, ArrowLeft, CheckIcon } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: LucideIcon;
@@ -94,3 +96,23 @@ export const StepIndicator = ({ currentStep }: { currentStep: StepType }) => {
     </div>
   );
 };
+
+export function AuthErrorHandler({ setLoginType }: { setLoginType: React.Dispatch<React.SetStateAction<'member' | 'admin'>> }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!searchParams) return;
+    const errorType = searchParams.get('error');
+
+    if (errorType === 'admin_required') {
+      setLoginType('admin');
+      toast.error('관리자 권한이 필요한 페이지입니다', { description: '관리자 계정으로 로그인해주세요' });
+    } else if (errorType === 'member_required') {
+      setLoginType('member');
+      toast.error('구성원 전용 페이지입니다', { description: '구성원 계정으로 로그인해주세요' });
+    }
+  }, [searchParams, setLoginType, router]);
+
+  return null;
+}

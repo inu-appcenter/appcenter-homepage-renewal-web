@@ -115,7 +115,7 @@ export function Sidebar() {
 
       <div className="absolute right-0 bottom-6 left-0 px-4">
         <div className="flex justify-center border-t border-slate-100 pt-4">
-          <LogoutButton isCollapsed={isCollapsed} type={mode} />
+          <LogoutButton isCollapsed={isCollapsed} />
         </div>
       </div>
     </aside>

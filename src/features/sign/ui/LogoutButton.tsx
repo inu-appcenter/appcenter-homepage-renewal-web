@@ -1,19 +1,11 @@
 import { Loader2, LogOut } from 'lucide-react';
 import { useSignActions } from 'entities/sign';
 
-export const LogoutButton = ({ isCollapsed, type }: { isCollapsed?: boolean; type: 'admin' | 'member' }) => {
-  const { adminLogoutMutation, memberLogoutMutation } = useSignActions();
+export const LogoutButton = ({ isCollapsed }: { isCollapsed?: boolean }) => {
+  const { logoutMutation } = useSignActions();
 
-  const handleLogout = () => {
-    if (type === 'admin') {
-      adminLogoutMutation.mutate();
-    } else {
-      memberLogoutMutation.mutate();
-    }
-  };
-
-  if (isCollapsed) return <CollapsedLogoutButton onClick={handleLogout} isLoading={adminLogoutMutation.isPending || memberLogoutMutation.isPending} />;
-  return <ExpandedLogoutButton onClick={handleLogout} isLoading={adminLogoutMutation.isPending || memberLogoutMutation.isPending} />;
+  if (isCollapsed) return <CollapsedLogoutButton onClick={() => logoutMutation.mutate()} isLoading={logoutMutation.isPending} />;
+  return <ExpandedLogoutButton onClick={() => logoutMutation.mutate()} isLoading={logoutMutation.isPending} />;
 };
 
 const CollapsedLogoutButton = ({ onClick, isLoading }: { onClick: () => void; isLoading: boolean }) => (
