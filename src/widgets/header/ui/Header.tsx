@@ -22,7 +22,6 @@ export const Header = () => {
   const scrollToId = scrollContext?.scrollToId;
   const activeId = scrollContext?.activeId;
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
@@ -78,7 +77,7 @@ export const Header = () => {
         </nav>
 
         <div className="z-100 flex sm:hidden">
-          <button onClick={toggleMenu} aria-label="메뉴 열기" className="text-white">
+          <button onClick={() => setIsOpen((prev) => !prev)} aria-label="메뉴 열기" className="text-white">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
