@@ -12,7 +12,12 @@ import { toast } from 'sonner';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
-import { MarkdownEditor } from 'shared/ui/markdown-editor';
+// CloudFlare Workers 환경에서는 3MIB로 제한되므로, 동적 임포트로 최적화
+const MarkdownEditor = dynamic(() => import('shared/ui/markdown-editor').then((mod) => mod.MarkdownEditor), {
+  ssr: false,
+  loading: () => <div className="min-h-37.5 w-full animate-pulse rounded-lg bg-slate-100 p-4 text-slate-400">에디터를 불러오는 중입니다...</div>
+});
+import dynamic from 'next/dynamic';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();

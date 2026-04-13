@@ -1,3 +1,4 @@
+'use client';
 import { Project } from 'entities/project';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
