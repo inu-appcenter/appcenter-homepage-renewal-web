@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight, ChevronDown, Home } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
@@ -15,17 +15,16 @@ export function Sidebar() {
   const { mode } = useRoleContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [manualOpenGroup, setManualOpenGroup] = useState<string | null>(null);
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
   const data = mode === 'admin' ? ADMIN_MENU : MEMBER_MENU;
 
   const activeGroup = data.find((group) => group.path === pathname || group.subMenu?.some((sub) => sub.href === pathname));
 
-  useEffect(() => {
-    if (activeGroup) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setManualOpenGroup(activeGroup.group);
-    }
-  }, [pathname, activeGroup]);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setManualOpenGroup(null);
+  }
 
   const currentOpenGroup = manualOpenGroup ?? activeGroup?.group;
 
@@ -64,7 +63,7 @@ export function Sidebar() {
                 <button
                   onClick={() => handleGroupClick(item.group, true)}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                    isExpanded || isGroupActive ? 'bg-slate-50/80 text-slate-900' : 'text-slate-500 hover:bg-slate-50'
+                    isExpanded || isGroupActive ? 'bg-slate-50/80 text-slate-900' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   } ${isCollapsed ? 'justify-center px-2' : ''}`}
                 >
                   <item.icon size={18} className={`shrink-0 ${isGroupActive ? 'text-slate-900' : ''}`} />
@@ -79,7 +78,7 @@ export function Sidebar() {
                 <Link
                   href={item.path}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                    pathname === item.path ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                    pathname === item.path ? 'bg-slate-100/50 font-bold text-slate-900' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   } ${isCollapsed ? 'justify-center px-2' : ''}`}
                 >
                   <item.icon size={18} className="shrink-0" />
@@ -114,8 +113,20 @@ export function Sidebar() {
       </nav>
 
       <div className="absolute right-0 bottom-6 left-0 px-4">
-        <div className="flex justify-center border-t border-slate-100 pt-4">
-          <LogoutButton isCollapsed={isCollapsed} />
+        <div className="flex flex-col gap-2 border-t border-slate-100 pt-4">
+          <Link
+            href="/"
+            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-500 transition-all hover:bg-slate-50 hover:text-slate-900 ${
+              isCollapsed ? 'justify-center px-2' : ''
+            }`}
+          >
+            <Home size={18} className="shrink-0" />
+            {!isCollapsed && <span className="truncate">홈페이지로 이동</span>}
+          </Link>
+
+          <div className="flex justify-center">
+            <LogoutButton isCollapsed={isCollapsed} />
+          </div>
         </div>
       </div>
     </aside>
