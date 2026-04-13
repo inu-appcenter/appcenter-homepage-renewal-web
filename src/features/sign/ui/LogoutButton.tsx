@@ -20,7 +20,11 @@ const CollapsedLogoutButton = ({ onClick, isLoading }: { onClick: () => void; is
 );
 
 const ExpandedLogoutButton = ({ onClick, isLoading }: { onClick: () => void; isLoading: boolean }) => (
-  <button onClick={onClick} disabled={isLoading} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 disabled:opacity-50">
+  <button
+    onClick={onClick}
+    disabled={isLoading}
+    className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 disabled:opacity-50"
+  >
     {isLoading ? (
       <>
         <Loader2 size={18} className="animate-spin" />
@@ -28,7 +32,7 @@ const ExpandedLogoutButton = ({ onClick, isLoading }: { onClick: () => void; isL
       </>
     ) : (
       <>
-        <LogOut size={18} />
+        <LogOut size={18} className="transition-all group-hover:translate-x-0.5" />
         <span className="truncate">로그아웃</span>
       </>
     )}

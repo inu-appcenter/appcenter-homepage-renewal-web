@@ -1,137 +1,21 @@
-'use client';
-import { useState, useContext } from 'react';
-import { ScrollContext } from 'entities/scroll';
-import Link from 'next/link';
-import { Logo } from 'shared/icon/Logo';
-import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { LogoLink } from './LogoLink';
+import { DesktopHeader } from './DesktopHeader';
+import { MobileHeader } from './MobileHeader';
 
-const NAV_ITEMS = [
-  { name: 'About', href: '/#about' },
-  { name: 'Project', href: '/#project' },
-  { name: 'Activity', href: '/#activity' },
-  { name: 'FAQ', href: '/#faq' },
-  { name: 'Join Us', href: '/joinus' }
-];
-export const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-
-  const scrollContext = useContext(ScrollContext);
-  const scrollToId = scrollContext?.scrollToId;
-  const activeId = scrollContext?.activeId;
-
-  const closeMenu = () => setIsOpen(false);
-
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-    if (pathname === '/' && href.includes('#')) {
-      e.preventDefault();
-      const targetId = href.split('#')[1];
-
-      if (scrollToId) {
-        scrollToId(targetId);
-        closeMenu();
-      }
-    }
-  };
+export async function Header() {
+  const cookieStore = await cookies();
+  const mode = cookieStore.get('role')?.value;
 
   return (
-    <>
-      <header className="fixed z-9999 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30">
-        <a href="#main-content" className="bg-brand-primary-cta text-background fixed -top-2499.75 left-0 z-99999 w-40 px-6 py-4 text-center focus:top-0">
-          본문 바로가기
-        </a>
-        <Link href="/" aria-label="홈으로 가기" onClick={(e) => handleScroll(e, '/#home')}>
-          <Logo className="w-8 sm:w-16" />
-        </Link>
+    <header className="fixed z-9999 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-9 sm:px-30">
+      <a href="#main-content" className="bg-brand-primary-cta text-background fixed -top-2499.75 left-0 z-99999 w-40 px-6 py-4 text-center focus:top-0">
+        본문 바로가기
+      </a>
 
-        <nav className="hidden flex-1 justify-end text-xl font-semibold text-white sm:flex">
-          <ul className="flex items-center gap-20">
-            {NAV_ITEMS.map((item) => {
-              const itemId = item.href.split('#')[1];
-              const isActive = itemId === undefined ? false : activeId === itemId;
-
-              return (
-                <li key={item.name}>
-                  <Link
-                    scroll={false}
-                    href={item.href}
-                    onClick={(e) => handleScroll(e, item.href)}
-                    className={`hover:text-brand-primary-light transition-colors ${isActive ? 'text-brand-primary-cta' : 'text-white'}`}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              );
-            })}
-            <li>
-              <Link
-                href="/login"
-                className="text-custom-black ring-custom-gray-100 rounded-[60px] bg-white px-5 py-2.5 text-xl leading-none whitespace-nowrap shadow-[0_0_10px_0_#FFFAFA] ring-1 transition-all ring-inset hover:bg-gray-100 active:scale-95"
-              >
-                Sign in
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="z-100 flex sm:hidden">
-          <button onClick={() => setIsOpen((prev) => !prev)} aria-label="메뉴 열기" className="text-white">
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </header>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeMenu} className="bg-background/60 fixed inset-0 z-100 sm:hidden" />
-
-            <motion.nav
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={{
-                closed: {
-                  opacity: 0,
-                  transition: { staggerChildren: 0.05, staggerDirection: -1, when: 'afterChildren' }
-                },
-                open: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1, delayChildren: 0.1 }
-                }
-              }}
-              className="pointer-events-none fixed top-0 right-0 z-100 flex h-screen w-full flex-col items-end gap-4 pt-30 pr-9 sm:hidden"
-            >
-              <motion.div variants={{ closed: { opacity: 0, y: -20 }, open: { opacity: 1, y: 0 } }} className="pointer-events-auto">
-                <Link
-                  href="/login"
-                  onClick={closeMenu}
-                  className="block rounded-full bg-white/90 px-4 py-2 text-lg font-semibold text-black shadow-[0_0_10px_0_#FFFAFA] backdrop-blur-sm transition-transform active:scale-95"
-                >
-                  Sign in
-                </Link>
-              </motion.div>
-
-              {NAV_ITEMS.map((item) => (
-                <motion.div key={item.name} variants={{ closed: { opacity: 0, y: -20 }, open: { opacity: 1, y: 0 } }} className="pointer-events-auto">
-                  <Link
-                    href={item.href}
-                    onClick={(e) => {
-                      closeMenu();
-                      handleScroll(e, item.href);
-                    }}
-                    className="bg-surface-elevated active:text-brand-primary-cta active:border-brand-primary-cta border-custom-gray-500 block rounded-full border px-4 py-2 font-bold text-white transition-colors active:scale-95"
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.nav>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+      <LogoLink />
+      <DesktopHeader mode={mode} />
+      <MobileHeader mode={mode} />
+    </header>
   );
-};
+}

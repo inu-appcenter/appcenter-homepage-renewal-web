@@ -63,7 +63,7 @@ export function Sidebar() {
                 <button
                   onClick={() => handleGroupClick(item.group, true)}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                    isExpanded || isGroupActive ? 'bg-slate-50/80 text-slate-900' : 'text-slate-500 hover:bg-slate-50'
+                    isExpanded || isGroupActive ? 'bg-slate-50/80 text-slate-900' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   } ${isCollapsed ? 'justify-center px-2' : ''}`}
                 >
                   <item.icon size={18} className={`shrink-0 ${isGroupActive ? 'text-slate-900' : ''}`} />
@@ -78,7 +78,7 @@ export function Sidebar() {
                 <Link
                   href={item.path}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                    pathname === item.path ? 'bg-slate-100/50 font-bold text-slate-900' : 'text-slate-500 hover:bg-slate-50'
+                    pathname === item.path ? 'bg-slate-100/50 font-bold text-slate-900' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   } ${isCollapsed ? 'justify-center px-2' : ''}`}
                 >
                   <item.icon size={18} className="shrink-0" />

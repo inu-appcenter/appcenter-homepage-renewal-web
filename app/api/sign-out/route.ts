@@ -5,6 +5,7 @@ export async function POST() {
   const cookieStore = await cookies();
   cookieStore.delete('accessToken');
   cookieStore.delete('refreshToken');
+  cookieStore.delete('role');
 
   return NextResponse.json({ success: true });
 }
