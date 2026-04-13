@@ -11,7 +11,6 @@ import { useRoleContext } from 'entities/sign';
 
 import { MainSectionForm } from './MainSectionForm';
 import { IntroduceSectionForm } from './IntroduceSectionForm';
-import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
@@ -94,8 +93,6 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         return <MainSectionForm form={form} setForm={setForm} setStep={setStep} />;
       case 'introduce':
         return <IntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
-      case 'grid':
-        return <GridSectionForm form={form} setForm={setForm} projectId={projectId} />;
       default:
         return null;
     }
