@@ -10,28 +10,15 @@ import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 import { toast } from 'sonner';
 
-// 추가된 모달 폼 컴포넌트 임포트 (경로는 실제 구조에 맞게 수정하세요)
 import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
-
-// 이미지 타입 정의
-type ImageObj = { id: number; url: string | File };
 
 export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();
   const { mode } = useRoleContext();
   const isEditMode = Boolean(initialData);
 
-  const [projectId, setProjectId] = useState<number | null>(initialData?.id || null);
-
-  const parsedImages = Object.entries(initialData?.images || {}).map(([id, url]) => ({
-    id: Number(id),
-    url: url as string
-  }));
-
-  const initialImages: (ImageObj | null)[] = [parsedImages[0] || null, parsedImages[1] || null, ...parsedImages.slice(2)];
-
-  const [form, setForm] = useState<ProjectFormType & { images: (ImageObj | null)[] }>({
+  const [form, setForm] = useState<ProjectFormType>({
     title: initialData?.title || '',
     subTitle: initialData?.subTitle || '',
     isActive: initialData?.isActive ?? true,
@@ -42,7 +29,10 @@ export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
     body: initialData?.body || '',
     stacks: initialData?.stacks?.map((stack) => stack.id) || [],
     groups: initialData?.groups?.map((group) => group.group_id) || [],
-    images: initialImages
+    images: Object.entries(initialData?.images || [null, null]).map(([id, url]) => ({
+      id: Number(id),
+      url: url as string
+    }))
   });
 
   const [isPending, setIsPending] = useState(false);
@@ -54,7 +44,7 @@ export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
       console.log('제출할 폼 데이터:', form);
       toast.success(isEditMode ? '프로젝트가 수정되었습니다.' : '프로젝트가 등록되었습니다.');
       router.back();
-    } catch (error) {
+    } catch {
       toast.error('저장에 실패했습니다.');
     } finally {
       setIsPending(false);
@@ -240,20 +230,16 @@ export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
           </h2>
 
           <div className="grid gap-6 xl:grid-cols-2">
-            {/* 기술 스택 영역 */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-slate-400">사용 기술 스택</label>
-              {/* 🚨 overflow-hidden 제거! */}
-              <div className="relative min-h-[250px] rounded-2xl border border-slate-200 bg-slate-50 p-2">
+              <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
                 <StackForm form={form} setForm={setForm} />
               </div>
             </div>
 
-            {/* 참여 팀원 영역 */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-slate-400">참여 팀원</label>
-              {/* 🚨 overflow-hidden 제거! */}
-              <div className="relative min-h-[250px] rounded-2xl border border-slate-200 bg-slate-50 p-2">
+              <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
                 <MemberForm form={form} setForm={setForm} />
               </div>
             </div>
@@ -262,7 +248,6 @@ export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
 
         <hr className="border-slate-200" />
 
-        {/* 5. 상세 이미지 섹션 */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
@@ -307,10 +292,9 @@ export const ProjectEditor = ({ initialData }: { initialData?: Project }) => {
   );
 };
 
-// --- 재사용 UI 컴포넌트들 ---
 const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => (
   <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-slate-400">{label}</label>
+    <label className="text-sm font-medium text-slate-800">{label}</label>
     <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className || ''}`} />
   </div>
 );

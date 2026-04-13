@@ -7,6 +7,6 @@ export async function AdminProjectWritePage({ params }: { params: Promise<{ id?:
 
   const initialData = id ? await projectApi.getById(Number(id)) : undefined;
 
-  return <ProjectForm initialData={initialData} />;
-  // return <ProjectEditor initialData={initialData} />;
+  // return <ProjectForm initialData={initialData} />;
+  return <ProjectEditor initialData={initialData} />;
 }

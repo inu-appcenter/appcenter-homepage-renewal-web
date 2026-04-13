@@ -4,6 +4,7 @@ import { GridSection } from './GridSection';
 import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';
 import { OtherProjects } from './OtherProject';
+import { ImageSection } from './ImageSection';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: number }> }): Promise<Metadata> {
   const { id } = await params;
@@ -42,6 +43,7 @@ export async function ProjectDetailPage({ params }: { params: Promise<{ id: numb
       <MainSection data={data} />
       <IntroduceSection data={data} />
       <GridSection data={data} />
+      <ImageSection data={data} />
       <OtherProjects />
     </>
   );
