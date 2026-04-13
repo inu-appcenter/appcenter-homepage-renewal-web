@@ -1,23 +1,23 @@
 'use client';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Project, projectApi } from 'entities/project';
-
-import { ProjectFormType, StepType } from '../types/form';
+import { Plus, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Project } from 'entities/project';
+import { useRoleContext } from 'entities/sign';
+import { ProjectFormType } from '../types/form';
+import { SaveButton } from 'shared/ui/button';
+import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { toast } from 'sonner';
 
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
-import { useRoleContext } from 'entities/sign';
-
-import { MainSectionForm } from './MainSectionForm';
-import { IntroduceSectionForm } from './IntroduceSectionForm';
-import { StepIndicator } from './StepIndicator';
+import { StackForm } from './StackForm';
+import { MemberForm } from './MemberForm';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();
   const { mode } = useRoleContext();
-  const [projectId, setProjectId] = useState<number | null>(initialData?.id || null);
-  const [step, setStep] = useState<StepType>('main');
+  const isEditMode = Boolean(initialData);
+
   const [form, setForm] = useState<ProjectFormType>({
     title: initialData?.title || '',
     subTitle: initialData?.subTitle || '',
@@ -35,126 +35,293 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     }))
   });
 
-  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && form.images.every((img) => img && img.url !== null && img.url !== ''); // 이미지가 2개 이상이어야 함(썸네일 + 대표 이미지);
-
   const { submit, isPending } = useProjectSubmit(
-    projectId
+    initialData?.id
       ? {
           mode: 'edit',
-          projectId: projectId,
+          projectId: initialData.id,
           onSuccess: () => {
-            if (step === 'grid') {
-              router.push(`/${mode}/project`);
-              router.refresh();
-            } else if (step === 'introduce') {
-              setStep('grid');
-            }
+            router.push(`/${mode}/project`);
+            router.refresh();
           }
         }
       : {
           mode: 'create',
-          onSuccess: async (id: number) => {
-            try {
-              const updatedData = await projectApi.getById(id);
-
-              if (updatedData) {
-                setForm({
-                  title: updatedData.title,
-                  subTitle: updatedData.subTitle,
-                  isActive: updatedData.isActive,
-                  githubLink: updatedData.githubLink || '',
-                  androidStoreLink: updatedData.androidStoreLink || '',
-                  appleStoreLink: updatedData.appleStoreLink || '',
-                  webSiteLink: updatedData.websiteLink || '',
-                  body: updatedData.body || '',
-                  stacks: updatedData.stacks?.map((s) => s.id) || [],
-                  groups: updatedData.groups?.map((g) => g.group_id) || [],
-                  images: Object.entries(updatedData.images || {}).map(([imgId, url]) => ({
-                    id: Number(imgId),
-                    url: url as string
-                  }))
-                });
-
-                // 3. ID 설정 및 다음 단계로 이동
-                setProjectId(id);
-                setStep('grid');
-              }
-            } catch (error) {
-              console.error('데이터를 불러오는 중 오류 발생:', error);
-              alert('프로젝트는 생성되었으나 데이터를 불러오지 못했습니다.');
-            }
+          onSuccess: () => {
+            router.push(`/${mode}/project`);
+            router.refresh();
           }
         }
   );
 
-  const renderStepContent = () => {
-    switch (step) {
-      case 'main':
-        return <MainSectionForm form={form} setForm={setForm} setStep={setStep} />;
-      case 'introduce':
-        return <IntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />;
-      default:
-        return null;
+  const handleSpecificImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: 0 | 1) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > IMAGE_SIZE_LIMIT) {
+        toast.error('이미지 파일 크기는 4MB 이하여야 합니다.');
+        e.target.value = '';
+        return;
+      }
+      setForm((prev) => {
+        const newImages = [...prev.images];
+        newImages[index] = { id: Date.now(), url: file };
+        return { ...prev, images: newImages };
+      });
+      e.target.value = '';
     }
   };
 
-  const handleNext = async () => {
-    if (step === 'main') {
-      if (isFormValid) setStep('introduce');
-    } else if (step === 'introduce') {
-      submit(form);
-    } else if (step === 'grid') {
-      submit(form);
+  const removeSpecificImage = async (index: 0 | 1) => {
+    const target = form.images[index];
+    if (target && typeof target.url === 'string' && isEditMode) {
+      if (!confirm('서버에 저장된 이미지를 삭제하시겠습니까?')) return;
+    }
+    setForm((prev) => {
+      const newImages = [...prev.images];
+      newImages[index] = null;
+      return { ...prev, images: newImages };
+    });
+  };
+
+  const handleDetailImagesAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      const hasLargeFile = newFiles.some((file) => file.size > IMAGE_SIZE_LIMIT);
+
+      if (hasLargeFile) {
+        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
+        e.target.value = '';
+        return;
+      }
+      const newImageObjs = newFiles.map((file) => ({
+        id: Date.now() + Math.random(),
+        url: file
+      }));
+      setForm((prev) => ({ ...prev, images: [...prev.images, ...newImageObjs] }));
+      e.target.value = '';
     }
   };
-  const handlePrev = () => {
-    if (step === 'introduce') {
-      setStep('main');
-    } else if (step === 'grid') {
-      setStep('introduce');
+
+  const removeDetailImage = async (targetId: number, targetUrl: string | File) => {
+    if (typeof targetUrl === 'string' && isEditMode) {
+      if (!confirm('서버에 저장된 이미지를 삭제하시겠습니까?')) return;
     }
+    setForm((prev) => ({
+      ...prev,
+      images: prev.images.filter((img, idx) => idx < 2 || img?.id !== targetId)
+    }));
   };
+
+  const appIcon = form.images[0];
+  const thumbnail = form.images[1];
+  const detailImages = form.images.length > 2 ? form.images.slice(2).filter(Boolean) : [];
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="mx-auto mb-12 w-full max-w-3xl">
-        <StepIndicator currentStep={step} />
+    <div className="rounded-2xl border border-slate-200 bg-white p-8">
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-slate-900">{isEditMode ? '프로젝트 수정' : '프로젝트 등록'}</h1>
+        <label className="flex cursor-pointer items-center gap-2">
+          <span className="text-sm font-medium text-slate-600">활성화 상태</span>
+          <input
+            type="checkbox"
+            checked={form.isActive}
+            onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+            className="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+          />
+        </label>
       </div>
 
-      <section className="bg-background w-full flex-1 rounded-2xl">
-        {renderStepContent()}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          submit(form);
+        }}
+        className="space-y-8"
+      >
+        {/* 1. 기본 정보 섹션 */}
+        <section className="space-y-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">1</span>
+            기본 정보
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
+            <Input label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-slate-400">본문 설명</label>
+            <textarea
+              value={form.body}
+              onChange={(e) => setForm({ ...form, body: e.target.value })}
+              rows={6}
+              className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              placeholder="프로젝트에 대한 상세 설명을 입력하세요"
+            />
+          </div>
+        </section>
 
-        <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
-          {step !== 'main' && (
-            <button
-              type="button"
-              onClick={handlePrev}
-              disabled={isPending}
-              className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-xl font-semibold text-white backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1" size={20} />
-              <span className="font-medium">이전</span>
-            </button>
-          )}
-          <button
-            onClick={handleNext}
-            disabled={!isFormValid || isPending}
-            className="group bg-brand-primary-cta text-custom-black flex items-center gap-2 rounded-full px-6 py-4 text-xl font-semibold shadow-lg transition-all hover:shadow-xl hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {isPending ? (
-              <>
-                <Loader2 className="animate-spin" size={20} />
-                <span className="font-medium">저장 중...</span>
-              </>
-            ) : (
-              <>
-                <span className="font-medium">{step === 'grid' ? '완료' : '다음'}</span>
-                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
-              </>
-            )}
-          </button>
+        <hr className="border-slate-200" />
+
+        {/* 2. 대표 이미지 섹션 */}
+        <section className="space-y-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">2</span>
+            대표 이미지
+          </h2>
+          <div className="flex flex-col gap-6 md:flex-row md:items-start">
+            <div className="flex flex-col gap-2 md:w-48">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-slate-400">앱 아이콘</span>
+                {appIcon && (
+                  <button type="button" onClick={() => removeSpecificImage(0)} className="text-xs text-red-500 hover:underline">
+                    삭제
+                  </button>
+                )}
+              </div>
+              <label className="group relative flex aspect-square w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100">
+                {appIcon ? (
+                  <>
+                    <img src={typeof appIcon.url === 'string' ? appIcon.url : URL.createObjectURL(appIcon.url)} alt="app-icon" className="h-full w-full object-cover" />
+                    <HoverOverlay label="아이콘 변경" />
+                  </>
+                ) : (
+                  <EmptyImagePlaceholder />
+                )}
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSpecificImageChange(e, 0)} />
+              </label>
+            </div>
+
+            <div className="flex flex-1 flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-slate-400">리스트 썸네일</span>
+                {thumbnail && (
+                  <button type="button" onClick={() => removeSpecificImage(1)} className="text-xs text-red-500 hover:underline">
+                    삭제
+                  </button>
+                )}
+              </div>
+              <label className="group relative flex aspect-video w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100 md:max-w-md">
+                {thumbnail ? (
+                  <>
+                    <img src={typeof thumbnail.url === 'string' ? thumbnail.url : URL.createObjectURL(thumbnail.url)} alt="thumbnail" className="h-full w-full object-cover" />
+                    <HoverOverlay label="썸네일 변경" />
+                  </>
+                ) : (
+                  <EmptyImagePlaceholder />
+                )}
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSpecificImageChange(e, 1)} />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-slate-200" />
+
+        {/* 3. 링크 정보 섹션 */}
+        <section className="space-y-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">3</span>
+            관련 링크
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
+            <Input label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
+            <Input label="Android 스토어 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="Play Store 링크" />
+            <Input label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
+          </div>
+        </section>
+
+        <hr className="border-slate-200" />
+        <section className="space-y-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">4</span>
+            프로젝트 메타 정보
+          </h2>
+
+          <div className="grid gap-6 xl:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-slate-400">사용 기술 스택</label>
+              <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
+                <StackForm form={form} setForm={setForm} />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-slate-400">참여 팀원</label>
+              <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
+                <MemberForm form={form} setForm={setForm} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-slate-200" />
+
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs text-white">5</span>
+              프로젝트 상세 이미지
+            </h2>
+            <span className="text-sm text-slate-500">{detailImages.length}개의 이미지</span>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {detailImages.map((image) => (
+                <div key={image.id} className="group relative aspect-square overflow-hidden rounded-lg border border-slate-200 bg-white">
+                  <img src={typeof image.url === 'string' ? image.url : URL.createObjectURL(image.url)} alt="project-image" className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                    <button
+                      type="button"
+                      onClick={() => removeDetailImage(image.id, image.url)}
+                      className="flex items-center gap-1 rounded bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600"
+                    >
+                      <Trash2 size={14} /> 삭제
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-white text-slate-400 transition-colors hover:border-blue-400 hover:text-blue-500">
+                <Plus size={24} className="mb-2" />
+                <span className="text-sm font-medium">이미지 추가</span>
+                <input type="file" multiple accept="image/*" className="hidden" onChange={handleDetailImagesAdd} />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <div className="flex justify-end pt-4">
+          <SaveButton disabled={isPending} type="submit" className="w-50">
+            {isEditMode ? '변경사항 저장' : '프로젝트 등록'}
+          </SaveButton>
         </div>
-      </section>
+      </form>
     </div>
   );
 };
+
+const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => (
+  <div className="flex flex-col gap-1">
+    <label className="text-sm font-medium text-slate-800">{label}</label>
+    <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className || ''}`} />
+  </div>
+);
+
+const EmptyImagePlaceholder = () => (
+  <div className="flex flex-col items-center text-slate-400 transition-transform group-hover:text-blue-500">
+    <Plus className="mb-2" size={24} />
+    <span className="text-xs font-medium">이미지 추가</span>
+  </div>
+);
+
+const HoverOverlay = ({ label }: { label: string }) => (
+  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+    <div className="flex translate-y-2 transform flex-col items-center gap-2 transition-transform group-hover:translate-y-0">
+      <div className="rounded-full bg-white/20 p-2">
+        <ImageIcon className="text-white" size={24} />
+      </div>
+      <span className="text-xs font-bold text-white">{label}</span>
+    </div>
+  </div>
+);

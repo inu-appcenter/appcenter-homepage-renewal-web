@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export async function ProjectListPage() {
   const data = await projectApi.getAll();
-  const sortedData = data.sort((a, b) => {
+  const sortedData = [...data].sort((a, b) => {
     return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
   });
 

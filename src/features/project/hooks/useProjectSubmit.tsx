@@ -8,7 +8,7 @@ interface EditProjectSubmitProps {
 }
 interface AddProjectSubmitProps {
   mode: 'create';
-  onSuccess: (id: number) => void;
+  onSuccess: () => void;
 }
 export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmitProps) => {
   const { addMutation, editMutation } = useProjectActions();
@@ -45,15 +45,7 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
 
     if (props.mode === 'create') {
       addMutation.mutate(formData, {
-        onSuccess: (response: any) => {
-          // response.msg에서 숫자(ID) 추출
-          // {"msg" : "108 Board has been successfully saved."}
-          const idMatch = response.msg.match(/\d+/);
-          const generatedId = idMatch ? Number(idMatch[0]) : null;
-          if (generatedId) {
-            props.onSuccess(generatedId);
-          }
-        }
+        onSuccess: props.onSuccess
       });
     } else {
       editMutation.mutate({ data: formData, id: props.projectId, modifiedIds }, { onSuccess: props.onSuccess });

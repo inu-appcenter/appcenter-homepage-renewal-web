@@ -5,7 +5,7 @@ import { Check, Plus, Search, Users, X } from 'lucide-react';
 import { Generation, useGeneration, usePart } from 'entities/generation';
 
 import { Modal } from 'shared/ui/modal';
-import { ProjectFormType } from '../../types/form';
+import { ProjectFormType } from '../types/form';
 import { Alert } from 'shared/ui/alert';
 
 export const MemberForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {

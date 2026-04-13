@@ -4,7 +4,7 @@ import { Check, Code2, Plus, RotateCw, Search, Settings, X } from 'lucide-react'
 import Link from 'next/link';
 
 import { useSkillStack } from 'entities/skill-stack';
-import { ProjectFormType } from '../../types/form';
+import { ProjectFormType } from '../types/form';
 import { Modal } from 'shared/ui/modal';
 import { useRoleContext } from 'entities/sign';
 

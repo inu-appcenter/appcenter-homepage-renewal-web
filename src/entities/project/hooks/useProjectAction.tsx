@@ -2,6 +2,7 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import { projectKeys, projectOptions } from '../api/queries';
 import { projectApi } from '../api';
 import { revalidateTag } from 'shared/utils/revalidateTag';
+import { toast } from 'sonner';
 
 export const useProject = () => {
   return useSuspenseQuery({
@@ -25,17 +26,35 @@ export const useProjectActions = () => {
 
   const addMutation = useMutation({
     mutationFn: projectApi.create,
-    onSuccess: invalidateProjects
+    onSuccess: () => {
+      invalidateProjects();
+      toast.success('프로젝트가 성공적으로 등록되었습니다.');
+    },
+    onError: (error) => {
+      toast.error(error.message || '프로젝트 등록에 실패했습니다. 다시 시도해주세요.');
+    }
   });
 
   const editMutation = useMutation({
     mutationFn: projectApi.update,
-    onSuccess: invalidateProjects
+    onSuccess: () => {
+      invalidateProjects();
+      toast.success('프로젝트가 성공적으로 수정되었습니다.');
+    },
+    onError: (error) => {
+      toast.error(error.message || '프로젝트 수정에 실패했습니다. 다시 시도해주세요.');
+    }
   });
 
   const deleteMutation = useMutation({
     mutationFn: projectApi.delete,
-    onSuccess: invalidateProjects
+    onSuccess: () => {
+      invalidateProjects();
+      toast.success('프로젝트가 성공적으로 삭제되었습니다.');
+    },
+    onError: (error) => {
+      toast.error(error.message || '프로젝트 삭제에 실패했습니다. 다시 시도해주세요.');
+    }
   });
 
   const toggleMutation = useMutation({

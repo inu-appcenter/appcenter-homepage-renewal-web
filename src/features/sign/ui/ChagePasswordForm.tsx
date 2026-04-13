@@ -28,16 +28,11 @@ export function ChangePasswordForm() {
       return;
     }
 
-    try {
-      await changePasswordMutation.mutateAsync({
-        currentPassword: formData.currentPassword,
-        newPassword: formData.newPassword
-      });
-      toast.success('비밀번호가 성공적으로 변경되었습니다');
-      setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    } catch (error: any) {
-      toast.error(error.response?.data?.msg || '비밀번호 변경에 실패했습니다.');
-    }
+    changePasswordMutation.mutateAsync({
+      currentPassword: formData.currentPassword,
+      newPassword: formData.newPassword
+    });
+    setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
   };
 
   return (
@@ -116,7 +111,6 @@ export function ChangePasswordForm() {
   );
 }
 
-/* 비밀번호 전용 FormInput 컴포넌트 */
 interface PasswordInputProps {
   icon: React.ElementType;
   label: string;
@@ -127,7 +121,6 @@ interface PasswordInputProps {
   placeholder?: string;
   disabled?: boolean;
 }
-
 function PasswordInput({ icon: Icon, label, value, onChange, showPassword, onToggleVisible, ...props }: PasswordInputProps) {
   return (
     <div className="space-y-1.5">
