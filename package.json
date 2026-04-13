@@ -15,6 +15,9 @@
   "dependencies": {
     "@opennextjs/cloudflare": "^1.18.0",
     "@tanstack/react-query": "^5.90.17",
+    "@tiptap/pm": "^3.22.3",
+    "@tiptap/react": "^3.22.3",
+    "@tiptap/starter-kit": "^3.22.3",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
@@ -29,13 +32,17 @@
     "react-dom": "19.2.3",
     "react-error-boundary": "^6.1.0",
     "react-kakao-maps-sdk": "^1.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "tiptap-markdown": "^0.9.0"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.0",
     "@opennextjs/cloudflare": "^1.18.0",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
     "@tanstack/react-query-devtools": "^5.91.2",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",

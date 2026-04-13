@@ -31,9 +31,8 @@ export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: R
     }));
   };
 
-  const safeSkillStack = skillStack || [];
-  const filteredStack = safeSkillStack.filter((skill) => skill.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  const selectedSkills = safeSkillStack.filter((skill) => form.stacks.includes(skill.id));
+  const filteredStack = skillStack?.filter((skill) => skill.name.toLowerCase().includes(searchTerm.toLowerCase())) || [];
+  const selectedSkills = skillStack?.filter((skill) => form.stacks.includes(skill.id)) || [];
 
   return (
     <div className="relative flex h-full w-full flex-col">

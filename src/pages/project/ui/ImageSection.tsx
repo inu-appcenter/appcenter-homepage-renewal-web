@@ -56,8 +56,6 @@ export const ImageSection = ({ data }: { data: Project }) => {
                   </div>
                 ))}
               </div>
-
-              <div className="pointer-events-none absolute top-0 right-0 bottom-4 w-6 bg-linear-to-l from-black/60 to-transparent sm:w-24" />
             </div>
           </div>
         )}

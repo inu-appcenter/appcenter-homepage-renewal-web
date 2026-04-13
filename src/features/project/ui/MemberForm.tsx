@@ -185,7 +185,7 @@ const SelectedMemberItem = ({ member, onRemove }: { member: Generation; onRemove
         <div className="relative flex items-center justify-center">
           <span className="text-[10px] text-slate-400 transition-opacity duration-200 group-hover:opacity-0">{member.year}기</span>
           <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red-100 text-red-500">
+            <div className="flex h-4 w-4 items-center justify-center text-red-500">
               <X size={10} strokeWidth={3} />
             </div>
           </div>
