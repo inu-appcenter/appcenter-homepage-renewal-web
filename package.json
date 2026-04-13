@@ -15,9 +15,6 @@
   "dependencies": {
     "@opennextjs/cloudflare": "^1.18.0",
     "@tanstack/react-query": "^5.90.17",
-    "@tiptap/pm": "^3.22.3",
-    "@tiptap/react": "^3.22.3",
-    "@tiptap/starter-kit": "^3.22.3",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
@@ -36,6 +33,9 @@
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
+    "@tiptap/pm": "^3.22.3",
+    "@tiptap/react": "^3.22.3",
+    "@tiptap/starter-kit": "^3.22.3",
     "tiptap-markdown": "^0.9.0"
   },
   "devDependencies": {
