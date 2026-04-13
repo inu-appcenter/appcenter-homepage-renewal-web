@@ -12,7 +12,7 @@ export function DesktopHeader({ mode }: { mode?: string }) {
   const scrollToId = scrollContext?.scrollToId;
   const activeId = scrollContext?.activeId;
 
-  const loginText = mode === 'member' ? '멤버' : '관리자';
+  const loginText = mode === 'member' ? '멤버 대시보드' : '관리자 대시보드';
   const authBtnText = mode ? loginText : 'Sign in';
   const authBtnHref = mode ? `/${mode}/home` : '/login';
 
