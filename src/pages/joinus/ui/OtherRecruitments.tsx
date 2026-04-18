@@ -1,11 +1,10 @@
 'use client';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
-import useEmblaCarousel from 'embla-carousel-react';
 import { useRecruitment } from 'entities/recruitment';
 import { RecruitmentCard } from './Component';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
-import Autoplay from 'embla-carousel-autoplay';
+import { Carousel } from 'shared/ui/carousel';
 
 export function OtherRecruitments() {
   return (
@@ -14,24 +13,8 @@ export function OtherRecruitments() {
     </AsyncBoundary>
   );
 }
-
 function OtherRecruitmentsContent() {
   const { data } = useRecruitment();
-
-  const [emblaRef] = useEmblaCarousel(
-    {
-      align: 'center',
-      dragFree: true,
-      containScroll: 'trimSnaps'
-    },
-    [
-      Autoplay({
-        delay: 3000,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true
-      })
-    ]
-  );
 
   if (!data || data.length === 0) return null;
 
@@ -50,17 +33,25 @@ function OtherRecruitmentsContent() {
         </Link>
       </div>
 
-      <div className="relative w-full">
-        <div className="overflow-hidden py-4" ref={emblaRef}>
-          <div className="flex gap-3 sm:gap-8">
-            {data.map((item) => (
-              <div key={item.id} className="min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]">
-                <RecruitmentCard data={item} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Carousel
+        data={data}
+        autoPlay={true}
+        showTrackButton={false}
+        autoPlayOptions={{
+          delay: 3000,
+          stopOnInteraction: false,
+          stopOnMouseEnter: true
+        }}
+        options={{
+          align: 'center',
+          dragFree: true,
+          loop: true
+        }}
+        className="py-0"
+        trackClassName="gap-3 sm:gap-8"
+        slideClassName="min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]"
+        renderItem={(item) => <RecruitmentCard data={item} />}
+      />
     </section>
   );
 }

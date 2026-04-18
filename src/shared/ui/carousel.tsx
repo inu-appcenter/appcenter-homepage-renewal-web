@@ -9,22 +9,13 @@ import { EmblaOptionsType } from 'embla-carousel';
 interface CarouselProps<T> {
   data: T[];
   renderItem: (item: T, index: number, isActive?: boolean) => React.ReactNode;
-
   options?: EmblaOptionsType;
   autoScroll?: boolean;
-  autoPlayOptions?: {
-    delay?: number;
-    stopOnInteraction?: boolean;
-    stopOnMouseEnter?: boolean;
-  };
-  autoScrollOptions?: {
-    speed?: number;
-    stopOnInteraction?: boolean;
-    stopOnMouseEnter?: boolean;
-  };
   autoPlay?: boolean;
+  autoPlayOptions?: Parameters<typeof Autoplay>[0];
+  autoScrollOptions?: Parameters<typeof AutoScroll>[0];
   pauseOnIntersection?: boolean;
-
+  showTrackButton?: boolean;
   className?: string;
   trackClassName?: string;
   slideClassName?: string;
@@ -40,6 +31,7 @@ export const Carousel = <T,>({
   autoPlayOptions = { delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true },
   autoScrollOptions = { speed: 1.5, stopOnInteraction: false, stopOnMouseEnter: true },
   pauseOnIntersection = true,
+  showTrackButton = true,
   className,
   trackClassName = 'gap-4 px-4',
   slideClassName = '',
@@ -47,67 +39,56 @@ export const Carousel = <T,>({
 }: CarouselProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const plugins = useMemo(() => {
-    const activePlugins = [];
-    if (autoScroll) {
-      activePlugins.push(AutoScroll({ ...autoScrollOptions }));
-    }
-    if (autoPlay) {
-      activePlugins.push(Autoplay({ ...autoPlayOptions }));
-    }
-    return activePlugins;
-  }, [autoScroll, autoPlay, autoPlayOptions, autoScrollOptions]);
+  const plugins = useMemo(
+    () => [autoScroll && AutoScroll({ ...autoScrollOptions }), autoPlay && Autoplay({ ...autoPlayOptions })].filter(Boolean) as any[],
+    [autoScroll, autoPlay, autoPlayOptions, autoScrollOptions]
+  );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
-
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   useEffect(() => {
     if (!emblaApi) return;
 
-    setScrollSnaps(emblaApi.scrollSnapList());
-    const onSelect = () => setActiveIndex(emblaApi.selectedScrollSnap() || 0);
-
-    onSelect();
-    emblaApi.on('select', onSelect);
-
-    return () => {
-      emblaApi.off('select', onSelect);
+    const onInit = () => {
+      setScrollSnaps(emblaApi.scrollSnapList());
     };
+
+    const onSelect = () => {
+      setActiveIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on('init', onInit).on('reInit', onInit);
+    emblaApi.on('select', onSelect).on('reInit', onSelect);
+
+    onInit();
+    onSelect();
   }, [emblaApi]);
 
   useEffect(() => {
-    if (!emblaApi || !pauseOnIntersection) return;
+    if (!emblaApi || !pauseOnIntersection || !containerRef.current) return;
 
-    const activePlugin = emblaApi.plugins().autoScroll || emblaApi.plugins().autoplay;
-    if (!activePlugin) return;
+    const plugin = emblaApi.plugins().autoScroll || emblaApi.plugins().autoplay;
+    if (!plugin) return;
 
-    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? activePlugin.play() : activePlugin.stop()), { threshold: 0.3 });
+    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? plugin.play() : plugin.stop()), { threshold: 0.3 });
 
-    if (containerRef.current) observer.observe(containerRef.current);
+    observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [emblaApi, pauseOnIntersection]);
 
   const scrollTo = useCallback(
     (index: number) => {
-      const activePlugin = emblaApi?.plugins().autoScroll || emblaApi?.plugins().autoplay;
-
-      activePlugin?.stop();
-      emblaApi?.scrollTo(index);
-
-      const resume = () => {
-        activePlugin?.play();
-        emblaApi?.off('settle', resume);
-      };
-      emblaApi?.on('settle', resume);
+      if (!emblaApi) return;
+      emblaApi.scrollTo(index);
     },
     [emblaApi]
   );
 
   return (
     <div ref={containerRef} className={cn('relative flex flex-col py-6', className)}>
-      <div ref={emblaRef} className={cn('overflow-hidden', { 'overflow-visible': !overflow })}>
+      <div ref={emblaRef} className={cn('overflow-hidden', !overflow && 'overflow-visible')}>
         <ul className={cn('flex', trackClassName)}>
           {data.map((item, index) => (
             <li key={index} className={slideClassName}>
@@ -117,16 +98,18 @@ export const Carousel = <T,>({
         </ul>
       </div>
 
-      <div className="flex justify-center gap-2 sm:gap-5">
-        {scrollSnaps.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollTo(index)}
-            className={cn('h-1 w-1 rounded-full transition-all duration-300 sm:h-3 sm:w-3', activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700')}
-            aria-label={`슬라이드 ${index + 1}로 이동`}
-          />
-        ))}
-      </div>
+      {showTrackButton && scrollSnaps.length > 0 && (
+        <div className="mt-4 flex justify-center gap-2 sm:gap-5">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollTo(index)}
+              className={cn('h-1 w-1 rounded-full transition-all duration-300 sm:h-3 sm:w-3', activeIndex === index ? 'bg-brand-primary-cta scale-110' : 'bg-custom-gray-700')}
+              aria-label={`슬라이드 ${index + 1}로 이동`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
