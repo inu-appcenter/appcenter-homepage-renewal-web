@@ -52,7 +52,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
           <div className="flex flex-1 flex-col gap-5 sm:gap-8" tabIndex={0}>
             <div className="grid grid-cols-[60px_1fr] gap-x-2.5 gap-y-2 text-white sm:grid-cols-[120px_1fr] sm:gap-x-6 sm:gap-y-7">
               <div className="text-base font-semibold sm:text-2xl/6">모집 분야</div>
-              <div className="flex flex-wrap gap-1 sm:gap-2">
+              <div className="flex flex-wrap gap-2.5 sm:gap-5">
                 {recruitmentData.fields.map((role, index) => (
                   <span key={index} className="border-brand-primary-cta text-brand-primary-cta rounded-full border px-2 py-1 text-[0.875rem]/3.5 sm:px-4 sm:py-1.5 sm:text-sm">
                     {role.name}
@@ -60,8 +60,8 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
                 ))}
               </div>
 
-              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 기한</div>
-              <div className="flex flex-col space-y-1 text-base/4 font-medium sm:text-2xl/6">
+              <div className="text-base font-semibold sm:text-2xl/6">모집 기한</div>
+              <div className="flex flex-col space-y-0.5 text-base font-medium sm:text-2xl/6">
                 <span>
                   시작일 <span className="mx-1">|</span> {dayjs(recruitmentData.startDate).format('YYYY. MM . DD')}
                 </span>
@@ -70,11 +70,11 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
                 </span>
               </div>
 
-              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 인원</div>
-              <div className="text-base/4 font-medium sm:text-2xl/6">{recruitmentData.capacity}명</div>
+              <div className="text-base font-semibold sm:text-2xl/6">모집 인원</div>
+              <div className="text-base font-medium sm:text-2xl/6">{recruitmentData.capacity}명</div>
 
-              <div className="text-base/4 font-semibold sm:text-2xl/6">모집 대상</div>
-              <div className="text-base/4 font-medium sm:text-2xl/6">{recruitmentData.targetAudience ? recruitmentData.targetAudience : '-'}</div>
+              <div className="text-base font-semibold sm:text-2xl/6">모집 대상</div>
+              <div className="text-base font-medium sm:text-2xl/6">{recruitmentData.targetAudience ? recruitmentData.targetAudience : '-'}</div>
             </div>
             {recruitmentData.status === 'RECRUITING' ? (
               <AnimationButton target="_top" href={recruitmentData.applyLink}>

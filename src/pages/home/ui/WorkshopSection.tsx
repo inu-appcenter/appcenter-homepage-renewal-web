@@ -4,13 +4,15 @@ import { ListButton, SectionDetailTitle } from './Components';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { useWorkShop } from 'entities/workshop';
 import { Carousel } from 'shared/ui/carousel';
+import { useMediaQuery } from 'shared/hooks/useMediaQuery';
+import { useMemo } from 'react';
 
 export const WorkshopSection = () => {
   return (
     <section className="flex h-[40vh] flex-col justify-center sm:h-screen sm:gap-8">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
-        <ListButton href="/workshoplist" className="hidden sm:flex" />
+        <ListButton href="/workshoplist" />
       </div>
       <AsyncBoundary>
         <WorkshopCarousel />
@@ -21,13 +23,23 @@ export const WorkshopSection = () => {
 
 const WorkshopCarousel = () => {
   const { data } = useWorkShop();
+  const isMobile = useMediaQuery('(max-width: 639px)');
   const sortedData = [...data].slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+  const scrollOptions = useMemo(
+    () => ({
+      speed: isMobile ? 0.6 : 1.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true
+    }),
+    [isMobile]
+  );
 
   return (
     <Carousel
       data={sortedData}
       className="gap-3 sm:gap-11.5"
       autoScroll={true}
+      autoScrollOptions={scrollOptions}
       pauseOnIntersection={false}
       trackClassName="gap-4 px-4 sm:gap-8 sm:px-8"
       renderItem={(item) => (

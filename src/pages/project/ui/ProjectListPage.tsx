@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export async function ProjectListPage() {
   const data = await projectApi.getAll();
-  const sortedData = data.sort((a, b) => {
+  const sortedData = [...data].sort((a, b) => {
     return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
   });
 
@@ -26,7 +26,7 @@ export async function ProjectListPage() {
         <span className="text-brand-primary-cta">P</span>roject
       </h1>
 
-      <ul className="mt-8 grid grid-cols-2 gap-2 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+      <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
         {sortedData.map((item) => (
           <ProjectCard key={item.id} data={item} className="w-full" />
         ))}

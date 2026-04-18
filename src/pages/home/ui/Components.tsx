@@ -71,7 +71,7 @@ export const ListButton = ({ href, text, className }: { href: string; text?: str
       prefetch={true}
       className={`text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-3 py-1.5 text-[0.875rem]/3.5 shadow-[0px_0px_8px_0px_#57FF8566] sm:px-4 sm:py-2 sm:text-lg sm:shadow-[0px_0px_12px_0px_#57FF8566] ${className}`}
     >
-      <Menu strokeWidth={1.25} className="h-4 w-4 sm:h-6 sm:w-6" />
+      <Menu strokeWidth={1.25} className="h-6 w-6 p-0.5" />
       <span>{text || '목록으로'}</span>
     </Link>
   );

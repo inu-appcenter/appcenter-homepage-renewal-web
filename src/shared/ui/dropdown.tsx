@@ -76,7 +76,7 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
               left: `${coords.left}px`,
               width: `${coords.width}px`
             }}
-            className="bg-background border-custom-gray-600 no-scrollbar absolute z-9998 max-h-28 overflow-y-auto border-2 sm:max-h-126"
+            className="bg-background border-custom-gray-600 no-scrollbar absolute z-9998 max-h-28 overflow-y-auto border-2 sm:max-h-85"
           >
             <ul className="flex flex-col">
               {options.map((option) => (
@@ -86,7 +86,7 @@ export const Dropdown = <T extends string | number>({ label, options, value, onC
                       onChange(option);
                       setIsOpen(false);
                     }}
-                    className={`hover:text-brand-primary-cta block w-full px-1 py-1 text-left text-[0.625rem] leading-none transition-colors hover:bg-[#08341F] sm:px-6 sm:py-5 sm:text-[2rem] ${
+                    className={`hover:text-brand-primary-cta block w-full px-1 py-1 text-left text-[0.625rem] leading-none transition-colors hover:bg-[#08341F] sm:px-8 sm:py-4 sm:text-[1.5rem]/6 ${
                       value === option ? 'text-brand-primary-cta bg-[#08341F]' : 'text-white'
                     }`}
                   >

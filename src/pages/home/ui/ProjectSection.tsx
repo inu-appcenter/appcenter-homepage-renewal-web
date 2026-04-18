@@ -11,7 +11,7 @@ export const ProjectSection = () => {
     <section id="project" className="relative flex flex-col justify-center gap-4 pt-20 sm:h-screen sm:gap-10">
       <div className="flex justify-between">
         <SectionTitle title="project" />
-        <ListButton href="/projectlist" className="hidden sm:flex" />
+        <ListButton href="/projectlist" />
       </div>
       <AsyncBoundary>
         <ProjectCarousel />

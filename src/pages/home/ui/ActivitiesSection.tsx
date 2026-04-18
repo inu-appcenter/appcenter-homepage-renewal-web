@@ -6,6 +6,8 @@ import { MoveRight } from 'lucide-react';
 import { useActivities } from 'entities/activity';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { Carousel } from 'shared/ui/carousel';
+import { useMediaQuery } from 'shared/hooks/useMediaQuery';
+import { useMemo } from 'react';
 
 export const ActivitiesSection = () => {
   return (
@@ -15,7 +17,7 @@ export const ActivitiesSection = () => {
       </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activities" />
-        <ListButton href="/activitylist" className="hidden sm:flex" />
+        <ListButton href="/activitylist" />
       </div>
       <AsyncBoundary>
         <ActivitiesCarousel />
@@ -26,12 +28,22 @@ export const ActivitiesSection = () => {
 
 const ActivitiesCarousel = () => {
   const { data } = useActivities();
+  const isMobile = useMediaQuery('(max-width: 639px)');
   const sortedData = [...data].slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+  const scrollOptions = useMemo(
+    () => ({
+      speed: isMobile ? 0.6 : 1.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true
+    }),
+    [isMobile]
+  );
 
   return (
     <Carousel
       data={sortedData}
       autoScroll={true}
+      autoScrollOptions={scrollOptions}
       pauseOnIntersection={false}
       className="gap-3 sm:gap-11.5"
       trackClassName="gap-4 px-4"
