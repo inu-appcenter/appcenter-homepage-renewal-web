@@ -15,6 +15,7 @@ export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isA
     >
       {data.thumbnail ? (
         <Image
+          unoptimized
           src={data.thumbnail}
           alt={`${data.title} thumbnail`}
           width={1920}

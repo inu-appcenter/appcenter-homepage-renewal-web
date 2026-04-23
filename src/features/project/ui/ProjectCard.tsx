@@ -16,7 +16,7 @@ export function ProjectCard({ data, className, isActive }: { data: Project; clas
       } ${className}`}
     >
       {data.images ? (
-        <Image src={imageArray[0]} alt="Recruitment Thumbnail" width={1200} height={600} quality={75} className="h-auto w-full rounded-md object-cover sm:rounded-xl" />
+        <Image src={imageArray[0]} alt="Recruitment Thumbnail" width={1200} height={600} quality={75} unoptimized className="h-auto w-full rounded-md object-cover sm:rounded-xl" />
       ) : (
         <div className="bg-background flex h-90 w-full items-center justify-center rounded-xl p-4">
           <Logo />

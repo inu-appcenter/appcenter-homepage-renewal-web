@@ -12,7 +12,7 @@ export function ProjectCard({ data }: { data: Project }) {
       className="group border-custom-gray-600 hover:border-brand-primary-cta bg-background relative flex h-full flex-col gap-1 overflow-hidden rounded-lg border p-2 transition-all duration-500 hover:shadow-[0px_0px_20px_0px_#57FF8544] sm:gap-4 sm:rounded-2xl sm:border-2 sm:p-8"
     >
       {data.images ? (
-        <Image src={imageArray[0]} alt="Recruitment Thumbnail" width={1200} quality={75} className="h-auto w-full rounded-md object-cover sm:rounded-[28px]" />
+        <Image unoptimized src={imageArray[0]} alt="Recruitment Thumbnail" width={1200} quality={75} className="h-auto w-full rounded-md object-cover sm:rounded-[28px]" />
       ) : (
         <div className="bg-background flex h-90 w-full items-center justify-center rounded-xl p-4">
           <Logo />

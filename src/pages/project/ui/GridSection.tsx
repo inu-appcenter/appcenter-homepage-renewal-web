@@ -59,7 +59,7 @@ export const GridSection = ({ data }: { data: Project }) => {
               {layoutData.lg.map((item: any) => (
                 <div key={item.i} className="overflow-hidden rounded-lg sm:rounded-2xl">
                   {item.type === 'image' ? (
-                    <Image src={item.content} alt="프로젝트 이미지" fill className="h-full w-full object-cover transition-transform duration-500" />
+                    <Image unoptimized src={item.content} alt="프로젝트 이미지" fill className="h-full w-full object-cover transition-transform duration-500" />
                   ) : (
                     <div className="flex h-full w-full items-start p-1">
                       <p className="text-[6px] tracking-tight break-keep whitespace-pre-wrap text-gray-100 min-[400px]:text-[8px] sm:text-lg sm:tracking-normal">{item.content}</p>
