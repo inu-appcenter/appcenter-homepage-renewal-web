@@ -49,7 +49,6 @@ export const MainSection = ({ data }: { data: Project }) => {
         </div>
         <div className="relative flex flex-1 justify-start sm:ml-10 sm:justify-end">
           <Image
-            unoptimized
             src={imageUrls[1] ? imageUrls[1] : '/images/dummyMockup.png'}
             alt="Main Section Image"
             width={1200}

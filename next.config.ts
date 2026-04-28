@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
         pathname: '/image/photo/**'
       }
     ],
+    unoptimized: true,
     qualities: [75, 100]
   },
   logging: {

@@ -1,7 +1,6 @@
 import { Project } from 'entities/project';
 import Link from 'next/link';
 import { Logo } from 'shared/icon/Logo';
-import Image from 'next/image';
 
 export function ProjectCard({ data, className, isActive }: { data: Project; className?: string; isActive?: boolean }) {
   const imageArray = data.images ? Object.values(data.images) : [];
@@ -16,7 +15,7 @@ export function ProjectCard({ data, className, isActive }: { data: Project; clas
       } ${className}`}
     >
       {data.images ? (
-        <Image src={imageArray[0]} alt="Recruitment Thumbnail" width={1200} height={600} quality={75} unoptimized className="h-auto w-full rounded-md object-cover sm:rounded-xl" />
+        <img src={imageArray[0]} alt="Recruitment Thumbnail" className="h-auto w-full rounded-md object-cover sm:rounded-xl" />
       ) : (
         <div className="bg-background flex h-90 w-full items-center justify-center rounded-xl p-4">
           <Logo />
