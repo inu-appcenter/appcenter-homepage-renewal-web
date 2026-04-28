@@ -53,7 +53,7 @@ export const ImageSection = ({ data }: { data: ActivityContent }) => {
               transition={{ delay: index * 0.1 }}
               className="relative h-auto overflow-hidden rounded-md bg-zinc-100 sm:rounded-xl dark:bg-zinc-800"
             >
-              <Image unoptimized src={url} fill alt="활동 이미지" className="object-cover" quality={75} />
+              <Image src={url} fill alt="활동 이미지" className="object-cover" quality={75} />
             </motion.div>
           ))}
         </div>

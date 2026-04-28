@@ -49,7 +49,7 @@ const ActivitiesCarousel = () => {
       trackClassName="gap-4 px-4"
       renderItem={(item) => (
         <div className="group relative h-20 w-36 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
-          <Image unoptimized draggable={false} loading="lazy" quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" />
+          <Image draggable={false} loading="lazy" quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" />
           <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
             <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-end gap-0.5 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:p-7">
               <span className="text-custom-gray-200 text-[1rem]/4 font-medium sm:text-[1.75rem]/7">{item.title}</span>

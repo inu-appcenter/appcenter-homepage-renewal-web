@@ -6,7 +6,7 @@ export const MainSection = ({ data }: { data: Activity }) => {
     <section className="relative flex h-screen flex-col justify-between gap-10 pt-50 pb-30 sm:justify-start sm:gap-20 sm:pt-87">
       <div className="flex justify-between">
         <div className="bg-surface/50 pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden blur-sm">
-          <Image unoptimized src={data.thumbnail} alt="메인 이미지" quality={75} fill className="object-cover opacity-10" />
+          <Image src={data.thumbnail} alt="메인 이미지" quality={75} fill className="object-cover opacity-10" />
         </div>
         <div className="flex flex-col gap-10 sm:gap-40">
           <div className="flex flex-col gap-2 sm:gap-10">
