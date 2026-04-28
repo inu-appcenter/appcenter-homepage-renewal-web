@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { LucideIcon, Eye, EyeOff, ArrowLeft, CheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import { getAuthMessage } from 'shared/constants/auth';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: LucideIcon;
@@ -104,13 +105,13 @@ export function AuthErrorHandler({ setLoginType }: { setLoginType: React.Dispatc
   useEffect(() => {
     if (!searchParams) return;
     const errorType = searchParams.get('error');
+    const config = getAuthMessage(errorType);
 
-    if (errorType === 'admin_required') {
-      setLoginType('admin');
-      toast.error('관리자 권한이 필요한 페이지입니다', { description: '관리자 계정으로 로그인해주세요' });
-    } else if (errorType === 'member_required') {
-      setLoginType('member');
-      toast.error('구성원 전용 페이지입니다', { description: '구성원 계정으로 로그인해주세요' });
+    if (config) {
+      setLoginType(config.loginType);
+      toast.error(config.message, {
+        description: config.description
+      });
     }
   }, [searchParams, setLoginType, router]);
 

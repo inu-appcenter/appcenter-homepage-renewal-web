@@ -1,5 +1,7 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { AUTH_ERROR_TYPES } from 'shared/constants/auth';
 
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
@@ -16,7 +18,7 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   const isAuthenticated = await (async () => {
-    if (accessToken) return true; // accessToken이 만료되었는지
+    if (accessToken) return true; // accessToken이 있는지 확인, 있으면 인증된 상태로 간주
     if (!refreshToken) return false; // refreshToken이 없으면 새로 로그인 필요
 
     try {
@@ -43,16 +45,21 @@ export async function middleware(request: NextRequest) {
   })();
 
   if (!isAuthenticated) {
-    const loginPath = isAdminRoute ? '/admin' : '/login';
-    return NextResponse.redirect(new URL(loginPath, origin));
+    const errorParam = AUTH_ERROR_TYPES.AUTH_EXPIRED;
+    const cookieStore = await cookies();
+    cookieStore.delete('refreshToken');
+    cookieStore.delete('role');
+    return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));
   }
 
   // 4. 인가(Authorization) 검사, error 쿼리스트링을 붙여서 로그인 페이지로 리다이렉트
   if (isAdminRoute && role !== 'admin') {
-    return NextResponse.redirect(new URL('/login?error=admin_required', origin));
+    const errorParam = AUTH_ERROR_TYPES.ADMIN_REQUIRED;
+    return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));
   }
   if (isMemberRoute && role !== 'member') {
-    return NextResponse.redirect(new URL('/login?error=member_required', origin));
+    const errorParam = AUTH_ERROR_TYPES.MEMBER_REQUIRED;
+    return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));
   }
 
   return response;
