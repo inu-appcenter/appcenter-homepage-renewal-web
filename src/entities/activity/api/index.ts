@@ -4,10 +4,9 @@ import { activityKeys } from './queries';
 
 export const activityApi = {
   getAll: () => {
-    return http.get<Activity[]>('/cache/activity-board/public/all-boards-contents', {
-      headers: {
-        'x-cache-tag': activityKeys.all
-      }
+    return http.get<Activity[]>('/activity-board/public/all-boards-contents', {
+      cache: 'force-cache',
+      next: { tags: [activityKeys.all] }
     });
   },
   getById: (id: number) => {

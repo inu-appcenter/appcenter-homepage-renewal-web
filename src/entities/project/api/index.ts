@@ -4,10 +4,9 @@ import { projectKeys } from './queries';
 
 export const projectApi = {
   getAll: () => {
-    return http.get<Project[]>('/cache/introduction-board/public/all-boards-contents', {
-      headers: {
-        'x-cache-tag': projectKeys.all
-      }
+    return http.get<Project[]>('/introduction-board/public/all-boards-contents', {
+      cache: 'force-cache',
+      next: { tags: [projectKeys.all] }
     });
   },
 
