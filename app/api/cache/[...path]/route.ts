@@ -5,17 +5,16 @@ type RouteParams = { params: Promise<{ path: string[] }> };
 export async function GET(req: NextRequest, { params }: RouteParams) {
   const { path } = await params;
   const urlPath = path?.join('/') || '';
-  console.log('Cache Proxy Request for:', urlPath);
   const searchParams = req.nextUrl.search;
 
   // 1. 클라이언트가 보낸 헤더에서 태그 이름 꺼내기
   const cacheTag = req.headers.get('x-cache-tag');
 
-  // 2. 백엔드로 보낼 Fetch 옵션 (Next.js 캐시 강제 적용)
+  // 2. 백엔드로 보낼 Fetch 옵션 (Next.js 캐시 적용)
   const fetchOptions: RequestInit = {
     method: 'GET',
-    cache: 'force-cache', // 동적 라우트라도 무조건 캐시하라고 지시!
-    ...(cacheTag && { next: { tags: [cacheTag] } }) // 태그가 있으면 달아줌
+    cache: 'force-cache',
+    ...(cacheTag && { next: { tags: [cacheTag] } })
   };
 
   try {
@@ -30,7 +29,6 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
     const data = await response.json();
 
-    // 3. 브라우저(클라이언트)가 하드디스크에 캐시하지 못하게 방어막 치기
     return NextResponse.json(data, {
       status: 200
     });

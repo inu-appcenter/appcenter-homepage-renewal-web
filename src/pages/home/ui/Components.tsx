@@ -52,8 +52,8 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
 export const SectionTitle = ({ title, className = '' }: { title: string; className?: string }) => {
   return (
     <motion.h2
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`text-custom-gray-200 font-product-design text-[2rem]/8 uppercase sm:text-[2.5rem]/10 ${className}`}
