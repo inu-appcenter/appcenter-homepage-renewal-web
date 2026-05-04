@@ -4,6 +4,7 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import { recruitmentKeys, recruitmentOptions } from '../api/queries';
 import { recruitmentApi } from '../api';
 import { toast } from 'sonner';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useRecruitment = () => {
   return useSuspenseQuery({
@@ -34,6 +35,7 @@ export const useRecruitmentActions = () => {
   const router = useRouter();
 
   const invalidateRecruitments = async () => {
+    await revalidateTag(recruitmentKeys.all);
     await queryClient.invalidateQueries({ queryKey: recruitmentKeys.lists() });
   };
 

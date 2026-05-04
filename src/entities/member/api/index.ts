@@ -15,7 +15,7 @@ export const memberApi = {
   },
 
   getStats: () => {
-    return http.get<MemberStats>('/members/public/stats', { next: { revalidate: 3600 } });
+    return http.get<MemberStats>('/members/public/stats', { next: { revalidate: 60 * 60 } });
   },
 
   updateByMember: (data: MemberForm) => {

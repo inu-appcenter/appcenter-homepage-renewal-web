@@ -6,7 +6,7 @@ export const projectApi = {
   getAll: () => {
     return http.get<Project[]>('/introduction-board/public/all-boards-contents', {
       cache: 'force-cache',
-      next: { tags: [projectKeys.all] }
+      next: { tags: [projectKeys.all], revalidate: 2 * 60 * 60 }
     });
   },
 

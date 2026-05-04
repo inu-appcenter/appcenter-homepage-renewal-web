@@ -1,9 +1,13 @@
 import { http } from 'shared/utils/http';
 import { Email, Recruitment, RecruitmentList, RecruitmentMetaData } from '../types/recruitment';
+import { recruitmentKeys } from './queries';
 
 export const recruitmentApi = {
   getAll: () => {
-    return http.get<RecruitmentList[]>('/recruitment/public/all', {});
+    return http.get<RecruitmentList[]>('/recruitment/public/all', {
+      cache: 'force-cache',
+      next: { tags: [recruitmentKeys.all], revalidate: 4 * 60 * 60 }
+    });
   },
 
   getById: (id: number) => {
