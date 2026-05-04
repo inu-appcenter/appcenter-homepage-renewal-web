@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ArrowRight, Loader2, User, Lock } from 'lucide-react';
 import { useSignActions } from 'entities/sign';
 import { Logo } from 'shared/icon/Logo';
