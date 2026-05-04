@@ -1,7 +1,7 @@
+import { Metadata } from 'next';
+import { ProjectCard } from 'features/project';
 import { projectApi } from 'entities/project';
 import { ScrollToBottomButton } from 'entities/scroll';
-import { ProjectCard } from 'features/project';
-import { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

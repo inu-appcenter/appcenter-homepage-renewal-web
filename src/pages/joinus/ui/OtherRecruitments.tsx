@@ -49,7 +49,7 @@ function OtherRecruitmentsContent() {
         }}
         className="py-0"
         trackClassName="gap-3 sm:gap-8"
-        slideClassName="min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]"
+        slideClassName="py-4 min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]"
         renderItem={(item) => <RecruitmentCard data={item} />}
       />
     </section>

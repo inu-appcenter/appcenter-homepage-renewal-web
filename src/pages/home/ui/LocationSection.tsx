@@ -16,7 +16,7 @@ export const LocationSection = () => {
       <div className="flex flex-1 flex-col gap-10 overflow-hidden sm:flex-row sm:gap-16">
         <div className="relative h-70 w-full overflow-hidden rounded-xl shadow-2xl sm:h-full sm:flex-1 sm:rounded-3xl">
           {loading ? (
-            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-500">지도를 불러오는 중입니다...</div>
+            <div className="flex h-full w-full animate-pulse items-center justify-center bg-zinc-700" />
           ) : (
             <Map center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
               <CustomOverlayMap position={POSITION}>
