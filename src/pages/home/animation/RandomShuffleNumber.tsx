@@ -1,34 +1,32 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInView } from 'motion/react';
 
-const DURATION = 1000;
+const ANIMATION_DURATION = 1000;
 
 export const RandomShuffleNumber = ({ value }: { value: number }) => {
-  const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { amount: 0.5, once: false });
+  const isInView = useInView(ref, { amount: 0.5 });
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || !ref.current) return;
 
-    let startTime: number | null = null;
+    const length = value.toString().length;
+    const min = Math.pow(10, length - 1);
+    const max = Math.pow(10, length) - 1;
+
+    let startTime: number;
     let frameId: number;
-
-    const digitCount = value.toString().length;
-    const min = Math.pow(10, digitCount - 1);
-    const max = Math.pow(10, digitCount) - 1;
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      const progress = timestamp - startTime;
 
-      if (progress < DURATION) {
+      if (timestamp - startTime < ANIMATION_DURATION) {
         const randomVal = Math.floor(Math.random() * (max - min + 1)) + min;
-        setDisplayValue(randomVal);
+        ref.current!.textContent = String(randomVal);
         frameId = requestAnimationFrame(step);
       } else {
-        setDisplayValue(value);
+        ref.current!.textContent = String(value);
       }
     };
 
@@ -36,5 +34,5 @@ export const RandomShuffleNumber = ({ value }: { value: number }) => {
     return () => cancelAnimationFrame(frameId);
   }, [isInView, value]);
 
-  return <span ref={ref}>{displayValue}</span>;
+  return <span ref={ref}>0</span>;
 };

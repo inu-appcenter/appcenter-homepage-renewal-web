@@ -1,9 +1,9 @@
 'use client';
 import { useMemo } from 'react';
 import { ListButton, SectionTitle } from './Components';
+import { ProjectCard } from 'features/project';
 import { useProject } from 'entities/project';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
-import { ProjectCard } from 'features/project';
 import { Carousel } from 'shared/ui/carousel';
 
 export const ProjectSection = () => {

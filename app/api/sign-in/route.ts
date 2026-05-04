@@ -18,33 +18,14 @@ export async function POST(request: Request) {
 
   if (!res.ok) return NextResponse.json({ success: false }, { status: 401 });
 
-  const cookieStore = await cookies();
-
-  cookieStore.set('accessToken', data.accessToken, {
-    httpOnly: true,
-    sameSite: 'strict',
-    secure: true,
-    path: '/',
-    maxAge: 30 * 60 // 30분
-  });
-
-  cookieStore.set('refreshToken', data.refreshToken, {
-    httpOnly: true,
-    sameSite: 'strict',
-    secure: true,
-    path: '/',
-    maxAge: 14 * 24 * 60 * 60 // 14일
-  });
-
   // 어드민인 경우 admin, 멤버인 경우 member로 role 설정
   const userRole = id === process.env.ADMIN_KEY ? 'admin' : 'member';
-  cookieStore.set('role', userRole, {
-    httpOnly: true,
-    sameSite: 'strict',
-    secure: true,
-    path: '/',
-    maxAge: 14 * 24 * 60 * 60 // 14일
-  });
+
+  const cookieStore = await cookies();
+  const cookieOptions = { httpOnly: true, sameSite: 'strict' as const, secure: true, path: '/' };
+  cookieStore.set('accessToken', data.accessToken, { ...cookieOptions, maxAge: 30 * 60 });
+  cookieStore.set('refreshToken', data.refreshToken, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
+  cookieStore.set('role', userRole, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
 
   return NextResponse.json({ success: true });
 }

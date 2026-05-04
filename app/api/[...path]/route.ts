@@ -1,39 +1,27 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { refreshTokens } from 'features/sign';
 
 type RouteParams = { params: Promise<{ path: string[] }> };
+export const GET = (req: NextRequest, { params }: RouteParams) => params.then((p) => handleProxy(req, p));
+export const POST = (req: NextRequest, { params }: RouteParams) => params.then((p) => handleProxy(req, p));
+export const PATCH = (req: NextRequest, { params }: RouteParams) => params.then((p) => handleProxy(req, p));
+export const DELETE = (req: NextRequest, { params }: RouteParams) => params.then((p) => handleProxy(req, p));
+export const PUT = (req: NextRequest, { params }: RouteParams) => params.then((p) => handleProxy(req, p));
 
-export async function GET(req: NextRequest, { params }: RouteParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
+async function handleUnauthorized() {
+  const cookieStore = await cookies();
+  cookieStore.delete('accessToken');
+  cookieStore.delete('refreshToken');
+  return NextResponse.json({ message: '세션이 만료되었습니다. 다시 로그인해주세요.' }, { status: 401 });
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function PATCH(req: NextRequest, { params }: RouteParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function DELETE(req: NextRequest, { params }: RouteParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function PUT(req: NextRequest, { params }: RouteParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-async function handleProxy(req: NextRequest, pathSegments: string[]) {
+async function handleProxy(req: NextRequest, { path: pathSegments }: { path: string[] }) {
   const path = pathSegments?.join('/') || '';
   const searchParams = req.nextUrl.search;
 
   const cookieStore = await cookies();
-  const token = cookieStore.get('accessToken')?.value;
+  const accessToken = cookieStore.get('accessToken')?.value;
 
   const headers = new Headers();
   const contentType = req.headers.get('content-type');
@@ -41,7 +29,7 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
   if (contentType) {
     headers.set('content-type', contentType);
   }
-  headers.set('Authorization', `Bearer ${token || ''}`);
+  headers.set('Authorization', `Bearer ${accessToken}`);
   headers.set('Accept', 'application/json');
 
   try {
@@ -59,61 +47,30 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
 
     if (response.status === 401) {
       const refreshToken = cookieStore.get('refreshToken')?.value;
+      if (!refreshToken) return handleUnauthorized();
 
-      if (refreshToken) {
-        const refreshRes = await fetch(`${process.env.API_URL}/sign/refresh`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ refreshToken: refreshToken })
-        });
+      const newTokens = await refreshTokens(refreshToken);
+      if (!newTokens) return handleUnauthorized();
 
-        if (refreshRes.ok) {
-          const newData = await refreshRes.json();
+      const cookieOptions = { httpOnly: true, sameSite: 'strict' as const, secure: true, path: '/' };
+      cookieStore.set('accessToken', newTokens.accessToken, { ...cookieOptions, maxAge: 30 * 60 });
+      cookieStore.set('refreshToken', newTokens.refreshToken, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
 
-          cookieStore.set('accessToken', newData.accessToken, {
-            httpOnly: true,
-            sameSite: 'strict',
-            secure: true,
-            path: '/',
-            expires: new Date(Date.now() + 30 * 60 * 1000)
-          });
+      headers.set('Authorization', `Bearer ${newTokens.accessToken}`);
+      fetchOptions.headers = headers;
 
-          if (newData.refreshToken) {
-            cookieStore.set('refreshToken', newData.refreshToken, {
-              httpOnly: true,
-              sameSite: 'strict',
-              secure: true,
-              path: '/',
-              expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
-            });
-          }
-
-          headers.set('Authorization', `Bearer ${newData.accessToken}`);
-          fetchOptions.headers = headers;
-
-          response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
-          return NextResponse.json(await response.json(), { status: response.status });
-        } else {
-          // 재발급 실패 (refreshToken 마저 만료됨) -> 로그아웃 처리
-          cookieStore.delete('accessToken');
-          cookieStore.delete('refreshToken');
-          return NextResponse.json({ message: '세션이 만료되었습니다. 다시 로그인해주세요.' }, { status: 401 });
-        }
-      } else {
-        return NextResponse.json({ message: '세션이 만료되었습니다. 다시 로그인해주세요.' }, { status: 401 });
-      }
+      response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
+      return NextResponse.json(await response.json(), { status: response.status });
     }
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.log('BFF Error Response:', errorData);
       return NextResponse.json({ message: errorData }, { status: response.status });
     }
 
     if (response.status === 204) return new NextResponse(null, { status: 204 });
 
-    const resData = await response.json();
-    return NextResponse.json(resData, { status: response.status });
+    return NextResponse.json(await response.json(), { status: response.status });
   } catch (error) {
     console.error('BFF Error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

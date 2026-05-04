@@ -1,9 +1,9 @@
 'use client';
 import { useMemo, useState } from 'react';
-import { Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Part } from 'shared/types/part';
+import { Plus } from 'lucide-react';
 import { Project } from 'entities/project';
+import { Part } from 'shared/types/part';
 import { GitHub } from 'shared/icon/GitHub';
 
 export const IntroduceSection = ({ data }: { data: Project }) => {
@@ -17,7 +17,7 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
         ))}
       </div>
 
-      <div className="bg-custom-black flex h-80 w-full items-center justify-center overflow-hidden rounded-2xl px-4 py-2 whitespace-pre-line sm:h-110 sm:px-20 sm:py-11.5">
+      <div className="bg-custom-black flex h-80 w-full items-center justify-center overflow-hidden rounded-sm px-4 py-2 whitespace-pre-line sm:h-110 sm:rounded-2xl sm:px-20 sm:py-11.5">
         <AnimatePresence mode="wait">
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="h-full w-full">
             {selected === 0 && <Stacks data={data} />}
@@ -108,24 +108,23 @@ const Groups = ({ data }: { data: Groups[] }) => {
 
   return (
     <div className="flex h-full w-full flex-wrap justify-between px-4 sm:px-8 xl:px-24">
-      {data &&
-        Object.entries(groupedByPart).map(([part, members]) => (
-          <div key={part} className="flex shrink-0 flex-col items-start gap-3 rounded-full px-3 py-2 sm:gap-6">
-            <span className="text-brand-primary-cta text-[10px] font-semibold uppercase sm:text-lg">{part}</span>
-            <div className="flex flex-col items-center gap-2 sm:gap-10">
-              {members.map((member) => (
-                <div key={member.member} className="flex flex-row items-center gap-2 sm:gap-4">
-                  {member.profileImage ? (
-                    <img src={member.profileImage} alt={`${member.member} profile`} className="h-5 w-5 rounded-full object-cover sm:h-15 sm:w-15" />
-                  ) : (
-                    <div className="bg-custom-gray-500 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold sm:h-15 sm:w-15 sm:text-2xl">{member.member.charAt(0)}</div>
-                  )}
-                  <span className="text-[10px] text-white sm:text-xl">{member.member}</span>
-                </div>
-              ))}
-            </div>
+      {Object.entries(groupedByPart).map(([part, members]) => (
+        <div key={part} className="flex shrink-0 flex-col items-start gap-3 rounded-full px-3 py-2 sm:gap-6">
+          <span className="text-brand-primary-cta text-[0.625rem]/2.5 font-semibold uppercase sm:text-lg">{part}</span>
+          <div className="flex flex-col items-center gap-2 sm:gap-10">
+            {members.map((member) => (
+              <div key={member.member} className="flex flex-row items-center gap-2 sm:gap-4">
+                {member.profileImage ? (
+                  <img src={member.profileImage} alt={`${member.member} profile`} className="h-5 w-5 rounded-full object-cover sm:h-15 sm:w-15" />
+                ) : (
+                  <div className="bg-custom-gray-500 flex h-5 w-5 items-center justify-center rounded-full text-[0.625rem]/2.5 font-bold sm:h-15 sm:w-15 sm:text-2xl">{member.member.charAt(0)}</div>
+                )}
+                <span className="text-[0.625rem]/2.5 text-white sm:text-xl">{member.member}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };

@@ -105,8 +105,8 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
     >
       <div className="flex w-full flex-row justify-between sm:flex-col sm:gap-3">
         <div className="flex flex-col gap-1 sm:gap-3">
-          <span className="text-[0.625rem]/2.5 font-semibold text-white sm:text-[2.5rem]/10">{member.name}</span>
-          <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.5rem]/6">
+          <span className="text-[0.625rem]/2.5 font-semibold text-white sm:text-[2rem]/8">{member.name}</span>
+          <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.25rem]/5">
             <span className="line-clamp-1">{member.department}</span>
             <Dot className="h-2 w-2 sm:h-6 sm:w-6" />
             <span className="text-brand-primary-cta whitespace-nowrap">{groupData.year}기</span>
