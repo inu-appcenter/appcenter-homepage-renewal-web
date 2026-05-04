@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { refreshTokens } from 'features/sign';
 import { AUTH_ERROR_TYPES } from 'shared/constants/auth';
 
 export async function middleware(request: NextRequest) {
@@ -17,33 +18,22 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  const isAuthenticated = await (async () => {
-    if (accessToken) return true; // accessToken이 있는지 확인, 있으면 인증된 상태로 간주
-    if (!refreshToken) return false; // refreshToken이 없으면 새로 로그인 필요
+  let isAuthenticated = false;
 
-    try {
-      // accessToken이 만료된 경우 refreshToken으로 토큰 재발급 시도
-      const refreshRes = await fetch(`${process.env.API_URL}/sign/refresh`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken })
-      });
+  if (accessToken) {
+    isAuthenticated = true;
+  } else if (refreshToken) {
+    const newTokens = await refreshTokens(refreshToken);
 
-      if (refreshRes.ok) {
-        const newData = await refreshRes.json();
-        const cookieOptions = { httpOnly: true, sameSite: 'strict' as const, secure: true, path: '/' };
-
-        response.cookies.set('accessToken', newData.accessToken, { ...cookieOptions, maxAge: 30 * 60 });
-        response.cookies.set('refreshToken', newData.refreshToken, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
-        return true;
-      }
-      return false;
-    } catch {
-      console.error('Middleware Token Refresh Error:');
-      return false;
+    if (newTokens) {
+      const cookieOptions = { httpOnly: true, sameSite: 'strict' as const, secure: true, path: '/' };
+      response.cookies.set('accessToken', newTokens.accessToken, { ...cookieOptions, maxAge: 30 * 60 });
+      response.cookies.set('refreshToken', newTokens.refreshToken, { ...cookieOptions, maxAge: 14 * 24 * 60 * 60 });
+      isAuthenticated = true;
     }
-  })();
+  }
 
+  // 토큰 만료 또는 토큰 재발급 실패 시 로그인 페이지로 리디렉션
   if (!isAuthenticated) {
     const errorParam = AUTH_ERROR_TYPES.AUTH_EXPIRED;
     const cookieStore = await cookies();
@@ -52,11 +42,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));
   }
 
-  // 4. 인가(Authorization) 검사, error 쿼리스트링을 붙여서 로그인 페이지로 리다이렉트
+  // 역할 기반 접근 제어
   if (isAdminRoute && role !== 'admin') {
     const errorParam = AUTH_ERROR_TYPES.ADMIN_REQUIRED;
     return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));
   }
+
   if (isMemberRoute && role !== 'member') {
     const errorParam = AUTH_ERROR_TYPES.MEMBER_REQUIRED;
     return NextResponse.redirect(new URL(`/login?error=${errorParam}`, origin));

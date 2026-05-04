@@ -9,14 +9,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
   const { id } = await params;
   try {
     const data = await projectApi.getById(id);
-    const imageUrls = Object.values(data.images);
 
     return {
       title: `${data.title} | 인천대학교 앱센터`,
       description: data.subTitle,
-      icons: {
-        icon: imageUrls[0] || '/favicon.ico'
-      },
       openGraph: {
         title: data.title,
         description: data.subTitle

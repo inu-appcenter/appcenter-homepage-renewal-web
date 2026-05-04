@@ -36,7 +36,7 @@ export const PartDescriptData: Record<string, PartDescription> = {
     techStack: ['React', 'Java'],
     icon: (
       <div className="absolute -right-8 bottom-2 sm:-right-32 sm:bottom-0">
-        <Basic className="w-44 sm:w-200" />
+        <Basic className="w-44 sm:w-160" />
       </div>
     )
   },
@@ -46,7 +46,7 @@ export const PartDescriptData: Record<string, PartDescription> = {
     techStack: ['Notion', 'Slack'],
     icon: (
       <div className="absolute -right-4 -bottom-8 sm:-right-20 sm:-bottom-20">
-        <PM className="w-48 sm:w-160" />
+        <PM className="w-48 sm:w-140" />
       </div>
     )
   }
