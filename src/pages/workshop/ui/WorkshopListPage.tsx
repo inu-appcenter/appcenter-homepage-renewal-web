@@ -24,7 +24,7 @@ export async function WorkshopListPage() {
         <span className="text-brand-primary-cta">W</span>orkshop
       </h1>
 
-      <ul className="mt-8 grid grid-cols-3 gap-2 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+      <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-3 sm:gap-8">
         {sortedData.map((item) => (
           <Item key={item.id} data={item} />
         ))}

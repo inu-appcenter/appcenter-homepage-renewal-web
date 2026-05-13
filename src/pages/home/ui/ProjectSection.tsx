@@ -8,7 +8,7 @@ import { Carousel } from 'shared/ui/carousel';
 
 export const ProjectSection = () => {
   return (
-    <section id="project" className="relative flex flex-col justify-center gap-4 pt-20 sm:h-screen sm:gap-10">
+    <section id="project" className="relative flex flex-col justify-center gap-4 pt-30 sm:h-screen sm:gap-10">
       <div className="flex justify-between">
         <SectionTitle title="project" />
         <ListButton href="/projectlist" />
