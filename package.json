@@ -25,6 +25,7 @@
     "lucide-react": "^0.562.0",
     "motion": "^12.24.7",
     "next": "16.2.3",
+    "nextjs-toploader": "^3.9.17",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-error-boundary": "^6.1.0",

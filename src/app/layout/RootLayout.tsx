@@ -3,6 +3,7 @@ import { Toaster } from 'shared/ui/toast';
 import { ReactQueryProvider } from '../provider/ReactQueryProvider';
 import { productDesignFont, pretendardFont, tokyoFont } from '../style/fonts';
 import '../style/globals.css';
+import NextTopLoader from 'nextjs-toploader';
 
 const jsonLd = [
   {
@@ -30,6 +31,7 @@ export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>
   return (
     <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable} ${tokyoFont.variable} no-scrollbar`}>
       <body className="antialiased">
+        <NextTopLoader zIndex={9999} color="#57ff85" initialPosition={0.08} crawlSpeed={200} height={2} crawl={true} showSpinner={false} easing="ease" speed={200} />
         <Script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d72988e5b9f34b398e6901943d0f0e6d"}' />
         <Toaster />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
