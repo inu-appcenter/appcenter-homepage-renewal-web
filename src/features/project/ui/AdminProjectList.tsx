@@ -94,7 +94,8 @@ const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {
       </td>
 
       <td className="px-6 py-5">
-        <div className="flex flex-row gap-2">
+        {/* flex-row 대신 flex-wrap을 사용합니다 */}
+        <div className="flex flex-wrap gap-2">
           {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} className="h-8" />}
           {data.appleStoreLink && <AppStore href={data.appleStoreLink} className="h-8" />}
           {data.websiteLink && <WebLink href={data.websiteLink} className="h-8" />}
@@ -104,7 +105,6 @@ const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {
 
       <td className="px-6 py-5">
         <div className="flex items-center gap-3">
-          {/* 심플한 점 + 텍스트 */}
           <div className="flex w-16 items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               {data.isActive && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>}
@@ -113,7 +113,6 @@ const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {
             <span className={`text-xs font-medium ${data.isActive ? 'text-emerald-700' : 'text-slate-500'}`}>{data.isActive ? '운영 중' : '종료'}</span>
           </div>
 
-          {/* 토글 버튼 */}
           <ProjectStatusToggle projectId={data.id} isActive={data.isActive} />
         </div>
       </td>

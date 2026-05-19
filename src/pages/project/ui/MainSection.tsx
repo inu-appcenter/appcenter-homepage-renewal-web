@@ -12,19 +12,27 @@ export const MainSection = ({ data }: { data: Project }) => {
           <div>
             {data.isActive ? (
               <div className="my-2 flex flex-row items-center gap-1 sm:mb-4 sm:gap-2">
-                <div className="bg-brand-secondary-light text-background rounded-full px-2 py-1 text-[0.625rem]/2.5 whitespace-nowrap sm:px-2.5 sm:py-1.5 sm:text-[1.25rem]/5">서비스 이용 가능</div>
+                <div className="bg-brand-secondary-light text-background rounded-full px-2 py-1 text-[0.625rem]/2.5 whitespace-nowrap sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">
+                  서비스 이용 가능
+                </div>
                 {data.websiteLink && (
-                  <div className="text-brand-secondary-light border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:px-2.5 sm:py-1.5 sm:text-[1.25rem]/5">Web</div>
+                  <div className="text-brand-secondary-light border-brand-secondary-light/60 sm:border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">
+                    Web
+                  </div>
                 )}
                 {data.androidStoreLink && (
-                  <div className="text-brand-secondary-light border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:px-2.5 sm:py-1.5 sm:text-[1.25rem]/5">Android</div>
+                  <div className="text-brand-secondary-light border-brand-secondary-light/60 sm:border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">
+                    Android
+                  </div>
                 )}
                 {data.appleStoreLink && (
-                  <div className="text-brand-secondary-light border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:px-2.5 sm:py-1.5 sm:text-[1.25rem]/5">iOS</div>
+                  <div className="text-brand-secondary-light border-brand-secondary-light/60 sm:border-brand-secondary-light rounded-full border px-2 py-1 text-[0.625rem]/2.5 sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">
+                    iOS
+                  </div>
                 )}
               </div>
             ) : (
-              <div className="bg-custom-gray-500 mb-4 w-fit rounded-full px-2 py-1 text-[0.625rem]/2.5 sm:px-2.5 sm:py-1.5 sm:text-[1.25rem]/5">서비스 종료</div>
+              <div className="bg-custom-gray-500 mb-4 w-fit rounded-full px-2 py-1 text-[0.625rem]/2.5 sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">서비스 종료</div>
             )}
             <h1 className="text-custom-gray-100 text-xl font-bold sm:mb-29 sm:text-[4.5rem]/18">{data.title}</h1>
           </div>
