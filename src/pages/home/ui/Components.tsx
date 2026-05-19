@@ -20,7 +20,7 @@ export const ShuffleItem = ({ title, subNumber, smallSubtitle, index }: { title:
       <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 text-[0.75rem]/3 duration-500 sm:text-[1.75rem]/7">{title}</span>
       <span className="text-custom-gray-100 group-hover:text-brand-primary-cta line-clamp-1 flex items-end text-[1.125rem]/4.5 leading-none font-medium duration-500 sm:items-center sm:text-[4.125rem]/16.5">
         <RandomShuffleNumber value={subNumber} />
-        {smallSubtitle && <small className="ml-0.5 text-[0.5rem]/2 font-medium sm:ml-1 sm:text-[2.5rem]/10">{smallSubtitle}</small>}
+        {smallSubtitle && <small className="mb-0.5 ml-0.5 text-[0.5rem]/2 font-medium sm:ml-1 sm:text-[2.5rem]/10">{smallSubtitle}</small>}
       </span>
     </motion.li>
   );
