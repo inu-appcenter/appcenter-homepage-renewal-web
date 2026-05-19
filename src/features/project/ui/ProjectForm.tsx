@@ -12,12 +12,13 @@ import { toast } from 'sonner';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
+
+import dynamic from 'next/dynamic';
 // CloudFlare Workers 환경에서는 3MIB로 제한되므로, 동적 임포트로 최적화
 const MarkdownEditor = dynamic(() => import('shared/ui/markdown-editor').then((mod) => mod.MarkdownEditor), {
   ssr: false,
   loading: () => <div className="min-h-37.5 w-full animate-pulse rounded-lg bg-slate-100 p-4 text-slate-400">에디터를 불러오는 중입니다...</div>
 });
-import dynamic from 'next/dynamic';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const router = useRouter();
@@ -157,9 +158,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
           </h2>
 
           <div className="flex flex-col gap-6 md:flex-row md:items-stretch">
-            {/* 좌측: 앱 아이콘 및 텍스트 정보 */}
             <div className="flex flex-1 flex-col gap-6">
-              {/* 앱 아이콘 */}
               <div className="flex w-32 flex-col gap-2 md:w-40">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-slate-800">앱 아이콘</span>
@@ -182,12 +181,10 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
                 </label>
               </div>
 
-              {/* 텍스트 정보 입력 */}
               <div className="flex flex-col gap-4">
                 <Input label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
                 <Input label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
 
-                {/* 📝 Markdown Editor 로 교체된 부분 */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-medium text-slate-800">본문 설명</label>
                   <MarkdownEditor value={form.body} onChange={(val) => setForm({ ...form, body: val })} />
@@ -195,10 +192,9 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
               </div>
             </div>
 
-            {/* 우측: 리스트 썸네일 */}
             <div className="flex w-full shrink-0 flex-col gap-2 md:w-72 lg:w-96">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-slate-800">리스트 썸네일</span>
+                <span className="text-sm font-medium text-slate-800">썸네일</span>
                 {thumbnail && (
                   <button type="button" onClick={() => removeSpecificImage(1)} className="text-xs text-red-500 hover:underline">
                     삭제
@@ -230,7 +226,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
           <div className="grid gap-4 md:grid-cols-2">
             <Input label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
             <Input label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
-            <Input label="Android 스토어 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="Play Store 링크" />
+            <Input label="PlayStore 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="PlayStore 링크" />
             <Input label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
           </div>
         </section>
@@ -245,14 +241,14 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
 
           <div className="grid gap-6 xl:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-slate-400">사용 기술 스택</label>
+              <label className="text-sm font-medium text-slate-800">사용 기술 스택</label>
               <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
                 <StackForm form={form} setForm={setForm} />
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-slate-400">참여 팀원</label>
+              <label className="text-sm font-medium text-slate-800">참여 팀원</label>
               <div className="relative min-h-62.5 rounded-2xl border border-slate-200 bg-slate-50 p-2">
                 <MemberForm form={form} setForm={setForm} />
               </div>
@@ -295,8 +291,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
             </div>
           </div>
         </section>
-
-        <div className="flex justify-end pt-4">
+        <div className="fixed right-20 bottom-10 z-50 flex items-center gap-3">
           <SaveButton disabled={isPending} type="submit" className="w-50">
             {isEditMode ? '변경사항 저장' : '프로젝트 등록'}
           </SaveButton>

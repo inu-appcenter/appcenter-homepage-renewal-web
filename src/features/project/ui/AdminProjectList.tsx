@@ -54,7 +54,7 @@ const ProjectListUI = ({ data, mode }: { data: Project[]; mode: UserMode }) => {
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
           <TableHeaderCell className="w-92">프로젝트 정보</TableHeaderCell>
           <TableHeaderCell>플랫폼 링크</TableHeaderCell>
-          <TableHeaderCell className="w-40">앱 활성화 상태</TableHeaderCell>
+          <TableHeaderCell className="w-40">앱 상태</TableHeaderCell>
           <TableHeaderCell className="w-32">게시일</TableHeaderCell>
           <TableHeaderCell className="w-40">작업</TableHeaderCell>
         </TableHeader>
@@ -94,7 +94,6 @@ const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {
       </td>
 
       <td className="px-6 py-5">
-        {/* flex-row 대신 flex-wrap을 사용합니다 */}
         <div className="flex flex-wrap gap-2">
           {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} className="h-8" />}
           {data.appleStoreLink && <AppStore href={data.appleStoreLink} className="h-8" />}
