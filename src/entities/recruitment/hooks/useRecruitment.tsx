@@ -3,8 +3,8 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { recruitmentKeys, recruitmentOptions } from '../api/queries';
 import { recruitmentApi } from '../api';
-import { revalidateTag } from 'shared/utils/revalidateTag';
 import { toast } from 'sonner';
+import { revalidateTag } from 'shared/utils/revalidateTag';
 
 export const useRecruitment = () => {
   return useSuspenseQuery({

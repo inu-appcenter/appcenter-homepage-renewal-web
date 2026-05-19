@@ -24,7 +24,7 @@
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.562.0",
     "motion": "^12.24.7",
-    "next": "16.1.5",
+    "next": "16.2.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-error-boundary": "^6.1.0",
@@ -48,9 +48,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-resizable": "^3.0.8",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-node": "^0.3.10",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
@@ -60,6 +63,15 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.52.0"
+    "typescript-eslint": "^8.52.0",
+    "wrangler": "^4.87.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd",
+      "unrs-resolver"
+    ]
   }
 }

@@ -34,7 +34,7 @@ export const MainSection = ({ data }: { data: Project }) => {
             ) : (
               <div className="bg-custom-gray-500 mb-4 w-fit rounded-full px-2 py-1 text-[0.625rem]/2.5 sm:rounded-4xl sm:px-2.5 sm:py-1.5 sm:text-[1rem]/4">서비스 종료</div>
             )}
-            <h1 className="text-custom-gray-100 text-xl font-bold sm:mb-29 sm:text-[72px]">{data.title}</h1>
+            <h1 className="text-custom-gray-100 text-xl font-bold sm:mb-29 sm:text-[4.5rem]/18">{data.title}</h1>
           </div>
           <div className="mt-2 flex flex-col items-start gap-9">
             <p className="text-custom-gray-100 text-base/6 sm:text-xl/7">{data.subTitle}</p>
@@ -48,14 +48,7 @@ export const MainSection = ({ data }: { data: Project }) => {
           </div>
         </div>
         <div className="relative flex flex-1 justify-start sm:ml-10 sm:justify-end">
-          <Image
-            src={imageUrls[1] ? imageUrls[1] : '/images/dummyMockup.png'}
-            alt="Main Section Image"
-            width={1200}
-            height={600}
-            className="h-auto w-auto max-w-full rounded-xl object-contain"
-            quality={75}
-          />
+          <Image src={imageUrls[1]} alt="프로젝트 이미지" width={1200} height={600} className="h-auto w-auto max-w-full rounded-xl object-contain" quality={75} />
         </div>
       </div>
     </section>

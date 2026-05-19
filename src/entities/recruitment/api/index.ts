@@ -4,10 +4,9 @@ import { recruitmentKeys } from './queries';
 
 export const recruitmentApi = {
   getAll: () => {
-    return http.get<RecruitmentList[]>('/cache/recruitment/public/all', {
-      headers: {
-        'x-cache-tag': recruitmentKeys.all
-      }
+    return http.get<RecruitmentList[]>('/recruitment/public/all', {
+      cache: 'force-cache',
+      next: { tags: [recruitmentKeys.all], revalidate: 4 * 60 * 60 }
     });
   },
 

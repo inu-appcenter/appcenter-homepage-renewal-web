@@ -116,7 +116,7 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="flex flex-row items-center gap-3 px-4 py-2 text-[10px] sm:px-14 sm:py-5 sm:text-xl/7">
+            <p className="flex flex-row items-center gap-3 px-4 py-3 text-[1rem]/4 sm:px-14 sm:py-5 sm:text-xl/7">
               <CornerDownRight className="w-6 shrink-0 sm:w-10" aria-hidden="true" />
               {data.answer}
             </p>

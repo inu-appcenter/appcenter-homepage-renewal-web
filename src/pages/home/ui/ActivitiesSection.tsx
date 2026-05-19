@@ -6,6 +6,8 @@ import { MoveRight } from 'lucide-react';
 import { useActivities } from 'entities/activity';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { Carousel } from 'shared/ui/carousel';
+import { useMediaQuery } from 'shared/hooks/useMediaQuery';
+import { useMemo } from 'react';
 
 export const ActivitiesSection = () => {
   return (
@@ -15,7 +17,7 @@ export const ActivitiesSection = () => {
       </div>
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activities" />
-        <ListButton href="/activitylist" className="hidden sm:flex" />
+        <ListButton href="/activitylist" />
       </div>
       <AsyncBoundary>
         <ActivitiesCarousel />
@@ -26,18 +28,28 @@ export const ActivitiesSection = () => {
 
 const ActivitiesCarousel = () => {
   const { data } = useActivities();
+  const isMobile = useMediaQuery('(max-width: 639px)');
   const sortedData = [...data].slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+  const scrollOptions = useMemo(
+    () => ({
+      speed: isMobile ? 0.6 : 1.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true
+    }),
+    [isMobile]
+  );
 
   return (
     <Carousel
       data={sortedData}
       autoScroll={true}
+      autoScrollOptions={scrollOptions}
       pauseOnIntersection={false}
       className="gap-3 sm:gap-11.5"
       trackClassName="gap-4 px-4"
       renderItem={(item) => (
         <div className="group relative h-20 w-36 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
-          <Image draggable={false} loading="lazy" quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" />
+          <Image draggable={false} loading="eager" quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" />
           <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
             <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-end gap-0.5 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:p-7">
               <span className="text-custom-gray-200 text-[1rem]/4 font-medium sm:text-[1.75rem]/7">{item.title}</span>

@@ -1,7 +1,7 @@
+import { Metadata } from 'next';
+import { ProjectCard } from 'features/project';
 import { projectApi } from 'entities/project';
 import { ScrollToBottomButton } from 'entities/scroll';
-import { ProjectCard } from 'features/project';
-import { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -26,7 +26,7 @@ export async function ProjectListPage() {
         <span className="text-brand-primary-cta">P</span>roject
       </h1>
 
-      <ul className="mt-8 grid grid-cols-2 gap-2 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+      <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
         {sortedData.map((item) => (
           <ProjectCard key={item.id} data={item} className="w-full" />
         ))}

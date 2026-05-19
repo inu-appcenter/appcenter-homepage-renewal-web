@@ -52,8 +52,8 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
 export const SectionTitle = ({ title, className = '' }: { title: string; className?: string }) => {
   return (
     <motion.h2
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`text-custom-gray-200 font-product-design text-[2rem]/8 uppercase sm:text-[2.5rem]/10 ${className}`}
@@ -71,7 +71,7 @@ export const ListButton = ({ href, text, className }: { href: string; text?: str
       prefetch={true}
       className={`text-brand-primary-cta border-brand-primary-cta bg-surface-elevated flex h-fit cursor-pointer items-center gap-1.5 rounded-4xl border px-3 py-1.5 text-[0.875rem]/3.5 shadow-[0px_0px_8px_0px_#57FF8566] sm:px-4 sm:py-2 sm:text-lg sm:shadow-[0px_0px_12px_0px_#57FF8566] ${className}`}
     >
-      <Menu strokeWidth={1.25} className="h-4 w-4 sm:h-6 sm:w-6" />
+      <Menu strokeWidth={1.25} className="h-6 w-6 p-0.5" />
       <span>{text || '목록으로'}</span>
     </Link>
   );

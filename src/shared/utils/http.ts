@@ -1,31 +1,21 @@
 const getBaseUrl = () => {
-  // BFF 서버 주소
-  if (typeof window !== 'undefined') {
-    return `/api`;
-  }
-
+  if (typeof window !== 'undefined') return `/api`;
   return process.env.API_URL;
 };
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
   const baseUrl = getBaseUrl();
-
   const isServer = typeof window === 'undefined';
-
-  const isCacheRequest = url.startsWith('/cache');
-  const actualUrl = isCacheRequest ? url.replace(/^\/cache/, '') : url;
 
   const headers: Record<string, string> = {
     ...(options?.headers as Record<string, string>)
   };
 
   if (isServer) {
-    // SSR 환경에서는 쿠키에서 토큰을 읽어서 Authorization 헤더에 추가
     try {
       const { cookies } = await import('next/headers');
       const cookieStore = await cookies();
       const token = cookieStore.get('accessToken')?.value;
-
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
@@ -33,26 +23,17 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
       console.error('SSR Token injection failed:', e);
     }
   }
+
   if (!(options?.body instanceof FormData)) {
     if (!headers['Content-Type']) {
       headers['Content-Type'] = 'application/json';
     }
   }
 
-  const config: RequestInit = {
+  const res = await fetch(`${baseUrl}${url}`, {
     ...options,
-    headers: { ...headers }
-  };
-
-  if (isServer && isCacheRequest) {
-    config.cache = 'force-cache';
-    const cacheTag = headers['x-cache-tag'];
-    if (cacheTag) {
-      config.next = { tags: [cacheTag] };
-    }
-  }
-
-  const res = await fetch(`${baseUrl}${actualUrl}`, config);
+    headers
+  });
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));

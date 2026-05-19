@@ -1,5 +1,5 @@
-import { memberApi } from 'entities/member/api';
 import { ListButton, SectionTitle, ShuffleItem } from './Components';
+import { memberApi } from 'entities/member';
 
 export async function AboutSection() {
   const data = await memberApi.getStats();

@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { GitHub } from 'shared/icon/GitHub';
 import { Blog } from 'shared/icon/Blog';
 import { Hello } from 'shared/icon/Hello';
-import { PartDescriptData } from '../data/PartDescriptData';
 import { useMediaQuery } from 'shared/hooks/useMediaQuery';
+import { PartDescriptData } from '../model/PartDescriptData';
 import { toast } from 'sonner';
 
 interface ItemProps {
@@ -105,8 +105,8 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
     >
       <div className="flex w-full flex-row justify-between sm:flex-col sm:gap-3">
         <div className="flex flex-col gap-1 sm:gap-3">
-          <span className="text-[0.625rem]/2.5 font-semibold text-white sm:text-[2.5rem]/10">{member.name}</span>
-          <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.5rem]/6">
+          <span className="text-[0.625rem]/2.5 font-semibold text-white sm:text-[2rem]/8">{member.name}</span>
+          <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.25rem]/5">
             <span className="line-clamp-1">{member.department}</span>
             <Dot className="h-2 w-2 sm:h-6 sm:w-6" />
             <span className="text-brand-primary-cta whitespace-nowrap">{groupData.year}기</span>
@@ -152,7 +152,7 @@ export const IntroduceBlock = ({ part }: { part: string }) => {
   const partData = PartDescriptData[part];
 
   return (
-    <>
+    <div className="flex flex-col gap-2.5 pb-20 sm:gap-12 sm:px-36">
       <div className="relative flex flex-col items-end overflow-hidden">
         <div className="from-background-surface/60 to-background-surface/0 pointer-events-none absolute inset-0 z-50 bg-linear-to-t to-47%" />
         <div className="bg-surface-elevated flex w-full rounded-md px-3 py-2.5 sm:rounded-2xl sm:px-12 sm:py-10">
@@ -182,7 +182,7 @@ export const IntroduceBlock = ({ part }: { part: string }) => {
           </div>
         </div>
       </div>
-      <div className="relative flex w-full items-start gap-2.5 pt-2.5 pb-20 sm:gap-12 sm:pt-12">
+      <div className="relative flex w-full items-start gap-2.5 sm:gap-12">
         <div className="bg-surface-elevated flex h-19 flex-1 flex-col justify-end rounded-md px-3 py-2.5 sm:h-79 sm:rounded-2xl sm:px-12 sm:py-10">
           <p className="text-custom-gray-100 text-[12px]/4 font-medium whitespace-pre-line sm:text-[44px]/15">{partData.description}</p>
         </div>
@@ -201,6 +201,6 @@ export const IntroduceBlock = ({ part }: { part: string }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
