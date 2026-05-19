@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 
 export const ActivitiesSection = () => {
   return (
-    <section id="activity" className="mt-16 flex flex-col justify-center sm:mt-0 sm:h-screen sm:gap-8">
+    <section id="activity" className="flex flex-col justify-center pt-30 sm:h-screen sm:gap-8 sm:pt-0">
       <div className="relative mb-16 flex flex-col justify-center sm:mb-0">
         <SectionTitle title="activity" />
       </div>
