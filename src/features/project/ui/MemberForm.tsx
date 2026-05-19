@@ -1,13 +1,14 @@
+'use client';
 import { useMemo, useState } from 'react';
 import { Check, Plus, Search, Users, X } from 'lucide-react';
 
 import { Generation, useGeneration, usePart } from 'entities/generation';
 
 import { Modal } from 'shared/ui/modal';
-import { ProjectFormType } from '../../types/form';
+import { ProjectFormType } from '../types/form';
 import { Alert } from 'shared/ui/alert';
 
-export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
+export const MemberForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: allMembers } = useGeneration();
   const { data: partData } = usePart();
 
@@ -32,7 +33,8 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
   };
 
   const filteredMembers = useMemo(() => {
-    return allMembers.filter((gen) => {
+    const safeMembers = allMembers || [];
+    return safeMembers.filter((gen) => {
       const matchName = gen.member.toLowerCase().includes(searchTerm.toLowerCase());
       const matchPart = selectedPartName === 'All' || gen.part === selectedPartName;
       return matchName && matchPart;
@@ -40,7 +42,8 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
   }, [allMembers, searchTerm, selectedPartName]);
 
   const selectedMemberObjects = useMemo(() => {
-    return allMembers.filter((gen) => form.groups.includes(gen.group_id));
+    const safeMembers = allMembers || [];
+    return safeMembers.filter((gen) => form.groups.includes(gen.group_id));
   }, [allMembers, form.groups]);
 
   const groupedSelectedMembers = useMemo(() => {
@@ -54,16 +57,13 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
 
   return (
     <div className="relative flex h-full w-full flex-col">
-      <div className="flex h-full w-full items-center justify-center overflow-hidden">
+      <div className="flex h-full w-full items-start p-4">
         {selectedMemberObjects.length > 0 ? (
-          <div className="custom-scrollbar flex h-full w-full flex-row items-start justify-center gap-8 overflow-x-auto p-4">
+          <div className="custom-scrollbar flex w-full flex-col gap-4 overflow-y-auto">
             {Object.entries(groupedSelectedMembers).map(([partName, members]) => (
-              <div key={partName} className="flex min-w-50 flex-col gap-3">
-                <div className="flex items-center gap-2 pb-2">
-                  <span className="text-brand-primary-cta text-[28px] font-semibold">{partName}</span>
-                </div>
-
-                <div className="flex flex-col gap-8">
+              <div key={partName} className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+                <span className="text-sm font-bold text-slate-800">{partName}</span>
+                <div className="flex flex-wrap gap-2">
                   {members.map((member) => (
                     <SelectedMemberItem key={member.group_id} member={member} onRemove={() => removeMember(member.group_id)} />
                   ))}
@@ -72,9 +72,16 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
             ))}
           </div>
         ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-3 py-6 text-slate-300">
-            <Users size={24} className="text-slate-300" />
-            <span className="text-sm">아래 버튼을 클릭하여 팀원을 추가해주세요</span>
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3 pt-10 pb-12 text-slate-400">
+            <div className="rounded-full bg-slate-100 p-4">
+              <Users size={32} className="text-slate-300" />
+            </div>
+            <div className="text-center">
+              <p className="font-medium text-slate-600">선택된 참여 팀원이 없습니다.</p>
+              <p className="text-xs text-slate-400">
+                우측 하단의 <b className="font-semibold text-blue-500">+ 버튼</b>을 눌러 추가해주세요.
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -82,9 +89,13 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
       <Modal
         title="팀원 선택"
         trigger={
-          <div className="bg-brand-primary-cta text-background absolute right-4 bottom-4 cursor-pointer rounded-full p-2 shadow-lg transition-transform hover:scale-110">
-            <Plus size={32} />
-          </div>
+          <button
+            type="button"
+            className="absolute right-4 bottom-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg transition-transform hover:scale-110 hover:bg-blue-600 active:scale-95"
+            title="팀원 선택"
+          >
+            <Plus size={24} strokeWidth={2.5} />
+          </button>
         }
       >
         {(close) => (
@@ -150,58 +161,67 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
     </div>
   );
 };
-
-const SelectedMemberItem = ({ member, onRemove }: { member: ReturnType<typeof useGeneration>['data'][number]; onRemove: () => void }) => {
+const SelectedMemberItem = ({ member, onRemove }: { member: Generation; onRemove: () => void }) => {
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
         onRemove();
       }}
-      className="group flex cursor-pointer items-center gap-3 rounded-full py-2 pr-4 pl-2 transition-all hover:text-rose-400 hover:ring hover:ring-rose-400"
+      className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1 pr-3 pl-1 transition-all hover:border-red-200 hover:bg-red-50"
+      title={`${member.member} 제외`}
     >
-      <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/10">
+      <div className="h-6 w-6 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white">
         {member.profileImage ? (
           <img src={member.profileImage} alt={member.member} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-slate-200 text-lg text-slate-400">{member.member.charAt(0)}</div>
+          <div className="flex h-full w-full items-center justify-center bg-slate-100 text-[10px] font-bold text-slate-400">{member.member.charAt(0)}</div>
         )}
       </div>
 
-      <div className="flex flex-col items-start leading-none">
-        <span className="text-custom-gray-400 text-xl transition-colors group-hover:text-rose-400">{member.member}</span>
+      <div className="flex items-center gap-1.5">
+        <span className="text-sm font-medium text-slate-700 transition-colors group-hover:text-red-600">{member.member}</span>
+
+        <div className="relative flex items-center justify-center">
+          <span className="text-[10px] text-slate-400 transition-opacity duration-200 group-hover:opacity-0">{member.year}기</span>
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            <div className="flex h-4 w-4 items-center justify-center text-red-500">
+              <X size={10} strokeWidth={3} />
+            </div>
+          </div>
+        </div>
       </div>
-      <X size={14} className="ml-auto opacity-50 transition-opacity group-hover:opacity-100" />
     </div>
   );
 };
-
-const MemberSelectionCard = ({ member, isSelected, onToggle }: { member: ReturnType<typeof useGeneration>['data'][number]; isSelected: boolean; onToggle: () => void }) => {
+const MemberSelectionCard = ({ member, isSelected, onToggle }: { member: Generation; isSelected: boolean; onToggle: () => void }) => {
   return (
     <div
       onClick={onToggle}
-      className={`group relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border p-3 transition-all duration-200 ${
-        isSelected ? 'border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/20' : 'border-slate-100 bg-white text-slate-600 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md'
+      className={`group relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border p-4 transition-all duration-200 ${
+        isSelected ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm' : 'border-slate-100 bg-white text-slate-600 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md'
       }`}
     >
       {isSelected && (
-        <div className="animate-in zoom-in absolute top-2 right-2 duration-200">
-          <Check size={12} strokeWidth={3} />
+        <div className="absolute top-2 right-2">
+          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white">
+            <Check size={12} strokeWidth={3} />
+          </div>
         </div>
       )}
 
-      <div className={`h-14 w-14 overflow-hidden rounded-full border-2 ${isSelected ? 'border-white/20' : 'border-slate-100'}`}>
+      <div className={`h-14 w-14 overflow-hidden rounded-full border-2 ${isSelected ? 'border-blue-200' : 'border-slate-100'}`}>
         {member.profileImage ? (
           <img src={member.profileImage} alt={member.member} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-slate-200 text-xl text-slate-400">{member.member.charAt(0)}</div>
+          <div className="flex h-full w-full items-center justify-center bg-slate-100 text-lg font-bold text-slate-400">{member.member.charAt(0)}</div>
         )}
       </div>
 
-      <div className="flex flex-col gap-0.5 text-center">
-        <div className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-slate-800'}`}>{member.member}</div>
-        <div className={`rounded-lg px-2 py-0.5 text-xs ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>{member.part}</div>
-        <div className={`text-xs ${isSelected ? 'text-slate-300' : 'text-slate-400'}`}>{member.year}기</div>
+      <div className="flex flex-col items-center gap-0.5 text-center">
+        <div className={`text-sm font-bold ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{member.member}</div>
+        <div className={`text-xs ${isSelected ? 'text-blue-600' : 'text-slate-500'}`}>{member.part}</div>
+        <div className={`text-[10px] ${isSelected ? 'text-blue-400' : 'text-slate-400'}`}>{member.year}기</div>
       </div>
     </div>
   );

@@ -59,7 +59,13 @@ export const useSignActions = () => {
   });
 
   const changePasswordMutation = useMutation({
-    mutationFn: signApi.changePassword
+    mutationFn: signApi.changePassword,
+    onSuccess: () => {
+      toast.success('비밀번호가 성공적으로 변경되었습니다');
+    },
+    onError: (error) => {
+      toast.error(error.message || '비밀번호 변경에 실패했습니다.');
+    }
   });
 
   return { adminLoginMutation, adminLogoutMutation, memberLoginMutation, memberLogoutMutation, logoutMutation, signupMutation, changePasswordMutation };
