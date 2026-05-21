@@ -8,6 +8,7 @@ import { MarkdownSection } from './MarkdownSection';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: number }> }): Promise<Metadata> {
   const { id } = await params;
+
   try {
     const data = await projectApi.getById(id);
 

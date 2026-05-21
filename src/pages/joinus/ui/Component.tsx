@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { RecruitmentList } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isActive?: boolean }) {
   return (
@@ -20,6 +21,8 @@ export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isA
           width={1920}
           height={1020}
           quality={75}
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           className="aspect-square w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl"
         />
       ) : (

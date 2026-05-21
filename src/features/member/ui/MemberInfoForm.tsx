@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { Save, Loader2, Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera, X, Hash, FileUser } from 'lucide-react';
-
+import { Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera, X, Hash, FileUser } from 'lucide-react';
 import { useMemberActions, useMemberByMember } from 'entities/member';
 import type { MemberForm as MemberFormType } from 'entities/member';
+import { SaveButton } from 'shared/ui/button';
 
 export function MemberInfoForm() {
   const { data: memberData } = useMemberByMember();
@@ -116,23 +116,9 @@ export function MemberInfoForm() {
 
         {/* 저장 버튼 */}
         <div className="fixed right-20 bottom-10 z-50 flex items-center gap-3">
-          <button
-            disabled={isPending || !formData.name || !formData.studentNumber}
-            type="submit"
-            className="group bg-brand-primary-cta hover:bg-brand-primary-cta/90 flex items-center gap-2.5 rounded-2xl px-6 py-4 font-bold tracking-tight text-black shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:scale-105 active:scale-95 disabled:scale-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:grayscale sm:px-8"
-          >
-            {isPending ? (
-              <>
-                <Loader2 size={20} className="animate-spin" />
-                <span className="text-sm sm:text-base">저장 중...</span>
-              </>
-            ) : (
-              <>
-                <Save size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12" />
-                <span className="text-sm sm:text-base">변경 사항 저장</span>
-              </>
-            )}
-          </button>
+          <SaveButton disabled={isPending} type="submit" className="w-50">
+            변경 사항 저장
+          </SaveButton>
         </div>
       </form>
     </div>
