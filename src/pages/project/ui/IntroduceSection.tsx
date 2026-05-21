@@ -10,7 +10,7 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
   const [selected, setSelected] = useState(0);
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 sm:h-screen sm:gap-10">
+    <section className="mt-10 flex flex-col items-center justify-center gap-4 sm:gap-10">
       <div className="relative flex flex-row gap-8 sm:gap-30">
         {['사용 스택', '팀원 정보'].map((tab, index) => (
           <SelectButton key={index} text={tab} isSelected={selected === index} onClick={() => setSelected(index)} />

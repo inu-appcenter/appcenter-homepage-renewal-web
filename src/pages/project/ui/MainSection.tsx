@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Project } from 'entities/project';
 import { AppStore, WebLink, GooglePlay } from 'entities/link';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const MainSection = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images);
@@ -48,7 +49,16 @@ export const MainSection = ({ data }: { data: Project }) => {
           </div>
         </div>
         <div className="relative flex flex-1 justify-start sm:ml-10 sm:justify-end">
-          <Image src={imageUrls[1]} alt="프로젝트 이미지" width={1200} height={600} className="h-auto w-auto max-w-full rounded-xl object-contain" quality={75} />
+          <Image
+            src={imageUrls[1]}
+            alt="프로젝트 이미지"
+            width={1200}
+            height={600}
+            className="h-auto w-auto max-w-full rounded-xl object-contain"
+            quality={75}
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
+          />
         </div>
       </div>
     </section>

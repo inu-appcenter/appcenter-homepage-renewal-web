@@ -62,5 +62,8 @@ export const useProjectActions = () => {
     onSuccess: invalidateProjects
   });
 
-  return { addMutation, editMutation, deleteMutation, toggleMutation };
+  const deleteImageMutation = useMutation({
+    mutationFn: projectApi.deleteImage
+  });
+  return { addMutation, editMutation, deleteMutation, toggleMutation, deleteImageMutation };
 };

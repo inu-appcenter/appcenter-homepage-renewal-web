@@ -6,6 +6,7 @@ import { useWorkShop } from 'entities/workshop';
 import { Carousel } from 'shared/ui/carousel';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { useMediaQuery } from 'shared/hooks/useMediaQuery';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const WorkshopSection = () => {
   return (
@@ -44,7 +45,7 @@ const WorkshopCarousel = () => {
       trackClassName="gap-4 px-4 sm:gap-8 sm:px-8"
       renderItem={(item) => (
         <div className="group relative h-24 w-40 overflow-hidden rounded-sm bg-gray-900 sm:h-90 sm:w-164 sm:rounded-xl">
-          <Image draggable={false} loading="eager" src={item.imageUrl} quality={75} alt={item.title} fill className="object-cover" />
+          <Image draggable={false} src={item.imageUrl} quality={75} alt={item.title} fill className="object-cover" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
           <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-1 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-3 sm:p-11">
             <span className="text-custom-gray-100 text-[1rem]/4 font-medium sm:text-[2.625rem]/10.5">{item.title}</span>
             <span className="text-custom-gray-500 ml-1.5 text-[0.75rem]/3 sm:text-[1.625rem]/6.5">{item.eventDate}</span>
