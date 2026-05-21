@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { Toaster } from 'shared/ui/toast';
 import { ReactQueryProvider } from '../provider/ReactQueryProvider';
+import { MixpanelInit } from '../provider/MixpanelProvider';
 import { productDesignFont, pretendardFont, tokyoFont } from '../style/fonts';
 import '../style/globals.css';
 import NextTopLoader from 'nextjs-toploader';
@@ -35,6 +36,7 @@ export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>
         <Script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d72988e5b9f34b398e6901943d0f0e6d"}' />
         <Toaster />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <MixpanelInit />
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
