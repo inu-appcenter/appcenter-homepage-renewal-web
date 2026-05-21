@@ -11,7 +11,9 @@ const nextConfig: NextConfig = {
     ],
     qualities: [75, 100],
     deviceSizes: [640, 1080, 1920],
-    imageSizes: [16, 64, 256]
+    imageSizes: [16, 64, 256],
+    // 1년(365일) 동안 이미지 캐시 강제 유지
+    minimumCacheTTL: 31536000
   },
   logging: {
     fetches: {
