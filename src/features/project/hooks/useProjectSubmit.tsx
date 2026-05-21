@@ -11,11 +11,11 @@ interface AddProjectSubmitProps {
   onSuccess: () => void;
 }
 export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmitProps) => {
-  const { addMutation, editMutation } = useProjectActions();
+  const { addMutation, editMutation, deleteImageMutation } = useProjectActions();
 
   const isPending = props.mode === 'create' ? addMutation.isPending : editMutation.isPending;
 
-  const submit = async (data: ProjectFormType) => {
+  const submit = async (data: ProjectFormType, deletedImageIds?: number[]) => {
     const formData = new FormData();
     const modifiedIds: number[] = [];
 
@@ -48,6 +48,7 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
         onSuccess: props.onSuccess
       });
     } else {
+      if (deletedImageIds && deletedImageIds.length > 0) deleteImageMutation.mutate({ board_id: props.projectId, image_id: deletedImageIds });
       editMutation.mutate({ data: formData, id: props.projectId, modifiedIds }, { onSuccess: props.onSuccess });
     }
   };

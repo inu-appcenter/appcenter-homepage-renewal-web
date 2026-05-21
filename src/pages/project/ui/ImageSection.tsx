@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Project } from 'entities/project';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const ImageSection = ({ data }: { data: Project }) => {
