@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { ActivityContent } from 'entities/activity';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const ImageSection = ({ data }: { data: ActivityContent }) => {
   return (
@@ -53,7 +54,7 @@ export const ImageSection = ({ data }: { data: ActivityContent }) => {
               transition={{ delay: index * 0.1 }}
               className="relative h-auto overflow-hidden rounded-md bg-zinc-100 sm:rounded-xl dark:bg-zinc-800"
             >
-              <Image src={url} fill alt="활동 이미지" className="object-cover" quality={75} />
+              <Image src={url} fill alt="활동 이미지" className="object-cover" quality={75} placeholder="blur" blurDataURL={BLUR_DATA_URL} />
             </motion.div>
           ))}
         </div>

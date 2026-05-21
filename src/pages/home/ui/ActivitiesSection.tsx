@@ -8,6 +8,7 @@ import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { Carousel } from 'shared/ui/carousel';
 import { useMediaQuery } from 'shared/hooks/useMediaQuery';
 import { useMemo } from 'react';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const ActivitiesSection = () => {
   return (
@@ -49,7 +50,7 @@ const ActivitiesCarousel = () => {
       trackClassName="gap-4 px-4"
       renderItem={(item) => (
         <div className="group relative h-20 w-36 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
-          <Image draggable={false} loading="eager" quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" />
+          <Image draggable={false} quality={75} src={item.thumbnail} alt={item.title} fill className="object-cover" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
           <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
             <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-end gap-0.5 p-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:p-7">
               <span className="text-custom-gray-200 text-[1rem]/4 font-medium sm:text-[1.75rem]/7">{item.title}</span>

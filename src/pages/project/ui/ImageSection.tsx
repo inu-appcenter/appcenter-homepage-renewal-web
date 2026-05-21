@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Project } from 'entities/project';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const ImageSection = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images || {}).slice(2);
@@ -50,6 +51,8 @@ export const ImageSection = ({ data }: { data: Project }) => {
                       alt={`${data.title} 상세 이미지 ${index + 1}`}
                       width={0}
                       height={0}
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA_URL}
                       sizes="100vh"
                       className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-102"
                     />
@@ -79,7 +82,7 @@ export const ImageSection = ({ data }: { data: Project }) => {
           )}
 
           <div className="relative h-full max-h-[85vh] w-full max-w-[90vw] rounded-lg">
-            <Image src={imageUrls[selectedIndex]} alt={`상세 이미지 확대뷰 ${selectedIndex + 1}`} fill className="object-contain" />
+            <Image src={imageUrls[selectedIndex]} alt={`상세 이미지 확대뷰 ${selectedIndex + 1}`} fill className="object-contain" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
           </div>
 
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-1.5 text-sm text-white">

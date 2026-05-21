@@ -9,8 +9,9 @@ const nextConfig: NextConfig = {
         pathname: '/image/photo/**'
       }
     ],
-    unoptimized: true,
-    qualities: [75, 100]
+    qualities: [75, 100],
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [16, 64, 256]
   },
   logging: {
     fetches: {

@@ -32,5 +32,9 @@ export const projectApi = {
 
   getById: (id: number) => {
     return http.get<Project>(`/introduction-board/public/${id}`);
+  },
+
+  deleteImage: ({ board_id, image_id }: { board_id: number; image_id: number }) => {
+    return http.delete(`/image/photo?image_id=${image_id}&board_id=${board_id}`);
   }
 };

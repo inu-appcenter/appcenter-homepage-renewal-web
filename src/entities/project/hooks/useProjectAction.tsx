@@ -62,5 +62,15 @@ export const useProjectActions = () => {
     onSuccess: invalidateProjects
   });
 
-  return { addMutation, editMutation, deleteMutation, toggleMutation };
+  const deleteImageMutation = useMutation({
+    mutationFn: projectApi.deleteImage,
+    onSuccess: () => {
+      invalidateProjects();
+      toast.success('이미지가 삭제되었습니다');
+    },
+    onError: (error) => {
+      toast.error(error.message || '이미지 삭제에 실패했습니다. 다시 시도해주세요.');
+    }
+  });
+  return { addMutation, editMutation, deleteMutation, toggleMutation, deleteImageMutation };
 };

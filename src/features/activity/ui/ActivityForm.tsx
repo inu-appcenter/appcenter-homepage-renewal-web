@@ -284,8 +284,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
             <Plus size={16} /> 새로운 섹션 추가하기
           </button>
         </section>
-
-        <div className="flex justify-end pt-4">
+        <div className="fixed right-20 bottom-10 z-50 flex items-center gap-3">
           <SaveButton disabled={isPending} type="submit" className="w-50">
             {isEditMode ? '변경사항 저장' : '게시글 등록'}
           </SaveButton>
