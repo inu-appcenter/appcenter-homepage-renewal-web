@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { signApi } from '../api';
 import { toast } from 'sonner';
-import { setMixpanelUser, resetMixpanel, trackEvent } from 'shared/utils/mixpanel';
 
 export const useSignActions = () => {
   const queryClient = useQueryClient();
@@ -11,38 +10,29 @@ export const useSignActions = () => {
 
   const adminLoginMutation = useMutation({
     mutationFn: signApi.login,
-    onSuccess: (_, variables) => {
-      setMixpanelUser(variables.id);
-      trackEvent('Admin Login Success');
+    onSuccess: () => {
       router.push('/admin/home');
     },
-    onError: () => {
-      trackEvent('Admin Login Failure');
+    onError: () =>
       toast.error('어드민 계정 정보가 일치하지 않습니다', {
         description: '구성원이라면 구성원탭에서 로그인해주세요'
-      });
-    }
+      })
   });
 
   const memberLoginMutation = useMutation({
     mutationFn: signApi.login,
-    onSuccess: (_, variables) => {
-      setMixpanelUser(variables.id);
-      trackEvent('Member Login Success');
+    onSuccess: () => {
       router.push('/member/home');
     },
-    onError: () => {
-      trackEvent('Member Login Failure');
+    onError: () =>
       toast.error('계정 정보가 일치하지 않습니다', {
         description: '오타가 없는지 확인해주세요'
-      });
-    }
+      })
   });
 
   const adminLogoutMutation = useMutation({
     mutationFn: signApi.logout,
     onSuccess: () => {
-      resetMixpanel();
       queryClient.clear();
       router.replace('/login');
     }
@@ -51,7 +41,6 @@ export const useSignActions = () => {
   const memberLogoutMutation = useMutation({
     mutationFn: signApi.logout,
     onSuccess: () => {
-      resetMixpanel();
       queryClient.clear();
       router.replace('/login');
     }
@@ -60,20 +49,13 @@ export const useSignActions = () => {
   const logoutMutation = useMutation({
     mutationFn: signApi.logout,
     onSuccess: () => {
-      resetMixpanel();
       queryClient.clear();
       router.replace('/login');
     }
   });
 
   const signupMutation = useMutation({
-    mutationFn: signApi.signup,
-    onSuccess: () => {
-      trackEvent('Signup Success');
-    },
-    onError: () => {
-      trackEvent('Signup Failure');
-    }
+    mutationFn: signApi.signup
   });
 
   const changePasswordMutation = useMutation({
