@@ -43,8 +43,6 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   });
 
   const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
-  console.log('initialData?.images', form);
-  console.log('initialData?.images', deletedImageIds);
 
   const { submit, isPending } = useProjectSubmit(
     initialData?.id
@@ -53,14 +51,12 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
           projectId: initialData.id,
           onSuccess: () => {
             router.push(`/${mode}/project`);
-            router.refresh();
           }
         }
       : {
           mode: 'create',
           onSuccess: () => {
             router.push(`/${mode}/project`);
-            router.refresh();
           }
         }
   );
