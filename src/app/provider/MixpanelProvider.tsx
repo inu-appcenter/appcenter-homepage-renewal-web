@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Mixpanel } from 'shared/utils/mixpanel';
 
-export default function MixpanelInit() {
+export function MixpanelInit() {
   const pathname = usePathname();
 
   useEffect(() => {
