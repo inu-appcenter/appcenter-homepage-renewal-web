@@ -7,13 +7,14 @@ import { Logo } from 'shared/icon/Logo';
 import { RecruitmentList } from 'entities/recruitment';
 import { StatusBadge } from './Component';
 
+const ITEM_PER_PAGE = 4;
+
 export function ListSection({ data }: { data: RecruitmentList[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [direction, setDirection] = useState(0);
-  const itemsPerPage = 4;
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const currentItems = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.ceil(data.length / ITEM_PER_PAGE);
+  const currentItems = data.slice((currentPage - 1) * ITEM_PER_PAGE, currentPage * ITEM_PER_PAGE);
 
   const handlePageChange = (newPage: number) => {
     setDirection(newPage > currentPage ? 1 : -1);

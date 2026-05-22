@@ -9,11 +9,9 @@ export const MainSection = ({ data }: { data: Activity }) => {
         <div className="bg-surface/50 pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden blur-sm">
           <Image src={data.thumbnail} alt="메인 이미지" quality={75} fill className="object-cover opacity-10" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
         </div>
-        <div className="flex flex-col gap-10 sm:gap-40">
-          <div className="flex flex-col gap-2 sm:gap-10">
-            <h1 className="text-brand-primary-cta text-[2rem]/8 font-bold sm:text-[6rem]/24">{data.title}</h1>
-            <h2 className="text-custom-gray-100 text-[1rem]/4 font-bold sm:pl-2.5 sm:text-[1.5rem]/6">{data.titleEng}</h2>
-          </div>
+        <div className="flex flex-col gap-2 sm:gap-10">
+          <h1 className="text-brand-primary-cta text-[2rem]/8 font-bold sm:text-[6rem]/24">{data.title}</h1>
+          <h2 className="text-custom-gray-100 text-[1rem]/4 font-bold sm:pl-2.5 sm:text-[1.5rem]/6">{data.titleEng}</h2>
         </div>
         <div className="flex min-w-fit flex-col items-end gap-1 sm:gap-3">
           <Item title="Date" subTitle={new Date(data.createdDate).toLocaleDateString()} />
