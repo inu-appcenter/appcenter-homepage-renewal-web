@@ -10,7 +10,7 @@ import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const WorkshopSection = () => {
   return (
-    <section className="flex h-[40vh] flex-col justify-center sm:h-screen sm:gap-8">
+    <section id="workshop" className="flex h-[40vh] flex-col justify-center sm:h-screen sm:gap-8">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
         <ListButton href="/workshoplist" />
