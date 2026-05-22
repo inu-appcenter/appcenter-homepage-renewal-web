@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { PageTitle } from './Components';
 import { TableSkeleton } from 'shared/skeleton/TableSkeleton';
-import { AdminRegistration } from 'features/registraion';
+import { AdminRegistration } from 'features/registration';
 
 export const AdminRegistrationCodePage = () => {
   return (

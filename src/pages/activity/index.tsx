@@ -1,2 +1,2 @@
-export { ActivityPage, generateMetadata as generateActivityDetailMetadata } from './ui/ActivtyPage';
-export { ActivityListPage, generateMetadata as generateActivityListMetadata } from './ui/AcitivityListPage';
+export { ActivityPage, generateMetadata as generateActivityDetailMetadata } from './ui/ActivityPage';
+export { ActivityListPage, generateMetadata as generateActivityListMetadata } from './ui/ActivityListPage';

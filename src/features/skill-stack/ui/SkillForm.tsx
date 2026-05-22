@@ -8,6 +8,7 @@ import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { FormInput } from 'shared/ui/form-input';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -114,19 +115,7 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">
-          기술 스택명 <span className="text-red-500">*</span>
-        </label>
-        <input
-          autoFocus
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="예: React, TypeScript"
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20"
-        />
-      </div>
+      <FormInput label="기술 스택명" required value={name} onChange={(e) => setName(e.target.value)} placeholder="기술 스택명을 입력해주세요." />
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-slate-400">
           카테고리 <span className="text-red-500">*</span>

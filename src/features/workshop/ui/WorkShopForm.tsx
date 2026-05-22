@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
-import { Modal } from 'shared/ui/modal';
-import { WorkShop, useWorkShopActions } from 'entities/workshop';
-import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
+import { WorkShop, useWorkShopActions } from 'entities/workshop';
+import { Modal } from 'shared/ui/modal';
+import { SaveButton } from 'shared/ui/button';
+import { FormInput } from 'shared/ui/form-input';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 export const AddWorkShopForm = () => {
@@ -80,11 +81,9 @@ interface WorkShopFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   isPending: boolean;
 }
-
 export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormProps) => {
   const [title, setTitle] = useState(initialData?.title || '');
   const [eventDate, setEventDate] = useState(initialData?.eventDate || '');
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(() => {
     return initialData?.imageUrl || null;
@@ -117,41 +116,15 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
     const formData = new FormData();
     formData.append('title', title);
     formData.append('eventDate', eventDate);
-
-    if (selectedFile) {
-      formData.append('multipartFile', selectedFile);
-    }
+    if (selectedFile) formData.append('multipartFile', selectedFile);
 
     await onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">
-          워크숍 제목 <span className="text-red-500">*</span>
-        </label>
-        <input
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="워크숍 제목을 입력해주세요."
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">
-          워크숍 날짜 <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="date"
-          required
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        />
-      </div>
+      <FormInput label="워크숍 제목" required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="워크숍 제목을 입력해주세요." />
+      <FormInput label="워크숍 날짜" type="date" required value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
 
       <div className="space-y-2">
         <label className="text-sm font-semibold text-slate-400">

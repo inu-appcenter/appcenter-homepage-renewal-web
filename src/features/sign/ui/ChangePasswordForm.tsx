@@ -28,10 +28,7 @@ export function ChangePasswordForm() {
       return;
     }
 
-    changePasswordMutation.mutateAsync({
-      currentPassword: formData.currentPassword,
-      newPassword: formData.newPassword
-    });
+    changePasswordMutation.mutateAsync(formData);
     setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
   };
 

@@ -7,6 +7,7 @@ import type { Part } from 'shared/types/part';
 import { Modal } from 'shared/ui/modal';
 import { usePart } from 'entities/generation';
 import { SaveButton } from 'shared/ui/button';
+import { FormInput } from 'shared/ui/form-input';
 
 export const AddFAQForm = () => {
   const { addMutation } = useFAQActions();
@@ -93,7 +94,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       }}
     >
       <div>
-        <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
+        <label className="mb-2 block text-sm font-bold text-slate-400">
           파트 <span className="text-red-500">*</span>
         </label>
         <div className="flex flex-wrap gap-2">
@@ -103,36 +104,15 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
               key={p}
               disabled={isPending}
               onClick={() => setFormData({ ...formData, part: p })}
-              className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${
-                formData.part === p ? 'bg-slate-900 text-slate-100 shadow-sm' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
-              } disabled:opacity-50`}
+              className={`rounded-xl px-4 py-2 text-xs font-bold transition-all disabled:opacity-50 ${formData.part === p ? 'bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'} `}
             >
               {p}
             </button>
           ))}
         </div>
       </div>
-      <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
-        질문 <span className="text-red-500">*</span>
-      </label>
-      <input
-        disabled={isPending}
-        className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        placeholder="질문을 입력해주세요"
-        value={formData.question}
-        onChange={(e) => setFormData({ ...formData, question: e.target.value })}
-      />
-      <label className="mb-2 block text-sm font-bold text-slate-400 uppercase">
-        답변 <span className="text-red-500">*</span>
-      </label>
-      <input
-        disabled={isPending}
-        className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        placeholder="답변을 입력해주세요"
-        value={formData.answer}
-        onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
-      />
-
+      <FormInput label="질문" required value={formData.question} onChange={(e) => setFormData({ ...formData, question: e.target.value })} placeholder="질문을 입력해주세요." />
+      <FormInput label="답변" required value={formData.answer} onChange={(e) => setFormData({ ...formData, answer: e.target.value })} placeholder="답변을 입력해주세요." />
       <SaveButton type="submit" disabled={isPending || !formData.question || !formData.answer}>
         {initialData ? '변경사항 저장' : ' 저장'}
       </SaveButton>

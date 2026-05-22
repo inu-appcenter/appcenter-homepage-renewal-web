@@ -4,6 +4,7 @@ import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { useRoleActions, type Role, type RoleForm } from 'entities/role';
 import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
+import { FormInput } from 'shared/ui/form-input';
 
 export const AddRoleForm = () => {
   const { addMutation } = useRoleActions();
@@ -73,32 +74,18 @@ export const DeleteRoleButton = ({ roleId }: { roleId: number }) => {
 };
 
 const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; onSubmit: (data: RoleForm) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<RoleForm>({
-    roleName: initialData?.roleName || ''
-  });
+  const [roleName, setRoleName] = useState(initialData?.roleName || '');
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit({ roleName });
       }}
       className="space-y-4"
     >
-      <div className="flex flex-col gap-2">
-        <label className="ml-1 text-sm font-semibold text-slate-400">
-          역할 <span className="text-red-500">*</span>
-        </label>
-        <input
-          disabled={isPending}
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-          placeholder="역할 이름"
-          autoFocus
-          value={formData.roleName}
-          onChange={(e) => setFormData({ ...formData, roleName: e.target.value })}
-        />
-      </div>
-      <SaveButton isPending={isPending} disabled={!formData.roleName}>
+      <FormInput label="역할 이름" required value={roleName} onChange={(e) => setRoleName(e.target.value)} placeholder="역할 이름을 입력해주세요." />
+      <SaveButton isPending={isPending} disabled={!roleName}>
         {initialData ? '변경사항 수정' : '저장'}
       </SaveButton>
     </form>
