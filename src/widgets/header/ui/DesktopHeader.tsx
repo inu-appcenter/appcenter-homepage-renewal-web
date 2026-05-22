@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ScrollContext } from 'entities/scroll';
 import { NAV_ITEMS } from '../constants/navItem';
-import { ArrowRight } from 'lucide-react';
+import { ChartLine } from 'lucide-react';
 
 export function DesktopHeader({ mode }: { mode?: string }) {
   const pathname = usePathname();
@@ -15,9 +15,6 @@ export function DesktopHeader({ mode }: { mode?: string }) {
   const loginText = mode === 'member' ? '멤버 대시보드' : '관리자 대시보드';
   const authBtnText = mode ? loginText : 'Sign in';
   const authBtnHref = mode ? `/${mode}/home` : '/login';
-
-  const signInStyle = 'px-5 py-2.5 text-custom-black ring-custom-gray-100 bg-white shadow-[0_0_10px_0_#FFFAFA] ring-1 ring-inset hover:bg-gray-100';
-  const dashboardStyle = 'px-2 py-2.5 bg-transparent text-white hover:text-brand-primary-cta group underline underline-offset-4';
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
     if (pathname === '/' && href.includes('#')) {
@@ -53,10 +50,10 @@ export function DesktopHeader({ mode }: { mode?: string }) {
         <li>
           <Link
             href={authBtnHref}
-            className={`flex items-center justify-center rounded-[60px] text-xl leading-none whitespace-nowrap transition-all active:scale-95 ${mode ? dashboardStyle : signInStyle}`}
+            className="text-custom-black ring-custom-gray-100 flex items-center justify-center gap-2 rounded-[60px] bg-white px-5 py-3 text-xl leading-none whitespace-nowrap shadow-[0_0_10px_0_#FFFAFA] ring-1 transition-all ring-inset hover:bg-gray-100 active:scale-95"
           >
+            {mode && <ChartLine size={24} />}
             {authBtnText}
-            {mode && <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1.5" />}
           </Link>
         </li>
       </ul>
