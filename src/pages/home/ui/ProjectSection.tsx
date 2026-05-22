@@ -8,7 +8,7 @@ import { Carousel } from 'shared/ui/carousel';
 
 export const ProjectSection = () => {
   return (
-    <section id="project" className="relative flex flex-col justify-center gap-4 pt-30 sm:h-screen sm:gap-10">
+    <section id="project" className="flex flex-col justify-center gap-4 pt-30 sm:h-screen">
       <div className="flex justify-between">
         <SectionTitle title="project" />
         <ListButton href="/projectlist" />
@@ -32,7 +32,7 @@ function ProjectCarousel() {
       autoPlayOptions={{ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }}
       className="space-y-4 py-4"
       trackClassName="gap-4 p-4"
-      slideClassName="min-w-0 flex-[0_0_60%] sm:flex-[0_0_25%]"
+      slideClassName="flex-[0_0_60%] sm:flex-[0_0_25%]"
       renderItem={(project, _, isActive) => <ProjectCard data={project} isActive={isActive} />}
       overflow={false}
     />
