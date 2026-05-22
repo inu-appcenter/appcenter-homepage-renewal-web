@@ -146,9 +146,7 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
 };
 
 export const IntroduceBlock = ({ part }: { part: string }) => {
-  if (part === 'ALL') {
-    return null;
-  }
+  if (part === 'ALL') return null;
   const partData = PartDescriptData[part];
 
   return (

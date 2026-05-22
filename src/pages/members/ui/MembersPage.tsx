@@ -4,9 +4,7 @@ import { MembersList } from './MembersList';
 import { generationApi } from 'entities/generation/api';
 
 export async function MembersPage() {
-  const data = await memberApi.getStats();
-  const memberData = await memberApi.getMembersInfo();
-  const generationData = await generationApi.getGroupYears();
+  const [data, memberData, generationData] = await Promise.all([memberApi.getStats(), memberApi.getMembersInfo(), generationApi.getGroupYears()]);
 
   const aboutData = [
     { title: 'TOTAL MEMBERS', subNumber: data.totalMemberCount },

@@ -1,10 +1,12 @@
 'use client';
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MemberWithGeneration } from 'entities/member';
 import { IntroduceBlock, MemberCard } from './Components';
 import { Dropdown } from 'shared/ui/dropdown';
 import { cn } from 'shared/utils/cn';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { memberOptions } from 'entities/member/api/queries';
+import { generationOptions } from 'entities/generation/api/queries';
 
 const PARTS = ['ALL', 'Dev', 'Basic', 'Design', 'PM'];
 
@@ -14,14 +16,12 @@ const itemVariants = {
   exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } }
 };
 
-interface MembersListProps {
-  initialMembers: MemberWithGeneration[];
-  generationData: number[];
-}
+export const MembersList = () => {
+  const { data: initialMembers } = useSuspenseQuery(memberOptions.memberInfo());
+  const { data: generationData } = useSuspenseQuery(generationOptions.groupYears());
 
-export const MembersList = ({ initialMembers, generationData }: MembersListProps) => {
   const [selectedPart, setSelectedPart] = useState('ALL');
-  const [selectedYear, setSelectedYear] = useState(generationData[0]);
+  const [selectedYear, setSelectedYear] = useState(() => generationData.yearList[0]);
 
   const matchedData = useMemo(() => {
     return initialMembers
@@ -56,7 +56,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
             ))}
           </div>
         </div>
-        <Dropdown label="기수" options={generationData} value={selectedYear} onChange={setSelectedYear} renderValue={(v) => `${v}기`} />
+        <Dropdown label="기수" options={generationData.yearList} value={selectedYear} onChange={setSelectedYear} renderValue={(v) => `${v}기`} />
       </section>
 
       <AnimatePresence mode="wait">

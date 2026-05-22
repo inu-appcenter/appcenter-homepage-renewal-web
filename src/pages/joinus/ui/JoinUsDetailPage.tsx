@@ -87,7 +87,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-base font-medium sm:text-2xl/6">{recruitmentData.targetAudience ? recruitmentData.targetAudience : '-'}</div>
             </div>
             {recruitmentData.status === 'RECRUITING' ? (
-              <AnimationButton target="_top" href={recruitmentData.applyLink}>
+              <AnimationButton target="_blank" rel="noopener noreferrer" href={recruitmentData.applyLink}>
                 <div className="text-base/4 text-white sm:text-2xl/6">지원하러 가기</div>
               </AnimationButton>
             ) : (

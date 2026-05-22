@@ -31,7 +31,7 @@ export const LandingSection = () => {
 
       {/** 데스크탑인 경우 */}
       <div className="hidden sm:inline-block">
-        <AnimationButton href="/joinus">
+        <AnimationButton href="/joinus" prefetch={true}>
           <span className="text-custom-gray-200 text-[1rem]/4 font-semibold">앱센터 모집 지원하러 가기</span>
         </AnimationButton>
       </div>
