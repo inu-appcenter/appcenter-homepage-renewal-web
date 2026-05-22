@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { generationOptions } from '../api/queries';
+import { generationKeys, generationOptions } from '../api/queries';
 import { generationApi } from '../api';
 import { toast } from 'sonner';
 
@@ -25,7 +25,7 @@ export const useGenerationActions = () => {
   const queryClient = useQueryClient();
 
   const invalidateGenerations = () => {
-    queryClient.invalidateQueries({ queryKey: ['generations'] });
+    queryClient.invalidateQueries({ queryKey: generationKeys.all });
   };
 
   const addMutation = useMutation({

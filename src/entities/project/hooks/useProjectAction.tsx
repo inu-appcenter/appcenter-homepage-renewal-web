@@ -20,7 +20,7 @@ export const useProjectActions = () => {
   const queryClient = useQueryClient();
 
   const invalidateProjects = async () => {
-    await revalidateTag(projectKeys.all);
+    await revalidateTag(...projectKeys.all);
     await queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
   };
 

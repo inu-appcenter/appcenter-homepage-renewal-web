@@ -35,7 +35,7 @@ export const useRecruitmentActions = () => {
   const router = useRouter();
 
   const invalidateRecruitments = async () => {
-    await revalidateTag(recruitmentKeys.all);
+    await revalidateTag(...recruitmentKeys.all);
     await queryClient.invalidateQueries({ queryKey: recruitmentKeys.lists() });
   };
 
