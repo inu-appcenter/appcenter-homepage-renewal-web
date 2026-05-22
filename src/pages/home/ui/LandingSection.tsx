@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import { ScrollIndicator } from './Components';
 import { BackgroundAnimation } from './BackgroundAnimation';
@@ -15,7 +14,7 @@ export const LandingSection = () => {
           <ScrambleText text="CENTER" />
         </span>
       </h1>
-      <p className="text-custom-gray-200 text-center text-[14px] whitespace-nowrap sm:text-left sm:text-xl/8">
+      <p className="text-custom-gray-200 text-center text-[0.875rem] whitespace-nowrap sm:text-left sm:text-xl/8">
         {`오랫동안 사용되어 온 앱센터가 정보전산원 산하 `}
         <br className="sm:hidden" />
         {`AI 빅데이터 센터에 소속된 IT 이노베이션 랩으로 `}
