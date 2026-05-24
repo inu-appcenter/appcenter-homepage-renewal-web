@@ -2,18 +2,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, Trash2, Image as ImageIcon } from 'lucide-react';
+import { toast } from 'sonner';
 import { Project } from 'entities/project';
 import { useRoleContext } from 'entities/sign';
-import { ProjectFormType, ProjectImage } from '../types/form';
 import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
-import { toast } from 'sonner';
 
+import { ProjectFormType, ProjectImage } from '../types/form';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
 
 import dynamic from 'next/dynamic';
+import { FormInput } from 'shared/ui/form-input';
 // CloudFlare Workers 환경에서는 3MIB로 제한되므로, 동적 임포트로 최적화
 const MarkdownEditor = dynamic(() => import('shared/ui/markdown-editor').then((mod) => mod.MarkdownEditor), {
   ssr: false,
@@ -186,8 +187,8 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <Input label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
-                <Input label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
+                <FormInput label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
+                <FormInput label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
 
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-medium text-slate-800">본문 설명</label>
@@ -228,10 +229,10 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
             관련 링크
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
-            <Input label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
-            <Input label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
-            <Input label="PlayStore 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="PlayStore 링크" />
-            <Input label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
+            <FormInput label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
+            <FormInput label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
+            <FormInput label="PlayStore 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="PlayStore 링크" />
+            <FormInput label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
           </div>
         </section>
 
@@ -304,13 +305,6 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     </div>
   );
 };
-
-const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-slate-800">{label}</label>
-    <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className || ''}`} />
-  </div>
-);
 
 const EmptyImagePlaceholder = () => (
   <div className="flex flex-col items-center text-slate-400 transition-transform group-hover:text-blue-500">

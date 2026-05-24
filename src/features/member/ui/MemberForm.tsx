@@ -87,7 +87,7 @@ const DEFAULT_FORM: MemberForm = {
   department: null
 };
 const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: MemberForm; onSubmit: (data: MemberForm) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<MemberForm>(initialData || DEFAULT_FORM);
+  const [formData, setFormData] = useState<MemberForm>(initialData ?? DEFAULT_FORM);
 
   const handleChange = (field: keyof MemberForm, value: string | null) => {
     setFormData((prev) => ({ ...prev, [field]: value === '' ? null : value }));

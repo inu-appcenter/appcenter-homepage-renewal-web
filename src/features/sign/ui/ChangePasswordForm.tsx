@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { Lock, KeyRound, Check, Loader2, Save, Eye, EyeOff } from 'lucide-react';
+import { Lock, KeyRound, Check, Loader2, Save } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSignActions } from 'entities/sign';
 import { Alert } from 'shared/ui/alert';
+import { FormInput } from 'shared/ui/form-input';
 
 export function ChangePasswordForm() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,6 @@ export function ChangePasswordForm() {
     newPassword: '',
     confirmPassword: ''
   });
-  const [showPassword, setShowPassword] = useState(false);
 
   const { changePasswordMutation } = useSignActions();
   const isPending = changePasswordMutation.isPending;
@@ -41,13 +41,12 @@ export function ChangePasswordForm() {
               <Lock size={18} className="text-slate-400" /> 본인 확인
             </h3>
             <div className="space-y-4">
-              <PasswordInput
+              <FormInput
                 icon={Lock}
                 label="현재 비밀번호"
                 value={formData.currentPassword}
-                onChange={(v) => handleChange('currentPassword', v)}
-                showPassword={showPassword}
-                onToggleVisible={() => setShowPassword(!showPassword)}
+                onChange={(e) => handleChange('currentPassword', e.target.value)}
+                passwordToggle
                 placeholder="현재 사용 중인 비밀번호"
                 disabled={isPending}
               />
@@ -59,21 +58,21 @@ export function ChangePasswordForm() {
               <KeyRound size={18} className="text-slate-400" /> 새 비밀번호 설정
             </h3>
             <div className="space-y-4">
-              <PasswordInput
+              <FormInput
                 icon={KeyRound}
                 label="새 비밀번호"
                 value={formData.newPassword}
-                onChange={(v) => handleChange('newPassword', v)}
-                showPassword={showPassword}
+                onChange={(e) => handleChange('newPassword', e.target.value)}
+                passwordToggle
                 placeholder="새로운 비밀번호 입력"
                 disabled={isPending}
               />
-              <PasswordInput
+              <FormInput
                 icon={Check}
                 label="새 비밀번호 확인"
                 value={formData.confirmPassword}
-                onChange={(v) => handleChange('confirmPassword', v)}
-                showPassword={showPassword}
+                onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                passwordToggle
                 placeholder="한 번 더 입력해 주세요"
                 disabled={isPending}
               />
@@ -104,39 +103,6 @@ export function ChangePasswordForm() {
           </button>
         </div>
       </form>
-    </div>
-  );
-}
-
-interface PasswordInputProps {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  showPassword?: boolean;
-  onToggleVisible?: () => void;
-  placeholder?: string;
-  disabled?: boolean;
-}
-function PasswordInput({ icon: Icon, label, value, onChange, showPassword, onToggleVisible, ...props }: PasswordInputProps) {
-  return (
-    <div className="space-y-1.5">
-      <label className="ml-1 text-[12px] font-bold text-zinc-400 uppercase">{label}</label>
-      <div className="relative">
-        <Icon className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300" size={16} />
-        <input
-          type={showPassword ? 'text' : 'password'}
-          className="w-full rounded-xl border border-slate-100 bg-slate-50/50 p-3 pr-11 pl-11 text-sm transition-all outline-none focus:border-slate-900 focus:bg-white focus:ring-0"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          {...props}
-        />
-        {onToggleVisible && (
-          <button type="button" onClick={onToggleVisible} className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-300 transition-colors hover:text-slate-600">
-            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-          </button>
-        )}
-      </div>
     </div>
   );
 }

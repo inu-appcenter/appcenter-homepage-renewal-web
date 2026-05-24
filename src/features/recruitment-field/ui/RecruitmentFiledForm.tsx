@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 
-import { Modal } from 'shared/ui/modal';
 import { RecruitmentField, useRecruitmentFieldActions, type RecruitmentFieldForm } from 'entities/recruitment-field';
+import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
 import { FormInput } from 'shared/ui/form-input';
 
