@@ -6,15 +6,15 @@ export interface Member extends MemberForm {
 
 export interface MemberForm {
   name: string;
-  description: string | undefined;
-  profileImage: string | undefined;
-  blogLink: string | undefined;
-  email: string | undefined;
-  gitRepositoryLink: string | undefined;
-  behanceLink: string | undefined;
-  phoneNumber: string | undefined;
-  studentNumber: string | undefined;
-  department: string | undefined;
+  description: string | null;
+  profileImage: string | null;
+  blogLink: string | null;
+  email: string | null;
+  gitRepositoryLink: string | null;
+  behanceLink: string | null;
+  phoneNumber: string | null;
+  studentNumber: string | null;
+  department: string | null;
 }
 
 export interface MemberStats {

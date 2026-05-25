@@ -8,7 +8,7 @@ import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { toast } from 'sonner';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -115,7 +115,7 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <FormInput label="기술 스택명" required value={name} onChange={(e) => setName(e.target.value)} placeholder="기술 스택명을 입력해주세요." />
+      <Input label="기술 스택명" required value={name} onChange={(e) => setName(e.target.value)} placeholder="기술 스택명을 입력해주세요." />
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-slate-400">
           카테고리 <span className="text-red-500">*</span>

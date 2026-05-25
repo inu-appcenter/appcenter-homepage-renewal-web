@@ -15,8 +15,8 @@ import { Recruitment } from 'entities/recruitment';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
-import { FormInput } from 'shared/ui/form-input';
-import { FormTextarea } from 'shared/ui/text-area';
+import { Input } from 'shared/ui/form-input';
+import { TextArea } from 'shared/ui/text-area';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
   const isEditMode = initialData ? true : false;
@@ -74,8 +74,8 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
 
           <div className="flex flex-row gap-6">
             <div className="flex flex-1 flex-col gap-4">
-              <FormInput label="공고 제목" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 앱센터 18기 모집" />
-              <FormTextarea label="모집 설명" required value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} placeholder="모집 설명을 입력하세요" className="h-48" />
+              <Input label="공고 제목" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 앱센터 18기 모집" />
+              <TextArea label="모집 설명" required value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} placeholder="모집 설명을 입력하세요" className="h-48" />
             </div>
 
             {/* 오른쪽: 썸네일 업로드 영역 */}
@@ -115,17 +115,17 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex gap-4">
-                <FormInput label="모집 시작일" required type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
-                <FormInput label="모집 종료일" required type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
-                <FormInput label="모집 인원" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })} placeholder="숫자만 입력" />
+                <Input label="모집 시작일" required type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} />
+                <Input label="모집 종료일" required type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
+                <Input label="모집 인원" type="number" value={form.capacity} onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })} placeholder="숫자만 입력" />
               </div>
-              <FormInput label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 열정있는 유니들" />
+              <Input label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 열정있는 유니들" />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-7">
               <Alert type="warning">
                 <span className="whitespace-pre-line">{'링크 끝에 붙은 ? 기호와 그 뒤의 내용(예: ?usp=sharing)은 모두 지우고 입력해 주세요. \n설문지 링크가 제대로 작동하지 않을 수 있습니다.'}</span>
               </Alert>
-              <FormInput label="지원 링크(Google Form 등)" value={form.applyLink} onChange={(e) => setForm({ ...form, applyLink: e.target.value })} placeholder="https://docs.google.com/forms" />
+              <Input label="지원 링크(Google Form 등)" value={form.applyLink} onChange={(e) => setForm({ ...form, applyLink: e.target.value })} placeholder="https://docs.google.com/forms" />
             </div>
           </div>
         </section>
@@ -191,11 +191,9 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           </div>
         </section>
 
-        <div className="flex justify-end pt-6">
-          <SaveButton disabled={isPending || !form.title || !form.startDate || !form.endDate} isPending={isPending} className="w-60" onClick={handleSubmit}>
-            {isEditMode ? '수정 사항 저장' : '모집 공고 등록'}
-          </SaveButton>
-        </div>
+        <SaveButton disabled={isPending || !form.title || !form.startDate || !form.endDate} isPending={isPending} className="fixed right-20 bottom-10 w-50 shadow" onClick={handleSubmit}>
+          {isEditMode ? '수정 사항 저장' : '모집 공고 등록'}
+        </SaveButton>
       </form>
     </div>
   );

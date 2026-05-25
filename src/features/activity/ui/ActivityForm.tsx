@@ -8,6 +8,8 @@ import { useAddActivity } from '../hooks/useAddActivity';
 import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 import { toast } from 'sonner';
+import { Input } from 'shared/ui/form-input';
+import { TextArea } from 'shared/ui/text-area';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -173,14 +175,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
               <Input label="제목" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="활동 제목을 입력하세요" />
               <Input label="영문 제목" type="text" value={form.titleEng} onChange={(e) => setForm({ ...form, titleEng: e.target.value })} placeholder="영문 제목을 입력하세요" />
               <Input label="작성자" type="text" value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} placeholder="작성자를 입력하세요" />
-              <label className="mb-1 text-sm font-medium text-slate-400">본문</label>
-              <textarea
-                value={form.body}
-                onChange={(e) => setForm({ ...form, body: e.target.value })}
-                rows={10}
-                className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-                placeholder="게시글 첫 화면에 보일 본문을 입력하세요"
-              />
+              <TextArea label="본문" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} rows={10} placeholder="게시글 첫 화면에 보일 본문을 입력하세요" />
             </div>
             <div className="flex flex-1 flex-col">
               <span className="mb-1 text-sm font-medium text-slate-400">썸네일</span>
@@ -226,7 +221,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
 
           <div className="space-y-6">
             {form.contents.map((section, index) => (
-              <div key={section.id !== 0 ? section.id : `new-${index}`} className="relative rounded-lg border border-slate-200 bg-slate-50/50 p-5">
+              <div key={section.id !== 0 ? section.id : `new-${index}`} className="relative rounded-lg border border-slate-200 p-5">
                 <div className="mb-4 flex items-center justify-between">
                   <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-bold text-blue-600">섹션 {index + 1}</span>
                   <button type="button" onClick={() => removeSection(section.id)} className="text-slate-500 hover:text-red-500">
@@ -237,14 +232,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-3">
                     <Input label="소제목" type="text" value={section.subTitle} onChange={(e) => updateSection(section.id, 'subTitle', e.target.value)} placeholder="소제목을 입력하세요" />
-                    <label className="text-sm font-medium text-slate-400">본문 내용</label>
-                    <textarea
-                      value={section.text}
-                      onChange={(e) => updateSection(section.id, 'text', e.target.value)}
-                      placeholder="본문 내용을 입력하세요"
-                      rows={5}
-                      className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-                    />
+                    <TextArea label="본문 내용" value={section.text} onChange={(e) => updateSection(section.id, 'text', e.target.value)} placeholder="본문 내용을 입력하세요" rows={5} />
                   </div>
 
                   <div className="space-y-2">
@@ -284,21 +272,10 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
             <Plus size={16} /> 새로운 섹션 추가하기
           </button>
         </section>
-        <div className="fixed right-20 bottom-10 z-50 flex items-center gap-3">
-          <SaveButton disabled={isPending} type="submit" className="w-50">
-            {isEditMode ? '변경사항 저장' : '게시글 등록'}
-          </SaveButton>
-        </div>
+        <SaveButton disabled={isPending} type="submit" className="fixed right-20 bottom-10 z-50 flex w-50">
+          {isEditMode ? '변경사항 저장' : '게시글 등록'}
+        </SaveButton>
       </form>
     </div>
   );
 }
-
-const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => {
-  return (
-    <>
-      <label className="text-sm font-medium text-slate-400">{label}</label>
-      <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className}`} />
-    </>
-  );
-};

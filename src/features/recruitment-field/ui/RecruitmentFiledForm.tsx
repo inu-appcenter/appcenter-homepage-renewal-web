@@ -5,7 +5,7 @@ import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { RecruitmentField, useRecruitmentFieldActions, type RecruitmentFieldForm } from 'entities/recruitment-field';
 import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 
 export const AddRecruitmentFieldForm = () => {
   const { addMutation } = useRecruitmentFieldActions();
@@ -85,7 +85,7 @@ const RecruitmentFieldForm = ({ initialData, onSubmit, isPending }: { initialDat
       }}
       className="space-y-4"
     >
-      <FormInput label="모집 분야" required value={name} onChange={(e) => setName(e.target.value)} placeholder="모집 분야 이름을 입력해주세요." />
+      <Input label="모집 분야" required value={name} onChange={(e) => setName(e.target.value)} placeholder="모집 분야 이름을 입력해주세요." />
       <SaveButton type="submit" disabled={isPending || !name}>
         {initialData ? '변경사항 수정' : '저장'}
       </SaveButton>

@@ -7,7 +7,7 @@ import type { Part } from 'shared/types/part';
 import { Modal } from 'shared/ui/modal';
 import { usePart } from 'entities/generation';
 import { SaveButton } from 'shared/ui/button';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 
 export const AddFAQForm = () => {
   const { addMutation } = useFAQActions();
@@ -94,7 +94,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
       }}
     >
       <div>
-        <label className="mb-2 block text-sm font-bold text-slate-400">
+        <label className="mb-2 block text-sm font-bold text-slate-700">
           파트 <span className="text-red-500">*</span>
         </label>
         <div className="flex flex-wrap gap-2">
@@ -111,8 +111,8 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
           ))}
         </div>
       </div>
-      <FormInput label="질문" required value={formData.question} onChange={(e) => setFormData({ ...formData, question: e.target.value })} placeholder="질문을 입력해주세요." />
-      <FormInput label="답변" required value={formData.answer} onChange={(e) => setFormData({ ...formData, answer: e.target.value })} placeholder="답변을 입력해주세요." />
+      <Input label="질문" required value={formData.question} onChange={(e) => setFormData({ ...formData, question: e.target.value })} placeholder="질문을 입력해주세요." />
+      <Input label="답변" required value={formData.answer} onChange={(e) => setFormData({ ...formData, answer: e.target.value })} placeholder="답변을 입력해주세요." />
       <SaveButton type="submit" disabled={isPending || !formData.question || !formData.answer}>
         {initialData ? '변경사항 저장' : ' 저장'}
       </SaveButton>

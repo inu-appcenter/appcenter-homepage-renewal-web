@@ -23,7 +23,7 @@ export const useActivityActions = () => {
   const router = useRouter();
 
   const invalidateActivities = async () => {
-    await revalidateTag(activityKeys.all);
+    await revalidateTag(...activityKeys.all);
     await queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
   };
 

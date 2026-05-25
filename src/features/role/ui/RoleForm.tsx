@@ -4,7 +4,7 @@ import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { useRoleActions, type Role, type RoleForm } from 'entities/role';
 import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 
 export const AddRoleForm = () => {
   const { addMutation } = useRoleActions();
@@ -84,7 +84,7 @@ const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; on
       }}
       className="space-y-4"
     >
-      <FormInput label="역할 이름" required value={roleName} onChange={(e) => setRoleName(e.target.value)} placeholder="역할 이름을 입력해주세요." />
+      <Input label="역할 이름" required value={roleName} onChange={(e) => setRoleName(e.target.value)} placeholder="역할 이름을 입력해주세요." />
       <SaveButton isPending={isPending} disabled={!roleName}>
         {initialData ? '변경사항 수정' : '저장'}
       </SaveButton>

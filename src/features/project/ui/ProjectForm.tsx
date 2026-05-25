@@ -14,7 +14,7 @@ import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
 
 import dynamic from 'next/dynamic';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 // CloudFlare Workers 환경에서는 3MIB로 제한되므로, 동적 임포트로 최적화
 const MarkdownEditor = dynamic(() => import('shared/ui/markdown-editor').then((mod) => mod.MarkdownEditor), {
   ssr: false,
@@ -187,8 +187,8 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <FormInput label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
-                <FormInput label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
+                <Input label="프로젝트명" required type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
+                <Input label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
 
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-medium text-slate-800">본문 설명</label>
@@ -229,10 +229,10 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
             관련 링크
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
-            <FormInput label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
-            <FormInput label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
-            <FormInput label="PlayStore 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="PlayStore 링크" />
-            <FormInput label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
+            <Input label="웹사이트 주소" type="url" value={form.webSiteLink} onChange={(e) => setForm({ ...form, webSiteLink: e.target.value })} placeholder="https://..." />
+            <Input label="GitHub 주소" type="url" value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="https://github.com/..." />
+            <Input label="PlayStore 링크" type="url" value={form.androidStoreLink} onChange={(e) => setForm({ ...form, androidStoreLink: e.target.value })} placeholder="PlayStore 링크" />
+            <Input label="Apple 스토어 링크" type="url" value={form.appleStoreLink} onChange={(e) => setForm({ ...form, appleStoreLink: e.target.value })} placeholder="App Store 링크" />
           </div>
         </section>
 

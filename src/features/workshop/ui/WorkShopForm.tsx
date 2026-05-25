@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
 import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
-import { FormInput } from 'shared/ui/form-input';
+import { Input } from 'shared/ui/form-input';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 export const AddWorkShopForm = () => {
@@ -123,8 +123,8 @@ export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormP
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <FormInput label="워크숍 제목" required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="워크숍 제목을 입력해주세요." />
-      <FormInput label="워크숍 날짜" type="date" required value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+      <Input label="워크숍 제목" required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="워크숍 제목을 입력해주세요." />
+      <Input label="워크숍 날짜" type="date" required value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
 
       <div className="space-y-2">
         <label className="text-sm font-semibold text-slate-400">

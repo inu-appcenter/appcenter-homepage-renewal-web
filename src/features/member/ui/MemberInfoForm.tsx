@@ -4,14 +4,14 @@ import { Phone, Mail, User as UserIcon, GraduationCap, Github, LinkIcon, Camera,
 import { useMemberActions, useMemberByMember } from 'entities/member';
 import type { MemberForm as MemberFormType } from 'entities/member';
 import { SaveButton } from 'shared/ui/button';
-import { FormInput } from 'shared/ui/form-input';
-import { FormTextarea } from 'shared/ui/text-area';
+import { Input } from 'shared/ui/form-input';
+import { TextArea } from 'shared/ui/text-area';
 
 export function MemberInfoForm() {
   const { data: memberData } = useMemberByMember();
   const { editByMemberMutation } = useMemberActions();
 
-  const [formData, setFormData] = useState<MemberFormType>({
+  const [formData, setFormData] = useState({
     name: memberData.name || '',
     description: memberData.description || '',
     profileImage: memberData.profileImage || '',
@@ -53,7 +53,7 @@ export function MemberInfoForm() {
               </button>
             )}
           </div>
-          <FormInput icon={Camera} label="프로필 이미지 URL" value={formData.profileImage} onChange={(e) => handleChange('profileImage', e.target.value)} required />
+          <Input icon={Camera} label="프로필 이미지 URL" value={formData.profileImage} onChange={(e) => handleChange('profileImage', e.target.value)} required />
         </section>
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
@@ -62,9 +62,9 @@ export function MemberInfoForm() {
               <UserIcon size={18} className="text-slate-400" /> 기본 정보
             </h3>
             <div className="space-y-4">
-              <FormInput icon={UserIcon} label="이름" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} required />
-              <FormInput icon={Mail} label="이메일" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} />
-              <FormInput icon={Phone} label="전화번호" value={formData.phoneNumber} onChange={(e) => handleChange('phoneNumber', e.target.value)} placeholder="010-0000-0000" />
+              <Input icon={UserIcon} label="이름" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} required />
+              <Input icon={Mail} label="이메일" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} />
+              <Input icon={Phone} label="전화번호" value={formData.phoneNumber} onChange={(e) => handleChange('phoneNumber', e.target.value)} placeholder="010-0000-0000" />
             </div>
           </div>
 
@@ -74,17 +74,17 @@ export function MemberInfoForm() {
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <FormInput icon={Hash} label="학번" value={formData.studentNumber} onChange={(e) => handleChange('studentNumber', e.target.value)} required />
-                <FormInput icon={GraduationCap} label="학과" value={formData.department} onChange={(e) => handleChange('department', e.target.value)} />
+                <Input icon={Hash} label="학번" value={formData.studentNumber} onChange={(e) => handleChange('studentNumber', e.target.value)} required />
+                <Input icon={GraduationCap} label="학과" value={formData.department} onChange={(e) => handleChange('department', e.target.value)} />
               </div>
-              <FormInput icon={Github} label="깃허브" value={formData.gitRepositoryLink} onChange={(e) => handleChange('gitRepositoryLink', e.target.value)} placeholder="https://www.github.com/..." />
-              <FormInput icon={FileUser} label="포트폴리오" value={formData.behanceLink} onChange={(e) => handleChange('behanceLink', e.target.value)} placeholder="https://www.portfolio.com/..." />
-              <FormInput icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(e) => handleChange('blogLink', e.target.value)} placeholder="https://velog.io/..." />
+              <Input icon={Github} label="깃허브" value={formData.gitRepositoryLink} onChange={(e) => handleChange('gitRepositoryLink', e.target.value)} placeholder="https://www.github.com/..." />
+              <Input icon={FileUser} label="포트폴리오" value={formData.behanceLink} onChange={(e) => handleChange('behanceLink', e.target.value)} placeholder="https://www.portfolio.com/..." />
+              <Input icon={LinkIcon} label="블로그" value={formData.blogLink} onChange={(e) => handleChange('blogLink', e.target.value)} placeholder="https://velog.io/..." />
             </div>
           </div>
         </div>
 
-        <FormTextarea label="자기 소개" value={formData.description} onChange={(e) => handleChange('description', e.target.value)} placeholder="자신을 짧게 소개해 주세요." />
+        <TextArea label="자기 소개" value={formData.description} onChange={(e) => handleChange('description', e.target.value)} placeholder="자신을 짧게 소개해 주세요." />
 
         <SaveButton disabled={isPending} type="submit" className="fixed right-20 bottom-10 z-50 flex w-50 items-center gap-3 shadow">
           변경 사항 저장
