@@ -1,13 +1,11 @@
 ﻿'use client';
 import { useState } from 'react';
-import { Plus, Trash2, X } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import type { ActivityForm as ActivityFormType } from '../types/form';
-import { Activity, useActivityActions } from 'entities/activity';
+import { Activity } from 'entities/activity';
 import { useEditActivity } from '../hooks/useEditActivity';
 import { useAddActivity } from '../hooks/useAddActivity';
 import { SaveButton } from 'shared/ui/button';
-import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
-import { toast } from 'sonner';
 import { Input } from 'shared/ui/form-input';
 import { TextArea } from 'shared/ui/text-area';
 import { ImageInput } from 'shared/ui/image-input';
@@ -25,11 +23,11 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
   const { addActivity, isPending: isAddPending } = useAddActivity();
   const { editActivity, isPending: isEditPending } = useEditActivity();
 
-  const { deleteImageMutation } = useActivityActions();
-
   const isPending = isEditMode ? isEditPending : isAddPending;
 
-  const [form, setForm] = useState<ActivityFormType>({
+  const [deletedImages, setDeletedImages] = useState<Array<{ sectionId: number; imageId: number }>>([]);
+
+  const [form, setForm] = useState<ActivityFormType>(() => ({
     title: initialData?.title || '',
     author: initialData?.author || '',
     body: initialData?.body || '',
@@ -41,12 +39,12 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
           imageUrls: content.imageUrls || []
         }))
       : [{ ...DEFAULT_CONTENT, id: Date.now() }]
-  });
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isEditMode && initialData) {
-      editActivity(initialData, form);
+      editActivity(initialData, form, deletedImages);
     } else {
       addActivity(form);
     }
@@ -79,72 +77,41 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
     }));
   };
 
-  const handleSectionImageAdd = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-
-      const hasLargeFile = newFiles.some((file) => file.size > IMAGE_SIZE_LIMIT);
-
-      if (hasLargeFile) {
-        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
-        e.target.value = '';
-        return;
-      }
-
-      setForm((prev) => ({
-        ...prev,
-        contents: prev.contents.map((s) => {
-          if (s.id === id) {
-            return { ...s, imageUrls: [...s.imageUrls, ...newFiles] };
-          }
-          return s;
-        })
-      }));
-      e.target.value = '';
-    }
+  const handleSectionImageAdd = (sectionId: number, file: File | null) => {
+    if (!file) return;
+    setForm((prev) => ({
+      ...prev,
+      contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: [...s.imageUrls, file] } : s))
+    }));
   };
-  const removeSectionImage = async (sectionId: number, targetImage: string | File) => {
-    //  로컬 파일인 경우 (아직 업로드 안 됨) -> State에서만 삭제
-    if (targetImage instanceof File) {
-      setForm((prev) => ({
-        ...prev,
-        contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.filter((img) => img !== targetImage) } : s))
-      }));
+
+  const handleSectionImageChange = (sectionId: number, index: number, file: File | null) => {
+    const existingUrl = form.contents.find((s) => s.id === sectionId)?.imageUrls[index];
+
+    if (file === null) {
+      if (existingUrl) removeSectionImage(sectionId, existingUrl);
       return;
     }
 
-    // 서버 이미지인 경우 (URL 문자열)
-    // 등록 모드이거나, ID가 0(새로 추가된 섹션)인 경우 -> 그냥 State에서 삭제 (아직 DB에 없음)
-    if (!isEditMode) {
-      setForm((prev) => ({
-        ...prev,
-        contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.filter((img) => img !== targetImage) } : s))
-      }));
-      return;
+    if (typeof existingUrl === 'string' && isEditMode) {
+      const imageId = Number(existingUrl.split('/').pop());
+      if (imageId) setDeletedImages((prev) => [...prev, { sectionId, imageId }]);
     }
 
-    // 수정 모드이고, 기존 DB에 있던 섹션의 이미지인 경우 -> API 호출
-    if (!confirm('서버에 저장된 이미지를 삭제하시겠습니까?')) return;
-
-    try {
-      // "https://server.inuappcenter.kr:443/image/photo/509" -> 509 추출
-      const urlParts = targetImage.split('/');
-      const lastPart = urlParts.pop();
-      const imageId = Number(lastPart);
-
-      if (!imageId) throw new Error('이미지 ID를 찾을 수 없습니다.');
-
-      await deleteImageMutation.mutateAsync({ id: sectionId, imageIds: [imageId] });
-
-      // 성공 시 State에서도 제거
-      setForm((prev) => ({
-        ...prev,
-        contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.filter((img) => img !== targetImage) } : s))
-      }));
-    } catch (error) {
-      console.error(error);
-      toast.error('이미지 삭제 실패');
+    setForm((prev) => ({
+      ...prev,
+      contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.map((img, i) => (i === index ? file : img)) } : s))
+    }));
+  };
+  const removeSectionImage = (sectionId: number, targetImage: string | File) => {
+    if (typeof targetImage === 'string' && isEditMode) {
+      const imageId = Number(targetImage.split('/').pop());
+      if (imageId) setDeletedImages((prev) => [...prev, { sectionId, imageId }]);
     }
+    setForm((prev) => ({
+      ...prev,
+      contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.filter((img) => img !== targetImage) } : s))
+    }));
   };
 
   return (
@@ -200,24 +167,9 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
                     <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
                       <div className="grid grid-cols-3 gap-2">
                         {section.imageUrls.map((url, imgIdx) => (
-                          <div key={imgIdx} className="relative">
-                            <div className="aspect-square overflow-hidden rounded-2xl border border-slate-200">
-                              <img src={typeof url === 'string' ? url : URL.createObjectURL(url)} alt="content" className="h-full w-full object-cover" />
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => removeSectionImage(section.id, url)}
-                              className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white shadow-md hover:bg-red-600"
-                            >
-                              <X size={12} />
-                            </button>
-                          </div>
+                          <ImageInput key={imgIdx} value={url} onChange={(file) => handleSectionImageChange(section.id, imgIdx, file)} areaClassName="aspect-square" className="w-full" />
                         ))}
-                        <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-500">
-                          <Plus size={20} />
-                          <span className="mt-1 text-xs font-medium">추가</span>
-                          <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => handleSectionImageAdd(section.id, e)} />
-                        </label>
+                        <ImageInput value={null} onChange={(file) => handleSectionImageAdd(section.id, file)} areaClassName="aspect-square" className="w-full" />
                       </div>
                     </div>
                     <p className="text-right text-sm text-slate-500">{section.imageUrls.length}개의 이미지 추가됨</p>
