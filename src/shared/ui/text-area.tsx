@@ -1,15 +1,16 @@
 import { TextareaHTMLAttributes } from 'react';
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
+  label?: string;
 }
-
 export const TextArea = ({ label, required, className, ...props }: TextAreaProps) => {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-semibold text-slate-700">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
+      {label && (
+        <label className="text-sm font-semibold text-slate-700">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
       <textarea
         required={required}
         {...props}

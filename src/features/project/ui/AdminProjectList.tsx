@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { UserMode, useRoleContext } from 'entities/sign';
@@ -8,7 +8,6 @@ import { AppStore, GooglePlay, WebLink } from 'entities/link';
 
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import { SearchBar } from 'shared/ui/searchbar';
 
 import { AddProjectForm, EditProjectForm, DeleteProjectButton, ProjectStatusToggle } from './ProjectListButton';
 
@@ -36,16 +35,13 @@ const MemberProjectFetcher = ({ mode }: { mode: UserMode }) => {
 };
 
 const ProjectListUI = ({ data, mode }: { data: Project[]; mode: UserMode }) => {
-  const [searchTerm, setSearchTerm] = useState('');
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => b.id - a.id);
   }, [data]);
-  const filteredData = sortedData.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
-    <>
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <SearchBar placeholder="프로젝트 이름으로 검색하세요" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+    <div className="flex flex-col items-center gap-6">
+      <div className="flex w-full flex-row justify-end">
         <AddProjectForm mode={mode} />
       </div>
 
@@ -59,13 +55,13 @@ const ProjectListUI = ({ data, mode }: { data: Project[]; mode: UserMode }) => {
           <TableHeaderCell className="w-40">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
-          {filteredData.map((project) => (
+          {sortedData.map((project) => (
             <Item key={project.id} data={project} mode={mode} />
           ))}
-          {filteredData.length === 0 && <EmptyResult />}
+          {sortedData.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 const Item = ({ data, mode }: { data: Project; mode: UserMode }) => {

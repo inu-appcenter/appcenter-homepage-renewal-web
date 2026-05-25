@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
-import { Plus, Trash2, Image as ImageIcon, X } from 'lucide-react';
+import { Plus, Trash2, X } from 'lucide-react';
 import type { ActivityForm as ActivityFormType } from '../types/form';
 import { Activity, useActivityActions } from 'entities/activity';
 import { useEditActivity } from '../hooks/useEditActivity';
@@ -10,6 +10,7 @@ import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/das
 import { toast } from 'sonner';
 import { Input } from 'shared/ui/form-input';
 import { TextArea } from 'shared/ui/text-area';
+import { ImageInput } from 'shared/ui/image-input';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -48,19 +49,6 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
       editActivity(initialData, form);
     } else {
       addActivity(form);
-    }
-  };
-
-  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > IMAGE_SIZE_LIMIT) {
-        toast.error('썸네일 파일 크기는 4MB 이하여야 합니다.');
-        e.target.value = '';
-        return;
-      }
-      setForm((prev) => ({ ...prev, thumbnail: file }));
-      e.target.value = '';
     }
   };
 
@@ -177,34 +165,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
               <Input label="작성자" type="text" value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} placeholder="작성자를 입력하세요" />
               <TextArea label="본문" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} rows={10} placeholder="게시글 첫 화면에 보일 본문을 입력하세요" />
             </div>
-            <div className="flex flex-1 flex-col">
-              <span className="mb-1 text-sm font-medium text-slate-400">썸네일</span>
-              <div className="flex-1">
-                <label className="group relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100">
-                  {form.thumbnail ? (
-                    <>
-                      <img src={typeof form.thumbnail === 'string' ? form.thumbnail : URL.createObjectURL(form.thumbnail)} alt="thumb-preview" className="h-full w-full object-cover" />
-
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                        <div className="flex translate-y-2 transform flex-col items-center gap-2 transition-transform group-hover:translate-y-0">
-                          <div className="rounded-full bg-white/20 p-2">
-                            <ImageIcon className="text-white" size={24} />
-                          </div>
-                          <span className="text-xs font-bold text-white">이미지 변경하기</span>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="flex flex-col items-center text-slate-400 transition-transform group-hover:text-blue-500">
-                      <Plus className="mb-2" size={24} />
-                      <span className="text-xs font-medium">추가</span>
-                    </div>
-                  )}
-
-                  <input type="file" accept="image/*" className="hidden" onChange={handleThumbnailChange} />
-                </label>
-              </div>
-            </div>
+            <ImageInput label="썸네일" value={form.thumbnail} onChange={(file) => setForm((prev) => ({ ...prev, thumbnail: file }))} className="flex-1" areaClassName="h-full w-full" />
           </div>
         </section>
 
@@ -236,23 +197,25 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
                   </div>
 
                   <div className="space-y-2">
-                    <div className="min-h-35 rounded border border-slate-200 bg-white p-3">
-                      <div className="mb-2 grid grid-cols-3 gap-2">
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                      <div className="grid grid-cols-3 gap-2">
                         {section.imageUrls.map((url, imgIdx) => (
-                          <div key={imgIdx} className="group relative aspect-square overflow-hidden rounded border border-slate-100">
-                            <img src={typeof url === 'string' ? url : URL.createObjectURL(url)} alt="content" className="h-full w-full object-cover" />
+                          <div key={imgIdx} className="relative">
+                            <div className="aspect-square overflow-hidden rounded-2xl border border-slate-200">
+                              <img src={typeof url === 'string' ? url : URL.createObjectURL(url)} alt="content" className="h-full w-full object-cover" />
+                            </div>
                             <button
                               type="button"
                               onClick={() => removeSectionImage(section.id, url)}
-                              className="absolute inset-0 flex items-center justify-center bg-black/40 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                              className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white shadow-md hover:bg-red-600"
                             >
-                              <X size={16} />
+                              <X size={12} />
                             </button>
                           </div>
                         ))}
-                        <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded border border-dashed border-slate-200 bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-blue-500">
+                        <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-500">
                           <Plus size={20} />
-                          <span className="mt-1 text-sm">추가</span>
+                          <span className="mt-1 text-xs font-medium">추가</span>
                           <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => handleSectionImageAdd(section.id, e)} />
                         </label>
                       </div>

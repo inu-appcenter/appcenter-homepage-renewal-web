@@ -85,7 +85,7 @@ const RecruitmentFieldForm = ({ initialData, onSubmit, isPending }: { initialDat
       }}
       className="space-y-4"
     >
-      <Input label="모집 분야" required value={name} onChange={(e) => setName(e.target.value)} placeholder="모집 분야 이름을 입력해주세요." />
+      <Input label="모집 분야" required value={name} onChange={(e) => setName(e.target.value)} autoFocus placeholder="모집 분야 이름을 입력해주세요." />
       <SaveButton type="submit" disabled={isPending || !name}>
         {initialData ? '변경사항 수정' : '저장'}
       </SaveButton>
