@@ -35,9 +35,7 @@ export const useActivityActions = () => {
       router.push('/admin/activity');
       router.refresh();
     },
-    onError: (error) => {
-      toast.error(error.message);
-    }
+    onError: (error) => toast.error(error.message)
   });
 
   const deleteMutation = useMutation({
