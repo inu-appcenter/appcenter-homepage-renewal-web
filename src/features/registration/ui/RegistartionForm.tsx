@@ -5,6 +5,7 @@ import { Pencil } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
 import { Alert } from 'shared/ui/alert';
+import { Input } from 'shared/ui/form-input';
 
 export const EditRegistrationButton = ({ code }: { code: string }) => {
   const { editMutation } = useRegistrationActions();
@@ -46,10 +47,10 @@ const AuthCodeInnerForm = ({ initialData, onSubmit, isPending }: { initialData: 
       className="space-y-4"
     >
       <div className="flex flex-col gap-2">
-        <label className="ml-1 text-sm font-semibold text-slate-400">새로운 인증 코드 입력</label>
-        <input
+        <Input
+          label="새로운 인증 코드 입력"
           disabled={isPending}
-          className="w-full rounded-2xl bg-slate-50 p-4 font-mono text-lg font-bold tracking-widest text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
+          className="font-mono text-lg font-bold tracking-widest text-slate-800"
           placeholder="예: APPCENTER2026"
           autoFocus
           value={formData.code}

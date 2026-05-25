@@ -14,7 +14,7 @@ export const useWorkShopActions = () => {
   const queryClient = useQueryClient();
 
   const invalidateWorkShop = async () => {
-    await revalidateTag(workShopKeys.all);
+    await revalidateTag(...workShopKeys.all);
     await queryClient.invalidateQueries({ queryKey: workShopKeys.lists() });
   };
 

@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
-import { Modal } from 'shared/ui/modal';
+import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { WorkShop, useWorkShopActions } from 'entities/workshop';
+import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
-import { toast } from 'sonner';
-import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { Input } from 'shared/ui/form-input';
+import { ImageInput } from 'shared/ui/image-input';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -80,102 +80,27 @@ interface WorkShopFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   isPending: boolean;
 }
-
 export const WorkShopForm = ({ initialData, onSubmit, isPending }: WorkShopFormProps) => {
   const [title, setTitle] = useState(initialData?.title || '');
   const [eventDate, setEventDate] = useState(initialData?.eventDate || '');
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(() => {
-    return initialData?.imageUrl || null;
-  });
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > IMAGE_SIZE_LIMIT) {
-      toast.error(IMAGE_SIZE_ERROR_MESSAGE);
-      e.target.value = '';
-      return;
-    }
-
-    setSelectedFile(file);
-
-    if (preview && !initialData?.imageUrl) URL.revokeObjectURL(preview);
-    setPreview(URL.createObjectURL(file));
-    e.target.value = '';
-  };
-
-  const removeFile = () => {
-    setSelectedFile(null);
-    setPreview(null);
-  };
+  const [image, setImage] = useState<File | string | null>(initialData?.imageUrl || null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
     formData.append('eventDate', eventDate);
-
-    if (selectedFile) {
-      formData.append('multipartFile', selectedFile);
-    }
+    if (image instanceof File) formData.append('multipartFile', image);
 
     await onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">
-          워크숍 제목 <span className="text-red-500">*</span>
-        </label>
-        <input
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="워크숍 제목을 입력해주세요."
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">
-          워크숍 날짜 <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="date"
-          required
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-slate-400">
-          이미지 첨부 <span className="text-red-500">*</span>
-        </label>
-
-        <div className="flex justify-start">
-          {preview ? (
-            <div className="relative aspect-square w-32 overflow-hidden rounded-lg border border-slate-200">
-              <img src={preview} alt="preview" className="h-full w-full object-cover" />
-              <button type="button" onClick={removeFile} className="absolute top-1 right-1 rounded-full bg-red-500 p-1 text-white hover:bg-red-600">
-                <X size={12} />
-              </button>
-            </div>
-          ) : (
-            <label className="flex aspect-square w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-blue-400 hover:bg-blue-50">
-              <Upload size={24} />
-              <span className="text-xs">사진 추가</span>
-              <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-            </label>
-          )}
-        </div>
-      </div>
-      <SaveButton type="submit" disabled={isPending || !title || !eventDate || !preview}>
+      <Input label="워크숍 제목" autoFocus required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="워크숍 제목을 입력해주세요." />
+      <Input label="워크숍 날짜" type="date" required value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+      <ImageInput label="이미지 첨부" required value={image} onChange={setImage} />
+      <SaveButton type="submit" disabled={isPending || !title || !eventDate || !image}>
         저장하기
       </SaveButton>
     </form>

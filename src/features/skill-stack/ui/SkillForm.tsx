@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
+import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { useSkillStackActions, type SkillStack } from 'entities/skill-stack';
 import { SKILL_CATEGORY, SKILL_CATEGORY_COLORS } from 'shared/constants/skillCategory';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
-import { toast } from 'sonner';
-import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { Input } from 'shared/ui/form-input';
+import { ImageInput } from 'shared/ui/image-input';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -84,49 +84,21 @@ interface SkillFormProps {
 export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) => {
   const [name, setName] = useState(initialData?.name || '');
   const [category, setCategory] = useState(initialData?.category || '');
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(initialData?.icon || null);
+  const [icon, setIcon] = useState<File | string | null>(initialData?.icon || null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('name', name);
     formData.append('category', category);
-    if (file) formData.append('iconImage', file);
+    if (icon instanceof File) formData.append('iconImage', icon);
 
     await onSubmit(formData);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-
-    if (selectedFile) {
-      if (selectedFile.size > IMAGE_SIZE_LIMIT) {
-        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
-        e.target.value = '';
-        return;
-      }
-
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile));
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">
-          기술 스택명 <span className="text-red-500">*</span>
-        </label>
-        <input
-          autoFocus
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="예: React, TypeScript"
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20"
-        />
-      </div>
+      <Input label="기술 스택명" required value={name} onChange={(e) => setName(e.target.value)} placeholder="기술 스택명을 입력해주세요." />
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-slate-400">
           카테고리 <span className="text-red-500">*</span>
@@ -144,47 +116,15 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
           ))}
         </div>
       </div>
-
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-semibold text-slate-400">
-          아이콘 이미지 <span className="text-red-500">*</span>
-        </span>
         <Alert type="warning">
           <span>
             배경이 투명한 <b>.png</b> 파일만 업로드해주세요.
           </span>
         </Alert>
-
-        <div className="relative h-32 w-fit">
-          <label
-            className={`flex h-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-slate-200 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 ${preview ? 'w-auto border-solid' : 'w-32 border-dashed'}`}
-          >
-            {preview ? (
-              <img src={preview} alt="Preview 이미지" className="h-full w-auto object-contain" />
-            ) : (
-              <div className="flex flex-col items-center text-slate-400">
-                <Upload size={24} />
-                <span className="mt-1 text-xs">클릭하여 추가</span>
-              </div>
-            )}
-            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-          </label>
-
-          {preview && (
-            <button
-              type="button"
-              onClick={() => {
-                setFile(null);
-                setPreview(null);
-              }}
-              className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white shadow-md hover:bg-red-600"
-            >
-              <X size={12} />
-            </button>
-          )}
-        </div>
+        <ImageInput label="아이콘 이미지" required value={icon} onChange={setIcon} objectFit="contain" accept=".png" />
       </div>
-      <SaveButton type="submit" disabled={isPending || !name || !category || !preview}>
+      <SaveButton type="submit" disabled={isPending || !name || !category || !icon}>
         저장하기
       </SaveButton>
     </form>

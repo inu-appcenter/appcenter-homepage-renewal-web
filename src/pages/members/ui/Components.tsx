@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { GitHub } from 'shared/icon/GitHub';
 import { Blog } from 'shared/icon/Blog';
 import { Hello } from 'shared/icon/Hello';
-import { useMediaQuery } from 'shared/hooks/useMediaQuery';
 import { PartDescriptData } from '../model/PartDescriptData';
 import { toast } from 'sonner';
 
@@ -14,28 +13,9 @@ interface ItemProps {
   member: MemberWithGeneration;
   activeYear: number;
 }
-const useResponsiveFlip = () => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 639px)');
-
-  const handleMouseEnter = () => {
-    if (!isMobile) setIsFlipped(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (!isMobile) setIsFlipped(false);
-  };
-
-  const handleClick = () => {
-    if (isMobile) setIsFlipped(!isFlipped);
-  };
-
-  return { isFlipped, handleMouseEnter, handleMouseLeave, handleClick };
-};
-
 export const MemberCard = ({ member, activeYear }: ItemProps) => {
   const groupData = member.groups.find((g) => g.year === activeYear) || member.groups[0];
-  const { isFlipped, handleMouseEnter, handleMouseLeave, handleClick } = useResponsiveFlip();
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const isLeader = groupData.role === '파트장' || groupData.role === '센터장';
 
@@ -45,14 +25,13 @@ export const MemberCard = ({ member, activeYear }: ItemProps) => {
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
         style={{ transformStyle: 'preserve-3d' }}
-        className="relative h-full w-full cursor-pointer"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
+        onMouseEnter={() => setIsFlipped(true)}
+        onMouseLeave={() => setIsFlipped(false)}
+        onClick={() => setIsFlipped(!isFlipped)}
       >
         <div
           style={{ backfaceVisibility: 'hidden' }}
-          className={`group border-brand-primary-cta flex h-full flex-row gap-2 ${isLeader ? 'border-l bg-[#191E1C] hover:bg-[#232B28]' : 'border-none bg-[#0A0A0A] hover:bg-[#151515]'} p-3 transition-colors hover:shadow-[inset_0_-1px_0_0_var(--color-brand-primary-cta)] sm:flex-col sm:gap-7 sm:border-l-4 sm:p-10 hover:sm:shadow-[inset_0_-4px_0_0_var(--color-brand-primary-cta)] part-${groupData.part.toLowerCase() || 'default'}`}
+          className={`border-brand-primary-cta flex h-full flex-row gap-2 ${isLeader ? 'border-l bg-[#191E1C] hover:bg-[#232B28]' : 'border-none bg-[#0A0A0A] hover:bg-[#151515]'} p-3 transition-colors hover:shadow-[inset_0_-1px_0_0_var(--color-brand-primary-cta)] sm:flex-col sm:gap-7 sm:border-l-4 sm:p-10 hover:sm:shadow-[inset_0_-4px_0_0_var(--color-brand-primary-cta)] part-${groupData.part.toLowerCase() || 'default'}`}
         >
           <div className="flex flex-row justify-between">
             <div className="bg-custom-gray-500 relative h-12 w-12 overflow-hidden sm:h-28 sm:w-28">
@@ -120,8 +99,9 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
           )}
           {member.email && (
             <Mail
-              className="h-2.5 w-2.5 sm:h-9 sm:w-9"
-              onClick={() => {
+              className="h-2.5 w-2.5 cursor-pointer sm:h-9 sm:w-9"
+              onClick={(e) => {
+                e.stopPropagation();
                 if (!member.email) return;
                 navigator.clipboard.writeText(member.email);
                 toast.success('이메일 주소가 복사되었습니다');
@@ -146,43 +126,31 @@ export const FlipedContent = ({ member, groupData }: { member: MemberWithGenerat
 };
 
 export const IntroduceBlock = ({ part }: { part: string }) => {
-  if (part === 'ALL') {
-    return null;
-  }
+  if (part === 'ALL') return null;
   const partData = PartDescriptData[part];
 
   return (
     <div className="flex flex-col gap-2.5 pb-20 sm:gap-12 sm:px-36">
-      <div className="relative flex flex-col items-end overflow-hidden">
+      <div className="bg-surface-elevated relative flex w-full items-end overflow-hidden rounded-md px-3 py-2.5 sm:rounded-2xl sm:px-12 sm:py-10">
         <div className="from-background-surface/60 to-background-surface/0 pointer-events-none absolute inset-0 z-50 bg-linear-to-t to-47%" />
-        <div className="bg-surface-elevated flex w-full rounded-md px-3 py-2.5 sm:rounded-2xl sm:px-12 sm:py-10">
-          <div className="z-10 sm:pt-10">
-            <motion.div
-              style={{
-                display: 'inline-block',
-                fontSize: '2rem',
-                originX: 0.7,
-                originY: 0.9
-              }}
-              whileInView={{ rotate: [0, 20, -10, 20, -10, 0] }}
-              viewport={{ once: false, amount: 0.5 }}
-              transition={{
-                delay: 0.4,
-                duration: 0.8,
-                ease: 'easeInOut'
-              }}
-            >
-              <Hello className="mb-5 h-2 w-2 sm:h-8 sm:w-8" />
-            </motion.div>
-            <p className="text-custom-gray-100 text-[14px]/4 font-bold sm:text-[56px]/17">
-              안녕하세요! <br />
-              <span className="text-brand-primary-cta">{partData.partName} 파트</span>입니다.
-            </p>
-            {partData.icon}
-          </div>
+        <div className="z-10 sm:pt-10">
+          <motion.div
+            style={{ display: 'inline-block', fontSize: '2rem', originX: 0.7, originY: 0.9 }}
+            whileInView={{ rotate: [0, 20, -10, 20, -10, 0] }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: 'easeInOut' }}
+          >
+            <Hello className="mb-5 h-2 w-2 sm:h-8 sm:w-8" />
+          </motion.div>
+          <p className="text-custom-gray-100 text-[14px]/4 font-bold sm:text-[56px]/17">
+            안녕하세요! <br />
+            <span className="text-brand-primary-cta">{partData.partName} 파트</span>입니다.
+          </p>
+          {partData.icon}
         </div>
       </div>
-      <div className="relative flex w-full items-start gap-2.5 sm:gap-12">
+
+      <div className="flex w-full items-start gap-2.5 sm:gap-12">
         <div className="bg-surface-elevated flex h-19 flex-1 flex-col justify-end rounded-md px-3 py-2.5 sm:h-79 sm:rounded-2xl sm:px-12 sm:py-10">
           <p className="text-custom-gray-100 text-[12px]/4 font-medium whitespace-pre-line sm:text-[44px]/15">{partData.description}</p>
         </div>

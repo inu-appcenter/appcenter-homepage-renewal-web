@@ -4,7 +4,7 @@ import { memberApi } from 'entities/member';
 export async function AboutSection() {
   const data = await memberApi.getStats();
 
-  const aboutData = [
+  const ABOUT = [
     { title: '창립연도', subNumber: new Date().getFullYear() - Math.trunc(data.currentYear) },
     { title: '누적 멤버 수', subNumber: data.totalMemberCount, smallSubtitle: '+' },
     { title: '출시한 서비스 수', subNumber: data.projectCount, smallSubtitle: '+' },
@@ -12,14 +12,14 @@ export async function AboutSection() {
   ];
 
   return (
-    <section id="about" className="relative flex h-[45vh] flex-col justify-end gap-4 sm:h-screen sm:justify-center sm:gap-8">
+    <section id="about" className="relative flex h-[45vh] flex-col justify-end gap-8 sm:h-screen sm:justify-center sm:gap-16">
       <div className="flex w-full justify-between">
         <SectionTitle title="about" />
         <ListButton href="/members" text="멤버 목록" />
       </div>
-      <ul className="mt-9 grid grid-cols-2 justify-between gap-4 sm:mt-25 sm:flex sm:flex-row sm:gap-20">
-        {aboutData.map((data, index) => (
-          <ShuffleItem key={index} title={data.title} subNumber={data.subNumber} smallSubtitle={data.smallSubtitle} index={index} />
+      <ul className="grid grid-cols-2 justify-between gap-4 sm:grid-cols-4 sm:gap-20">
+        {ABOUT.map((data, index) => (
+          <ShuffleItem key={index} index={index} title={data.title} subNumber={data.subNumber} smallSubtitle={data.smallSubtitle} />
         ))}
       </ul>
     </section>

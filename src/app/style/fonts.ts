@@ -7,6 +7,7 @@ export const productDesignFont = localFont({
   variable: '--font-product-design',
   display: 'swap'
 });
+
 // regular, medium, semibold, bold
 export const pretendardFont = localFont({
   src: [

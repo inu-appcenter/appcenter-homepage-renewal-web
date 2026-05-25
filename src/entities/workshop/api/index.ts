@@ -6,7 +6,7 @@ export const workShopApi = {
   getAll: () => {
     return http.get<WorkShop[]>('/photo-board/public/all-boards-contents', {
       cache: 'force-cache',
-      next: { tags: [workShopKeys.all] }
+      next: { tags: [...workShopKeys.all] }
     });
   },
 

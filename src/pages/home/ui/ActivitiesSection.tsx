@@ -12,10 +12,8 @@ import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export const ActivitiesSection = () => {
   return (
-    <section id="activity" className="flex flex-col justify-center pt-30 sm:h-screen sm:gap-8 sm:pt-0">
-      <div className="relative mb-16 flex flex-col justify-center sm:mb-0">
-        <SectionTitle title="activity" />
-      </div>
+    <section id="activity" className="flex flex-col justify-center pt-30 sm:h-screen sm:gap-8">
+      <SectionTitle title="activity" className="mb-16 sm:mb-0" />
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activities" />
         <ListButton href="/activitylist" />

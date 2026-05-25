@@ -34,10 +34,8 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
   return (
     <>
       <section className="flex flex-col justify-center pt-35">
-        <div className="mb-10 sm:mb-12">
-          <StatusBadge status={recruitmentData.status} />
-          <h1 className="mt-2 text-xl/5 font-bold text-white sm:mt-2 sm:text-[2.5rem]/10">{recruitmentData.title}</h1>
-        </div>
+        <StatusBadge status={recruitmentData.status} />
+        <h1 className="mt-2 mb-12 text-xl/5 font-bold text-white sm:text-[2.5rem]/10">{recruitmentData.title}</h1>
 
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-40">
           <div className="relative flex-1">
@@ -86,15 +84,22 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
               <div className="text-base font-semibold sm:text-2xl/6">모집 대상</div>
               <div className="text-base font-medium sm:text-2xl/6">{recruitmentData.targetAudience ? recruitmentData.targetAudience : '-'}</div>
             </div>
-            {recruitmentData.status === 'RECRUITING' ? (
-              <AnimationButton target="_top" href={recruitmentData.applyLink}>
-                <div className="text-base/4 text-white sm:text-2xl/6">지원하러 가기</div>
-              </AnimationButton>
-            ) : (
-              <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">
-                {recruitmentData.status === 'CLOSED' ? '모집이 종료되었습니다' : '모집 대기중입니다'}
-              </div>
-            )}
+            {(() => {
+              switch (recruitmentData.status) {
+                case 'RECRUITING':
+                  return (
+                    <AnimationButton target="_blank" rel="noopener noreferrer" href={recruitmentData.applyLink}>
+                      <div className="text-white sm:text-2xl/6">지원하러 가기</div>
+                    </AnimationButton>
+                  );
+                case 'CLOSED':
+                  return <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">모집이 종료되었습니다</div>;
+                case 'WAITING':
+                  return <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">모집 대기중입니다</div>;
+                default:
+                  return null;
+              }
+            })()}
           </div>
         </div>
       </section>
@@ -102,7 +107,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
         id="main-content"
         tabIndex={0}
         aria-label={recruitmentData.body}
-        className="bg-surface-elevated mt-10 rounded-2xl px-4 py-8 text-[16px] wrap-break-word whitespace-pre-line text-white sm:mt-20 sm:px-20 sm:py-15 sm:text-xl"
+        className="bg-surface-elevated mt-10 rounded-2xl px-4 py-8 text-base wrap-break-word whitespace-pre-line text-white sm:mt-20 sm:px-20 sm:py-15 sm:text-xl"
       >
         {recruitmentData.body}
       </section>

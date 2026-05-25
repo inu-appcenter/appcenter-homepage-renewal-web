@@ -15,6 +15,8 @@ import { Recruitment } from 'entities/recruitment';
 import { Alert } from 'shared/ui/alert';
 import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
+import { Input } from 'shared/ui/form-input';
+import { TextArea } from 'shared/ui/text-area';
 
 export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) {
   const isEditMode = initialData ? true : false;
@@ -73,15 +75,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           <div className="flex flex-row gap-6">
             <div className="flex flex-1 flex-col gap-4">
               <Input label="공고 제목" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="예: 앱센터 18기 모집" />
-              <div className="h-full space-y-1">
-                <label className="text-sm font-medium text-slate-700">모집 설명</label>
-                <textarea
-                  value={form.body}
-                  onChange={(e) => setForm({ ...form, body: e.target.value })}
-                  className="h-full w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm transition-all outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                  placeholder="모집 설명을 입력하세요"
-                />
-              </div>
+              <TextArea label="모집 설명" required value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} placeholder="모집 설명을 입력하세요" className="h-48" />
             </div>
 
             {/* 오른쪽: 썸네일 업로드 영역 */}
@@ -127,7 +121,7 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
               </div>
               <Input label="모집 대상" value={form.targetAudience} onChange={(e) => setForm({ ...form, targetAudience: e.target.value })} placeholder="예: 열정있는 유니들" />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-7">
               <Alert type="warning">
                 <span className="whitespace-pre-line">{'링크 끝에 붙은 ? 기호와 그 뒤의 내용(예: ?usp=sharing)은 모두 지우고 입력해 주세요. \n설문지 링크가 제대로 작동하지 않을 수 있습니다.'}</span>
               </Alert>
@@ -197,28 +191,10 @@ export function RecruitmentForm({ initialData }: { initialData?: Recruitment }) 
           </div>
         </section>
 
-        <div className="flex justify-end pt-6">
-          <SaveButton disabled={isPending || !form.title || !form.startDate || !form.endDate} isPending={isPending} className="w-60" onClick={handleSubmit}>
-            {isEditMode ? '수정 사항 저장' : '모집 공고 등록'}
-          </SaveButton>
-        </div>
+        <SaveButton disabled={isPending || !form.title || !form.startDate || !form.endDate} isPending={isPending} className="fixed right-20 bottom-10 w-50 shadow" onClick={handleSubmit}>
+          {isEditMode ? '수정 사항 저장' : '모집 공고 등록'}
+        </SaveButton>
       </form>
     </div>
   );
 }
-
-const Input = ({ label, required, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => {
-  return (
-    <div className="space-y-1">
-      <label className="flex items-center gap-1 text-sm font-medium text-slate-700">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </label>
-      <input
-        required={required}
-        {...props}
-        className={`w-full rounded-lg border border-slate-200 px-3 py-2 text-sm transition-all outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${className}`}
-      />
-    </div>
-  );
-};

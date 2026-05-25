@@ -3,7 +3,6 @@ import { useState, useMemo } from 'react';
 import { useFAQs } from 'entities/faq';
 
 import { Part } from 'shared/types/part';
-import { SearchBar } from 'shared/ui/searchbar';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 
@@ -14,7 +13,6 @@ export const AdminFAQList = () => {
   const { data } = useFAQs();
   const { data: partData } = usePart();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<Part | 'All'>('All');
 
   const sortedFaqs = useMemo(() => {
@@ -25,11 +23,10 @@ export const AdminFAQList = () => {
 
   const filteredFaqs = useMemo(() => {
     return sortedFaqs.filter((faq) => {
-      const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPart = selectedPart === 'All' || faq.part === selectedPart;
-      return matchesSearch && matchesPart;
+      return matchesPart;
     });
-  }, [searchTerm, selectedPart, sortedFaqs]);
+  }, [selectedPart, sortedFaqs]);
 
   return (
     <>
@@ -45,7 +42,6 @@ export const AdminFAQList = () => {
             </button>
           ))}
         </div>
-        <SearchBar placeholder="질문 또는 답변 입력..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <AddFAQForm />
       </div>
 

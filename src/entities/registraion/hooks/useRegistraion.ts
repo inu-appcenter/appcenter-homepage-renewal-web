@@ -23,9 +23,7 @@ export const useRegistrationActions = () => {
       toast.success('인증 코드가 성공적으로 변경되었습니다');
       invalidateRegistration();
     },
-    onError: (err) => {
-      toast.error(err.message);
-    }
+    onError: (error) => toast.error(error.message)
   });
 
   return {

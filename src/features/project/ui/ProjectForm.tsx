@@ -1,19 +1,21 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { Project } from 'entities/project';
 import { useRoleContext } from 'entities/sign';
-import { ProjectFormType, ProjectImage } from '../types/form';
 import { SaveButton } from 'shared/ui/button';
 import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
-import { toast } from 'sonner';
 
+import { ProjectFormType, ProjectImage } from '../types/form';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 import { StackForm } from './StackForm';
 import { MemberForm } from './MemberForm';
 
 import dynamic from 'next/dynamic';
+import { Input } from 'shared/ui/form-input';
+import { ImageInput } from 'shared/ui/image-input';
 // CloudFlare Workers 환경에서는 3MIB로 제한되므로, 동적 임포트로 최적화
 const MarkdownEditor = dynamic(() => import('shared/ui/markdown-editor').then((mod) => mod.MarkdownEditor), {
   ssr: false,
@@ -61,25 +63,18 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         }
   );
 
-  const handleSpecificImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: 0 | 1) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > IMAGE_SIZE_LIMIT) {
-        toast.error('이미지 파일크기는 4MB 이하여야 합니다.');
-        e.target.value = '';
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setForm((prev) => {
-        const newImages = [...prev.images];
-        const existingImage = newImages[index];
-        // 기존에 이미지가 없었거나 placeholder였던 경우 새로운 ID 부여
-        const newId = existingImage.url === '' ? Date.now() + index : existingImage.id;
-        newImages[index] = { id: newId, url: previewUrl, file };
-        return { ...prev, images: newImages };
-      });
-      e.target.value = '';
+  const handleImageChange = (file: File | null, index: 0 | 1) => {
+    if (file === null) {
+      removeSpecificImage(index);
+      return;
     }
+    setForm((prev) => {
+      const newImages = [...prev.images];
+      const existingImage = newImages[index];
+      const newId = existingImage.url === '' ? Date.now() + index : existingImage.id;
+      newImages[index] = { id: newId, url: URL.createObjectURL(file), file };
+      return { ...prev, images: newImages };
+    });
   };
 
   const removeSpecificImage = async (index: 0 | 1) => {
@@ -128,8 +123,8 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     }));
   };
 
-  const appIcon = form.images[0]?.url;
-  const thumbnail = form.images[1]?.url;
+  const appIconValue: File | string | null = form.images[0]?.file ?? (form.images[0]?.url || null);
+  const thumbnailValue: File | string | null = form.images[1]?.file ?? (form.images[1]?.url || null);
   const detailImages = form.images.length > 2 ? form.images.slice(2).filter(Boolean) : [];
 
   return (
@@ -163,30 +158,10 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
 
           <div className="flex flex-col gap-6 md:flex-row md:items-stretch">
             <div className="flex flex-1 flex-col gap-6">
-              <div className="flex w-32 flex-col gap-2 md:w-40">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-slate-800">앱 아이콘</span>
-                  {appIcon && (
-                    <button type="button" onClick={() => removeSpecificImage(0)} className="text-xs text-red-500 hover:underline">
-                      삭제
-                    </button>
-                  )}
-                </div>
-                <label className="group relative flex aspect-square w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100">
-                  {appIcon ? (
-                    <>
-                      <img src={appIcon} alt="app-icon" className="h-full w-full object-cover" />
-                      <HoverOverlay label="아이콘 변경" />
-                    </>
-                  ) : (
-                    <EmptyImagePlaceholder />
-                  )}
-                  <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSpecificImageChange(e, 0)} />
-                </label>
-              </div>
+              <ImageInput label="앱 아이콘" value={appIconValue} onChange={(file) => handleImageChange(file, 0)} className="w-32 md:w-40" />
 
               <div className="flex flex-col gap-4">
-                <Input label="프로젝트명" type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
+                <Input label="프로젝트명" required type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="프로젝트 이름을 입력하세요" />
                 <Input label="부제목 (한줄 소개)" type="text" value={form.subTitle} onChange={(e) => setForm({ ...form, subTitle: e.target.value })} placeholder="짧은 소개글을 입력하세요" />
 
                 <div className="flex flex-col gap-2">
@@ -196,27 +171,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
               </div>
             </div>
 
-            <div className="flex w-full shrink-0 flex-col gap-2 md:w-72 lg:w-96">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-slate-800">썸네일</span>
-                {thumbnail && (
-                  <button type="button" onClick={() => removeSpecificImage(1)} className="text-xs text-red-500 hover:underline">
-                    삭제
-                  </button>
-                )}
-              </div>
-              <label className="group relative flex min-h-60 w-full flex-1 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-blue-400 hover:bg-slate-100">
-                {thumbnail ? (
-                  <>
-                    <img src={thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
-                    <HoverOverlay label="썸네일 변경" />
-                  </>
-                ) : (
-                  <EmptyImagePlaceholder />
-                )}
-                <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSpecificImageChange(e, 1)} />
-              </label>
-            </div>
+            <ImageInput label="썸네일" value={thumbnailValue} onChange={(file) => handleImageChange(file, 1)} className="w-full shrink-0 md:w-72 lg:w-96" areaClassName="min-h-60 w-full" />
           </div>
         </section>
 
@@ -304,28 +259,3 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     </div>
   );
 };
-
-const Input = ({ label, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-slate-800">{label}</label>
-    <input {...props} className={`w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none ${className || ''}`} />
-  </div>
-);
-
-const EmptyImagePlaceholder = () => (
-  <div className="flex flex-col items-center text-slate-400 transition-transform group-hover:text-blue-500">
-    <Plus className="mb-2" size={24} />
-    <span className="text-xs font-medium">이미지 추가</span>
-  </div>
-);
-
-const HoverOverlay = ({ label }: { label: string }) => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-    <div className="flex translate-y-2 transform flex-col items-center gap-2 transition-transform group-hover:translate-y-0">
-      <div className="rounded-full bg-white/20 p-2">
-        <ImageIcon className="text-white" size={24} />
-      </div>
-      <span className="text-xs font-bold text-white">{label}</span>
-    </div>
-  </div>
-);

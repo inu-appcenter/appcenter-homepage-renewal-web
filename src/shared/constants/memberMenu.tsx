@@ -18,7 +18,6 @@ import { Layout, LucideIcon, Zap, UserSearch, Component, User, Lock } from 'luci
 interface MemberMenuType {
   group: string;
   tag: string;
-  description: string;
   path: `/member/${string}`;
   icon: LucideIcon;
   subMenu?: Array<{ name: string; href: `/member/${string}`; icon: LucideIcon }>;
@@ -27,7 +26,6 @@ export const MEMBER_MENU: MemberMenuType[] = [
   {
     group: '프로젝트 관리',
     tag: 'project',
-    description: '동아리에서 진행한 프로젝트 관리',
     path: '/member/project',
     icon: Layout,
     subMenu: [
@@ -38,7 +36,6 @@ export const MEMBER_MENU: MemberMenuType[] = [
   {
     group: '모집 관리',
     tag: 'recruit',
-    description: '동아리원 모집 공고 관리',
     icon: UserSearch,
     path: '/member/recruitment',
     subMenu: [
@@ -53,7 +50,6 @@ export const MEMBER_MENU: MemberMenuType[] = [
   {
     group: '회원 정보',
     tag: 'info',
-    description: '회원 정보 관리',
     path: '/member/info',
     subMenu: [
       { name: '회원 정보 관리', href: '/member/info', icon: User },
