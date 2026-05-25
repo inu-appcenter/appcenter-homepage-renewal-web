@@ -117,19 +117,18 @@ export const FullPageScroll = ({ children, header }: FullPageScrollProps) => {
   return (
     <ScrollContext.Provider value={{ scrollToId, activeId }}>
       {header}
-      <div className={`inset-0 overflow-hidden ${isMobile ? 'relative overflow-y-auto' : 'fixed overscroll-none'} touch-pan-y`} onWheel={handleWheel}>
-        <motion.div
-          ref={containerRef}
-          className="flex w-full flex-col"
-          animate={{ y: isMobile ? 0 : -currentY }}
-          transition={isChanging || isMobile ? { duration: 0 } : { duration: 0.8, ease: [0.6, 0.01, -0.05, 0.95] }}
-          onAnimationComplete={() => {
-            isAnimating.current = false;
-          }}
-        >
-          {children}
-        </motion.div>
-      </div>
+      <motion.div
+        className={`inset-0 ${isMobile ? 'relative overflow-y-auto' : 'fixed overscroll-none'} touch-pan-y`}
+        onWheel={handleWheel}
+        ref={containerRef}
+        animate={{ y: isMobile ? 0 : -currentY }}
+        transition={isChanging || isMobile ? { duration: 0 } : { duration: 0.8, ease: [0.6, 0.01, -0.05, 0.95] }}
+        onAnimationComplete={() => {
+          isAnimating.current = false;
+        }}
+      >
+        {children}
+      </motion.div>
     </ScrollContext.Provider>
   );
 };

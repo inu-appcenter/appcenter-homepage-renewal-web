@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
 
-import { Modal } from 'shared/ui/modal';
 import { RecruitmentField, useRecruitmentFieldActions, type RecruitmentFieldForm } from 'entities/recruitment-field';
+import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
+import { Input } from 'shared/ui/form-input';
 
 export const AddRecruitmentFieldForm = () => {
   const { addMutation } = useRecruitmentFieldActions();
@@ -74,32 +75,18 @@ export const DeleteRecruitmentFieldButton = ({ recruitmentFieldId }: { recruitme
 };
 
 const RecruitmentFieldForm = ({ initialData, onSubmit, isPending }: { initialData?: RecruitmentField; onSubmit: (data: RecruitmentFieldForm) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<RecruitmentFieldForm>({
-    name: initialData?.name || ''
-  });
+  const [name, setName] = useState(initialData?.name || '');
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit({ name });
       }}
       className="space-y-4"
     >
-      <div className="flex flex-col gap-2">
-        <label className="ml-1 text-sm font-semibold text-slate-400">
-          모집 분야 명 <span className="text-red-500">*</span>
-        </label>
-        <input
-          disabled={isPending}
-          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-          placeholder="모집 분야 이름"
-          autoFocus
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </div>
-      <SaveButton type="submit" disabled={isPending || !formData.name}>
+      <Input label="모집 분야" required value={name} onChange={(e) => setName(e.target.value)} autoFocus placeholder="모집 분야 이름을 입력해주세요." />
+      <SaveButton type="submit" disabled={isPending || !name}>
         {initialData ? '변경사항 수정' : '저장'}
       </SaveButton>
     </form>

@@ -4,11 +4,9 @@ import { MembersList } from './MembersList';
 import { generationApi } from 'entities/generation/api';
 
 export async function MembersPage() {
-  const data = await memberApi.getStats();
-  const memberData = await memberApi.getMembersInfo();
-  const generationData = await generationApi.getGroupYears();
+  const [data, memberData, generationData] = await Promise.all([memberApi.getStats(), memberApi.getMembersInfo(), generationApi.getGroupYears()]);
 
-  const aboutData = [
+  const ABOUT = [
     { title: 'TOTAL MEMBERS', subNumber: data.totalMemberCount },
     { title: 'CURRENT GEN', subNumber: `${data.currentYear}TH` },
     { title: 'PARTS', subNumber: data.partCount },
@@ -24,8 +22,8 @@ export async function MembersPage() {
           </span>
           <ScrambleText text="EMBERS" />
         </h1>
-        <div className="flex flex-row gap-5 pl-2 sm:gap-20">
-          {aboutData.map((item, index) => (
+        <div className="flex flex-row gap-5 sm:gap-20">
+          {ABOUT.map((item, index) => (
             <div key={index} className="flex flex-col gap-6 text-[20px]">
               <span className="text-brand-primary-light font-tokyo text-[2rem]/8 font-bold sm:text-[100px]/25">
                 <ScrambleText text={item.subNumber.toString()} />

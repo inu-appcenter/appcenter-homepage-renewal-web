@@ -57,9 +57,7 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
 const Stacks = ({ data }: { data: Project }) => {
   const hasNoContent = (!data.stacks || data.stacks.length === 0) && !data.githubLink;
 
-  if (hasNoContent) {
-    return <EmptyState title="기술 스택 정보가 비어있어요" description="어떤 기술로 만들어졌는지 곧 알려드릴게요" />;
-  }
+  if (hasNoContent) return <EmptyState title="기술 스택 정보가 비어있어요" description="어떤 기술로 만들어졌는지 곧 알려드릴게요" />;
 
   return (
     <div className="flex h-full flex-col justify-center gap-4 sm:gap-20">

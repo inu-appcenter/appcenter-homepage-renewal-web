@@ -51,6 +51,13 @@ button {
   }
 }
 
+@layer base {
+  [data-snap-scroll] section[id] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

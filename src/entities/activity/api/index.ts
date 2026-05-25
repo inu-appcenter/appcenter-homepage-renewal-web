@@ -6,7 +6,7 @@ export const activityApi = {
   getAll: () => {
     return http.get<Activity[]>('/activity-board/public/all-boards-contents', {
       cache: 'force-cache',
-      next: { tags: [activityKeys.all] }
+      next: { tags: [...activityKeys.all] }
     });
   },
   getById: (id: number) => {
@@ -33,19 +33,12 @@ export const activityApi = {
   // 이미지만 수정할 수 있으며 이미지 추가,수정 동시에 안됨
   editImage: ({ id, imageIds, images }: { id: number; imageIds?: number[]; images: FormData }) => {
     const params = new URLSearchParams();
-
-    imageIds?.forEach((imgId) => {
-      params.append('image_id', String(imgId));
-    });
+    imageIds?.forEach((imgId) => params.append('image_id', imgId.toString()));
     return http.patch<Activity>(`/activity-board/contents/${id}/images?${params.toString()}`, images);
   },
   deleteImage: ({ id, imageIds }: { id: number; imageIds: number[] }) => {
     const params = new URLSearchParams();
-
-    imageIds.forEach((imgId) => {
-      params.append('image_id', String(imgId));
-    });
-
+    imageIds.forEach((imgId) => params.append('image_id', imgId.toString()));
     return http.delete<Activity>(`/activity-board/contents/${id}/images?${params.toString()}`);
   }
 };

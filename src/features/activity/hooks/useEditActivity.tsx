@@ -9,13 +9,22 @@ import { toast } from 'sonner';
 // 3단계. 각 콘텐츠 섹션별 이미지 파일 확인 -> 파일이면 수정
 
 export const useEditActivity = () => {
-  const { editMetadataMutation, editThumbnailMutation, editImageMutation } = useActivityActions();
+  const { editMetadataMutation, editThumbnailMutation, editImageMutation, deleteImageMutation } = useActivityActions();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const editActivity = async (initialData: Activity, form: ActivityForm) => {
+  const editActivity = async (initialData: Activity, form: ActivityForm, deletedImages: Array<{ sectionId: number; imageId: number }> = []) => {
     try {
       const promises: Array<Promise<any>> = [];
+
+      const deletionMap = deletedImages.reduce<Record<number, number[]>>((acc, { sectionId, imageId }) => {
+        (acc[sectionId] ??= []).push(imageId);
+        return acc;
+      }, {});
+
+      for (const [sectionId, imageIds] of Object.entries(deletionMap)) {
+        promises.push(deleteImageMutation.mutateAsync({ id: Number(sectionId), imageIds }));
+      }
 
       // 메타데이터 변경 사항 확인
       const isMetadataChanged =
@@ -103,5 +112,5 @@ export const useEditActivity = () => {
     }
   };
 
-  return { editActivity, isPending: editMetadataMutation.isPending || editThumbnailMutation.isPending || editImageMutation.isPending };
+  return { editActivity, isPending: editMetadataMutation.isPending || editThumbnailMutation.isPending || editImageMutation.isPending || deleteImageMutation.isPending };
 };

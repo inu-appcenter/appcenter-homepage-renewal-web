@@ -34,14 +34,12 @@ export const AdminHomePage = () => {
               <span className="mb-2 inline-block text-[11px] font-bold tracking-wider text-slate-400 uppercase">{feature.tag}</span>
               <h3 className="mb-2 text-xl font-bold text-slate-900">{feature.group}</h3>
 
-              {feature.subMenu ? (
+              {feature.subMenu && (
                 <div className="mt-2 space-y-1.5">
                   {feature.subMenu.map((sub) => (
                     <Submenu key={sub.name} name={sub.name} href={sub.href} />
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm leading-snug font-medium text-slate-500 italic opacity-0 transition-opacity group-hover:opacity-100">{feature.description}</p>
               )}
             </div>
           </div>

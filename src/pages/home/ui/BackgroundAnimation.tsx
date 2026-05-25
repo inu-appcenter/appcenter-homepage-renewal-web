@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useSpring, useMotionValue, useTransform } from 'motion/react';
 
 export const BackgroundAnimation = () => {
@@ -22,23 +22,23 @@ export const BackgroundAnimation = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const handleTimeUpdate = () => {
+  const handleTimeUpdate = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.duration - video.currentTime < 1.0) {
-      setIsEnding(true);
-    } else {
-      setIsEnding(false);
-    }
-  };
+    const ending = video.duration - video.currentTime < 1.0;
+    setIsEnding((prev) => (prev !== ending ? ending : prev));
+  }, []);
 
   const maskImage = useTransform([smoothX, smoothY], ([x, y]) => `radial-gradient(circle 450px at ${x}px ${y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0) 100%)`);
 
   return (
     <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden bg-black">
-      <div className="absolute inset-0 hidden opacity-10 sm:block">
-        <img src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" className="object-cover" />
-      </div>
+      <div
+        className="absolute inset-0 hidden bg-cover opacity-10 sm:block"
+        style={{
+          backgroundImage: 'url(/images/landing.webp)'
+        }}
+      />
 
       <motion.div
         className="absolute inset-0 z-10 hidden sm:block"
@@ -50,7 +50,7 @@ export const BackgroundAnimation = () => {
         <img src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" className="object-cover" />
       </motion.div>
 
-      <video ref={videoRef} poster="/images/landing.webp" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="inline-block h-full w-full object-cover sm:hidden">
+      <video ref={videoRef} poster="/images/landing.webp" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="h-full w-full object-cover sm:hidden">
         <source src="/videos/landing.webm" type="video/webm" />
         <source src="/videos/landing.mp4" type="video/mp4" />
         {/* Fallback content for unsupported browsers */}

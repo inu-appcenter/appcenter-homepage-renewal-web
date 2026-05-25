@@ -23,7 +23,7 @@ export const useActivityActions = () => {
   const router = useRouter();
 
   const invalidateActivities = async () => {
-    await revalidateTag(activityKeys.all);
+    await revalidateTag(...activityKeys.all);
     await queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
   };
 
@@ -35,9 +35,7 @@ export const useActivityActions = () => {
       router.push('/admin/activity');
       router.refresh();
     },
-    onError: (error) => {
-      toast.error(error.message);
-    }
+    onError: (error) => toast.error(error.message)
   });
 
   const deleteMutation = useMutation({

@@ -8,7 +8,7 @@ export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isA
   return (
     <Link
       href={`/joinus/${data.id}`}
-      className={`group bg-background relative flex h-full flex-col gap-1 overflow-hidden rounded-lg border p-4 transition-all duration-500 sm:gap-4 sm:rounded-xl sm:border-2 sm:px-6 sm:py-5 ${
+      className={`bg-background relative flex h-full flex-col gap-1 overflow-hidden rounded-lg border p-4 transition-all duration-500 sm:gap-4 sm:rounded-xl sm:border-2 sm:px-6 sm:py-5 ${
         isActive
           ? 'border-brand-primary-cta bg-custom-black -translate-y-2 shadow-[0px_0px_20px_0px_#57FF8544]'
           : 'border-custom-gray-600 hover:border-brand-primary-cta hover:bg-custom-black hover:-translate-y-2 hover:shadow-[0px_0px_20px_0px_#57FF8544]'
@@ -32,7 +32,7 @@ export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isA
       )}
       <div className="mt-1 flex items-center gap-4">
         <StatusBadge status={data.status} />
-        {data.status === 'RECRUITING' && <span className="text-sm/3.5 font-semibold text-white sm:text-xl/8">D-{data.dday}</span>}
+        {data.status === 'RECRUITING' && <span className="hidden text-sm/3.5 font-semibold text-white sm:block sm:text-xl/8">D-{data.dday}</span>}
       </div>
       <div className="text-brand-primary-cta line-clamp-2 text-sm font-semibold sm:text-[28px]">{data.title}</div>
       <hr className="border-white" />

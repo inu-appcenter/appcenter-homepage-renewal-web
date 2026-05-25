@@ -44,7 +44,6 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
             key={selectedCategory}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: false, margin: '-50px' }}
             variants={{
               hidden: { opacity: 0 },
               show: {
@@ -55,7 +54,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
             className="flex flex-col gap-2"
           >
             {filteredData.map((item, index) => (
-              <FAQItem key={`${item.part}-${index}`} data={item} isOpen={openId === index} onToggle={() => setOpenId(openId === index ? null : index)} />
+              <FAQItem key={index} data={item} isOpen={openId === index} onToggle={() => setOpenId(openId === index ? null : index)} />
             ))}
           </motion.div>
         </AnimatePresence>
@@ -85,7 +84,6 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
       }}
-      layout
       className="group flex flex-col text-white"
     >
       <button
@@ -114,9 +112,8 @@ const FAQItem = ({ data, isOpen, onToggle }: FAQItemProps) => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden"
           >
-            <p className="flex flex-row items-center gap-3 px-4 py-3 text-[1rem]/4 sm:px-14 sm:py-5 sm:text-xl/7">
+            <p className="flex flex-row items-center gap-3 px-4 py-3 sm:px-14 sm:py-5 sm:text-xl/7">
               <CornerDownRight className="w-6 shrink-0 sm:w-10" aria-hidden="true" />
               {data.answer}
             </p>

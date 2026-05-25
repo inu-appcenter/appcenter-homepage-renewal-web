@@ -1,10 +1,10 @@
 import { activityApi } from 'entities/activity';
 import { ImageSection } from './ImageSection';
 import { MainSection } from './MainSection';
-import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: number }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
+
   try {
     const data = await activityApi.getById(id);
 

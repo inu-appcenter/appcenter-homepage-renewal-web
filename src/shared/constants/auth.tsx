@@ -1,5 +1,3 @@
-// shared/constant/auth.ts
-
 export const AUTH_ERROR_TYPES = {
   ADMIN_REQUIRED: 'admin_required',
   MEMBER_REQUIRED: 'member_required',

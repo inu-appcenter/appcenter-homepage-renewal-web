@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Search, Loader2, Check, AlertCircle } from 'lucide-react';
 import { Member, useSearchMember } from 'entities/member';
+import { Input } from 'shared/ui/form-input';
 
 interface SearchMemberProps {
   initialName?: string;
@@ -47,10 +48,10 @@ export const SearchMember = ({ initialName = '', onSelect, isPending }: SearchMe
       <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">역할을 추가할 동아리원 이름 검색</label>
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <input
+          <Input
             disabled={isPending || isSearching}
             className={`w-full rounded-2xl border bg-slate-50 px-3 py-3 pl-5 text-sm transition-all outline-none ${
-              selectedId ? 'border-emerald-500/50' : 'border-slate-100 focus:border-emerald-500'
+              selectedId ? 'border-emerald-500/50' : 'border-slate-100'
             } ${noResults ? 'border-amber-400' : ''}`}
             placeholder="이름을 입력하세요 (2글자 이상)"
             value={query}

@@ -20,7 +20,7 @@ export const useProjectActions = () => {
   const queryClient = useQueryClient();
 
   const invalidateProjects = async () => {
-    await revalidateTag(projectKeys.all);
+    await revalidateTag(...projectKeys.all);
     await queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
   };
 
@@ -30,9 +30,7 @@ export const useProjectActions = () => {
       invalidateProjects();
       toast.success('프로젝트가 추가되었습니다');
     },
-    onError: (error) => {
-      toast.error(error.message || '프로젝트 추가에 실패했습니다. 다시 시도해주세요.');
-    }
+    onError: (error) => toast.error(error.message || '프로젝트 추가에 실패했습니다. 다시 시도해주세요.')
   });
 
   const editMutation = useMutation({
@@ -41,9 +39,7 @@ export const useProjectActions = () => {
       invalidateProjects();
       toast.success('프로젝트가 수정되었습니다');
     },
-    onError: (error) => {
-      toast.error(error.message || '프로젝트 수정에 실패했습니다. 다시 시도해주세요.');
-    }
+    onError: (error) => toast.error(error.message || '프로젝트 수정에 실패했습니다. 다시 시도해주세요.')
   });
 
   const deleteMutation = useMutation({
@@ -52,9 +48,7 @@ export const useProjectActions = () => {
       invalidateProjects();
       toast.success('프로젝트가 삭제되었습니다');
     },
-    onError: (error) => {
-      toast.error(error.message || '프로젝트 삭제에 실패했습니다. 다시 시도해주세요.');
-    }
+    onError: (error) => toast.error(error.message || '프로젝트 삭제에 실패했습니다. 다시 시도해주세요.')
   });
 
   const toggleMutation = useMutation({
@@ -65,5 +59,6 @@ export const useProjectActions = () => {
   const deleteImageMutation = useMutation({
     mutationFn: projectApi.deleteImage
   });
+
   return { addMutation, editMutation, deleteMutation, toggleMutation, deleteImageMutation };
 };

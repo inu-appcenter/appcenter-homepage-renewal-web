@@ -12,7 +12,8 @@ export function generateMetadata() {
   };
 }
 
-const STATUSPRIORITY: Record<string, number> = {
+const STATUSPRIORITY = {
+  AUTO: 0,
   RECRUITING: 1,
   WAITING: 2,
   CLOSED: 3
@@ -22,12 +23,9 @@ export async function JoinUsPage() {
   const data = await recruitmentApi.getAll();
 
   const sortedData = [...data].sort((a, b) => {
-    const statusDiff = (STATUSPRIORITY[a.status] || 99) - (STATUSPRIORITY[b.status] || 99);
+    const statusDiff = STATUSPRIORITY[a.status] - STATUSPRIORITY[b.status];
 
-    if (statusDiff !== 0) {
-      return statusDiff;
-    }
-
+    if (statusDiff !== 0) return statusDiff;
     return b.id - a.id;
   });
 
@@ -36,7 +34,7 @@ export async function JoinUsPage() {
   return (
     <>
       <MainSection />
-      {data && data.length > 0 && (
+      {data.length > 0 && (
         <>
           <CarouselSection data={sortedData} />
           <ListSection data={sortedData} />

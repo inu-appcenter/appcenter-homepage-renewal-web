@@ -6,6 +6,7 @@ import { Modal } from 'shared/ui/modal';
 import { useMemberActions, type Member, type MemberForm } from 'entities/member';
 import { SaveButton } from 'shared/ui/button';
 import { formatPhoneNumber } from 'shared/utils/phoneNumber';
+import { Input } from 'shared/ui/form-input';
 
 export const AddMemberForm = () => {
   const { addMutation } = useMemberActions();
@@ -87,7 +88,7 @@ const DEFAULT_FORM: MemberForm = {
   department: null
 };
 const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: MemberForm; onSubmit: (data: MemberForm) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<MemberForm>(initialData || DEFAULT_FORM);
+  const [formData, setFormData] = useState<MemberForm>(initialData ?? DEFAULT_FORM);
 
   const handleChange = (field: keyof MemberForm, value: string | null) => {
     setFormData((prev) => ({ ...prev, [field]: value === '' ? null : value }));
@@ -119,11 +120,11 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
           )}
         </div>
 
-        <div className="relative w-full max-w-xs">
-          <Camera className="absolute top-3 left-4 text-slate-300" size={16} />
-          <input
+        <div className="w-full max-w-xs">
+          <Input
+            icon={Camera}
             disabled={isPending}
-            className="w-full rounded-xl bg-slate-50 p-3 pl-11 text-xs outline-none focus:ring-2 focus:ring-slate-900/10 disabled:opacity-60"
+            className="py-2"
             placeholder="프로필 이미지 URL을 입력하세요"
             value={formData.profileImage || ''}
             onChange={(e) => handleChange('profileImage', e.target.value)}
@@ -135,125 +136,65 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
       <section className="space-y-3">
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">기본 정보</h3>
         <div className="grid grid-cols-2 gap-3">
-          <div className="relative">
-            <div className="absolute top-2.5 left-4 text-slate-400">
-              <User size={16} />
-              <span className="absolute -top-0.5 -right-1.5 text-xs font-bold text-red-500">*</span>
-            </div>
-            <input
-              disabled={isPending}
-              required
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="이름 (필수)"
-              value={formData.name || ''}
-              onChange={(e) => handleChange('name', e.target.value)}
-            />
-          </div>
-          <div className="relative">
-            <Mail className="absolute top-2.5 left-4 text-slate-300" size={16} />
-            <input
-              disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="이메일"
-              value={formData.email || ''}
-              onChange={(e) => handleChange('email', e.target.value)}
-            />
-          </div>
+          <Input icon={User} required disabled={isPending} placeholder="이름 (필수)" value={formData.name || ''} className="py-2" onChange={(e) => handleChange('name', e.target.value)} />
+          <Input icon={Mail} disabled={isPending} placeholder="이메일" value={formData.email || ''} className="py-2" onChange={(e) => handleChange('email', e.target.value)} />
         </div>
-        <div className="relative">
-          <Phone className="absolute top-2.5 left-4 text-slate-300" size={16} />
-          <input
-            disabled={isPending}
-            type="tel"
-            className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-            placeholder="전화번호 (010-0000-0000)"
-            value={formData.phoneNumber || ''}
-            onChange={(e) => handleChange('phoneNumber', formatPhoneNumber(e.target.value))}
-          />
-        </div>
+        <Input
+          icon={Phone}
+          type="tel"
+          disabled={isPending}
+          placeholder="전화번호 (010-0000-0000)"
+          value={formData.phoneNumber || ''}
+          className="py-2"
+          onChange={(e) => handleChange('phoneNumber', formatPhoneNumber(e.target.value))}
+        />
       </section>
 
-      {/* 2. 학적 정보 (기존과 동일) */}
+      {/* 2. 학적 정보 */}
       <section className="space-y-3">
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">학적 정보</h3>
         <div className="grid grid-cols-2 gap-3">
-          <div className="relative">
-            <div className="absolute top-2.5 left-4 text-slate-400">
-              <Hash size={16} />
-              <span className="absolute -top-0.5 -right-1.5 text-xs font-bold text-red-500">*</span>
-            </div>
-            <input
-              disabled={isPending}
-              required
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="학번 (필수)"
-              value={formData.studentNumber || ''}
-              onChange={(e) => handleChange('studentNumber', e.target.value)}
-            />
-          </div>
-          <div className="relative">
-            <GraduationCap className="absolute top-2.5 left-4 text-slate-300" size={16} />
-            <input
-              disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="학과/학부"
-              value={formData.department || ''}
-              onChange={(e) => handleChange('department', e.target.value)}
-            />
-          </div>
+          <Input
+            icon={Hash}
+            required
+            disabled={isPending}
+            placeholder="학번 (필수)"
+            value={formData.studentNumber || ''}
+            className="py-2"
+            onChange={(e) => handleChange('studentNumber', e.target.value)}
+          />
+          <Input icon={GraduationCap} disabled={isPending} placeholder="학과/학부" value={formData.department || ''} className="py-2" onChange={(e) => handleChange('department', e.target.value)} />
         </div>
       </section>
 
-      {/* 3. 소셜 및 포트폴리오 링크 (기존과 동일) */}
+      {/* 3. 소셜 및 포트폴리오 링크 */}
       <section className="space-y-3">
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">소셜 및 링크</h3>
         <div className="grid grid-cols-1 gap-3">
-          <div className="relative">
-            <Github className="absolute top-2.5 left-4 text-slate-300" size={16} />
-            <input
-              disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="GitHub 링크"
-              value={formData.gitRepositoryLink || ''}
-              onChange={(e) => handleChange('gitRepositoryLink', e.target.value)}
-            />
-          </div>
-          <div className="relative">
-            <FileUser className="absolute top-2.5 left-4 text-slate-300" size={16} />
-            <input
-              disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="포트폴리오 링크"
-              value={formData.behanceLink || ''}
-              onChange={(e) => handleChange('behanceLink', e.target.value)}
-            />
-          </div>
-          <div className="relative">
-            <LinkIcon className="absolute top-2.5 left-4 text-slate-300" size={16} />
-            <input
-              disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="블로그 링크"
-              value={formData.blogLink || ''}
-              onChange={(e) => handleChange('blogLink', e.target.value)}
-            />
-          </div>
+          <Input
+            icon={Github}
+            disabled={isPending}
+            placeholder="GitHub 링크"
+            value={formData.gitRepositoryLink || ''}
+            className="py-2"
+            onChange={(e) => handleChange('gitRepositoryLink', e.target.value)}
+          />
+          <Input icon={FileUser} disabled={isPending} placeholder="포트폴리오 링크" value={formData.behanceLink || ''} className="py-2" onChange={(e) => handleChange('behanceLink', e.target.value)} />
+          <Input icon={LinkIcon} disabled={isPending} placeholder="블로그 링크" value={formData.blogLink || ''} className="py-2" onChange={(e) => handleChange('blogLink', e.target.value)} />
         </div>
       </section>
 
-      {/* 4. 자기소개 (기존과 동일) */}
+      {/* 4. 자기소개 */}
       <section className="space-y-3">
         <h3 className="ml-1 text-xs font-bold text-slate-400 uppercase">자기소개</h3>
-        <div className="relative">
-          <FileText className="absolute top-2.5 left-4 text-slate-300" size={16} />
-          <input
-            disabled={isPending}
-            className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-            placeholder="짧은 소개를 작성해주세요"
-            value={formData.description || ''}
-            onChange={(e) => handleChange('description', e.target.value)}
-          />
-        </div>
+        <Input
+          icon={FileText}
+          disabled={isPending}
+          placeholder="짧은 소개를 작성해주세요"
+          value={formData.description || ''}
+          className="py-2"
+          onChange={(e) => handleChange('description', e.target.value)}
+        />
       </section>
       <SaveButton disabled={isPending || !formData.name || !formData.studentNumber} isPending={isPending}>
         {initialData ? '변경사항 수정' : '저장'}

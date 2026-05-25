@@ -5,7 +5,6 @@ import { cn } from 'shared/utils/cn';
 interface SaveButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isPending?: boolean;
 }
-
 export function SaveButton({ isPending, children, disabled, type = 'submit', className = '', ...props }: SaveButtonProps) {
   return (
     <button

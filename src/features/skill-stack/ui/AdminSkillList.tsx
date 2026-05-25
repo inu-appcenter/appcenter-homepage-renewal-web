@@ -42,7 +42,7 @@ const Item = ({ data }: { data: ReturnType<typeof useSkillStack>['data'][number]
       <td className="px-6 py-5 text-sm font-medium text-slate-500">{data.name || '내용 없음'}</td>
       <td className="px-6 py-5">
         <span
-          className={`inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-sm font-semibold ${SKILL_CATEGORY_COLORS[data.category]?.bg || 'bg-slate-100'} ${
+          className={`inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-sm font-semibold ${SKILL_CATEGORY_COLORS[data.category].bg || 'bg-slate-100'} ${
             SKILL_CATEGORY_COLORS[data.category]?.text || 'text-slate-500'
           }`}
         >

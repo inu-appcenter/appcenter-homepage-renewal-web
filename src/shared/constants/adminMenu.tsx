@@ -8,7 +8,6 @@ import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon,
 {
   group: '기능 이름',
   tag: '기능 태그 home에서 보이는 이름',
-  description: '기능 설명',
   subMenu: [ // 서브메뉴가 있을 경우
     { name: '서브메뉴 이름', href: '/admin/서브메뉴 경로', icon: 아이콘 },
   ],
@@ -18,7 +17,6 @@ import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon,
 interface AdminMenuType {
   group: string;
   tag: string;
-  description: string;
   path: `/admin/${string}`;
   icon: LucideIcon;
   subMenu?: Array<{ name: string; href: `/admin/${string}`; icon: LucideIcon }>;
@@ -27,7 +25,6 @@ export const ADMIN_MENU: AdminMenuType[] = [
   {
     group: '동아리 관리',
     tag: 'club',
-    description: '구성원 정보, 기수 및 권한 체계 관리',
     path: '/admin/member',
     icon: Users,
     subMenu: [
@@ -39,7 +36,6 @@ export const ADMIN_MENU: AdminMenuType[] = [
   {
     group: '프로젝트 관리',
     tag: 'project',
-    description: '동아리에서 진행한 프로젝트 관리',
     path: '/admin/project',
     icon: Layout,
     subMenu: [
@@ -50,7 +46,6 @@ export const ADMIN_MENU: AdminMenuType[] = [
   {
     group: '게시판 관리',
     tag: 'image',
-    description: '동아리 활동 업로드 및 관리',
     icon: ImageIcon,
     path: '/admin/activity',
     subMenu: [
@@ -61,7 +56,6 @@ export const ADMIN_MENU: AdminMenuType[] = [
   {
     group: '모집 관리',
     tag: 'recruit',
-    description: '동아리 활동 업로드 및 관리',
     icon: UserSearch,
     path: '/admin/recruitment',
     subMenu: [
@@ -81,14 +75,12 @@ export const ADMIN_MENU: AdminMenuType[] = [
   {
     group: '질문 관리(FAQ)',
     tag: 'faq',
-    description: '자주 묻는 질문 관리',
     icon: MessageCircle,
     path: '/admin/faq'
   },
   {
     group: '멤버 인증 코드',
     tag: 'registration-code',
-    description: '인증 코드 관리',
     icon: Hash,
     path: '/admin/registration-code'
   }

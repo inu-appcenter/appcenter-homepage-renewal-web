@@ -81,9 +81,7 @@ export function SignUpPage() {
         onSuccess: () => {
           setIsSuccess(true);
         },
-        onError: (err: any) => {
-          setError(err.message || '회원가입 중 오류가 발생했습니다.');
-        }
+        onError: (err) => setError(err.message || '회원가입 중 오류가 발생했습니다.')
       });
     }
   };
