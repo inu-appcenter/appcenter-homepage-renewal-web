@@ -1,12 +1,9 @@
 ﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
 import { Project } from 'entities/project';
 import { useRoleContext } from 'entities/sign';
 import { SaveButton } from 'shared/ui/button';
-import { IMAGE_SIZE_ERROR_MESSAGE, IMAGE_SIZE_LIMIT } from 'shared/constants/dashBoard';
 
 import { ProjectFormType, ProjectImage } from '../types/form';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
@@ -27,6 +24,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
   const { mode } = useRoleContext();
   const isEditMode = Boolean(initialData);
 
+  const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
   const [form, setForm] = useState<ProjectFormType>({
     title: initialData?.title || '',
     subTitle: initialData?.subTitle || '',
@@ -43,8 +41,6 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
       url: url
     }))
   });
-
-  const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
 
   const { submit, isPending } = useProjectSubmit(
     initialData?.id
@@ -92,34 +88,28 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     });
   };
 
-  const handleDetailImagesAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      const hasLargeFile = newFiles.some((file) => file.size > IMAGE_SIZE_LIMIT);
-
-      if (hasLargeFile) {
-        toast.error(IMAGE_SIZE_ERROR_MESSAGE);
-        e.target.value = '';
-        return;
-      }
-
-      const newImageObjs = newFiles.map((file, index) => ({
-        id: Date.now() + index,
-        url: URL.createObjectURL(file),
-        file: file
-      }));
-      setForm((prev) => ({ ...prev, images: [...prev.images, ...newImageObjs] }));
-      e.target.value = '';
-    }
+  const addDetailImages = (files: File[]) => {
+    const newImageObjs = files.map((file, index) => ({
+      id: Date.now() + index,
+      url: URL.createObjectURL(file),
+      file
+    }));
+    setForm((prev) => ({ ...prev, images: [...prev.images, ...newImageObjs] }));
   };
 
-  const removeDetailImage = async (id: number, image: ProjectImage) => {
-    if (!image.file) {
-      setDeletedImageIds((prev) => [...prev, id]);
-    }
+  const removeDetailImage = (id: number, image: ProjectImage) => {
+    if (!image.file) setDeletedImageIds((prev) => [...prev, id]);
     setForm((prev) => ({
       ...prev,
       images: prev.images.filter((img, idx) => idx < 2 || img?.id !== id)
+    }));
+  };
+
+  const replaceDetailImage = (image: ProjectImage, file: File) => {
+    if (!image.file) setDeletedImageIds((prev) => [...prev, image.id]);
+    setForm((prev) => ({
+      ...prev,
+      images: prev.images.map((img) => (img.id === image.id ? { id: Date.now(), url: URL.createObjectURL(file), file } : img))
     }));
   };
 
@@ -229,24 +219,22 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {detailImages.map((image) => (
-                <div key={image.id} className="group relative aspect-square overflow-hidden rounded-lg border border-slate-200 bg-white">
-                  <img src={image.url} alt="project-image" className="h-full w-full object-cover" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
-                    <button
-                      type="button"
-                      onClick={() => removeDetailImage(image.id, image)}
-                      className="flex items-center gap-1 rounded bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600"
-                    >
-                      <Trash2 size={14} /> 삭제
-                    </button>
-                  </div>
-                </div>
+                <ImageInput
+                  key={image.id}
+                  value={image.file ?? (image.url || null)}
+                  onChange={(file) => (file ? replaceDetailImage(image, file) : removeDetailImage(image.id, image))}
+                  className="w-full"
+                  areaClassName="aspect-square"
+                />
               ))}
-              <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-white text-slate-400 transition-colors hover:border-blue-400 hover:text-blue-500">
-                <Plus size={24} className="mb-2" />
-                <span className="text-sm font-medium">이미지 추가</span>
-                <input type="file" multiple accept="image/*" className="hidden" onChange={handleDetailImagesAdd} />
-              </label>
+              <ImageInput
+                value={null}
+                onChange={(file) => {
+                  if (file) addDetailImages([file]);
+                }}
+                className="w-full"
+                areaClassName="aspect-square"
+              />
             </div>
           </div>
         </section>
