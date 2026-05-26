@@ -45,9 +45,9 @@ export function ChangePasswordForm() {
               <Input
                 icon={Lock}
                 label="현재 비밀번호"
+                type="password"
                 value={formData.currentPassword}
                 onChange={(e) => handleChange('currentPassword', e.target.value)}
-                passwordToggle
                 placeholder="현재 사용 중인 비밀번호"
                 disabled={isPending}
               />
@@ -62,18 +62,18 @@ export function ChangePasswordForm() {
               <Input
                 icon={KeyRound}
                 label="새 비밀번호"
+                type="password"
                 value={formData.newPassword}
                 onChange={(e) => handleChange('newPassword', e.target.value)}
-                passwordToggle
                 placeholder="새로운 비밀번호 입력"
                 disabled={isPending}
               />
               <Input
                 icon={Check}
                 label="새 비밀번호 확인"
+                type="password"
                 value={formData.confirmPassword}
                 onChange={(e) => handleChange('confirmPassword', e.target.value)}
-                passwordToggle
                 placeholder="한 번 더 입력해 주세요"
                 disabled={isPending}
               />
