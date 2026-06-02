@@ -53,8 +53,12 @@ export const MemberCard = ({ member, activeYear }: ItemProps) => {
           <div className="flex flex-col gap-1 sm:gap-2.5">
             <span className="text-[0.875rem]/2.5 font-semibold text-white sm:text-[2rem]/8">{member.name}</span>
             <div className="text-custom-gray-600 flex items-center text-[0.625rem]/2.5 sm:text-[1.25rem]/5">
-              <span className="line-clamp-1">{member.department}</span>
-              <Dot className="h-4 w-4 sm:h-6 sm:w-6" />
+              {member.department && (
+                <>
+                  <span className="line-clamp-1">{member.department}</span>
+                  <Dot className="h-4 w-4 sm:h-6 sm:w-6" />
+                </>
+              )}
               <span className="text-brand-primary-cta whitespace-nowrap">{groupData.year}기</span>
             </div>
           </div>

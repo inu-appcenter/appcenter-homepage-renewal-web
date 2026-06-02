@@ -30,7 +30,7 @@ export const MembersList = ({ initialMembers, generationData }: MembersListProps
       .filter((m) => m.activeGroup && (selectedPart === 'ALL' || m.activeGroup.part === selectedPart));
 
     return {
-      leaders: matched.filter((m) => isLeader(m.activeGroup?.role)),
+      leaders: matched.filter((m) => isLeader(m.activeGroup?.role)).sort((a, b) => (a.activeGroup?.role === '센터장' ? -1 : 1)),
       members: matched.filter((m) => !isLeader(m.activeGroup?.role)),
       isEmpty: matched.length === 0
     };
