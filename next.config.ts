@@ -2,6 +2,9 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
+    // 워커(/_next/image) 대신 Cloudflare Image Transformations(/cdn-cgi/image/)로 최적화 + 엣지 자동 캐싱
+    loader: 'custom',
+    loaderFile: './src/shared/utils/cloudflareImageLoader.ts',
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,9 +14,7 @@ const nextConfig: NextConfig = {
     ],
     qualities: [75, 100],
     deviceSizes: [640, 1080, 1920],
-    imageSizes: [16, 64, 256],
-    // 1년(365일) 동안 이미지 캐시 강제 유지
-    minimumCacheTTL: 31536000
+    imageSizes: [16, 64, 256]
   },
   logging: {
     fetches: {
