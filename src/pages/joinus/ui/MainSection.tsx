@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { ScrambleText } from 'shared/animation/ScrambleText';
 
 export const MainSection = () => {
@@ -11,7 +10,8 @@ export const MainSection = () => {
         </span>
         <ScrambleText text="s" />
       </h1>
-      <Image src="/videos/joinus.png" width={1200} height={675} quality={75} alt="Main Illustration" className="absolute -z-10" />
+      {/* APNG 애니메이션 보존을 위해 next/image(Cloudflare Image Transformations)를 거치지 않고 원본을 직접 서빙 */}
+      <img src="/videos/joinus.png" width={1200} height={675} alt="Main Illustration" className="absolute -z-10" />
     </section>
   );
 };
