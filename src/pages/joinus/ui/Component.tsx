@@ -26,7 +26,7 @@ export function RecruitmentCard({ data, isActive }: { data: RecruitmentList; isA
           className="aspect-square w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl"
         />
       ) : (
-        <div className="bg-background flex h-90 w-full items-center justify-center rounded-xl p-4">
+        <div className="bg-background flex aspect-square w-full items-center justify-center rounded-md p-4 sm:rounded-xl">
           <Logo />
         </div>
       )}
