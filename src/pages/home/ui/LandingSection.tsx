@@ -1,8 +1,13 @@
+'use client';
 import Link from 'next/link';
 import { ScrollIndicator } from './Components';
 import { BackgroundAnimation } from './BackgroundAnimation';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { ScrambleText } from 'shared/animation/ScrambleText';
+import { Mixpanel } from 'shared/utils/mixpanel';
+import { MIXPANEL_EVENTS } from 'shared/constants/mixpanelEvents';
+
+const trackJoinusCtaClick = () => Mixpanel.track(MIXPANEL_EVENTS.JOINUS_LANDING_CTA_CLICK);
 
 export const LandingSection = () => {
   return (
@@ -30,7 +35,7 @@ export const LandingSection = () => {
 
       {/** 데스크탑인 경우 */}
       <div className="hidden sm:inline-block">
-        <AnimationButton href="/joinus" prefetch={true}>
+        <AnimationButton href="/joinus" prefetch={true} onClick={trackJoinusCtaClick}>
           <span className="text-custom-gray-200 text-[1rem]/4 font-semibold">앱센터 모집 지원하러 가기</span>
         </AnimationButton>
       </div>
@@ -39,6 +44,7 @@ export const LandingSection = () => {
       <Link
         href="/joinus"
         prefetch={true}
+        onClick={trackJoinusCtaClick}
         className="bg-brand-primary-cta border-custom-gray-100 text-custom-black mt-10 rounded-[60px] border px-8 py-4 text-xl/8 font-semibold whitespace-nowrap drop-shadow-[0_0_48px_#00FFBF66] sm:hidden"
       >
         앱센터 모집 지원하러 가기

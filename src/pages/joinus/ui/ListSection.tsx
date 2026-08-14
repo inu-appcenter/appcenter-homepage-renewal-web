@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from 'shared/icon/Logo';
 import { RecruitmentList } from 'entities/recruitment';
 import { StatusBadge } from './Component';
+import { Mixpanel } from 'shared/utils/mixpanel';
+import { MIXPANEL_EVENTS, RECRUITMENT_CARD_SOURCE } from 'shared/constants/mixpanelEvents';
 
 const ITEM_PER_PAGE = 4;
 
@@ -105,6 +107,7 @@ const Item = ({ data }: { data: RecruitmentList }) => {
   return (
     <Link
       href={`/joinus/${data.id}`}
+      onClick={() => Mixpanel.track(MIXPANEL_EVENTS.RECRUITMENT_CARD_CLICK, { recruitmentId: data.id, title: data.title, status: data.status, source: RECRUITMENT_CARD_SOURCE.LIST })}
       className="bg-surface-elevated hover:border-brand-primary-cta border-background relative flex w-full cursor-pointer flex-row items-center gap-2 rounded-[9px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:rounded-[18px] sm:px-6 sm:py-4"
     >
       {data.thumbnail ? (

@@ -1,9 +1,8 @@
 import { recruitmentApi } from 'entities/recruitment';
-import { AnimationButton } from 'shared/ui/animation-button';
 import Image from 'next/image';
 import { Logo } from 'shared/icon/Logo';
 import { OtherRecruitments } from './OtherRecruitments';
-import { StatusBadge } from './Component';
+import { ApplyButton, StatusBadge } from './Component';
 import dayjs from 'dayjs';
 import { BLUR_DATA_URL } from 'shared/constants/blur';
 
@@ -87,11 +86,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
             {(() => {
               switch (recruitmentData.status) {
                 case 'RECRUITING':
-                  return (
-                    <AnimationButton target="_blank" rel="noopener noreferrer" href={recruitmentData.applyLink}>
-                      <div className="text-white sm:text-2xl/6">지원하러 가기</div>
-                    </AnimationButton>
-                  );
+                  return <ApplyButton recruitmentId={recruitmentData.id} title={recruitmentData.title} capacity={recruitmentData.capacity} applyLink={recruitmentData.applyLink} />;
                 case 'CLOSED':
                   return <div className="text-custom-gray-600 border-custom-gray-600 w-fit rounded-[60px] border px-6 py-4 text-base/4 sm:text-2xl/6">모집이 종료되었습니다</div>;
                 case 'WAITING':

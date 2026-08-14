@@ -5,6 +5,7 @@ import { useRecruitment } from 'entities/recruitment';
 import { RecruitmentCard } from './Component';
 import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 import { Carousel } from 'shared/ui/carousel';
+import { RECRUITMENT_CARD_SOURCE } from 'shared/constants/mixpanelEvents';
 
 export function OtherRecruitments() {
   return (
@@ -50,7 +51,7 @@ function OtherRecruitmentsContent() {
         className="py-0"
         trackClassName="gap-3 sm:gap-8"
         slideClassName="py-4 min-w-0 shrink-0 basis-[calc(33.333%-0.5rem)] sm:basis-[calc(33.333%-1.333rem)]"
-        renderItem={(item) => <RecruitmentCard data={item} />}
+        renderItem={(item) => <RecruitmentCard data={item} source={RECRUITMENT_CARD_SOURCE.OTHER_RECRUITMENTS} />}
       />
     </section>
   );
