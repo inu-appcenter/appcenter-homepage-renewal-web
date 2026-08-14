@@ -34,7 +34,7 @@ export const BackgroundAnimation = () => {
   return (
     <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden bg-black">
       <div
-        className="absolute inset-0 hidden bg-cover opacity-10 sm:block"
+        className="absolute inset-0 hidden bg-cover bg-center opacity-10 sm:block"
         style={{
           backgroundImage: 'url(/images/landing.webp)'
         }}
@@ -47,7 +47,7 @@ export const BackgroundAnimation = () => {
           maskImage: maskImage
         }}
       >
-        <img src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" className="object-cover" />
+        <img src="/images/landing.webp" alt="검은 배경에 네온 초록색 윤곽선으로 그려진 키보드 자판 이미지" className="absolute inset-0 h-full w-full object-cover" />
       </motion.div>
 
       <video ref={videoRef} poster="/images/landing.webp" autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="h-full w-full object-cover sm:hidden">
