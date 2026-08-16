@@ -1,10 +1,8 @@
 import { recruitmentApi } from 'entities/recruitment';
-import Image from 'next/image';
 import { Logo } from 'shared/icon/Logo';
 import { OtherRecruitments } from './OtherRecruitments';
 import { ApplyButton, StatusBadge } from './Component';
 import dayjs from 'dayjs';
-import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
@@ -39,16 +37,7 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
-              <Image
-                src={recruitmentData.thumbnail}
-                alt={`${recruitmentData.title} 포스터 이미지`}
-                width={1200}
-                height={600}
-                quality={75}
-                className="h-auto w-full object-contain"
-                placeholder="blur"
-                blurDataURL={BLUR_DATA_URL}
-              />
+              <img src={recruitmentData.thumbnail} alt={`${recruitmentData.title} 포스터 이미지`} className="h-auto w-full object-contain" />
             ) : (
               <div className="bg-background flex aspect-video w-full items-center justify-center rounded-2xl p-4">
                 <Logo />

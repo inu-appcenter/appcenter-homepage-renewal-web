@@ -1,9 +1,7 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { RecruitmentList } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
-import { BLUR_DATA_URL } from 'shared/constants/blur';
 import { AnimationButton } from 'shared/ui/animation-button';
 import { Mixpanel } from 'shared/utils/mixpanel';
 import { MIXPANEL_EVENTS, RecruitmentCardSource } from 'shared/constants/mixpanelEvents';
@@ -20,16 +18,7 @@ export function RecruitmentCard({ data, isActive, source }: { data: RecruitmentL
       } `}
     >
       {data.thumbnail ? (
-        <Image
-          src={data.thumbnail}
-          alt={`${data.title} thumbnail`}
-          width={1920}
-          height={1020}
-          quality={75}
-          placeholder="blur"
-          blurDataURL={BLUR_DATA_URL}
-          className="aspect-square w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl"
-        />
+        <img src={data.thumbnail} alt={`${data.title} thumbnail`} className="aspect-square w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl" />
       ) : (
         <div className="bg-background flex aspect-square w-full items-center justify-center rounded-md p-4 sm:rounded-xl">
           <Logo />
